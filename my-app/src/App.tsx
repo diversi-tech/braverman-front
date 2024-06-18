@@ -2,12 +2,15 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Main } from './Component/Main';
+import AddUser from "./Component/addUser.component"
 
 function App() {
   return (
     <div className="App">
 
       <Main></Main>
+      <AddUser/>
+
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
