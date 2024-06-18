@@ -1,30 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import  { useEffect } from 'react';
 import './App.css';
-import ShowUsers from './Component/ShowUsers.component';
-import AddUser from './Component/addUser.component';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from './Redux/actions';
+import Nav from './Component/nav.component';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
+
+  useEffect(() => {
+    // לדוגמה, ניתן לקרוא ל-API כדי לוודא את מצב המשתמש
+    const user = { username: 'JohnDoe', role: 'worker' }; // נתונים לדוגמה
+    dispatch(setUser(user));
+  }, [dispatch]);
+
+ 
+
   return (
-    <div className="App">
-
-      
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+    <div>
+      {isAuthenticated ? (
+        <div>
+          <Nav />
+          <p>Welcome to the app!</p>
+        </div>
+      ) : (
+        <p>Please log in.</p>
+      )}
     </div>
   );
-}
+};
+
 
 export default App;
