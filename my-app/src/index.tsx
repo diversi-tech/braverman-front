@@ -10,6 +10,51 @@ import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import { Nav } from './Component/Nav';
+import ShowUsers from './Component/ShowUsers.component';
+import AddUser from './Component/addUser.component';
+import { Leads } from './Component/leads.component';
+import { Dashboard } from './Component/dashboard.component';
+import { Bookkeeping } from './Component/bookkeeping.component';
+import { Customers } from './Component/customers.component';
+import { Staff } from './Component/staff.component';
+import { Tasks } from './Component/tasks.component';
+
+
+const router = createBrowserRouter([
+  {
+    path: '',
+    Component: Nav,
+    children: [
+      {
+        path: 'dashboard',
+        Component: Dashboard,
+      },{
+        path: 'leads',
+        Component: Leads,
+      },{
+        path: 'customers',
+        Component: Customers,
+      },{
+        path: 'staff',
+        Component: Staff,
+      }, {
+        path: 'tasks',
+        Component: Tasks,
+      },{
+        path: 'bookkeeping',
+        Component: Bookkeeping,
+      },
+    
+        
+ ] }]
+      
+                        
+);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,7 +62,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <PrimeReactProvider>
-      <App />
+    <RouterProvider router={router} />
     </PrimeReactProvider>
   </React.StrictMode>
 );
