@@ -1,10 +1,23 @@
-import { NavLink } from "react-router-dom"
+import { Link, NavLink, Outlet } from "react-router-dom"
 
 export const Nav = () => {
 
     return <>
         <div className={'nav'}>
-            <NavLink to='' className={'link'} > </NavLink>
+            <header>
+                <nav>
+                    <ul>
+
+                        <li className="nav"><Link to={'/dashboard'}>דשבורד</Link></li>
+                        <li className="nav"><Link to={'/leads'}>לידים</Link></li>
+                        <li className="nav"><Link to={'/customers'}>לקוחות</Link></li>
+                        <li className="nav"><Link to={'/staff'}>צוות</Link></li>
+                        <li className="nav"><Link to={'/tasks'}>משימות</Link></li> 
+                        <li className="nav"><Link to={'/bookkeeping'}>הנה"ח</Link></li>
+                    </ul>
+                </nav>
+            </header>
+            <Outlet />
         </div>
 
     </>
