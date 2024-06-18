@@ -1,5 +1,6 @@
 import  { useEffect } from 'react';
 import './App.css';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './Redux/actions';
 import Nav from './Component/nav.component';
@@ -26,6 +27,7 @@ const App = () => {
       ) : (
         <p>Please log in.</p>
       )}
+
     </div>
   );
 };
