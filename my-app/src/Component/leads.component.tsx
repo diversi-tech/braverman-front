@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { setUser } from '../Redux/userAction';
 
-// דוגמה לכמה לידים
 const leadsData = [
   { id: 1, name: 'ruti ', email: 'r583209640@gmail.com', status: 'lead' },
   { id: 2, name: 'rhachel ', email: 'r@gmail.com', status: 'lead' },
@@ -36,11 +35,11 @@ const Leads = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Status</TableCell>
-            !{currentUserType === 'Manager' && <TableCell>operations</TableCell>}
+            <TableCell>קוד</TableCell>
+            <TableCell>שם</TableCell>
+            <TableCell>מייל</TableCell>
+            <TableCell>סטטוס</TableCell>
+            !{currentUserType === 'Manager' && <TableCell>שינוי סטטוס</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -58,7 +57,7 @@ const Leads = () => {
                     onClick={() => handleStatusChange(lead.id)}
                     disabled={lead.status === 'Customer'}
                   >
-                  Convert to a customer
+                    העברה למצב לקוח 
                   </Button>
                 </TableCell>
               )}
