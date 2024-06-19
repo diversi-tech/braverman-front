@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,21 +14,20 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Nav } from './Component/Nav';
-import ShowUsers from './Component/ShowUsers.component';
-import AddUser from './Component/addUser.component';
-import { Leads } from './Component/leads.component';
+import  {Leads}  from './Component/leads.component';
 import { Dashboard } from './Component/dashboard.component';
 import { Bookkeeping } from './Component/bookkeeping.component';
 import { Customers } from './Component/customers.component';
 import { Staff } from './Component/staff.component';
 import { Tasks } from './Component/tasks.component';
+import { Provider } from 'react-redux';
+import store from './Redux/Store';
 
 
 const router = createBrowserRouter([
   {
     path: '',
-    Component: Nav,
+    Component: App,
     children: [
       {
         path: 'dashboard',
@@ -56,17 +55,20 @@ const router = createBrowserRouter([
                         
 );
 
-const root = ReactDOM.createRoot(
+
+const root = createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <PrimeReactProvider>
-    <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </PrimeReactProvider>
   </React.StrictMode>
 );
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
