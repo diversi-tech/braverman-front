@@ -5,8 +5,6 @@ import { LoginUser } from '../api/user.api';
 import { log } from 'console';
 import { useNavigate } from 'react-router-dom';
 
-
- 
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
@@ -33,7 +31,7 @@ const Login = () => {
         
         }
         else
-           alert("Email and password do not exist")
+           alert("מייל וסיסמא לא קיימים ")
 
       }).catch(x=>{
         alert("error")
@@ -42,16 +40,16 @@ const Login = () => {
       })
       
     } else {
-      alert('Please enter username and password');
+      alert('נא להכניס מייל וסיסמא');
     }
   };
 
   return (
     <div className="login">
-      <h2>Login</h2>
+      <h2>להתחברות</h2>
       <form>
         <label>
-          Username:
+          אימייל:
           <input
             type="text"
             value={UserEmail}
@@ -60,7 +58,7 @@ const Login = () => {
         </label>
         <br />
         <label>
-          Password:
+          סיסמא:
           <input
             type="password"
             value={UserPassword}
@@ -69,9 +67,9 @@ const Login = () => {
         </label>
         <br />
         <button type="button" onClick={handleLogin}>
-          Login
+          התחברות
         </button>
-      </form>
+  </form>
     </div>
   );
 };
