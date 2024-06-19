@@ -1,46 +1,48 @@
 import React, { useState } from 'react';
 
-const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+// הגדרת סוגי הפרופס של הקומפוננטה
+interface LoginProps {
+  onLogin: (username: string, password: string) => void;
+}
 
-    const handleLogin = () => {
-        // Here you can add any validation before calling onLogin
-        // For simplicity, let's assume username and password are required
-        if (username && password) {
-            onLogin({ username, password });
-        } else {
-            alert('Please enter username and password');
-        }
-    };
+// קומפוננטת הלוגין
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-    return (
-        <div className="login">
-            <h2>Login</h2>
-            <form>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </label>
-                <br />
-                <button type="button" onClick={handleLogin}>
-                    Login
-                </button>
-            </form>
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onLogin(username, password);
+  };
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
-    );
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
 };
+
 export default Login;
