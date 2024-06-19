@@ -1,6 +1,6 @@
-import { Link, NavLink, Outlet } from "react-router-dom"
+import { Link,  Outlet } from "react-router-dom"
 
-export const Nav = () => {
+const AdminNav = () => {
 
     return <>
         <div className={'nav'}>
@@ -22,3 +22,4 @@ export const Nav = () => {
 
     </>
 }
+export default AdminNav
