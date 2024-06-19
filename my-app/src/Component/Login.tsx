@@ -1,46 +1,79 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector,  } from 'react-redux';
+import { setUser } from '../Redux/userAction';
+import { LoginUser } from '../api/user.api';
+import { log } from 'console';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        // Here you can add any validation before calling onLogin
-        // For simplicity, let's assume username and password are required
-        if (username && password) {
-            onLogin({ username, password });
-        } else {
-            alert('Please enter username and password');
+ 
+const Login = () => {
+  const [UserEmail, setUserEmail] = useState('');
+  const [UserPassword, setUserPassword] = useState('');
+  const [UserType, setUserType]=useState('');
+  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
+
+//   const currentUser = useSelector((state: { userReducer: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.userReducer.currentUser);
+   console.log(currentUser);
+  
+  const dispatch = useDispatch();
+  const nav = useNavigate()
+
+
+  const handleLogin = () => {
+    if (UserEmail && UserPassword) {
+      console.log('Logging in with', { UserEmail, UserPassword });
+      LoginUser(UserEmail,UserPassword).
+      then(x=>{
+        if(x.status==200){
+        console.log(UserType);
+        alert("success")
+        dispatch(setUser({ UserEmail,UserPassword, UserType }));
+        debugger
+        
         }
-    };
+        else
+           alert("Email and password do not exist")
 
-    return (
-        <div className="login">
-            <h2>Login</h2>
-            <form>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </label>
-                <br />
-                <button type="button" onClick={handleLogin}>
-                    Login
-                </button>
-            </form>
-        </div>
-    );
+      }).catch(x=>{
+        alert("error")
+        console.log("erorr");   
+        console.log(x.response);
+      })
+      
+    } else {
+      alert('Please enter username and password');
+    }
+  };
+
+  return (
+    <div className="login">
+      <h2>Login</h2>
+      <form>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={UserEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={UserPassword}
+            onChange={(e) => setUserPassword(e.target.value)}
+          />
+        </label>
+        <br />
+        <button type="button" onClick={handleLogin}>
+          Login
+        </button>
+      </form>
+    </div>
+  );
 };
+
 export default Login;
