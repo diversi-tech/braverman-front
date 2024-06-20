@@ -1,46 +1,75 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector,  } from 'react-redux';
+import { setUser } from '../Redux/userAction';
+import { LoginUser } from '../api/user.api';
+import { log } from 'console';
+import { useNavigate } from 'react-router-dom';
 
-// הגדרת סוגי הפרופס של הקומפוננטה
-interface LoginProps {
-  onLogin: (username: string, password: string) => void;
-}
+const Login = () => {
+  const [UserEmail, setUserEmail] = useState('');
+  const [UserPassword, setUserPassword] = useState('');
+  const [UserType, setUserType]=useState('');
+  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
 
-// קומפוננטת הלוגין
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+//   const currentUser = useSelector((state: { userReducer: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.userReducer.currentUser);
+   console.log(currentUser);
+  
+  const dispatch = useDispatch();
+  const nav = useNavigate()
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onLogin(username, password);
+
+  const handleLogin = () => {
+    if (UserEmail && UserPassword) {
+      console.log('Logging in with', { UserEmail, UserPassword });
+      LoginUser(UserEmail,UserPassword).
+      then(x=>{
+        if(x.status==200){
+        console.log(UserType);
+        alert("success")
+        dispatch(setUser({ UserEmail,UserPassword, UserType }));
+        debugger
+        
+        }
+        else
+           alert("מייל וסיסמא לא קיימים ")
+
+      }).catch(x=>{
+        alert("error")
+        console.log("erorr");   
+        console.log(x.response);
+      })
+      
+    } else {
+      alert('נא להכניס מייל וסיסמא');
+    }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
+    <div className="login">
+      <h2>להתחברות</h2>
+      <form>
+        <label>
+          אימייל:
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            value={UserEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        </label>
+        <br />
+        <label>
+          סיסמא:
           <input
             type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            value={UserPassword}
+            onChange={(e) => setUserPassword(e.target.value)}
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+        </label>
+        <br />
+        <button type="button" onClick={handleLogin}>
+          התחברות
+        </button>
+  </form>
     </div>
   );
 };
