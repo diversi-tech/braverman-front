@@ -1,23 +1,17 @@
-// userReducer.js
-import { SET_USER} from './actions';
-
 const initialState = {
-  role: null,
   isAuthenticated: false,
-  user: null,
-  
+  currentUser: { UserEmail: '', UserPassword: '', UserType: '' },
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER:
+    case 'SET_CURRENT_USER':
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
-        role: action.payload.role,
+
+        currentUser: action.payload,
       };
-  
     default:
       return state;
   }

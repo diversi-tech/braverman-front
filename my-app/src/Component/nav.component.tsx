@@ -1,16 +1,21 @@
 // Nav.js
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import AdminNav from './adminNav.component';
 import WorkerNav from './workerNav.component';
 import CustomerNav from './customerNav.component';
 
 const Nav = () => {
-  const role = useSelector((state:{ user: { role: string } }) => state.user.role);
+  const currentUserType = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser.UserType);
+  let navigationComponent: ReactElement | null = null;
 
-  let navigationComponent = null;
 
-  switch (role) {
+  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
+  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
+
+  
+
+  switch (currentUserType) {
     case 'admin':
       navigationComponent = <AdminNav />;
       break;
@@ -21,7 +26,10 @@ const Nav = () => {
       navigationComponent = <CustomerNav />;
       break;
     default:
-      navigationComponent = null;
+      navigationComponent = <WorkerNav />;
+      // navigationComponent = null;
+
+      
   }
 
   return (

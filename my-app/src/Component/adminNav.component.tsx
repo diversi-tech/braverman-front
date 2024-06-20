@@ -1,3 +1,4 @@
+import React from "react"
 import { Link,  Outlet } from "react-router-dom"
 
 const AdminNav = () => {
@@ -9,7 +10,7 @@ const AdminNav = () => {
                     <ul>
 
                         <li className="nav"><Link to={'/dashboard'}>דשבורד</Link></li>
-                        <li className="nav"><Link to={'/leads'}>לידים</Link></li>
+                        <li className="nav"><Link to={'/Leads'}>לידים</Link></li>
                         <li className="nav"><Link to={'/customers'}>לקוחות</Link></li>
                         <li className="nav"><Link to={'/staff'}>צוות</Link></li>
                         <li className="nav"><Link to={'/tasks'}>משימות</Link></li> 
