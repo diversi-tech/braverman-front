@@ -1,0 +1,138 @@
+/* General styles */
+/* צבעים לסטטוס */
+.First {
+    background-color:  #FF7361;
+    ;
+}
+.Appointment {
+    background-color:  #61B3FF;
+    ;
+}
+.Sent {
+    background-color:  #FF6187;
+    ;
+}
+.Not {
+    background-color:  #D9D9D9;
+    ;
+}
+.Payment {
+    background-color: #FFF177;
+    
+}
+.ToSent {
+    background-color: #71E29E;
+    ;
+}
+
+body {
+    font-family: 'Ping HL', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F1F7FF; /* Set background color for the whole page */
+    color: #002046;
+}
+
+/* Page container */
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Lead management container */
+.lead-management-container {
+    width: 90%;
+    background-color: #FFFFFF; /* White background for the container */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px;
+    margin-top: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
+
+/* Table container styles */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+}
+
+/* Table styles */
+.table {
+    border-collapse: collapse; /* Collapse borders between cells */
+    table-layout: auto; /* Allow each column to have its own width based on content */
+    width: 100%;
+    border-spacing: 0; /* No spacing between cells */
+    border-top: 1px solid #D9D9D9; /* Border above the table */
+}
+
+.table th,
+.table td {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 12.01px;
+    text-align: center;
+    padding: 10px;
+    height: 65px;
+    color: #002046;
+    /* background-color: #FFFFFF; */
+    border: none; /* No border inside cells */
+    border-bottom: 1px solid #D9D9D9; /* Bottom border between rows */
+}
+
+/* Header cell */
+.table th {
+    color: #002046;
+    background-color: transparent; /* Transparent background for header */
+    position: relative;
+}
+
+/* Border between header cells */
+.table th:not(:last-child) {
+    border-right: 1px solid #D9D9D9;
+}
+
+/* Status button */
+.status-button {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 12.01px;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    background-color: #002046;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.status-button:hover {
+    background-color: #004080;
+}
+
+/* Circle button */
+.circle-button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #002046;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.circle-button.clicked {
+    background-color: #002046;
+    border-color: #FFFFFF;
+}
+.add{
+    text-align: right;
+}
+.add-lead-button{
+    background-color: white;
+    border: white;
+    font-size: medium;
+    opacity: 0px;
+    }
+
