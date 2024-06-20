@@ -19,7 +19,7 @@ import { Tasks } from './Component/tasks.component';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
 import WorkerNav from './Component/workerNav.component';
-import Leads from './Component/Leads.component';
+import Leads from './Component/leads.component';
 
 
 const router = createBrowserRouter([
