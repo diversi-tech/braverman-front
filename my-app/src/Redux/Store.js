@@ -1,18 +1,10 @@
-import { produce } from 'immer';
+import { combineReducers, createStore } from 'redux';
+import userReducer from './userReducer';
 
-import { createStore } from 'redux';
+const rootReducer = combineReducers({
+  user: userReducer 
+});
 
-const reducer = produce((state, action) => {
-
-    switch (action.type) {
-       
-        default:
-            break;
-    }
-
-}, initialState)
-
-//יצירת המחסן - מקבל את הרדיוסר
-const store = createStore(reducer)
+const store = createStore(rootReducer);
 window.store = store;
 export default store;
