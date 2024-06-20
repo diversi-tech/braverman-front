@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-
-interface User {
-  email: string;
-  firstName: string;
-  lastName: string;
-  userType: string;
-  password: string;
-}
-
+import { User} from "../model/user.model";
+import { addUser } from "../api/user.api";
 const AddUser: React.FC = () => {
+
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userType, setUserType] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleAddUser = () => {
+  const addNewUser=async(newUser:User)=>{
+    try{
+      await addUser(newUser);
+    }
+    catch(error){
+      console.error(error);
+    }
+   
+  }
+  const handleAddUser = async() => {
     // יצירת אובייקט משתמש חדש
     const newUser: User = {
       email,
@@ -27,6 +30,7 @@ const AddUser: React.FC = () => {
 
     // כאן תוכל להוסיף לוגיקה לשליחת המשתמש לשרת או עיבוד נוסף
     console.log('Adding user:', newUser);
+    await addNewUser(newUser);
 
     // איפוס השדות לאחר הוספת המשתמש
     setEmail('');
