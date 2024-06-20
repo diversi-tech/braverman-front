@@ -13,13 +13,15 @@ import { createBrowserRouter,RouterProvider,
 } from "react-router-dom";
 import { Dashboard } from './Component/dashboard.component';
 import { Bookkeeping } from './Component/bookkeeping.component';
-import { Customers } from './Component/customers.component';
 import { Staff } from './Component/staff.component';
 import { Tasks } from './Component/tasks.component';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
 import WorkerNav from './Component/workerNav.component';
 import Leads from './Component/leads.component';
+import ShowUsers from './Component/ShowUsers.component';
+import Login from './Component/Login';
+import Nav from './Component/nav.component';
 
 
 const router = createBrowserRouter([
@@ -28,28 +30,40 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       {
-        path: 'dashboard',
-        Component: Dashboard,
+
+        path:'login',
+        Component:Login
+      },
+      {
+        path:'home',
+        Component:Nav,
+        children:[
+          {
+            path: 'dashboard',
+            Component: Dashboard,
+          },{
+            path: 'leads',
+            Component: Leads,
+          },{
+            path: 'customers',
+            Component: ShowUsers,
+          },{
+            path: 'staff',
+            Component: Staff,
+          }, {
+            path: 'tasks',
+            Component: Tasks,
+          },{
+            path: 'bookkeeping',
+            Component: Bookkeeping,
+          },
+        ]
       },
       {
         path: 'customers',
-        Component: Customers,
-      },{
-        path: 'staff',
-        Component: Staff,
-      }, {
-        path: 'tasks',
-        Component: Tasks,
-      },{
-        path: 'bookkeeping',
-        Component: Bookkeeping,
-      },
-      {
-        path:'Leads',
-        Component:Leads,
+        Component: ShowUsers,
       }
       
-     
     
         
  ] }]

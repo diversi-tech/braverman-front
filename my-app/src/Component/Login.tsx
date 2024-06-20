@@ -74,4 +74,17 @@ const Login = () => {
   );
 };
 
+// const navigate = useNavigate();
+
+//     const handleClick = () => {
+//         navigate("/home")
+//       };
+//     return(
+//         <>
+//         <p>login</p>
+//         <button onClick={handleClick}>אישור</button>
+//         <Outlet/>
+//         </>
+//     )
+
 export default Login;
