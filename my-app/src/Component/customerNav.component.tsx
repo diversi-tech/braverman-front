@@ -1,26 +1,22 @@
 import React from "react"
-import { Link, NavLink, Outlet } from "react-router-dom"
+
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
+import ShowUsers from "./ShowUsers.component"
+import { useEffect } from "react";
 
 const CustomerNav = () => {
 
-    return <>
-        <div className={'nav'}>
-            <header>
-                <nav>
-                    <ul>
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+       navigate('/customers');
+     }, [navigate]);
+   
+     return (
+      <Outlet/>
+     );
+   };
+   
 
-                        <li className="nav"><Link to={'/dashboard'}>דשבורד</Link></li>
-                        <li className="nav"><Link to={'/Leads'}>לידים</Link></li>
-                        <li className="nav"><Link to={'/customers'}>לקוחות</Link></li>
-                        {/* <li className="nav"><Link to={'/staff'}>צוות</Link></li>
-                        <li className="nav"><Link to={'/tasks'}>משימות</Link></li> 
-                        <li className="nav"><Link to={'/bookkeeping'}>הנה"ח</Link></li> */}
-                    </ul>
-                </nav>
-            </header>
-            <Outlet />
-        </div>
 
-    </>
-}
 export default CustomerNav
