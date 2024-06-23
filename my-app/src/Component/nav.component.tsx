@@ -1,9 +1,7 @@
-// Nav.js
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import AdminNav from './adminNav.component';
-import WorkerNav from './workerNav.component';
-import CustomerNav from './customerNav.component';
+
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 const Nav = () => {
   const currentUserType = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser.UserType);
@@ -13,29 +11,33 @@ const Nav = () => {
   const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
   const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
 
+ 
+  const navigate = useNavigate();
   
-
-  switch (currentUserType) {
-    case 'admin':
-      navigationComponent = <AdminNav />;
-      break;
-    case 'worker':
-      navigationComponent = <WorkerNav />;
-      break;
-    case 'customer':
-      navigationComponent = <CustomerNav />;
-      break;
-    default:
-      navigationComponent = <WorkerNav />;
-      // navigationComponent = null;
-
-      
-  }
-
+    useEffect(() => {
+      if(currentUserType==="customer")
+       navigate('/customers');
+     }, [navigate]);
+   
+ 
   return (
-    <div>
-      {navigationComponent}
-    </div>
+    <div className={'nav'}>
+    <header>
+        <nav>
+            <ul>
+               
+               <li className="nav"><Link to={'dashboard'}>דשבורד</Link></li>
+               <li className="nav"><Link to={'leads'}>לידים</Link></li>
+                <li className="nav"><Link to={'customers'}>לקוחות</Link></li>
+                {currentUserType==="admin"&&<>
+                <li className="nav"><Link to={'staff'}>צוות</Link></li>
+                <li className="nav"><Link to={'tasks'}>משימות</Link></li> 
+                <li className="nav"><Link to={'bookkeeping'}>הנה"ח</Link></li></>}
+            </ul>
+        </nav>
+    </header>
+    <Outlet />
+</div>
   );
 };
 

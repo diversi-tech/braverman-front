@@ -39,7 +39,7 @@ const Leads = () => {
             <TableCell>שם</TableCell>
             <TableCell>מייל</TableCell>
             <TableCell>סטטוס</TableCell>
-            !{currentUserType === 'Manager' && <TableCell>שינוי סטטוס</TableCell>}
+            {currentUserType === 'admin' && <TableCell>שינוי סטטוס</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
