@@ -3,45 +3,49 @@ import { useDispatch, useSelector,  } from 'react-redux';
 import { setUser } from '../Redux/userAction';
 import { LoginUser } from '../api/user.api';
 import { log } from 'console';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
   const [UserType, setUserType]=useState('');
   const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
+  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
 
+  const navigate = useNavigate();
 //   const currentUser = useSelector((state: { userReducer: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.userReducer.currentUser);
-   console.log(currentUser);
   
   const dispatch = useDispatch();
-  const nav = useNavigate()
 
 
   const handleLogin = () => {
-    if (UserEmail && UserPassword) {
-      console.log('Logging in with', { UserEmail, UserPassword });
-      LoginUser(UserEmail,UserPassword).
-      then(x=>{
-        if(x.status==200){
-        console.log(UserType);
-        alert("success")
-        dispatch(setUser({ UserEmail,UserPassword, UserType }));
-        debugger
+ 
+    
+    navigate("/home")
+    sessionStorage.setItem("isAuthenticated","true");
+    // if (UserEmail && UserPassword) {
+    //   console.log('Logging in with', { UserEmail, UserPassword });
+    //   LoginUser(UserEmail,UserPassword).
+    //   then(x=>{
+    //     if(x.status==200){
+    //     console.log(UserType);
+    //     alert("success")
+    //     dispatch(setUser({ UserEmail,UserPassword, UserType }));
+    //     debugger
         
-        }
-        else
-           alert("מייל וסיסמא לא קיימים ")
+    //     }
+    //     else
+    //        alert("מייל וסיסמא לא קיימים ")
 
-      }).catch(x=>{
-        alert("error")
-        console.log("erorr");   
-        console.log(x.response);
-      })
+    //   }).catch(x=>{
+    //     alert("error")
+    //     console.log("erorr");   
+    //     console.log(x.response);
+    //   })
       
-    } else {
-      alert('נא להכניס מייל וסיסמא');
-    }
+    // } else {
+    //   alert('נא להכניס מייל וסיסמא');
+    // }
   };
 
   return (
@@ -70,6 +74,8 @@ const Login = () => {
           התחברות
         </button>
   </form>
+  <Outlet/>
+
     </div>
   );
 };

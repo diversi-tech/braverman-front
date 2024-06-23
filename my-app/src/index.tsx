@@ -17,7 +17,6 @@ import { Staff } from './Component/staff.component';
 import { Tasks } from './Component/tasks.component';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
-import WorkerNav from './Component/workerNav.component';
 import Leads from './Component/leads.component';
 import ShowUsers from './Component/ShowUsers.component';
 import Login from './Component/Login';

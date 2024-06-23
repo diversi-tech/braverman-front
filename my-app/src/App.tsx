@@ -12,16 +12,15 @@ import { setUser } from './Redux/userAction';
 
 const App = () => {
   const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
-console.log(isAuthenticated);
 
 const dispatch = useDispatch();
 
   useEffect(() => {
     // לדוגמה, ניתן לקרוא ל-API כדי לוודא את מצב המשתמש
-    const user = { username: 'JohnDoe' ,role:"admin"}; 
+    const user = {UserEmail: 'a@gg.hh' ,UserPassword:"123",UserType:"admin"}; 
 
     // נתונים לדוגמה
-    dispatch(setUser(user));
+    dispatch(setUser(user.UserEmail,user.UserPassword,user.UserType));
 
   }, [dispatch]);
 
@@ -30,17 +29,16 @@ const dispatch = useDispatch();
  
     const navigate = useNavigate();
   
-  //  useEffect(() => {
-    if(!isAuthenticated)
+   useEffect(() => {
+
+    
+    if(!sessionStorage.getItem("isAuthenticated"))
       {
-        console.log("effect");
-        console.log(isAuthenticated);
-        
-        
+     
         navigate('/login');
 
       }
-    // }, [isAuthenticated,navigate]);
+    }, [isAuthenticated,navigate]);
   
     return (
      <Outlet/>

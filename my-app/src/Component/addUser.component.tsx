@@ -6,7 +6,7 @@ const AddUser: React.FC = () => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState({id:'',description:''});
   const [password, setPassword] = useState('');
 
   const addNewUser=async(newUser:User)=>{
@@ -36,7 +36,7 @@ const AddUser: React.FC = () => {
     setEmail('');
     setFirstName('');
     setLastName('');
-    setUserType('');
+    setUserType({id:'',description:''});
     setPassword('');
   };
 
@@ -61,7 +61,7 @@ const AddUser: React.FC = () => {
         </div>
         <div>
           <label>User Type:</label>
-          <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
+          <select value={userType.description} onChange={(e) => setUserType({...userType,description : e.target.value})} required>
             <option value="">Select User Type</option>
             <option value="admin">Admin</option>
             <option value="user">User</option>
