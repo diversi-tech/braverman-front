@@ -47,7 +47,7 @@ body {
     background-color: #FFFFFF; /* White background for the container */
     border-radius: 15px; /* Rounded corners */
     padding: 20px;
-    margin-top: 0px;
+    /* margin-top: -140px; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
 }
 
@@ -73,7 +73,7 @@ body {
     line-height: 12.01px;
     text-align: center;
     padding: 10px;
-    height: 65px;
+    height: 55px;
     color: #002046;
     /* background-color: #FFFFFF; */
     border: none; /* No border inside cells */
@@ -90,6 +90,8 @@ body {
 /* Border between header cells */
 .table th:not(:last-child) {
     border-right: 1px solid #D9D9D9;
+    padding: 8px;
+
 }
 
 /* Status button */
@@ -126,9 +128,8 @@ body {
     background-color: #002046;
     border-color: #FFFFFF;
 }
-.add{
-    text-align: right;
-}
+
+
 .add-lead-button{
     background-color: white;
     border: white;

@@ -10,7 +10,8 @@ import AdminNav from './Component/adminNav.component';
 import Nav from './Component/nav.component'
 
 const App = () => {
-  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
+  //const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
+  const isAuthenticated = "ruti"
 
 
   return (
