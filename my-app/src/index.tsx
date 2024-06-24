@@ -21,6 +21,7 @@ import Leads from './Component/leads.component';
 import ShowUsers from './Component/ShowUsers.component';
 import Login from './Component/Login';
 import Nav from './Component/nav.component';
+import { NotFound } from './Component/notFound.component';
 
 
 const router = createBrowserRouter([
@@ -61,6 +62,9 @@ const router = createBrowserRouter([
       {
         path: 'customers',
         Component: ShowUsers,
+      },{
+        path:'not-found',
+        Component:NotFound
       }
       
     

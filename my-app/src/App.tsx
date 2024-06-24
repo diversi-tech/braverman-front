@@ -17,7 +17,7 @@ const dispatch = useDispatch();
 
   useEffect(() => {
     // לדוגמה, ניתן לקרוא ל-API כדי לוודא את מצב המשתמש
-    const user = {UserEmail: 'a@gg.hh' ,UserPassword:"123",UserType:"admin"}; 
+    const user = {UserEmail: 'a@gg.hh' ,UserPassword:"123",UserType:"worker"}; 
 
     // נתונים לדוגמה
     dispatch(setUser(user.UserEmail,user.UserPassword,user.UserType));

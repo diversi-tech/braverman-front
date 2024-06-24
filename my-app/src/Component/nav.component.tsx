@@ -5,19 +5,15 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 const Nav = () => {
   const currentUserType = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser.UserType);
-  let navigationComponent: ReactElement | null = null;
 
 
-  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
-  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
 
- 
   const navigate = useNavigate();
   
     useEffect(() => {
       if(currentUserType==="customer")
-       navigate('/customers');
-     }, [navigate]);
+       navigate('/not-found');
+     }, [currentUserType,navigate]);
    
  
   return (
