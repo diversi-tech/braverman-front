@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector,  } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { setUser } from '../Redux/userAction';
 import { LoginUser } from '../api/user.api';
 import { log } from 'console';
@@ -8,21 +8,22 @@ import { Outlet, useNavigate } from 'react-router-dom';
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
-  const [UserType, setUserType]=useState('');
-  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
-  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
+  const [UserType, setUserType] = useState('');
+  const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser);
+  const isAuthenticated = useSelector((state: { user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
 
   const navigate = useNavigate();
-//   const currentUser = useSelector((state: { userReducer: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.userReducer.currentUser);
-  
+
   const dispatch = useDispatch();
 
 
   const handleLogin = () => {
- 
+    if (currentUser.UserType === "customer")
+      navigate("/customers");
+    else 
+      navigate("/home");
     
-    navigate("/home")
-    sessionStorage.setItem("isAuthenticated","true");
+    sessionStorage.setItem("isAuthenticated", "true");
     // if (UserEmail && UserPassword) {
     //   console.log('Logging in with', { UserEmail, UserPassword });
     //   LoginUser(UserEmail,UserPassword).
@@ -32,7 +33,7 @@ const Login = () => {
     //     alert("success")
     //     dispatch(setUser({ UserEmail,UserPassword, UserType }));
     //     debugger
-        
+
     //     }
     //     else
     //        alert("מייל וסיסמא לא קיימים ")
@@ -42,7 +43,7 @@ const Login = () => {
     //     console.log("erorr");   
     //     console.log(x.response);
     //   })
-      
+
     // } else {
     //   alert('נא להכניס מייל וסיסמא');
     // }
@@ -73,8 +74,8 @@ const Login = () => {
         <button type="button" onClick={handleLogin}>
           התחברות
         </button>
-  </form>
-  <Outlet/>
+      </form>
+      <Outlet />
 
     </div>
   );
