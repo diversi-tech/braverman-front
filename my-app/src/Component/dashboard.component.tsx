@@ -12,7 +12,7 @@ export const Dashboard = () => {
     }, [role, navigate]);
     return(
         <>
-        {role!=="customer"&& <p>bookeping</p>}
+        {role!=="customer"&& <p>dashboard</p>}
         </>
     )
 }
