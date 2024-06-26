@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector, } from 'react-redux';
-import { setUser } from '../Redux/userAction';
-import { LoginUser } from '../api/user.api';
+import { setUser } from '../../Redux/userAction';
+import { LoginUser } from '../../api/user.api';
 import { log } from 'console';
 import { Outlet, useNavigate } from 'react-router-dom';
 
@@ -18,9 +18,7 @@ const Login = () => {
 
 
   const handleLogin = () => {
-    if (currentUser.UserType === "customer")
-      navigate("/customers");
-    else 
+    
       navigate("/home");
     
     sessionStorage.setItem("isAuthenticated", "true");

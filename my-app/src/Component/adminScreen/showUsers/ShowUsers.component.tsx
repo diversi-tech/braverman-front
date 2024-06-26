@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getUserById, getUsers } from '../api/user.api';
-import { User } from '../model/user.model';
+import { getUserById, getUsers } from '../../../api/user.api';
+import { User } from '../../../model/user.model';
 
 
 

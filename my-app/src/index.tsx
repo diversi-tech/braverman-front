@@ -11,17 +11,18 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { createBrowserRouter,RouterProvider,
 } from "react-router-dom";
-import { Dashboard } from './Component/dashboard.component';
-import { Bookkeeping } from './Component/bookkeeping.component';
-import { Staff } from './Component/staff.component';
-import { Tasks } from './Component/tasks.component';
+import { Dashboard } from './Component/dashboard/dashboard.component';
+import { Bookkeeping } from './Component/bookkeeping/bookkeeping.component';
+import { Staff } from './Component/staff/staff.component';
+import { Tasks } from './Component/tasks/tasks.component';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
-import Leads from './Component/leads.component';
-import ShowUsers from './Component/ShowUsers.component';
-import Login from './Component/Login';
-import Nav from './Component/nav.component';
-import { NotFound } from './Component/notFound.component';
+import Leads from './Component/leads/leads.component';
+import ShowUsers from './Component/adminScreen/showUsers/ShowUsers.component';
+import Login from './Component/login/Login';
+import Nav from './Component/nav/nav.component';
+import { NotFound } from './Component/notFound/notFound.component';
+import ProjectsTable from './Component/customers/costumers.component';
 
 
 const router = createBrowserRouter([
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
             Component: Leads,
           },{
             path: 'customers',
-            Component: ShowUsers,
+            Component: ProjectsTable,
           },{
             path: 'staff',
             Component: Staff,
