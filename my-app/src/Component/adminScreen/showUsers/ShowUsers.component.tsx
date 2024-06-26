@@ -2,26 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserById, getUsers } from '../../../api/user.api';
 import { User } from '../../../model/user.model';
+import { getTypes } from '../../../api/userType.api';
+import { UserType } from '../../../model/userType.model';
 
 
 
-const ShowUsers = () => {
+const ShowUsers =  () => {
   const role = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
-
+  const userId=useSelector((state: { user: { currentUser: { UserId:string,UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserId);
 
   const [users, setUsers] = useState<User[]>([])
-
+  const [userTypes, setTypes]=useState<UserType[]>([])
   useEffect(() => {
     async function getData() {
-      let result;
+      let usersResult;
+      let userTypesResult;
       try {
         if (role === 'admin'||role==="worker") {
-          result = await getUsers();
+          usersResult = await getUsers();
         }
         else
-          result = await getUserById("66792c0cc659c4a04bab82e4")
-        setUsers(result);
-
+          usersResult = await getUserById(userId)
+        setUsers(usersResult);
+        userTypesResult=await getTypes();
+        setTypes(userTypesResult);
 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -29,8 +33,8 @@ const ShowUsers = () => {
     }
     getData();
   }, [role]);
-  //שליפת הtypes מהמודל
-  const userTypes = ['Admin', 'Worker', 'Customer'];
+  
+  const userTypesDescription=userTypes.map(d=>d.description);
   //צריך לעדכן את פונקציית setUsers כך שתקרא לפונקציית עדכון בסרוויס
   const handleUserTypeChange = (index: number, newType: string) => {
     const updatedUsers = users.map((user, i) =>
@@ -60,7 +64,7 @@ const ShowUsers = () => {
                 value={user.userType.description}
                 onChange={(e) => handleUserTypeChange(index, e.target.value)}
               >
-                {userTypes.map((type) => (
+                {userTypesDescription.map((type) => (
                   <option key={type} value={type}>
                     {type}
                   </option>

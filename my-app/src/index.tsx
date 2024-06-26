@@ -18,7 +18,6 @@ import { Tasks } from './Component/tasks/tasks.component';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
 import Leads from './Component/leads/leads.component';
-import ShowUsers from './Component/adminScreen/showUsers/ShowUsers.component';
 import Login from './Component/login/Login';
 import Nav from './Component/nav/nav.component';
 import { NotFound } from './Component/notFound/notFound.component';
@@ -60,10 +59,7 @@ const router = createBrowserRouter([
           },
         ]
       },
-      {
-        path: 'customers',
-        Component: ShowUsers,
-      },{
+     {
         path:'not-found',
         Component:NotFound
       }

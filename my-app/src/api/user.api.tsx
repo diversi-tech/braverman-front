@@ -31,3 +31,18 @@ export const getUserById=async (userId:string)=>{
       }
 }
 
+export const updateUser=async(userId:string,newUser:User)=>
+{
+  try
+  {
+    const response=await axios.put(`https://localhost:7119/api/User/${userId}`,newUser);
+    return response.data;
+  }
+  catch(error)
+  {
+    console.error('error update user: ',error);
+    return error;
+    
+  }
+}
+
