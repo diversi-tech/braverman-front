@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { TaskCategory } from "../model/taskCategory.model"
-import { getTaskCategories } from "../api/taskCategory.api";
+import { TaskCategory } from "../../../model/taskCategory.model"
+import { getTaskCategories } from "../../../api/taskCategory.api";
 
 export const ShowTasksCategory : React.FC<{ refresh: boolean }> = ({ refresh }) => {
 

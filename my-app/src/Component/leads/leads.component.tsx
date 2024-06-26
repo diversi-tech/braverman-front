@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-import { setUser } from '../Redux/userAction';
+import { setUser } from '../../Redux/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const leadsData = [

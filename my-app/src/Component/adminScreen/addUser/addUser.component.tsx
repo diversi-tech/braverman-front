@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { User} from "../model/user.model";
-import { addUser } from "../api/user.api";
+import { User} from "../../../model/user.model";
+import { addUser } from "../../../api/user.api";
 const AddUser: React.FC = () => {
 
   const [email, setEmail] = useState('');

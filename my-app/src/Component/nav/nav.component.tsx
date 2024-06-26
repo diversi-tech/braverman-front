@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
-import logo from "../assets/images/logo.png"
+import logo from "../../assets/images/logo.png"
 
 const Nav = () => {
   const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
@@ -13,9 +13,6 @@ const Nav = () => {
     if (currentUserType === "customer")
       navigate('/not-found');
   }, [currentUserType, navigate]);
-  console.log(location.pathname);
-  
-
   return (
     <>
 <div id='imgandnav'>

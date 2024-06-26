@@ -39,7 +39,7 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { getcostumerProjec } from "../api/costumer.api";
+import { getcostumerProjec } from "../..//api/costumer.api";
 
 interface ProjectDetailsProps {
   customer_id: string;

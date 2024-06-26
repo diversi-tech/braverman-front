@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addCategory } from "../api/taskCategory.api";
+import { addCategory } from "../../../api/taskCategory.api";
 
 export const AddTaskCategory : React.FC<{ onCategoryAdded: () => void }>= ( { onCategoryAdded }) => {
     const [categoryName, setCategoryName] = useState('');
@@ -8,6 +8,14 @@ export const AddTaskCategory : React.FC<{ onCategoryAdded: () => void }>= ( { on
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (categoryName.length < 2) {
+        setMessage('Category name must be at least 2 characters long');
+        setIsMessageVisible(true);
+        setTimeout(() => {
+            setIsMessageVisible(false);
+        }, 2000);
+        return;
+    }
       try {
         const result = await addCategory(categoryName);
         setMessage(`Category "${result.description}" added successfully with ID ${result.id}!`);
