@@ -1,0 +1,307 @@
+
+/* צבעים לסטטוס */
+.First {
+    background-color: #FFF177;
+  }
+  .InitialConversation {
+    background-color: #71E29E;
+  }
+  .characterization {
+    background-color:  #FF6187;
+  }
+  .toSend {
+    background-color:  #FF7361;
+  }
+  .sent {
+    background-color:#FF4131;   
+  }
+  .Tracking {
+    background-color: #0084FF;  
+  }
+  .Invoicing{
+  background-color: #B659FF;
+  }
+  .Creation{
+  background-color:#FFA8A8;
+  }
+  .closed{
+  background-color: #E6E6E6;
+  }
+  .phone{
+      width: 10%; /* או כל ערך אחר שתרצה, לדוגמה 100% */
+  }
+  .email{
+    width: 15%;
+  }
+  
+  
+  body {
+    font-family: 'Ping HL', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F1F7FF; /* Set background color for the whole page */
+    color: #002046;
+  }
+  
+  /* Page container */
+  .page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; 
+    margin-bottom: 50px; 
+  }
+  
+  /* Lead management container */
+  .lead-management-container {
+    width: 90%;
+    background-color: #FFFFFF; /* White background for the container */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+  }
+  
+  /* Table container styles */
+  .table-container {
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+  }
+  
+  /* Table styles */
+  .table {
+    border-collapse: collapse; /* Collapse borders between cells */
+    table-layout: auto; /* Allow each column to have its own width based on content */
+    width: 100%;
+    border-spacing: 0; /* No spacing between cells */
+    border-top: 1px solid #D9D9D9; /* Border above the table */
+  }
+  
+  .table th,
+  .table td {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 12.01px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 55px;
+    padding: 0px;
+    color: #002046;
+    border: none; /* No border inside cells */
+    border-bottom: 1px solid #D9D9D9; /* Bottom border between rows */
+    vertical-align: middle; /* אנכי אמצעי */
+    word-break: break-word; /* למניעת קטיעת מילים */
+  }
+  
+  /* Header cell */
+  .table th {
+    color: #002046;
+    background-color: transparent; /* Transparent background for header */
+    position: relative;
+  }
+  
+  /* Border between header cells */
+  .table th:not(:last-child) {
+    border-right: 1px solid #D9D9D9;
+    padding: 8px;
+  }
+  
+  /* Status button */
+  .status-button {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 12.01px;
+    text-align: center;
+    width: 100%;
+    background-color: #002046;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .status-button:hover {
+    background-color: #004080;
+  }
+  
+  /* Circle button */
+  .circle-button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #002046;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .circle-button.clicked {
+    background-color: #002046;
+    border-color: #FFFFFF;
+  }
+  
+  /* עיצוב סלקט של סטטוס */
+  .table td select {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: inherit;
+    text-align: center;
+  }
+  
+  .status-select {
+    width: 100%;
+    height: 10%;
+    border: none;
+    background: none;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    appearance: none; /* הסרה של עיצוב דפדפן ברירת מחדל */
+    -webkit-appearance: none; /* הסרה של עיצוב דפדפן ברירת מחדל */
+    -moz-appearance: none; /* הסרה של עיצוב דפדפן ברירת מחדל */
+  }
+  
+  .status-select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* הוספת אפקט בעת המיקוד */
+  }
+  
+  .status-select option {
+    background: none;
+  }
+  
+  .status-select:focus {
+    animation: expand 0.3s ease-in-out;
+  }
+  
+  .lead-management-title {
+    font: 'Ping HL';
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 72.45px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #002046;
+  }
+  
+  #swal-input4 {
+    width: 63%;
+    margin-top: 7px;
+    height: 50px;
+  }
+  
+  .swal2-input {
+    margin: 5px;
+  }
+  
+  .select {
+    background-color: #ffffff;
+  }
+  
+  .swal2-select {
+    width: 100%;
+    padding: 0.75em;
+    font-size: 1em;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    margin-top: 0.5em;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  .swal2-select option {
+    background-color: white;
+  }
+  
+  .swal2-select .default-option {
+    background-color: lightgray;
+  }
+  
+  @keyframes expand {
+    0% {
+      transform: scaleY(0.9);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+  
+  /* עיצוב הערות */
+  .notes-container {
+    display: none; /* מוסתר במצב רגיל */
+    flex-direction: column;
+    padding: 10px;
+    border-top: 1px solid #D9D9D9;
+    background-color: #F9F9F9;
+  }
+  
+  .notes-container.show {
+    display: flex; /* מוצג כאשר יש מחלקת show */
+  }
+  
+  .note-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #D9D9D9;
+  }
+  
+  .note-item:last-child {
+    border-bottom: none;
+  }
+  
+  .notes-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .notes-button i {
+    margin-right: 5px;
+  }
+  
+  /* עיצוב נוסף לתאים */
+  .table td {
+    position: relative;
+  }
+  
+  .notes-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  /* אנימציה */
+  @keyframes slideDown {
+    from {
+      max-height: 0;
+    }
+    to {
+      max-height: 500px; /* ערך גובה מקסימלי */
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      max-height: 500px;
+    }
+    to {
+      max-height: 0;
+    }
+  }
+  
+  .notes-container.show {
+    animation: slideDown 0.3s ease forwards;
+  }
+  
+  .notes-container.hide {
+    animation: slideUp 0.3s ease forwards;
+  }
+  
