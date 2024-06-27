@@ -6,7 +6,7 @@ export const TaskCategories = () => {
     const [refreshCategories, setRefreshCategories] = useState(false);
 
     const handleCategoryAdded = () => {
-      setRefreshCategories(!refreshCategories); // משנה את ה-state כדי להפעיל רינדור מחדש
+      setRefreshCategories(!refreshCategories); 
     };
     return(
         <>

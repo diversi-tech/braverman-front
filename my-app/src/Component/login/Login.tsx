@@ -30,7 +30,6 @@ const Login = () => {
 
             navigate("/home");
 
-            debugger
 
           }
           else
