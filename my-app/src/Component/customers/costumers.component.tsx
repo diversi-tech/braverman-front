@@ -166,8 +166,8 @@
 
 import React, { useState, useEffect } from 'react';
 import ProjectDetails from "./projectCostumer.component";
-import { getAllCostumers } from "../api/costumer.api";
-import { Costumer } from "../model/costumer.model";
+import { getAllCostumers } from "../../api/costumer.api";
+import { Costumer } from "../../model/costumer.model";
 
 const ProjectsTable: React.FC = () => {
   const [projects, setProjects] = useState<Costumer[]>([]);
@@ -234,4 +234,3 @@ const ProjectsTable: React.FC = () => {
 };
 
 export default ProjectsTable;
-

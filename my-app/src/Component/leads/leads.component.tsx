@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-import { setUser } from '../Redux/userAction';
+import { setUser } from '../../Redux/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const leadsData = [
   { id: 1, name: 'ruti ', email: 'r583209640@gmail.com', status: 'lead' },
@@ -20,6 +21,8 @@ interface LeadsProps {
 }
 
 const Leads = () => {
+  const role = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
+  const navigate=useNavigate();
   const [leads, setLeads] = useState<Lead[]>(leadsData);
   const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
   const dispatch = useDispatch();
@@ -29,9 +32,14 @@ const Leads = () => {
       lead.id === id ? { ...lead, status: 'לקוח' } : lead
     ));
   };
-
+  useEffect(() => {
+    if (role !== "admin"&&role!=="worker") {
+        navigate("/not-found");
+    }
+}, [role, navigate]);
   return (
-    <TableContainer component={Paper}>
+    <>
+    {role!=="customer"&&<TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -39,7 +47,7 @@ const Leads = () => {
             <TableCell>שם</TableCell>
             <TableCell>מייל</TableCell>
             <TableCell>סטטוס</TableCell>
-            !{currentUserType === 'Manager' && <TableCell>שינוי סטטוס</TableCell>}
+            {currentUserType === 'admin' && <TableCell>שינוי סטטוס</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -65,8 +73,10 @@ const Leads = () => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>}
+    </>
   );
+  
 };
 
 export default Leads;
