@@ -1,6 +1,6 @@
 const initialState = {
   isAuthenticated: false,
-  currentUser: { UserEmail: '', UserPassword: '', UserType: '' },
+  currentUser: {UserEmail:'',UserPassword:'',UserId:'',UserTypeId:'',UserTypeName:'', UserFirstName: '', UserLastName: '' },
 };
 
 const userReducer = (state = initialState, action) => {
