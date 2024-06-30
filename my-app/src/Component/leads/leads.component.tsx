@@ -7,8 +7,8 @@ import { GrUpdate } from "react-icons/gr";
 import { addLead, convertToCustomer, getAllLeads, updateLeadChanges } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
-import { log } from 'console';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { log } from 'console';
 
 
 type NotesColumnProps = {
@@ -47,7 +47,6 @@ type NotesColumnProps = {
                 <div style={{ marginTop: '10px' }}>
                   <p><strong>Creator:</strong> {note.createdBy}</p>
                   <p><strong>Due Date:</strong> </p>
-                  {/* Add other note details here */}
                 </div>
               )}
             </li>
@@ -102,6 +101,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
     "הערות": '',
     "סטטוס":''
   });
+  
   const [filterInputsVisible, setFilterInputsVisible] = useState({
     "שם פרטי": false,
     "שם משפחה": false,
@@ -183,8 +183,8 @@ const [leads, setLeads] = useState<Lead[]>([]);
         '<input id="swal-input4" class="swal2-input" placeholder="אמייל" >'+
         '<input id="swal-input5" class="swal2-input" placeholder="מקור הליד" >'+
         '<input id="swal-input8" class="swal2-input" placeholder="שם העסק">'+
-        '<input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי">',     
-      focusConfirm: false,
+        '<textarea id="swal-input9" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
+        focusConfirm: false,
       showCancelButton: true,
 
       preConfirm: () => {
@@ -264,6 +264,10 @@ const [leads, setLeads] = useState<Lead[]>([]);
         lead.id === selectedLeadId ? { ...lead, status: "נסגר" }:lead
 
       ));
+      setModifiedLeads(modifiedLeads!.map((lead) =>
+        lead.id === selectedLeadId ? { ...lead, status: "נסגר" }:lead
+
+      ));
       setSelectedLeadId(null);
     }
     else
@@ -331,7 +335,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
           return lead.businessName.toLowerCase().includes(value.toLowerCase());
         case 'טקסט חופשי':
           return lead.freeText.toLowerCase().includes(value.toLowerCase());
-       // case 'הערות':
+   //   case 'הערות':
          // return lead.notes.toLowerCase().includes(value.toLowerCase());
         default:
           return true;
@@ -341,7 +345,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   //change Action
   const handleActionToPerformChange = (id: string, newValue: string) => {
-    
      const updatedLeads = modifiedLeads!.map((lead) =>
        lead.id === id ? { ...lead, freeText: newValue } : lead
      );
@@ -383,6 +386,8 @@ const [leads, setLeads] = useState<Lead[]>([]);
       }
 
       const handleEditLead =()=>{
+        console.log(currentUser);
+        
         const lead = leads.find((l) => l.id === selectedLeadId);
         if (!lead) {
           Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
@@ -397,9 +402,9 @@ const [leads, setLeads] = useState<Lead[]>([]);
                 <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
                 <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
                 <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
-                <input id="swal-input7" class="swal2-input" placeholder="Last Contacted Date" value="${convertDateTimeToDate(lead.lastContacted)}">
+                <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${convertDateTimeToDate(lead.lastContacted)}">
                 <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
-                <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
+                 <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                  <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
                   ${statusOptions.map ((status) => `<option value="${status}" ${lead.status === status ? 'selected' : ''}>${status}</option>`) }
                 </select>
@@ -445,7 +450,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
               lastContacted: lastContacted,
               businessName: businessName,
               freeText:freeText,
-              ///notes:Array<Notes>,
+              notes:lead.notes,
               status: status
             };
           }
@@ -586,7 +591,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
                 </button>
               </div>
             )}
-          {currentUserType === 'Manager' && selectedLeadId && (
+          { currentUser && selectedLeadId && (
               <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
                 <button className="convert-lead-button" onClick={handleEditLead} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}><GrUpdate />
                   <span className='add' style={{ fontSize: 15, color: '#636363' }}> עדכון ליד </span>
