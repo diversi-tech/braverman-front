@@ -44,5 +44,7 @@ export const updateUser=async(userId:string,newUser:User)=>
     return error;
     
   }
-}
+  }
+  export const LoginWithGoogle=async(credential:any)=>{
+  }
 

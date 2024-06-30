@@ -8,7 +8,6 @@ import { addLead, convertToCustomer, getAllLeads, updateLeadChanges } from '../.
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { log } from 'console';
 
 
 type NotesColumnProps = {
@@ -101,7 +100,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
     "הערות": '',
     "סטטוס":''
   });
-  
+
   const [filterInputsVisible, setFilterInputsVisible] = useState({
     "שם פרטי": false,
     "שם משפחה": false,
@@ -137,11 +136,21 @@ const [leads, setLeads] = useState<Lead[]>([]);
 
 
   //convert date
-  const convertDateTimeToDate = (date: Date) => {
-    if (typeof date === 'string') 
-      return date
-    return date.toLocaleDateString();
-  };
+  const convertDateTimeToDate = (date:Date) => {
+  if (typeof date === 'string') 
+    return date;
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // חודש מתחיל ב-0, לכן מוסיפים 1
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+};
+
+// const convertDateToDisplayFormat = (date:Date) => {
+//   const [year, month, day] = date.split('-');
+//   return `${day}/${month}/${year}`;
+// };
 
 
   const dispatch = useDispatch();
@@ -252,26 +261,76 @@ const [leads, setLeads] = useState<Lead[]>([]);
     });
   };
   
-  //convert to customer
-  const handleConvertLead =async () => {
-    debugger
-    const respnse=await convertToCustomer(selectedLeadId!)
-    console.log(respnse);
-    if(respnse.status==204){
-
-      Swal.fire('Success', 'הליד נהפך ללקוח', 'success');
-      setLeads(leads.map((lead) =>
-        lead.id === selectedLeadId ? { ...lead, status: "נסגר" }:lead
-
-      ));
-      setModifiedLeads(modifiedLeads!.map((lead) =>
-        lead.id === selectedLeadId ? { ...lead, status: "נסגר" }:lead
-
-      ));
-      setSelectedLeadId(null);
+  // פונקציה להמרת ליד ללקוח
+  const handleConvertLead = async () => {
+    const result = await Swal.fire({
+      title: 'האם אתה בטוח?',
+      text: "האם אתה בטוח שאתה רוצה להמיר את הליד ללקוח?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'כן!, המיר ללקוח',
+      cancelButtonText: 'ביטול',
+      customClass: {
+        confirmButton: 'button1',
+        cancelButton: 'button1'
+      }
+    });
+  
+    if (result.isConfirmed) {
+      debugger;
+      const response = await convertToCustomer(selectedLeadId!);
+      console.log(response);
+  
+      if (response.status === 200) {
+        const customer = response.data;
+  
+        Swal.fire({
+          title: 'עריכת לקוח',
+          html: `
+            <input id="swal-input1" class="swal2-input" value="${customer.firstName}" placeholder="שם פרטי">
+            <input id="swal-input2" class="swal2-input" value="${customer.lastName}" placeholder="שם משפחה">
+            <input id="swal-input3" class="swal2-input" value="${customer.email}" placeholder="אימייל">
+            <input id="swal-input4" class="swal2-input" value="${customer.businessName}" placeholder="שם העסק">
+            <input id="swal-input5" class="swal2-input" value="${customer.source}" placeholder="מקור הליד">
+            <div>
+            <select id="select_customer" class="swal2-input">
+              <option value="Active" ${customer.status === 'Active' ? 'selected' : ''}>Active</option>
+              <option value="Inactive" ${customer.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+              <option value="Done" ${customer.status === 'Done' ? 'selected' : ''}>Done</option>
+            </select>
+            </div>
+          `,
+          focusConfirm: false,
+          showCancelButton: true,
+          preConfirm: () => {
+            const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
+            const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
+            const email = (document.getElementById('swal-input3') as HTMLInputElement).value;
+            const businessName = (document.getElementById('swal-input4') as HTMLInputElement).value;
+            const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
+            const status = (document.getElementById('swal-input6') as HTMLSelectElement).value;
+            return { firstName, lastName, email, businessName, source, status };
+          }
+        }).then((editResult) => {
+          if (editResult.isConfirmed) {
+            const editedCustomer = editResult.value;
+            console.log('Edited Customer:', editedCustomer);
+          }
+        });
+  
+        setLeads(leads.map((lead) =>
+          lead.id === selectedLeadId ? { ...lead, status: "נסגר" } : lead
+        ));
+        setModifiedLeads(modifiedLeads!.map((lead) =>
+          lead.id === selectedLeadId ? { ...lead, status: "נסגר" } : lead
+        ));
+        setSelectedLeadId(null);
+      } else {
+        Swal.fire('Error', 'שגיאה לא ניתן להמיר ללקוח', 'error');
+      }
     }
-    else
-      Swal.fire('error', 'שגיאה לא ניתן להמיר ללקוח', 'error');
   };
   
 
@@ -576,7 +635,8 @@ const [leads, setLeads] = useState<Lead[]>([]);
             </tbody>
           </table>
         </div>
-        <td colSpan={10} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#636363' }}>
+        <td 
+        colSpan={10} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#636363' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div>
               <button className="add-lead-button" onClick={handleAddLead} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
