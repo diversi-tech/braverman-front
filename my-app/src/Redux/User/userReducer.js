@@ -1,10 +1,9 @@
 const initialState = {
   isAuthenticated: false,
-  currentUser: {UserId:'', UserEmail: '', UserPassword: '', UserType: '' },
+  currentUser: {UserEmail:'',UserPassword:'',UserId:'',UserTypeId:'',UserTypeName:'', UserFirstName: '', UserLastName: '' },
 };
 
 const userReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case 'SET_CURRENT_USER':
       return {
