@@ -7,10 +7,10 @@
     background-color: #71E29E;
   }
   .characterization {
-    background-color:  #FF6187;
+    background-color:  #FF7361;
   }
   .toSend {
-    background-color:  #FF7361;
+    background-color:  #FFB4AA;
   }
   .sent {
     background-color:#FF4131;   
@@ -22,7 +22,7 @@
   background-color: #B659FF;
   }
   .Creation{
-  background-color:#FFA8A8;
+  background-color: #FF1B6D;
   }
   .closed{
   background-color: #E6E6E6;
@@ -218,6 +218,14 @@
   
   .swal2-select .default-option {
     background-color: lightgray;
+  }
+  /* #swal-input9{
+    width: 63%;
+    height: 10%;
+  } */
+  #swal-input7{
+    width: 63%;
+
   }
   
   @keyframes expand {

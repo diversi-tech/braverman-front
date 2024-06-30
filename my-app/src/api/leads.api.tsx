@@ -3,11 +3,12 @@ import { Lead } from '../model/leads.model';
 
 
 const convertDateStringToDateTime = (dateString: string | Date): string => {
+  debugger
     if (dateString instanceof Date) {
       return dateString.toISOString();
     }
   
-    const [day, month, year] = dateString.split('.').map(Number);
+    const [day, month, year] = dateString.split('-').map(Number);
     const date = new Date(year, month - 1, day);
   
     if (isNaN(date.getTime())) {
