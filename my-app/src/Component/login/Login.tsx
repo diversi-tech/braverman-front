@@ -1,44 +1,44 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector,  } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUser } from '../../Redux/User/userAction';
-import { LoginUser } from '../../api/user.api';
-import { log } from 'console';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
+import { LoginUser } from '../../api/user.api';
 
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
-
-
-  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserId:string,UserTypeId:string,UserTypeName:string ,UserFirstName:string,UserLastName:string} } }) => state.user.currentUser);
-//   const currentUser = useSelector((state: { userReducer: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.userReducer.currentUser);
-   console.log(currentUser);
-  
   const dispatch = useDispatch();
-  const nav = useNavigate()
   const navigate = useNavigate();
 
-  const handleLogin  = async () => {
+  const handleLogin = async () => {
     if (UserEmail && UserPassword) {
       console.log('Logging in with', { UserEmail, UserPassword });
       const response = await LoginUser(UserEmail, UserPassword);
       if (response.status === 200) {
         const x = response;
-        console.log(x); 
-          console.log(x.data);
-          debugger
-        alert("success")
-        dispatch(setUser(UserEmail,UserPassword,x.data.id,x.data.userType.id,x.data.userType.description,x.data.firstName,x.data.lastName));
+        console.log(x);
+        console.log(x.data);
+        alert("success");
+        dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
-        
-            navigate("/home");
-        
-        }
-        else
-           alert("מייל וסיסמא לא קיימים ")     
+        navigate("/home");
+      } else {
+        alert("מייל וסיסמא לא קיימים");
+      }
     } else {
       alert('נא להכניס מייל וסיסמא');
     }
+  };
+
+  const clientId = '412263291390-jkirnvmjnk6qbera6qcdq3k6cotqk9o7.apps.googleusercontent.com';
+  const onSuccess = (googleUser:  any) => {
+    console.log('Login Success:', googleUser);
+    // You can handle the login success here, e.g., dispatching user data to Redux
+  };
+
+  const onFailure = () => {
+    console.log('Login Failed');
   };
 
   return (
@@ -66,7 +66,19 @@ const Login = () => {
         <button type="button" onClick={handleLogin}>
           התחברות
         </button>
-  </form>
+      </form>
+
+      <GoogleOAuthProvider clientId={clientId}>
+        <div>
+          <h2>התחברות באמצעות Google</h2>
+          <GoogleLogin
+            onSuccess={onSuccess}
+            onError={onFailure}
+            // buttonText="התחברות עם Google"
+            // Add additional props as needed
+          />
+        </div>
+      </GoogleOAuthProvider>
     </div>
   );
 };

@@ -13,9 +13,9 @@ const App = () => {
 
   useEffect(() => {
 
-
+     //sessionStorage.setItem('isAuthenticated','true')
     if (!sessionStorage.getItem("isAuthenticated")) {
-      navigate('/login');
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
 
