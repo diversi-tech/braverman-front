@@ -15,7 +15,7 @@ const App = () => {
 
 
     if (!sessionStorage.getItem("isAuthenticated")) {
-      navigate('/home');
+      navigate('/login');
     }
   }, [isAuthenticated, navigate]);
 

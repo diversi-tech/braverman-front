@@ -3,7 +3,13 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../Redux/User/userAction';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-import { LoginUser } from '../../api/user.api';
+import { LoginUser, LoginWithGoogle } from '../../api/user.api';
+import { jwtDecode } from "jwt-decode";
+import Swal from 'sweetalert2';
+
+interface GoogleCredentials {
+  email: string;
+}
 
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
@@ -34,7 +40,26 @@ const Login = () => {
   const clientId = '412263291390-jkirnvmjnk6qbera6qcdq3k6cotqk9o7.apps.googleusercontent.com';
   const onSuccess = (googleUser:  any) => {
     console.log('Login Success:', googleUser);
-    // You can handle the login success here, e.g., dispatching user data to Redux
+    const credentials = jwtDecode<GoogleCredentials>(googleUser.credential);
+    console.log(credentials);
+    LoginWithGoogle(credentials.email).then((response) => {
+      if (response.status === 200) {
+        const x = response;
+        console.log(x);
+        console.log(x.data);
+        Swal.fire('Success', 'התחברת בהצלחה', 'success');
+        dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
+        sessionStorage.setItem("userId", x.data.id);
+        navigate("/home");
+      } else {
+        Swal.showValidationMessage('מייל וסיסמא לא קיימים');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      Swal.fire("error", 'שגיאה בהתחברות', 'error');
+    });
+    
   };
 
   const onFailure = () => {
@@ -75,7 +100,6 @@ const Login = () => {
             onSuccess={onSuccess}
             onError={onFailure}
             // buttonText="התחברות עם Google"
-            // Add additional props as needed
           />
         </div>
       </GoogleOAuthProvider>
