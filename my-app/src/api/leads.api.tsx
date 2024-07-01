@@ -8,7 +8,7 @@ const convertDateStringToDateTime = (dateString: string | Date): string => {
       return dateString.toISOString();
     }
   
-    const [day, month, year] = dateString.split('-').map(Number);
+    const [day, month, year] = dateString.split('/').map(Number);
     const date = new Date(year, month - 1, day);
   
     if (isNaN(date.getTime())) {
@@ -21,7 +21,7 @@ const convertDateStringToDateTime = (dateString: string | Date): string => {
 //getAll
 export const getAllLeads = () => {
     debugger
-     return axios.get(`https://localhost:7119/api/Leads`);
+     return axios.get(`https://localhost:7119/api/Leads/GetOpenLeads`);
 }
 
 //addLead

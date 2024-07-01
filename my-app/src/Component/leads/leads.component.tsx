@@ -8,7 +8,7 @@ import { addLead, convertToCustomer, getAllLeads, updateLeadChanges } from '../.
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-
+import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
 
 type NotesColumnProps = {
   notes: Notes[];
@@ -114,46 +114,61 @@ const [leads, setLeads] = useState<Lead[]>([]);
     "הערות": false,
     "סטטוס": false
   });
-
+  const dispatch = useDispatch();
+  const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resAllLeads = await getAllLeads();
-        const data = resAllLeads.data.map((lead: any) => ({
-          ...lead,
-          createdDate: new Date(lead.createdDate),
-          lastContacted: new Date(lead.lastContacted),
-        }));
+        let data;
+        console.log(leadsState.allLeads);
+        if (leadsState.allLeads.length) {
+          data = leadsState.allLeads;
+        } else {
+          const resAllLeads = await getAllLeads();
+          data = resAllLeads.data.map((lead: any) => ({
+            ...lead,
+            createdDate: new Date(lead.createdDate),
+            lastContacted: lead.lastContacted ? new Date(lead.lastContacted) : null,
+          }));
+          dispatch(setAllLeads(data));
+        }
         setLeads(data);
-        setModifiedLeads(data)
-        setLeadsChanges(new Array(leads.length).fill(false))
+        setModifiedLeads(data);
+        setLeadsChanges(new Array(data.length).fill(false));
       } catch (error) {
         console.error('Error fetching leads:', error);
       }
     };
+  
     fetchData();
-  }, []);
-
-
+  }, [dispatch]);
+  
   //convert date
-  const convertDateTimeToDate = (date:Date) => {
+  const convertDateTimeToDate = (date:any) => {
   if (typeof date === 'string') 
-    return date;
-
+    if (date.includes('-')) {
+      date = new Date(date);
+    } else {
+      return date;
+    }
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // חודש מתחיל ב-0, לכן מוסיפים 1
+  const month = String(date.getMonth() + 1).padStart(2, '0'); 
   const day = String(date.getDate()).padStart(2, '0');
 
+  return `${day}/${month}/${year}`;
+};
+
+
+
+
+const formatDateForInput = (date:any) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0'); 
+  const day = String(d.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
 
-// const convertDateToDisplayFormat = (date:Date) => {
-//   const [year, month, day] = date.split('-');
-//   return `${day}/${month}/${year}`;
-// };
-
-
-  const dispatch = useDispatch();
   const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
   const currentUserType = 'Manager';
     
@@ -248,7 +263,8 @@ const [leads, setLeads] = useState<Lead[]>([]);
         newLead.createdDate = new Date(newLead.createdDate);
         newLead.lastContacted = new Date(newLead.lastContacted);
         setModifiedLeads([...modifiedLeads!, newLead]);
-        setLeads([...leads, newLead]);  
+        setLeads([...leads, newLead]);
+        dispatch(addLead2(newLead))  
         Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
       }
 
@@ -320,13 +336,10 @@ const [leads, setLeads] = useState<Lead[]>([]);
           }
         });
   
-        setLeads(leads.map((lead) =>
-          lead.id === selectedLeadId ? { ...lead, status: "נסגר" } : lead
-        ));
-        setModifiedLeads(modifiedLeads!.map((lead) =>
-          lead.id === selectedLeadId ? { ...lead, status: "נסגר" } : lead
-        ));
+        setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
+        setModifiedLeads(modifiedLeads!.filter((lead) => lead.id !== selectedLeadId));
         setSelectedLeadId(null);
+        dispatch(deleteLead(selectedLeadId!));
       } else {
         Swal.fire('Error', 'שגיאה לא ניתן להמיר ללקוח', 'error');
       }
@@ -461,7 +474,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
                 <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
                 <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
                 <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
-                <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${convertDateTimeToDate(lead.lastContacted)}">
+                <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
                 <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                  <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
@@ -506,7 +519,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
               email: email,
               source: source,
               createdDate: lead.createdDate,
-              lastContacted: lastContacted,
+              lastContacted: convertDateTimeToDate(lastContacted),
               businessName: businessName,
               freeText:freeText,
               notes:lead.notes,
