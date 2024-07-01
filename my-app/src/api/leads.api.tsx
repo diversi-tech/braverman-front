@@ -47,3 +47,9 @@ export const updateLeadChanges = async (lead: Lead, id: string) => {
   console.log(leadToUpdate);
   return await axios.put(`https://localhost:7119/api/Leads/${id}`, leadToUpdate);
 }  
+
+//filterStatus
+export const filterByStatus = async (status: string) => {
+    debugger
+    return await axios.get(`https://localhost:7119/api/Leads/FilterByStatus/?status=${encodeURIComponent(status)}`);
+  }

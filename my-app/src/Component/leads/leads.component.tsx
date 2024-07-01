@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import './leads.css';
 import { HiChevronDown ,HiSearch } from "react-icons/hi";
 import { GrUpdate } from "react-icons/gr";
-import { addLead, convertToCustomer, getAllLeads, updateLeadChanges } from '../../api/leads.api';
+import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -157,7 +157,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
 
   return `${day}/${month}/${year}`;
 };
-
 
 
 
@@ -372,11 +371,23 @@ const formatDateForInput = (date:any) => {
     }
   };
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>, key: keyof typeof filters) => {
-     debugger
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
     setFilters({ ...filters, [key]: e.target.value });
-  };
+};
 
+ const filterStatus =(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+  console.log(e.target.value);
+   filterByStatus(e.target.value).then
+   ((response) => {
+     if (response.status === 200) {
+      setFilters({ ...filters, [key]: e.target.value }); 
+      console.log(response.data);
+     }
+   })
+   .catch((error) => {  
+     console.log(error);
+   });
+ }
   const toggleFilterInput = (key: keyof typeof filterInputsVisible) => {
     setFilterInputsVisible({ ...filterInputsVisible, [key]: !filterInputsVisible[key] });
   };
@@ -396,7 +407,7 @@ const formatDateForInput = (date:any) => {
         case 'טלפון':
           return lead.phone.toLowerCase().includes(value.toLowerCase());
         case 'סטטוס':
-          return lead.status.toLowerCase().includes(value.toLowerCase());
+          return value === '' || lead.status.toLowerCase() === value.toLowerCase();
         case 'מקור הליד':
           return lead.source.toLowerCase().includes(value.toLowerCase());
         case 'תאריך יצירת הליד':
@@ -586,7 +597,19 @@ const formatDateForInput = (date:any) => {
                     </button>
                     </div>
                     <div style={{ display: "flex" }}>
-                      {filterInputsVisible[col] && (
+                    {filterInputsVisible[col] && (
+                    col === 'סטטוס' ? (
+                    <select
+                    value={filters[col]}
+                    onChange={(e) => filterStatus(e, col)}
+                    style={{ width: "100%" }}>
+                    {statusOptions.map(option => (
+                    <option key={option} value={option}>
+                    {option}
+                    </option>
+                    ))}
+                    </select>
+                    ) : 
                         <input
                           type="text"
                           value={filters[col]}
