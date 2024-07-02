@@ -1,5 +1,5 @@
 #username {
-    top: 37%;
+    top: 39%;
     bottom: 54.37%;
     border: none;
 
@@ -8,7 +8,7 @@
 .textBox {
     position: absolute;
     width: 600px;
-    height: 60px;
+    height: 55px;
     left: calc(50% - 779px/2 + 70px);
     background: #F1F7FF;
     border-radius: 15px;
@@ -40,7 +40,7 @@ input::placeholder::placeholder {
 
 #submit {
     left: calc(50% - 779px/2 + 70px);
-    top: 62%;
+    top: 60%;
     bottom: 32.12%;
 }
 
@@ -50,7 +50,7 @@ input::placeholder::placeholder {
     width: 81px;
     height: 28px;
     left: calc(50% - 81px/2 + 20.5px);
-    top: 27%;
+    top: 18%;
     z-index: 2;
     font-family: 'tutorial';
     font-style: normal;
@@ -66,7 +66,7 @@ input::placeholder::placeholder {
     position: absolute;
     width: 300px;
     height: 60px;
-    left: calc(50% - 350px/2);
+    left: calc(50% - 340px/2);
     top: 150px;
     font-family: 'tutorial';
     font-style: normal;
