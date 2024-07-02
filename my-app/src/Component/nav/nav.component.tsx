@@ -4,14 +4,31 @@ import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from "../../assets/images/logo.png"
 
+
+
 const Nav = () => {
   const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
+  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserId:string,UserTypeId:string,UserTypeName:string ,UserFirstName:string,UserLastName:string} } }) => state.user.currentUser);
+
   const navigate = useNavigate();
   const location = useLocation();
 
+  const getGreetingMessage = () => {
+    const hours = new Date().getHours();
+    let greeting;
+    if (hours < 12) {
+      greeting = 'בוקר טוב';
+    } else if (hours < 18) {
+      greeting = 'צהריים טובים';
+    } else {
+      greeting = 'ערב טוב';
+    }
+  
+    return `${currentUser.UserFirstName} ${currentUser.UserLastName}, ${greeting}:)`;
+  }
   useEffect(() => {
-    if (currentUserType === "customer")
-      navigate('/not-found');
+    // if (currentUserType === "customer")
+    //   navigate('/not-found');
   }, [currentUserType, navigate]);
   return (
     <>
@@ -20,10 +37,17 @@ const Nav = () => {
       <header>
         <nav className='nav'>
           <ul className='nav-list'>
-            <li className={`nav-item ${location.pathname.includes('/dashboard' )? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li>
+         
+           {currentUser.UserTypeName === "customer" ? (
+        <p>{ getGreetingMessage()}</p>
+      ) : (
+        <p>הזן פרטי גישה כדי להתחבר למערכת</p>
+      )}
+            {currentUserType === "admin" && <>
+              <li className={`nav-item ${location.pathname.includes('/dashboard' )? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li>
             <li className={`nav-item ${location.pathname.includes( '/leads' )? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
             <li className={`nav-item ${location.pathname.includes('/customers' )? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
-            {currentUserType === "admin" && <>
+
               <li className={`nav-item ${location.pathname.includes('/staff') ? 'active' : ''}`}><Link to={'staff'}>צוות</Link></li>
               <li className={`nav-item ${location.pathname.includes( '/tasks' )? 'active' : ''}`}><Link to={'tasks'}>משימות</Link></li>
               <li className={`nav-item ${location.pathname.includes( '/bookkeeping' )? 'active' : ''}`}><Link to={'bookkeeping'}>הנה"ח</Link></li>

@@ -32,12 +32,12 @@ const Login = () => {
         dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
 
-        navigate("/home");
+            // navigate("/home");
+        
+        }
       }
       else
         alert("מייל וסיסמא לא קיימים ")
-    } else {
-      alert('נא להכניס מייל וסיסמא');
     }
   };
   const linkWhithGogle = () => { }
