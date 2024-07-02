@@ -74,7 +74,6 @@ const statusOptions = [
   'שיחת מעקב',
   'הוצאת חשבונית',
   'העברה להקמה בפועל',
-  'נסגר'
 ];
 
 const Leads: React.FC = () => {
@@ -376,6 +375,7 @@ const formatDateForInput = (date:any) => {
 };
 
  const filterStatus =(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+  setFilters({ ...filters, [key]: e.target.value });
   console.log(e.target.value);
    filterByStatus(e.target.value).then
    ((response) => {
@@ -597,18 +597,20 @@ const formatDateForInput = (date:any) => {
                     </button>
                     </div>
                     <div style={{ display: "flex" }}>
+                      
                     {filterInputsVisible[col] && (
-                    col === 'סטטוס' ? (
-                    <select
-                    value={filters[col]}
-                    onChange={(e) => filterStatus(e, col)}
-                    style={{ width: "100%" }}>
-                    {statusOptions.map(option => (
-                    <option key={option} value={option}>
-                    {option}
-                    </option>
-                    ))}
-                    </select>
+                   col === 'סטטוס' ? (
+                  <select
+                 value={filters[col]}
+                 onChange={(e) => filterStatus(e, col)}
+                style={{ width: "100%" }}>
+               <option value="">הכל</option> 
+              {statusOptions.map(option => (
+               <option key={option} value={option}>
+               {option}
+              </option>
+             ))}
+               </select>
                     ) : 
                         <input
                           type="text"
