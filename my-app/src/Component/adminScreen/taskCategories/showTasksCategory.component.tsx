@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react"
-import { TaskCategory } from "../../../model/taskCategory.model"
+import { useEffect, useState } from "react";
+import { TaskCategory } from "../../../model/taskCategory.model";
 import { getTaskCategories } from "../../../api/taskCategory.api";
 
-export const ShowTasksCategory : React.FC<{ refresh: boolean }> = ({ refresh }) => {
-
-    const [tasksCategories, setTasksCategories] = useState<TaskCategory[]>([])
+export const ShowTasksCategory: React.FC<{ refresh: boolean }> = ({ refresh }) => {
+    const [tasksCategories, setTasksCategories] = useState<TaskCategory[]>([]);
 
     useEffect(() => {
         async function getData() {
             try {
-               const data = await getTaskCategories();
+                const data = await getTaskCategories();
                 setTasksCategories(data);
-            }
-            catch (error) {
+             
+            } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
@@ -20,15 +19,23 @@ export const ShowTasksCategory : React.FC<{ refresh: boolean }> = ({ refresh }) 
     }, [refresh]);
 
     return (
-        <>
-<div>
-      <h1>Task Categories</h1>
-      <ul>
-        {tasksCategories.map((category) => (
-          <li key={category.id}>{category.description}</li>
-        ))}
-      </ul>
-    </div>
-        </>
-    )
+        <div>
+            <h1>Task Categories</h1>
+            <ul>
+                {tasksCategories.map((category,index) => (
+                    <li key={index}>
+                        <div>
+                            <strong>Name:</strong> {category.categoryName}
+                        </div>
+                        <div>
+                            <strong>Weeks for Execution:</strong> {category.weeksForExecution}
+                        </div>
+                        {category.stageId!==null&&<div>
+                            <strong>Stage Id:</strong> {category.stageId }
+                        </div>}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
