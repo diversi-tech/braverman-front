@@ -11,6 +11,7 @@ export const LoginUser =(userEmail:string,userPassword:string)=>{
     console.log(userEmail,userPassword);
 return axios.post(`https://localhost:7119/api/User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
 }
+
 export const getUsers = async () => {
     try {
       const response = await axios.get('https://localhost:7119/api/User/GetAll');
@@ -44,5 +45,11 @@ export const updateUser=async(userId:string,newUser:User)=>
     return error;
     
   }
+  }
+  export const LoginWithGoogle=async(userEmail:string)=>{
+    debugger
+    console.log(userEmail);
+    return axios.post(`https://localhost:7119/api/User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
 }
+  
 
