@@ -22,6 +22,7 @@ import Login from './Component/login/Login';
 import Nav from './Component/nav/nav.component';
 import { NotFound } from './Component/notFound/notFound.component';
 import ProjectsTable from './Component/customers/costumers.component';
+import {ProjectStatus} from './Component/projectStatus/projectStatus.component';
 
 
 const router = createBrowserRouter([
@@ -34,10 +35,10 @@ const router = createBrowserRouter([
         path:'Login',
         Component:Login
       },
-      {
-        path:'home',
-        Component:Nav,
-        children:[
+      // {
+      //   path:'home',
+      //   Component:Nav,
+        // children:[
           {
             path: 'dashboard',
             Component: Dashboard,
@@ -57,17 +58,21 @@ const router = createBrowserRouter([
             path: 'bookkeeping',
             Component: Bookkeeping,
           },
-        ]
-      },
+          {
+            path: 'projectStatus',
+            Component: ProjectStatus,
+          }
+        ]},
+      // },
      {
         path:'not-found',
         Component:NotFound
       }
       
     
-        
- ] }]
       
+ ] 
+  
                         
 );
 
