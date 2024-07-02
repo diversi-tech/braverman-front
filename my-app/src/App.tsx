@@ -14,17 +14,17 @@ const App = () => {
 
   useEffect(() => {
 
-
-    if (!sessionStorage.getItem("isAuthenticated")) {
+    
+    if (!sessionStorage.getItem("userId")) {
       navigate('/Login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
  
 
   return (
     <>
-    <Nav></Nav>
+     <Nav></Nav>
       {/* <Outlet /> */}
     
       <Outlet />
