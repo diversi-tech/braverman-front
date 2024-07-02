@@ -1,5 +1,5 @@
 
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 import {Task} from '../../model/task.model'
 import React from 'react';
 export const Tasks = () => {
@@ -7,7 +7,7 @@ export const Tasks = () => {
         <p>tasks</p>)
 }
 
-const task = () => {
+const TTask = () => {
     const currentUserType = useSelector((state: {
         user:
         { currentUser: { UserEmail: string, UserPassword: string, UserType: string } }
