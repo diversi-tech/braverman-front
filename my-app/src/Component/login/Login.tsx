@@ -40,7 +40,7 @@ const Login = () => {
       else
         alert("מייל וסיסמא לא קיימים ")
     }
-  };
+
   const linkWhithGogle = () => { }
   return (
     <div id='login'>
