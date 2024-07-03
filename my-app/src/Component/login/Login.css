@@ -1,12 +1,17 @@
 #username {
     top: 39%;
+    top: 39%;
     bottom: 54.37%;
+    border: none;
     border: none;
 
 }
 
 .textBox {
     position: absolute;
+    width: 600px;
+    height: 55px;
+    left: calc(50% - 779px/2 + 70px);
     width: 600px;
     height: 55px;
     left: calc(50% - 779px/2 + 70px);
@@ -28,17 +33,25 @@ input::placeholder::placeholder {
     left: calc(50% - 277px/2 + 235.5px);
     top: 378px;
 
+
 }
+
 
 #password {
     top:50%;
+    top:50%;
     bottom: 43.35%;
+    border: none;
+    
+    
     border: none;
     
     
 }
 
 #submit {
+    left: calc(50% - 779px/2 + 70px);
+    top: 60%;
     left: calc(50% - 779px/2 + 70px);
     top: 60%;
     bottom: 32.12%;
@@ -50,6 +63,7 @@ input::placeholder::placeholder {
     height: 28px;
     left: calc(50% - 81px/2 + 20.5px);
     top: 18%;
+    top: 18%;
     z-index: 2;
     font-family: 'tutorial';
     font-style: normal;
@@ -58,12 +72,15 @@ input::placeholder::placeholder {
     line-height: 36px;
     text-align: center;
    
+   
 
 }
 #p {
     position: absolute;
     width: 300px;
+    width: 300px;
     height: 60px;
+    left: calc(50% - 340px/2);
     left: calc(50% - 340px/2);
     top: 150px;
     font-family: 'tutorial';
@@ -74,6 +91,7 @@ input::placeholder::placeholder {
     text-align: center;
     color: #002046;
 }
+
 
 .ok {
     position: absolute;
@@ -86,8 +104,11 @@ input::placeholder::placeholder {
     color: #002046;
 }
 
+
 #linkq {
     position: absolute;
+    width: 400px;
+    left: calc(50% - 450px/2);
     width: 400px;
     left: calc(50% - 450px/2);
     top: 75.68%;
@@ -95,12 +116,15 @@ input::placeholder::placeholder {
     background: #F1F7FF;
     border-radius: 15px;
     border: none;
+    border: none;
 }
+
 
 #q {
     position: absolute;
     width: 200px;
     height: 60px;
+    left: calc(50% - 277px/2 - 1px);
     left: calc(50% - 277px/2 - 1px);
     top: 5px;
     font-family: 'tutorial';
