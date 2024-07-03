@@ -14,7 +14,7 @@ const initialState = {
         case 'DELETE_LEAD':
             return {
               ...state,
-              allLeads: state.leads.filter(lead => lead.id !== action.payload),
+              allLeads: state.allLeads.filter(lead => lead.id !== action.payload),
             };
         case 'UPDATE_LEAD':
             return {
