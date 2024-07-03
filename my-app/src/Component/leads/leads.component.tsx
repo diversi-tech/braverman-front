@@ -4,12 +4,14 @@ import Swal from 'sweetalert2';
 import './leads.css';
 import { HiChevronDown ,HiSearch } from "react-icons/hi";
 import { GrUpdate } from "react-icons/gr";
-import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus } from '../../api/leads.api';
+import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
-
+import {Project} from '../../model/project.model'
+import {ProjectStatus} from '../../enum/ProjectStatus.enum'
+import {ProjectBalanceStatus} from '../../enum/projectBalanceStatus.enum'
 type NotesColumnProps = {
   notes: Notes[];
 };
@@ -81,11 +83,14 @@ const Leads: React.FC = () => {
 const [leads, setLeads] = useState<Lead[]>([]);
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-
+ //עמודים
+  const [page, setPage] = useState(0);
+  const leadsPerPage = 6;
+  const totalPages = Math.ceil(leads.length / leadsPerPage);
   // מערך לאחסון סטטוס השינויים של הלידים
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
   // מערך לאחסון האובייקטים של הלידים ששונו
-  const [modifiedLeads, setModifiedLeads] = useState<Lead[]>();
+  // const [modifiedLeads, setModifiedLeads] = useState<Lead[]>();
   const [filters, setFilters] = useState({
     "שם פרטי": '',
     "שם משפחה": '',
@@ -132,7 +137,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
           dispatch(setAllLeads(data));
         }
         setLeads(data);
-        setModifiedLeads(data);
+        // setModifiedLeads(data);
         setLeadsChanges(new Array(data.length).fill(false));
       } catch (error) {
         console.error('Error fetching leads:', error);
@@ -172,12 +177,12 @@ const formatDateForInput = (date:any) => {
     
 
   const handleStatus2Change = (id: string, newStatus2: string) => {
-    const updatedLeads = modifiedLeads!.map((lead) =>
+    const updatedLeads = leads!.map((lead) =>
       lead.id === id ? { ...lead, status: newStatus2 } : lead
     );
-    setModifiedLeads(updatedLeads);
+    setLeads(updatedLeads);
 
-    const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
+    const updatedIndex = leads!.findIndex((l) => l.id === id);
            if (updatedIndex !== -1) {
              const updatedChanges = [...leadsChanges!]; 
              updatedChanges[updatedIndex] = true; 
@@ -260,7 +265,7 @@ const formatDateForInput = (date:any) => {
         const newLead = response.data;
         newLead.createdDate = new Date(newLead.createdDate);
         newLead.lastContacted = new Date(newLead.lastContacted);
-        setModifiedLeads([...modifiedLeads!, newLead]);
+        setLeads([...leads!, newLead]);
         setLeads([...leads, newLead]);
         dispatch(addLead2(newLead))  
         Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
@@ -276,15 +281,15 @@ const formatDateForInput = (date:any) => {
   };
   
   // פונקציה להמרת ליד ללקוח
-  const handleConvertLead = async () => {
+  const handleConvertLeadToProject = async () => {
     const result = await Swal.fire({
       title: 'האם אתה בטוח?',
-      text: "האם אתה בטוח שאתה רוצה להמיר את הליד ללקוח?",
+      text: "האם אתה בטוח שאתה רוצה להמיר את הליד לפרויקט?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'כן!, המיר ללקוח',
+      confirmButtonText: 'כן!, המיר לפרויקט',
       cancelButtonText: 'ביטול',
       customClass: {
         confirmButton: 'button1',
@@ -293,53 +298,92 @@ const formatDateForInput = (date:any) => {
     });
   
     if (result.isConfirmed) {
-      debugger;
-      const response = await convertToCustomer(selectedLeadId!);
-      console.log(response);
+      const lead = leads.find(lead => lead.id === selectedLeadId);
   
-      if (response.status === 200) {
-        const customer = response.data;
+      if (!lead) {
+        Swal.fire('Error', 'לא נמצא ליד להמרה', 'error');
+        return;
+      }
   
-        Swal.fire({
-          title: 'עריכת לקוח',
-          html: `
-            <input id="swal-input1" class="swal2-input" value="${customer.firstName}" placeholder="שם פרטי">
-            <input id="swal-input2" class="swal2-input" value="${customer.lastName}" placeholder="שם משפחה">
-            <input id="swal-input3" class="swal2-input" value="${customer.email}" placeholder="אימייל">
-            <input id="swal-input4" class="swal2-input" value="${customer.businessName}" placeholder="שם העסק">
-            <input id="swal-input5" class="swal2-input" value="${customer.source}" placeholder="מקור הליד">
-            <div>
-            <select id="select_customer" class="swal2-input">
-              <option value="Active" ${customer.status === 'Active' ? 'selected' : ''}>Active</option>
-              <option value="Inactive" ${customer.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
-              <option value="Done" ${customer.status === 'Done' ? 'selected' : ''}>Done</option>
-            </select>
-            </div>
-          `,
-          focusConfirm: false,
-          showCancelButton: true,
-          preConfirm: () => {
-            const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-            const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-            const email = (document.getElementById('swal-input3') as HTMLInputElement).value;
-            const businessName = (document.getElementById('swal-input4') as HTMLInputElement).value;
-            const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-            const status = (document.getElementById('swal-input6') as HTMLSelectElement).value;
-            return { firstName, lastName, email, businessName, source, status };
+      const { firstName, lastName, email, businessName, source, status } = lead;
+  
+      const { value: formValues } = await Swal.fire({
+        title: 'יצירת פרויקט חדש',
+        html: `
+          <input id="swal-input1" class="swal2-input" value="${firstName}" placeholder="שם פרטי">
+          <input id="swal-input2" class="swal2-input" value="${lastName}" placeholder="שם משפחה">
+          <input id="swal-input3" class="swal2-input" value="${email}" placeholder="אימייל">
+          <input id="swal-input4" class="swal2-input" value="${businessName}" placeholder="שם העסק">
+          <input id="swal-input5" class="swal2-input" value="${source}" placeholder="מקור הליד">
+          <input id="swal-input6" class="swal2-input" placeholder="מחיר כולל">
+          <input id="swal-input7" class="swal2-input" placeholder="מחיר ששולם">
+          <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
+          <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
+          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        preConfirm: () => {
+          return {
+            firstName: (document.getElementById('swal-input1') as HTMLInputElement).value,
+            lastName: (document.getElementById('swal-input2') as HTMLInputElement).value,
+            email: (document.getElementById('swal-input3') as HTMLInputElement).value,
+            businessName: (document.getElementById('swal-input4') as HTMLInputElement).value,
+            source: (document.getElementById('swal-input5') as HTMLInputElement).value,
+            totalPrice: parseFloat((document.getElementById('swal-input6') as HTMLInputElement).value),
+            pricePaid: parseFloat((document.getElementById('swal-input7') as HTMLInputElement).value),
+            urlDrive: (document.getElementById('swal-input8') as HTMLInputElement).value,
+            urlFigma: (document.getElementById('swal-input9') as HTMLInputElement).value ,
+            UrlWordpress: (document.getElementById('swal-input10') as HTMLInputElement).value
+
+          };
+        }
+      });
+  
+      if (formValues) {
+        const project: Project = {
+          ProjectId: '',
+          FirstName: formValues.firstName,
+          LastName: formValues.lastName,
+          BusinessName: formValues.businessName,
+          Email: formValues.email,
+          Source: formValues.source,
+          Status:ProjectStatus.TODO,
+          EndDate: new Date(),  
+          BalanceStatus: ProjectBalanceStatus.DUE,
+          CreatedAt: new Date(),
+          UpdatedAt: new Date(),
+          TotalPrice: formValues.totalPrice,
+          PricePaid: formValues.pricePaid,
+          _balance: formValues.totalPrice - formValues.pricePaid,
+          Tasks: [],
+          Credentials: [],
+          UrlWordpress: formValues.UrlWordpress,
+          UrlDrive: formValues.urlDrive,
+          UrlFigma: formValues.urlFigma
+        };
+  
+        try {
+          debugger
+          console.log(project);
+          
+          const response = await convertToProject(project);
+          if (response.data.id) {
+            // const newProject = await response.json();
+            console.log('New Project Created:', response.data);
+  
+            setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
+            setSelectedLeadId(null);
+            dispatch(deleteLead(selectedLeadId!));
+  
+            Swal.fire('Success', 'הפרויקט נוצר בהצלחה!', 'success');
+          } else {
+            throw new Error('Failed to create project');
           }
-        }).then((editResult) => {
-          if (editResult.isConfirmed) {
-            const editedCustomer = editResult.value;
-            console.log('Edited Customer:', editedCustomer);
-          }
-        });
-  
-        setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
-        setModifiedLeads(modifiedLeads!.filter((lead) => lead.id !== selectedLeadId));
-        setSelectedLeadId(null);
-        dispatch(deleteLead(selectedLeadId!));
-      } else {
-        Swal.fire('Error', 'שגיאה לא ניתן להמיר ללקוח', 'error');
+        } catch (error) {
+          console.error('Error creating project:', error);
+          Swal.fire('Error', 'שגיאה ביצירת הפרויקט', 'error');
+        }
       }
     }
   };
@@ -428,12 +472,12 @@ const formatDateForInput = (date:any) => {
   
   //change Action
   const handleActionToPerformChange = (id: string, newValue: string) => {
-     const updatedLeads = modifiedLeads!.map((lead) =>
+     const updatedLeads = leads!.map((lead) =>
        lead.id === id ? { ...lead, freeText: newValue } : lead
      );
-     setModifiedLeads(updatedLeads);
+     setLeads(updatedLeads);
 
-     const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
+     const updatedIndex = leads!.findIndex((l) => l.id === id);
             if (updatedIndex !== -1) {
               const updatedChanges = [...leadsChanges!]; 
               updatedChanges[updatedIndex] = true; 
@@ -541,10 +585,10 @@ const formatDateForInput = (date:any) => {
           debugger
           if (result.isConfirmed && result.value) {
             const updatedLead = result.value;
-            const updatedModifiedLeads = modifiedLeads!.map((l) => (l.id === lead.id ? updatedLead : l));
-            setModifiedLeads(updatedModifiedLeads);
+            const updatedModifiedLeads = leads!.map((l) => (l.id === lead.id ? updatedLead : l));
+            setLeads(updatedModifiedLeads);
       
-            const updatedIndex = modifiedLeads!.findIndex((l) => l.id === lead.id);
+            const updatedIndex = leads!.findIndex((l) => l.id === lead.id);
             if (updatedIndex !== -1) {
               const updatedChanges = [...leadsChanges!]; 
               updatedChanges[updatedIndex] = true;
@@ -561,16 +605,16 @@ const formatDateForInput = (date:any) => {
       try {
         for (let i = 0; i < leadsChanges!.length; i++) {
           if (leadsChanges![i]) {
-            const updatedLead = modifiedLeads![i];
+            const updatedLead = leads![i];
             const response = await updateLeadChanges(updatedLead,updatedLead.id);
             console.log(response);      
           }
         }
         Swal.fire('Success', 'שמירה בוצעה בהצלחה', 'success');
         setLeadsChanges(new Array<boolean>(leads.length).fill(false)); 
-        console.log(modifiedLeads);
+        console.log(leads);
         
-        setLeads(modifiedLeads!)
+        setLeads(leads!)
       } catch (error) {
         console.error('Error saving leads:', error);
         Swal.fire('Error', 'השמירה נכשלה', 'error');
@@ -684,7 +728,7 @@ const formatDateForInput = (date:any) => {
             </div>
             {currentUserType === 'Manager' && selectedLeadId && (
               <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center' }}>
-                <button className="convert-lead-button" onClick={handleConvertLead} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}>→
+                <button className="convert-lead-button" onClick={handleConvertLeadToProject} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}>→
                   <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
                 </button>
               </div>
