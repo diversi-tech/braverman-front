@@ -12,6 +12,7 @@ import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
 import {Project} from '../../model/project.model'
 import { getAllEnumFromServer } from '../../api/enum.api';
 import { Enum } from '../../model/enum.model';
+import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
 type NotesColumnProps = {
   notes: Notes[];
 };
@@ -67,17 +68,6 @@ type NotesColumnProps = {
 //   { Id: 7, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לא טופל', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() }];
 
 
-const statusOptions = [
-  'ליד חדש',
-  'שיחה ראשונית'
-  ,'פגישת אפיון',
-  'שליחת הצעת מחיר',
-  'נשלחה הצעת מחיר',
-  'שיחת מעקב',
-  'הוצאת חשבונית',
-  'העברה להקמה בפועל',
-];
-
 const Leads: React.FC = () => {
 
 const [leads, setLeads] = useState<Lead[]>([]);
@@ -85,6 +75,8 @@ const [leads, setLeads] = useState<Lead[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusOptions2, setStatusOptions2] = useState<Enum[]>([]);
   const [balanceStatusOptions, setBalanceStatusOptions] = useState<Enum[]>([]);
+  const [statusOptions, setStatusOptions] = useState<Enum[]>([]);
+
  //עמודים
   const [page, setPage] = useState(0);
   const leadsPerPage = 6;
@@ -122,6 +114,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
   });
   const dispatch = useDispatch();
   const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
+  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead.allStatusLead);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -147,7 +140,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
     };
     const fetchEnums = async () => {
       try {
-        debugger
         const statusEnums = await getAllEnumFromServer(3); 
         const balanceStatusEnums = await getAllEnumFromServer(2); 
        console.log(statusEnums);
@@ -160,7 +152,28 @@ const [leads, setLeads] = useState<Lead[]>([]);
         console.error('Error fetching enums:', error);
       }
     };
-  fetchEnums(); fetchData();
+
+    const fetchStatusEnums = async () => {
+      debugger
+      try {
+        let data;
+        console.log(leadStatus.allStatusLead);
+        if (leadsState.allLeads.length) {
+          data = leadsState.allLeads;
+        } else {
+          const resAllLeads = await getAllEnumFromServer(5);
+          dispatch(setAllStatusLeads(resAllLeads));
+          debugger
+          setAllStatusLeads(resAllLeads);
+
+        }
+        debugger
+        console.log(leadStatus.allStatusLead);
+      } catch (error) {
+        console.error('Error fetching leads:', error);
+      }
+    };
+    fetchStatusEnums();fetchEnums(); fetchData();
   }, [dispatch]);
   
   //convert date
@@ -336,19 +349,19 @@ const formatDateForInput = (date:any) => {
           <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
           <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
           <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
-          <select id="swal-input11" class="swal2-input">
-            ${statusOptions2.map(
-              (status) =>
-                `<option value="${status.key}">${status.value}</option>`
-            ).join('')}
-          </select>
-          <select id="swal-input12" class="swal2-input">
-            ${balanceStatusOptions.map(
-              (balanceStatus) =>
-                `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
-            ).join('')}
-          </select>
         `,
+        // <select id="swal-input11" class="swal2-input">
+        //     ${statusOptions2.map(
+        //       (status) =>
+        //         `<option value="${status.key}">${status.value}</option>`
+        //     ).join('')}
+        //   </select>
+        //   <select id="swal-input12" class="swal2-input">
+        //     ${balanceStatusOptions.map(
+        //       (balanceStatus) =>
+        //         `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
+        //     ).join('')}
+        //   </select>
         focusConfirm: false,
         showCancelButton: true,
         preConfirm: () => {
@@ -363,19 +376,20 @@ const formatDateForInput = (date:any) => {
             urlDrive: (document.getElementById('swal-input8') as HTMLInputElement).value,
             urlFigma: (document.getElementById('swal-input9') as HTMLInputElement).value,
             UrlWordpress: (document.getElementById('swal-input10') as HTMLInputElement).value,
-            statusKey: ((document.getElementById('swal-input11') as HTMLSelectElement).value),
-            balanceStatusKey: ((document.getElementById('swal-input12') as HTMLSelectElement).value)
+            // statusKey: ((document.getElementById('swal-input11') as HTMLSelectElement).value),
+            // balanceStatusKey: ((document.getElementById('swal-input12') as HTMLSelectElement).value)
           };
         }
       });
   
       if (formValues) {
         debugger
-        const selectedStatus = statusOptions2.find(status => status.key === formValues.statusKey);
+        const selectedStatus = statusOptions2.find(status => status.value === "TODO");
+        const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
+        console.log(selectedBalanceStatus);
         console.log(selectedStatus);
         
-        const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.key === formValues.balanceStatusKey);
-  
+        
         const defaultEnum = { id: '', key: "", value: '' };
   
         const project: Project = {
@@ -385,9 +399,9 @@ const formatDateForInput = (date:any) => {
           BusinessName: formValues.businessName,
           Email: formValues.email,
           Source: formValues.source,
-          Status: selectedStatus ? selectedStatus : defaultEnum,
+          Status:  selectedStatus!,
           EndDate: new Date(),
-          BalanceStatus: selectedBalanceStatus ? selectedBalanceStatus : defaultEnum,
+          BalanceStatus: selectedBalanceStatus!,
           CreatedAt: new Date(),
           UpdatedAt: new Date(),
           TotalPrice: formValues.totalPrice,
@@ -407,13 +421,16 @@ const formatDateForInput = (date:any) => {
             console.log('New Project Created:', response.data);
             setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
             dispatch(deleteLead(selectedLeadId!));
+           const response2=await convertToCustomer(lead.id);
+           if(response2.status===200){
+             console.log("sucess");
+           }
+           else
+           console.log("fail");         
             setSelectedLeadId(null);
-  
             Swal.fire('Success', 'הפרויקט נוצר בהצלחה!', 'success');
           } else {
             Swal.fire('Error', ' שגיאה ביצירת הפרויקט ', 'error');
-
-            // throw new Error('Failed to create project');
           }
         
       }
@@ -564,7 +581,7 @@ const formatDateForInput = (date:any) => {
                 <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                  <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
-                  ${statusOptions.map ((status) => `<option value="${status}" 'selected' : ''}>${status}</option>`) }
+                  ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
                 </select>
             `,
             focusConfirm: false,
@@ -681,8 +698,8 @@ const formatDateForInput = (date:any) => {
                 style={{ width: "100%" }}>
                <option value="">הכל</option> 
               {statusOptions.map(option => (
-               <option key={option} value={option}>
-               {option}
+               <option key={option.key} value={option.value}>
+               {option.value}
               </option>
              ))}
                </select>
@@ -726,7 +743,7 @@ const formatDateForInput = (date:any) => {
                         className={getStatusClass(lead.status)}
                       >
                         {statusOptions.map((status) => (
-                          <option key={status} value={status} className='select'>{status}</option>
+                          <option key={status.key} value={status.value} className='select'>{status.value}</option>
                         ))}
                       </select>
                    
