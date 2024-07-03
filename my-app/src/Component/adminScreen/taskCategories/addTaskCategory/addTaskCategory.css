@@ -1,0 +1,85 @@
+.form-container {
+    margin: 0 auto;
+    /* מרכז את הקונטיינר */
+    width: 30%;
+    /* רוחב הקונטיינר 50% */
+    text-align: center;
+    /* מרכז את הטקסט */
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    /* רקע בהיר */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #009879;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: right;
+    /* טקסט מיושר לימין */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    /* טקסט מיושר לימין כולל הנקודתיים */
+    text-align: right;
+    /* מוודא שכל הטקסט מיושר לימין */
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.submit-button {
+    background-color: #009879;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #007f6e;
+}
+
+.message {
+    color: red;
+    margin-top: 20px;
+}
+
+.input-label {
+    display: inline-block;
+    width: 40%;
+    /* אורך ה-label ביחס לכולל */
+    text-align: right;
+    direction: rtl;
+    margin-right: 10px;
+}
+
+.input-wrapper {
+    display: inline-block;
+    width: 55%;
+    /* אורך ה-input ביחס לכולל */
+    vertical-align: top;
+    /* מיושר למעלה */
+}
+body{
+    direction: rtl;
+}
