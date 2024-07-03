@@ -10,8 +10,8 @@ import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
 import {Project} from '../../model/project.model'
-import {ProjectStatus} from '../../enum/ProjectStatus.enum'
-import {ProjectBalanceStatus} from '../../enum/projectBalanceStatus.enum'
+import { getAllEnumFromServer } from '../../api/enum.api';
+import { Enum } from '../../model/enum.model';
 type NotesColumnProps = {
   notes: Notes[];
 };
@@ -83,6 +83,8 @@ const Leads: React.FC = () => {
 const [leads, setLeads] = useState<Lead[]>([]);
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusOptions2, setStatusOptions2] = useState<Enum[]>([]);
+  const [balanceStatusOptions, setBalanceStatusOptions] = useState<Enum[]>([]);
  //עמודים
   const [page, setPage] = useState(0);
   const leadsPerPage = 6;
@@ -143,8 +145,22 @@ const [leads, setLeads] = useState<Lead[]>([]);
         console.error('Error fetching leads:', error);
       }
     };
+    const fetchEnums = async () => {
+      try {
+        debugger
+        const statusEnums = await getAllEnumFromServer(3); 
+        const balanceStatusEnums = await getAllEnumFromServer(2); 
+       console.log(statusEnums);
+       console.log(balanceStatusEnums);
   
-    fetchData();
+        setStatusOptions2(statusEnums);
+        setBalanceStatusOptions(balanceStatusEnums);
+        
+      } catch (error) {
+        console.error('Error fetching enums:', error);
+      }
+    };
+  fetchEnums(); fetchData();
   }, [dispatch]);
   
   //convert date
@@ -305,7 +321,7 @@ const formatDateForInput = (date:any) => {
         return;
       }
   
-      const { firstName, lastName, email, businessName, source, status } = lead;
+      const { firstName, lastName, email, businessName, source } = lead;
   
       const { value: formValues } = await Swal.fire({
         title: 'יצירת פרויקט חדש',
@@ -320,6 +336,18 @@ const formatDateForInput = (date:any) => {
           <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
           <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
           <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
+          <select id="swal-input11" class="swal2-input">
+            ${statusOptions2.map(
+              (status) =>
+                `<option value="${status.key}">${status.value}</option>`
+            ).join('')}
+          </select>
+          <select id="swal-input12" class="swal2-input">
+            ${balanceStatusOptions.map(
+              (balanceStatus) =>
+                `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
+            ).join('')}
+          </select>
         `,
         focusConfirm: false,
         showCancelButton: true,
@@ -333,14 +361,23 @@ const formatDateForInput = (date:any) => {
             totalPrice: parseFloat((document.getElementById('swal-input6') as HTMLInputElement).value),
             pricePaid: parseFloat((document.getElementById('swal-input7') as HTMLInputElement).value),
             urlDrive: (document.getElementById('swal-input8') as HTMLInputElement).value,
-            urlFigma: (document.getElementById('swal-input9') as HTMLInputElement).value ,
-            UrlWordpress: (document.getElementById('swal-input10') as HTMLInputElement).value
-
+            urlFigma: (document.getElementById('swal-input9') as HTMLInputElement).value,
+            UrlWordpress: (document.getElementById('swal-input10') as HTMLInputElement).value,
+            statusKey: ((document.getElementById('swal-input11') as HTMLSelectElement).value),
+            balanceStatusKey: ((document.getElementById('swal-input12') as HTMLSelectElement).value)
           };
         }
       });
   
       if (formValues) {
+        debugger
+        const selectedStatus = statusOptions2.find(status => status.key === formValues.statusKey);
+        console.log(selectedStatus);
+        
+        const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.key === formValues.balanceStatusKey);
+  
+        const defaultEnum = { id: '', key: "", value: '' };
+  
         const project: Project = {
           ProjectId: '',
           FirstName: formValues.firstName,
@@ -348,9 +385,9 @@ const formatDateForInput = (date:any) => {
           BusinessName: formValues.businessName,
           Email: formValues.email,
           Source: formValues.source,
-          Status:ProjectStatus.TODO,
-          EndDate: new Date(),  
-          BalanceStatus: ProjectBalanceStatus.DUE,
+          Status: selectedStatus ? selectedStatus : defaultEnum,
+          EndDate: new Date(),
+          BalanceStatus: selectedBalanceStatus ? selectedBalanceStatus : defaultEnum,
           CreatedAt: new Date(),
           UpdatedAt: new Date(),
           TotalPrice: formValues.totalPrice,
@@ -363,32 +400,27 @@ const formatDateForInput = (date:any) => {
           UrlFigma: formValues.urlFigma
         };
   
-        try {
+
           debugger
-          console.log(project);
-          
           const response = await convertToProject(project);
-          if (response.data.id) {
-            // const newProject = await response.json();
+          if (response.status === 200) {
             console.log('New Project Created:', response.data);
-  
             setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
-            setSelectedLeadId(null);
             dispatch(deleteLead(selectedLeadId!));
+            setSelectedLeadId(null);
   
             Swal.fire('Success', 'הפרויקט נוצר בהצלחה!', 'success');
           } else {
-            throw new Error('Failed to create project');
+            Swal.fire('Error', ' שגיאה ביצירת הפרויקט ', 'error');
+
+            // throw new Error('Failed to create project');
           }
-        } catch (error) {
-          console.error('Error creating project:', error);
-          Swal.fire('Error', 'שגיאה ביצירת הפרויקט', 'error');
-        }
+        
       }
     }
   };
   
-
+  
   const getStatusClass = (status: string) => {
     switch (status.trim()) {
       case 'ליד חדש':
@@ -437,7 +469,6 @@ const formatDateForInput = (date:any) => {
   };
 
   const filteredLeads = leads.filter(lead => {
-    debugger
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true; 
       debugger
@@ -533,7 +564,7 @@ const formatDateForInput = (date:any) => {
                 <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                  <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
-                  ${statusOptions.map ((status) => `<option value="${status}" ${lead.status === status ? 'selected' : ''}>${status}</option>`) }
+                  ${statusOptions.map ((status) => `<option value="${status}" 'selected' : ''}>${status}</option>`) }
                 </select>
             `,
             focusConfirm: false,

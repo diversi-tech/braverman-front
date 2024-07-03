@@ -50,6 +50,7 @@ export const filterByStatus = async (status: string) => {
 
 //convertToProject
 export const convertToProject = async (project: Project) => {
+  debugger
   const projectToConvert = {
     ...project,
     CreatedAt: new Date(project.CreatedAt).toISOString(),
