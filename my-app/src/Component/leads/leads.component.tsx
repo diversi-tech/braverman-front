@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import './leads.css';
-import { HiChevronDown ,HiSearch } from "react-icons/hi";
+import { SlArrowDown } from "react-icons/sl";
+import { HiChevronDown ,HiChevronRight,HiChevronLeft } from "react-icons/hi";
+import { SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
 import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
@@ -79,7 +81,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
 
  //עמודים
   const [page, setPage] = useState(0);
-  const leadsPerPage = 6;
+  const leadsPerPage = 7;
   const totalPages = Math.ceil(leads.length / leadsPerPage);
   // מערך לאחסון סטטוס השינויים של הלידים
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
@@ -114,7 +116,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
   });
   const dispatch = useDispatch();
   const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
-  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead.allStatusLead);
+  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -161,12 +163,12 @@ const [leads, setLeads] = useState<Lead[]>([]);
         if (leadsState.allLeads.length) {
           data = leadsState.allLeads;
         } else {
-          const resAllLeads = await getAllEnumFromServer(5);
-          dispatch(setAllStatusLeads(resAllLeads));
-          debugger
-          setAllStatusLeads(resAllLeads);
-
+          data = await getAllEnumFromServer(5);
         }
+        dispatch(setAllStatusLeads(data));
+          debugger
+        setStatusOptions(data);
+          console.log(leadStatus.allStatusLead);
         debugger
         console.log(leadStatus.allStatusLead);
       } catch (error) {
@@ -308,7 +310,19 @@ const formatDateForInput = (date:any) => {
 
     });
   };
-  
+
+  const handlePageChange = (direction: 'next' | 'prev') => {
+    setPage((prevPage) => {
+      if (direction === 'next') {
+        return Math.min(prevPage + 1, totalPages - 1);
+      } else if (direction === 'prev') {
+        return Math.max(prevPage - 1, 0);
+      } else {
+        return prevPage;
+      }
+    });
+  };
+
   // פונקציה להמרת ליד ללקוח
   const handleConvertLeadToProject = async () => {
     const result = await Swal.fire({
@@ -533,6 +547,9 @@ const formatDateForInput = (date:any) => {
             }
 
   };
+
+  const filteredLeads2 = filteredLeads.slice(page * leadsPerPage, (page + 1) * leadsPerPage);
+
   const handleChange=(id:string)=>{
     Swal.fire({
       title: "הכנס טקסט חופשי",
@@ -580,9 +597,11 @@ const formatDateForInput = (date:any) => {
                 <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
                 <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
+                 <div>
                  <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
                   ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
                 </select>
+                </div>
             `,
             focusConfirm: false,
             showCancelButton: true,
@@ -719,7 +738,7 @@ const formatDateForInput = (date:any) => {
               </tr>
             </thead>
             <tbody>
-              {filteredLeads.map((lead) => (
+              {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
                   <td>
                     <NotesColumn notes={lead.notes} />
@@ -789,8 +808,16 @@ const formatDateForInput = (date:any) => {
               </div>
             )}
           </div>
-
+          
         </td>
+        <div className="pagination">
+        <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} >
+          <SlArrowDown />
+          </button>
+          <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
+          <SlArrowUp />
+          </button>
+        </div>
 
     <button onClick={()=>save()}>save</button>
       </div>
