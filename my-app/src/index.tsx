@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import 'primeicons/primeicons.css';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
@@ -31,7 +30,6 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       {
-
         path:'login',
         Component:Login
       },

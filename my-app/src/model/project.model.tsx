@@ -1,5 +1,5 @@
 import {ProjectStatus} from "../enum/ProjectStatus.enum";
-import {ProjectBalanceStatus} from "../enum/ProjectBalanceStatus.enum";
+import {ProjectBalanceStatus} from "../enum/projectBalanceStatus.enum";
 import {Task} from "../model/task.model";
 import {Credential} from "./credential.model";
 
