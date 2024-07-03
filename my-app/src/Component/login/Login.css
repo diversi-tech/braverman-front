@@ -1,13 +1,15 @@
 #username {
-    top: 37.21%;
+    top: 39%;
     bottom: 54.37%;
+    border: none;
 
 }
 
 .textBox {
     position: absolute;
-    width: 779px;
-    left: calc(50% - 779px/2 + 0.5px);
+    width: 600px;
+    height: 55px;
+    left: calc(50% - 779px/2 + 70px);
     background: #F1F7FF;
     border-radius: 15px;
     font-family: 'tutorial';
@@ -25,16 +27,20 @@ input::placeholder::placeholder {
     height: 60px;
     left: calc(50% - 277px/2 + 235.5px);
     top: 378px;
-   
+
 }
+
 #password {
-    top: 48.23%;
+    top:50%;
     bottom: 43.35%;
+    border: none;
+    
+    
 }
 
 #submit {
-    left: calc(50% - 779px/2 + 5px);
-    top: 59.46%;
+    left: calc(50% - 779px/2 + 70px);
+    top: 60%;
     bottom: 32.12%;
 }
 
@@ -44,7 +50,7 @@ input::placeholder::placeholder {
     width: 81px;
     height: 28px;
     left: calc(50% - 81px/2 + 20.5px);
-    top: 27%;
+    top: 18%;
     z-index: 2;
     font-family: 'tutorial';
     font-style: normal;
@@ -52,14 +58,15 @@ input::placeholder::placeholder {
     font-size: 30px;
     line-height: 36px;
     text-align: center;
+   
 
 }
 #p {
     /* v */
     position: absolute;
-    width: 446px;
+    width: 300px;
     height: 60px;
-    left: calc(50% - 446px/2);
+    left: calc(50% - 340px/2);
     top: 150px;
     font-family: 'tutorial';
     font-style: normal;
@@ -69,6 +76,7 @@ input::placeholder::placeholder {
     text-align: center;
     color: #002046;
 }
+
 .ok {
     /* Vector v*/
     position: absolute;
@@ -80,22 +88,25 @@ input::placeholder::placeholder {
     height: 50%;
     color: #002046;
 }
+
 #linkq {
     /* Rectangle 13 */
     position: absolute;
-    width: 452px;
-    left: calc(50% - 452px/2);
+    width: 400px;
+    left: calc(50% - 450px/2);
     top: 75.68%;
     bottom: 15.9%;
     background: #F1F7FF;
     border-radius: 15px;
+    border: none;
 }
+
 #q {
     /* התחברות מהירה */
     position: absolute;
     width: 200px;
     height: 60px;
-    left: calc(50% - 277px/2 - 41.5px);
+    left: calc(50% - 277px/2 - 1px);
     top: 5px;
     font-family: 'tutorial';
     font-style: normal;
@@ -105,9 +116,15 @@ input::placeholder::placeholder {
     text-align: right;
     color: #002046;
 }
-@import url('https://www.typotheque.com/webfonts/tutorial');
-body { font-family: 'tutorial';
-    border-radius: 15px;
-    border: none;
+
+/* @import url('https://www.typotheque.com/webfonts/tutorial'); */
+
+body {
+    width:100%;
+    height: 100%;
+    gap: 0px;
+    border-radius: 15px 15px 15px 15px;
+    opacity: 0px;
+    /* border: none; */
     background-color: #ffffff
 }
