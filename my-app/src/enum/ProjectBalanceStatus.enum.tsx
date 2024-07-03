@@ -1,4 +1,4 @@
-export interface ProjectBalanceStatus {
-        id: string
-        description: string
+export enum ProjectBalanceStatus {
+    DUE='DUE',
+    PAID='PAID',
     }
