@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useDispatch, useSelector, } from 'react-redux';
 import { setUser } from '../../Redux/User/userAction';
@@ -18,15 +17,11 @@ interface GoogleCredentials {
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
-
-
   const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
   console.log(currentUser);
-
   const dispatch = useDispatch();
   const nav = useNavigate()
   const navigate = useNavigate();
-
   const handleLogin = async () => {
     debugger
     if (UserEmail && UserPassword) {
@@ -76,7 +71,7 @@ const Login = () => {
           navigate("/leads");}
         else
           navigate("/leads");
-             
+
       } else {
         Swal.showValidationMessage('מייל וסיסמא לא קיימים');
       }
@@ -126,7 +121,6 @@ const Login = () => {
           </button>
         </div>
         {/* כפתור התחברות מהירה */}
-        {/* <div> <button type="button" id='linkq'   >
         <div> <button type="button" id='linkq'   >
           <svg width="217" height="20" viewBox="0 0 217 20" id='q' fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M13.2752 19V9.19C13.2752 4.42 11.6852 3.34 7.90523 3.34H0.705234V1.15H8.11523C13.4252 1.15 15.6152 3.46 15.6152 9.13V19H13.2752ZM1.06523 19V10H3.40523V19H1.06523ZM28.4065 19V9.19C28.4065 4.54 26.9965 3.34 23.0065 3.34H18.1465V1.15H23.2165C28.7365 1.15 30.7465 3.55 30.7465 9.13V19H28.4065ZM35.6231 10.75V3.34H33.4031V1.15H37.9631V10.75H35.6231ZM55.4334 19V9.19C55.4334 4.42 53.8434 3.34 50.0634 3.34H42.8634V1.15H50.2734C55.5834 1.15 57.7734 3.46 57.7734 9.13V19H55.4334ZM43.2234 19V10H45.5634V19H43.2234ZM72.1259 19.15C70.9259 19.15 69.8159 19.06 68.9159 18.91L69.2759 16.69C70.0559 16.87 71.4059 16.99 72.3059 16.99C75.9659 16.99 78.7559 14.05 78.7559 10.03C78.7559 6.16 76.3259 3.07 73.1459 3.07C70.1759 3.07 68.0759 4.87 66.9059 8.65L63.6959 19H61.2659L64.7159 8.32L60.9059 1.15H63.3959L65.7659 6.13C67.1759 2.89 69.8159 0.97 73.2659 0.97C77.6459 0.97 81.0959 5.02 81.0959 10.03C81.0959 15.07 77.3459 19.15 72.1259 19.15ZM94.7402 19.15C93.6002 19.15 92.5202 19.03 91.7402 18.91L92.1302 16.9C92.8802 17.02 93.8402 17.08 94.6202 17.08C95.9102 17.08 96.7202 16.6 96.7202 14.41V3.34H92.7302V1.15H103.68C109.5 1.15 111.3 3.07 111.3 8.53V19H108.96V8.59C108.96 4.06 107.76 3.34 103.68 3.34H99.0602V14.44C99.0602 17.89 97.3802 19.15 94.7402 19.15ZM117.071 19V3.34H114.851V1.15H119.411V19H117.071ZM134.051 19V9.19C134.051 4.54 132.641 3.34 128.651 3.34H123.791V1.15H128.861C134.381 1.15 136.391 3.55 136.391 9.13V19H134.051ZM140.109 19V16.81H150.399V9.19C150.399 4.42 148.809 3.34 145.029 3.34H140.109V1.15H145.239C150.549 1.15 152.739 3.46 152.739 9.13V16.81H155.289V19H140.109ZM158.966 19V3.34H156.746V1.15H166.886C171.296 1.15 173.996 2.77 173.996 7.99V19H171.656V8.05C171.656 4.3 170.066 3.34 166.676 3.34H161.306V19H158.966ZM180.727 19.15C179.587 19.15 178.507 19.03 177.727 18.91L178.117 16.9C178.867 17.02 179.827 17.08 180.607 17.08C181.897 17.08 182.707 16.6 182.707 14.41V3.34H178.717V1.15H189.667C195.487 1.15 197.287 3.07 197.287 8.53V19H194.947V8.59C194.947 4.06 193.747 3.34 189.667 3.34H185.047V14.44C185.047 17.89 183.367 19.15 180.727 19.15ZM214.428 19V9.19C214.428 4.42 212.838 3.34 209.058 3.34H201.858V1.15H209.268C214.578 1.15 216.768 3.46 216.768 9.13V19H214.428ZM202.218 19V10H204.558V19H202.218Z" fill="#002046" />
@@ -140,8 +134,7 @@ const Login = () => {
               </pattern>
             </defs>
           </svg>
-        </button></div> */}
-
+        </button></div>
       </form>
       <GoogleOAuthProvider clientId={clientId}>
         <div>
@@ -155,7 +148,5 @@ const Login = () => {
       </GoogleOAuthProvider>
     </div>
       );
-
-};
-
-export default Login;
+      }
+      export default Login;
