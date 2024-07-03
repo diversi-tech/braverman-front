@@ -9,6 +9,7 @@
   width: 100%; /* קובע את רוחב הטבלה כך שתתפוס את כל רוחב הקונטיינר */
   border-collapse: collapse;
   font-size: 18px;
+  direction: rtl;
 }
 
 .styled-table thead tr {
