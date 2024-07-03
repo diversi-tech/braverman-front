@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ShowProgramStatus } from './Component/Project/ShowProgramStatus';
-import Links from './Component/Links/Links';
 
 const App = () => {
   const isAuthenticated = useSelector((state: { user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
