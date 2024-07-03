@@ -1,7 +1,7 @@
 import { Status } from "../enum/statusCostumer.enum";
 
 export interface Costumer {
-    customer_id: string;
+  customer_id: string;
   first_name: string;
   last_name: string;
   business_name: string;

@@ -23,6 +23,9 @@ import Nav from './Component/nav/nav.component';
 import { NotFound } from './Component/notFound/notFound.component';
 import ProjectsTable from './Component/customers/costumers.component';
 
+import {ProjectStatus} from './Component/projectStatus/projectStatus.component';
+
+
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,7 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       {
+
 
         path:'login',
         Component:Login
@@ -59,15 +63,49 @@ const router = createBrowserRouter([
           },
         ]
       },
+
+        path:'Login',
+        Component:Login
+      },
+      // {
+      //   path:'home',
+      //   Component:Nav,
+        // children:[
+          {
+            path: 'dashboard',
+            Component: Dashboard,
+          },{
+            path: 'leads',
+            Component: Leads,
+          },{
+            path: 'customers',
+            Component: ProjectsTable,
+          },{
+            path: 'staff',
+            Component: Staff,
+          }, {
+            path: 'tasks',
+            Component: Tasks,
+          },{
+            path: 'bookkeeping',
+            Component: Bookkeeping,
+          },
+          {
+            path: 'projectStatus',
+            Component: ProjectStatus,
+          }
+        ]},
+      // },
+
      {
         path:'not-found',
         Component:NotFound
       }
       
     
-        
- ] }]
       
+ ] 
+  
                         
 );
 
