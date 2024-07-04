@@ -61,9 +61,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
   }
   .lead-management-title{
-    margin-top: 0;
-    height: 30px;
-    text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* This centers the title horizontally */
+      width: 100%; /* Makes sure the container takes the full width */
+      height: 100px; /* Adjust this height as needed */
+     /* margin-top: 0; */
+     height: 30px;
+     text-align: center;
   }
   
   /* Table container styles */
@@ -90,7 +95,7 @@
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
-    height: 55px;
+    height: 50px;
     padding: 0px;
     color: #002046;
     border: none; /* No border inside cells */
@@ -159,7 +164,6 @@
   
   .status-select {
     width: 100%;
-    height: 10%;
     border: none;
     background: none;
     font-size: inherit;
@@ -201,7 +205,8 @@
   }
   
   .swal2-input {
-    margin: 5px;
+    height: 80px;
+    margin: 4px;
   }
   
   .select {
@@ -409,13 +414,47 @@
     color: #ddd;
     cursor: not-allowed;
   }
-  .table tfoot {
-    border-top: 2px solid #000; 
-  } 
-  .table tfoot td {
-    text-align: left; /* Align text to the left */
-    padding: 10px 0; /* Add padding */
-    color: #636363; /* Set text color */
+  
+ 
+  .icon {
+    font-size: 12px; 
   }
+  .add-lead-button,
+.convert-lead-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: white;
+  color: #636363;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.add-lead-button span.add,
+.convert-lead-button span.add {
+  margin-left: 5px;
+}
+
+tfoot td {
+  text-align: right; /* Ensure content is aligned to the right */
+  padding: 10px 0;
+  color: #636363;
+}
+
+tfoot div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px; /* Space between the buttons */
+}
+#swal-input100{
+  width: 63%;
+  height: 50px;
+}
+#swal-input99{
+  width: 63%;
+  height: 80px;
+}
+
   
   
