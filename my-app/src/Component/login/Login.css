@@ -19,6 +19,7 @@
     line-height: 36px;
     text-align: right;
     color: #002046;
+    align-content: center;
     z-index: 1;
 }
 
@@ -32,7 +33,7 @@ input::placeholder::placeholder {
 }
 
 #password {
-    top:50%;
+    top:50.5%;
     bottom: 43.35%;
     border: none;
     
@@ -41,7 +42,7 @@ input::placeholder::placeholder {
 
 #submit {
     left: calc(50% - 779px/2 + 70px);
-    top: 60%;
+    top: 62%;
     bottom: 32.12%;
 }
 
@@ -62,13 +63,17 @@ input::placeholder::placeholder {
    
 
 }
+#allin{
+    bottom: 10px;
+    align-content: center;
+}
 #p {
     /* v */
     position: absolute;
     width: 300px;
     height: 60px;
     left: calc(50% - 340px/2);
-    top: 150px;
+    top:80px;
     font-family: 'tutorial';
     font-style: normal;
     font-weight: 700;
@@ -77,11 +82,17 @@ input::placeholder::placeholder {
     text-align: center;
     color: #002046;
 }
-#login{
+#l{
     background-color: #ffffff;
- width: 700px;
- height: 350px;
-}
+    position:fixed;
+    width: 1350px;
+    height: 600px;
+    top: 100px;
+    left: 93px;
+    gap: 0px;
+    border-radius: 15px 15px 15px 15px;
+    opacity: 0px;
+} 
 
 .ok {
     /* Vector v*/
@@ -101,11 +112,12 @@ input::placeholder::placeholder {
     width: 400px;
     left: calc(50% - 450px/2);
     top: 75.68%;
-    bottom: 15.9%;
+    bottom: 15%;
     background: #F1F7FF;
     border-radius: 15px;
-    /* border: none; */
+    border: none;
 }
+
 #login{
     background-color: #ffffff;
     width:100px;
@@ -118,8 +130,8 @@ input::placeholder::placeholder {
     position: absolute;
     width: 200px;
     height: 60px;
-    left: calc(50% - 277px/2 - 1px);
-    top: 5px;
+    left: calc(50% - 277px/2);
+    top: -15px;;
     font-family: 'tutorial';
     font-style: normal;
     font-weight: 400;
