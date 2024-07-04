@@ -48,7 +48,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px; 
+    margin-top: 30px; 
     margin-bottom: 50px; 
   }
   
@@ -60,11 +60,22 @@
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
   }
+  .lead-management-title{
+      display: flex;
+      align-items: center;
+      justify-content: center; /* This centers the title horizontally */
+      width: 100%; /* Makes sure the container takes the full width */
+      height: 100px; /* Adjust this height as needed */
+     /* margin-top: 0; */
+     height: 30px;
+     text-align: center;
+  }
   
   /* Table container styles */
   .table-container {
     width: 100%;
     overflow-x: auto; /* Enable horizontal scrolling if needed */
+    margin-top: 0;
   }
   
   /* Table styles */
@@ -84,7 +95,7 @@
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
-    height: 55px;
+    height: 50px;
     padding: 0px;
     color: #002046;
     border: none; /* No border inside cells */
@@ -92,17 +103,19 @@
     vertical-align: middle; /* אנכי אמצעי */
     word-break: break-word; /* למניעת קטיעת מילים */
   }
+
   
   /* Header cell */
   .table th {
     color: #002046;
     background-color: transparent; /* Transparent background for header */
     position: relative;
+    height: 21px;
   }
   
   /* Border between header cells */
   .table th:not(:last-child) {
-    border-right: 1px solid #D9D9D9;
+    /* border-right: 1px solid #D9D9D9; */
     padding: 8px;
   }
   
@@ -151,7 +164,6 @@
   
   .status-select {
     width: 100%;
-    height: 10%;
     border: none;
     background: none;
     font-size: inherit;
@@ -193,7 +205,8 @@
   }
   
   .swal2-input {
-    margin: 5px;
+    height: 80px;
+    margin: 4px;
   }
   
   .select {
@@ -379,6 +392,69 @@
     width: 63%;
     /* height: 100%; */
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    
+  }
+  
+  .pagination button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    color: #000;
+
+  }
+  
+  .pagination button:disabled {
+    color: #ddd;
+    cursor: not-allowed;
+  }
+  
+ 
+  .icon {
+    font-size: 12px; 
+  }
+  .add-lead-button,
+.convert-lead-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: white;
+  color: #636363;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.add-lead-button span.add,
+.convert-lead-button span.add {
+  margin-left: 5px;
+}
+
+tfoot td {
+  text-align: right; /* Ensure content is aligned to the right */
+  padding: 10px 0;
+  color: #636363;
+}
+
+tfoot div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px; /* Space between the buttons */
+}
+#swal-input100{
+  width: 63%;
+  height: 50px;
+}
+#swal-input99{
+  width: 63%;
+  height: 80px;
+}
 
   
   

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import './leads.css';
-import { HiChevronDown ,HiSearch } from "react-icons/hi";
+import { SlArrowDown } from "react-icons/sl";
+import { HiChevronDown ,HiChevronRight,HiChevronLeft } from "react-icons/hi";
+import { SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
 import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
@@ -58,16 +60,6 @@ type NotesColumnProps = {
     </div>
   );
 };
-// const leadsData: Lead[] = [
-//   { Id: 1, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'שיחה ראשונית', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 5, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'נקבעה פגישה', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 2, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'נשלחה הצעמ', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 3, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לא טופל', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 4, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'ממתין למקדמה', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 6, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לשלוח הצעמ', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 7, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לא טופל', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() }];
-
-
 const Leads: React.FC = () => {
 
 const [leads, setLeads] = useState<Lead[]>([]);
@@ -79,12 +71,9 @@ const [leads, setLeads] = useState<Lead[]>([]);
 
  //עמודים
   const [page, setPage] = useState(0);
-  const leadsPerPage = 6;
+  const leadsPerPage = 7;
   const totalPages = Math.ceil(leads.length / leadsPerPage);
-  // מערך לאחסון סטטוס השינויים של הלידים
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
-  // מערך לאחסון האובייקטים של הלידים ששונו
-  // const [modifiedLeads, setModifiedLeads] = useState<Lead[]>();
   const [filters, setFilters] = useState({
     "שם פרטי": '',
     "שם משפחה": '',
@@ -114,7 +103,9 @@ const [leads, setLeads] = useState<Lead[]>([]);
   });
   const dispatch = useDispatch();
   const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
-  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead.allStatusLead);
+  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead);
+  console.log("status",leadStatus,"leads",leadsState);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -132,7 +123,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
           dispatch(setAllLeads(data));
         }
         setLeads(data);
-        // setModifiedLeads(data);
         setLeadsChanges(new Array(data.length).fill(false));
       } catch (error) {
         console.error('Error fetching leads:', error);
@@ -144,7 +134,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
         const balanceStatusEnums = await getAllEnumFromServer(2); 
        console.log(statusEnums);
        console.log(balanceStatusEnums);
-  
         setStatusOptions2(statusEnums);
         setBalanceStatusOptions(balanceStatusEnums);
         
@@ -156,19 +145,17 @@ const [leads, setLeads] = useState<Lead[]>([]);
     const fetchStatusEnums = async () => {
       debugger
       try {
-        let data;
-        console.log(leadStatus.allStatusLead);
-        if (leadsState.allLeads.length) {
-          data = leadsState.allLeads;
+        let data ;
+        console.log("Current status lead state:", leadStatus.allStatusLead);
+        if (leadStatus.allStatusLead.length) {
+          data = leadStatus.allStatusLead;
         } else {
-          const resAllLeads = await getAllEnumFromServer(5);
-          dispatch(setAllStatusLeads(resAllLeads));
-          debugger
-          setAllStatusLeads(resAllLeads);
-
+          data = await getAllEnumFromServer(5);
         }
-        debugger
-        console.log(leadStatus.allStatusLead);
+        console.log("Data to dispatch:", data); // בדוק את הנתונים לפני שליחתם
+        dispatch(setAllStatusLeads(data));
+        setStatusOptions(data);
+        console.log("Updated status lead state:", leadStatus.allStatusLead);
       } catch (error) {
         console.error('Error fetching leads:', error);
       }
@@ -201,9 +188,11 @@ const formatDateForInput = (date:any) => {
   return `${year}-${month}-${day}`;
 };
 
-  const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
-  const currentUserType = 'Manager';
-    
+const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
+ const userId= sessionStorage.getItem('userId')  
+ const currentUserType=sessionStorage.getItem('userType') 
+ console.log(currentUserType);
+ 
 
   const handleStatus2Change = (id: string, newStatus2: string) => {
     const updatedLeads = leads!.map((lead) =>
@@ -239,7 +228,7 @@ const formatDateForInput = (date:any) => {
         '<input id="swal-input4" class="swal2-input" placeholder="אמייל" >'+
         '<input id="swal-input5" class="swal2-input" placeholder="מקור הליד" >'+
         '<input id="swal-input8" class="swal2-input" placeholder="שם העסק">'+
-        '<textarea id="swal-input9" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
+        '<textarea id="swal-input99" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
         focusConfirm: false,
       showCancelButton: true,
 
@@ -251,7 +240,7 @@ const formatDateForInput = (date:any) => {
         const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
         const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
         const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-        const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
+        const freeText = (document.getElementById('swal-input99') as HTMLInputElement).value;
 
         if (!firstName || !lastName || !phone || !email || !source || !businessName || !freeText ) {
           Swal.showValidationMessage('אנא מלא את כל השדות');
@@ -308,7 +297,19 @@ const formatDateForInput = (date:any) => {
 
     });
   };
-  
+
+  const handlePageChange = (direction: 'next' | 'prev') => {
+    setPage((prevPage) => {
+      if (direction === 'next') {
+        return Math.min(prevPage + 1, totalPages - 1);
+      } else if (direction === 'prev') {
+        return Math.max(prevPage - 1, 0);
+      } else {
+        return prevPage;
+      }
+    });
+  };
+
   // פונקציה להמרת ליד ללקוח
   const handleConvertLeadToProject = async () => {
     const result = await Swal.fire({
@@ -362,25 +363,30 @@ const formatDateForInput = (date:any) => {
         //         `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
         //     ).join('')}
         //   </select>
+
         focusConfirm: false,
         showCancelButton: true,
+
+        
         preConfirm: () => {
-          return {
-            firstName: (document.getElementById('swal-input1') as HTMLInputElement).value,
-            lastName: (document.getElementById('swal-input2') as HTMLInputElement).value,
-            email: (document.getElementById('swal-input3') as HTMLInputElement).value,
-            businessName: (document.getElementById('swal-input4') as HTMLInputElement).value,
-            source: (document.getElementById('swal-input5') as HTMLInputElement).value,
-            totalPrice: parseFloat((document.getElementById('swal-input6') as HTMLInputElement).value),
-            pricePaid: parseFloat((document.getElementById('swal-input7') as HTMLInputElement).value),
-            urlDrive: (document.getElementById('swal-input8') as HTMLInputElement).value,
-            urlFigma: (document.getElementById('swal-input9') as HTMLInputElement).value,
-            UrlWordpress: (document.getElementById('swal-input10') as HTMLInputElement).value,
-            // statusKey: ((document.getElementById('swal-input11') as HTMLSelectElement).value),
-            // balanceStatusKey: ((document.getElementById('swal-input12') as HTMLSelectElement).value)
-          };
+          const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
+          const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
+          const email = (document.getElementById('swal-input3') as HTMLInputElement).value;
+          const businessName = (document.getElementById('swal-input4') as HTMLInputElement).value;
+          const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
+          const totalPrice = (document.getElementById('swal-input6') as HTMLInputElement).value;
+          const pricePaid = (document.getElementById('swal-input7') as HTMLInputElement).value;
+          const urlDrive = (document.getElementById('swal-input8') as HTMLInputElement).value;
+          const urlFigma = (document.getElementById('swal-input9') as HTMLInputElement).value;
+          const urlWordpress = (document.getElementById('swal-input10') as HTMLInputElement).value;
+  
+          if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
+            Swal.showValidationMessage('יש למלא את כל השדות');
+            return false;
+          }
         }
       });
+      
   
       if (formValues) {
         debugger
@@ -533,6 +539,9 @@ const formatDateForInput = (date:any) => {
             }
 
   };
+
+  const filteredLeads2 = filteredLeads.slice(page * leadsPerPage, (page + 1) * leadsPerPage);
+
   const handleChange=(id:string)=>{
     Swal.fire({
       title: "הכנס טקסט חופשי",
@@ -560,53 +569,59 @@ const formatDateForInput = (date:any) => {
     })
       }
 
-      const handleEditLead =()=>{
-        console.log(currentUser);
-        
-        const lead = leads.find((l) => l.id === selectedLeadId);
-        if (!lead) {
-          Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
-          return;
-        }
-          Swal.fire({
-            title: 'עריכת ליד',
-            html: `
-              <div>
-                <input id="swal-input1" class="swal2-input" placeholder="שם פרטי" value="${lead.firstName}">
-                <input id="swal-input2" class="swal2-input" placeholder="שם משפחה" value="${lead.lastName}">
-                <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
-                <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
-                <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
-                <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
-                <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
-                 <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
-                 <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
-                  ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
-                </select>
-            `,
-            focusConfirm: false,
-            showCancelButton: true,
-        
-    
-          preConfirm: () => {
-            const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-            const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-            const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
-            const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
-            const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-            const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
-            const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-            const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
-            const status = (document.getElementById('swal-input10') as HTMLInputElement).value;
+        const handleEditLead =()=>{
+          console.log(currentUser);
+          
+          const lead = leads.find((l) => l.id === selectedLeadId);
+          if (!lead) {
+            Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
+            return;
+          }
+          console.log(statusOptions);   
+            Swal.fire({
+              title: 'עריכת ליד',
+              html: `
+                <div>
+                  <input id="swal-input1" class="swal2-input" placeholder="שם פרטי" value="${lead.firstName}">
+                  <input id="swal-input2" class="swal2-input" placeholder="שם משפחה" value="${lead.lastName}">
+                  <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
+                  <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
+                  <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
+                  <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
+                  <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
+                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
+                  <div>
+                  <select id="swal-input100" class="swal2-input class={getStatusClass(lead.Status2)}">
+                    ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
+                  </select>
+                  </div>
+              `,
+              focusConfirm: false,
+              showCancelButton: true,
+              inputAttributes: {
+                style:'height: 100px',
+              },
+          
+      
+            preConfirm: () => {
+              const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
+              const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
+              const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
+              const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
+              const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
+              const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
+              const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
+              const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
+              const status = (document.getElementById('swal-input100') as HTMLInputElement).value;
 
-            if (!firstName || !lastName || !phone || !email || !source  || !lastContacted || !businessName || !freeText || !status) {
-              Swal.showValidationMessage('אנא מלא את כל השדות');
-              return null;
-            }
-    
-            if (!validateEmail(email)) {
-              Swal.showValidationMessage('כתובת האימייל לא תקינה');
-              return null;
+              if (!firstName || !lastName || !phone || !email || !source  || !lastContacted || !businessName || !freeText || !status) {
+                Swal.showValidationMessage('אנא מלא את כל השדות');
+                return null;
+              }
+      
+              if (!validateEmail(email)) {
+                Swal.showValidationMessage('כתובת האימייל לא תקינה');
+                return null;
             }
     
             if (!handlePhoneNumberChange(phone)) {
@@ -719,7 +734,7 @@ const formatDateForInput = (date:any) => {
               </tr>
             </thead>
             <tbody>
-              {filteredLeads.map((lead) => (
+              {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
                   <td>
                     <NotesColumn notes={lead.notes} />
@@ -753,7 +768,7 @@ const formatDateForInput = (date:any) => {
                   <td >{lead.lastName}</td>
                   <td>{lead.firstName}</td>
                   <td>
-                    {currentUserType === 'Manager' &&
+                    {currentUserType === 'admin' &&
                       <button
                         className={`circle-button ${selectedLeadId === lead.id ? 'clicked' : ''}`}
                         onClick={() => setSelectedLeadId(lead.id)}
@@ -763,36 +778,42 @@ const formatDateForInput = (date:any) => {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+  <tr>
+    <td colSpan={12} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>    
+        {currentUserType === 'admin' && selectedLeadId && (
+          <button className="convert-lead-button" onClick={handleConvertLeadToProject}>
+            →
+            <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
+          </button>
+        )}
+        {currentUser && selectedLeadId && (
+          <button className="convert-lead-button" onClick={handleEditLead}>
+            <GrUpdate className="icon" />
+            <span className='add' style={{ fontSize: 15, color: '#636363' }}>עדכון ליד</span>
+          </button>
+        )}
+        <button className="add-lead-button" onClick={handleAddLead}>
+          +
+          <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת ליד</span>
+        </button>
+      </div>
+    </td>
+  </tr>
+</tfoot>
           </table>
-        </div>
-        <td 
-        colSpan={10} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#636363' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div>
-              <button className="add-lead-button" onClick={handleAddLead} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
-                +
-                <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת ליד</span>
-              </button>
-            </div>
-            {currentUserType === 'Manager' && selectedLeadId && (
-              <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center' }}>
-                <button className="convert-lead-button" onClick={handleConvertLeadToProject} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}>→
-                  <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
-                </button>
-              </div>
-            )}
-          { currentUser && selectedLeadId && (
-              <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
-                <button className="convert-lead-button" onClick={handleEditLead} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}><GrUpdate />
-                  <span className='add' style={{ fontSize: 15, color: '#636363' }}> עדכון ליד </span>
-                </button>
-              </div>
-            )}
           </div>
+        <div className="pagination">
+        <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} >
+          <SlArrowDown className="icon" />
+          </button>
+          <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
+          <SlArrowUp className="icon"/>
+          </button>
+        </div>
+        <button onClick={()=>save()} style={{}}>save</button>
 
-        </td>
-
-    <button onClick={()=>save()}>save</button>
       </div>
     </div>
   );
