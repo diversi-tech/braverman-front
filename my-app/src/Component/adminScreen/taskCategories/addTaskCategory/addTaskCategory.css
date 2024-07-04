@@ -1,84 +1,96 @@
+
 .form-container {
-    margin: 0 auto;
-    /* מרכז את הקונטיינר */
-    width: 30%;
-    /* רוחב הקונטיינר 50% */
-    text-align: center;
-    /* מרכז את הטקסט */
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    /* רקע בהיר */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  text-align: center;
 }
 
-h1 {
-    color: #009879;
+.form-container h1 {
+  color: black;
+  margin-bottom: 20px;
 }
 
 .form-group {
-    margin-bottom: 15px;
-    text-align: right;
-    /* טקסט מיושר לימין */
+  margin-bottom: 15px;
+  text-align: right;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    /* טקסט מיושר לימין כולל הנקודתיים */
-    text-align: right;
-    /* מוודא שכל הטקסט מיושר לימין */
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: right;
 }
 
 input[type="text"],
 input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+  width: calc(100% - 20px); /* כדי לקחת בחשבון את הגבול הפנימי */
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 input[type="checkbox"] {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .submit-button {
-    background-color: #009879;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #F1F7FF;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .submit-button:hover {
-    background-color: #007f6e;
+  background-color: #b2b8bf;
 }
 
 .message {
-    color: red;
-    margin-top: 20px;
+  color: red;
+  margin-top: 20px;
 }
 
 .input-label {
-    display: inline-block;
-    width: 40%;
-    /* אורך ה-label ביחס לכולל */
-    text-align: right;
-    direction: rtl;
-    margin-right: 10px;
+  display: inline-block;
+  width: 40%;
+  text-align: right;
+  direction: rtl;
+  margin-right: 10px;
 }
 
 .input-wrapper {
-    display: inline-block;
-    width: 55%;
-    /* אורך ה-input ביחס לכולל */
-    vertical-align: top;
-    /* מיושר למעלה */
+  display: inline-block;
+  width: 55%;
+  vertical-align: top;
+}
+
+#closeAdd {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding-top: 6px;
+}
+
+#closeAdd:hover {
+  background-color: red;
+  
+  color: white;
 }
 body{
     direction: rtl;

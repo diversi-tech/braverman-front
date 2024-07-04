@@ -1,9 +1,11 @@
+
+
 import { useState } from "react";
 import { addCategory } from "../../../../api/taskCategory.api";
 import { TaskCategory } from "../../../../model/taskCategory.model";
 import './addTaskCategory.css';
 
-export const AddTaskCategory: React.FC<{ onCategoryAdded: () => void }> = ({ onCategoryAdded }) => {
+export const AddTaskCategory: React.FC<{ onCategoryAdded: () => void, onClose: () => void }> = ({ onCategoryAdded, onClose }) => {
   const [categoryName, setCategoryName] = useState('');
   const [weeksRequired, setWeeksRequired] = useState<number | undefined>(undefined);
   const [isMandatory, setIsMandatory] = useState(false);
@@ -56,39 +58,11 @@ export const AddTaskCategory: React.FC<{ onCategoryAdded: () => void }> = ({ onC
   };
 
   return (
+    
     <div className="form-container">
+      <button id="closeAdd" onClick={onClose}><i className="material-icons">close</i></button>
       <h1>הוספת קטגוריה</h1>
       <form onSubmit={handleSubmit}>
-        {/* <div className="form-group">
-          <label htmlFor="categoryName">שם הקטגוריה:</label>
-          <input
-            type="text"
-            id="categoryName"
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="weeksRequired">מס' שבועות נדרש לביצוע:</label>
-          <input
-            type="number"
-            id="weeksRequired"
-            value={weeksRequired !== undefined ? weeksRequired : ''}
-            onChange={(e) => setWeeksRequired(Number(e.target.value))}
-            min="0"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="isMandatory">חובה:</label>
-          <input
-            type="checkbox"
-            id="isMandatory"
-            checked={isMandatory}
-            onChange={(e) => setIsMandatory(e.target.checked)}
-          />
-        </div> */}
         <div className="form-group">
           <label htmlFor="categoryName" className="input-label">שם הקטגוריה:</label>
           <div className="input-wrapper">
