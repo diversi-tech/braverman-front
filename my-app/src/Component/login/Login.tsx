@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useDispatch, useSelector, } from 'react-redux';
 import { setUser } from '../../Redux/User/userAction';
@@ -18,15 +17,11 @@ interface GoogleCredentials {
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
-
-
   const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
   console.log(currentUser);
-
   const dispatch = useDispatch();
   const nav = useNavigate()
   const navigate = useNavigate();
-
   const handleLogin = async () => {
     debugger
     if (UserEmail && UserPassword) {
@@ -71,6 +66,8 @@ const Login = () => {
         Swal.fire('Success', 'התחברת בהצלחה', 'success');
         dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
+        sessionStorage.setItem("userType", x.data.userType.description);
+
         if (x.data.userType.description === "customer")
           navigate("/projectStatus");
         else if (x.data.userType.description === "admin"){
@@ -78,7 +75,7 @@ const Login = () => {
           navigate("/leads");}
         else
           navigate("/leads");
-             
+
       } else {
         Swal.showValidationMessage('מייל וסיסמא לא קיימים');
       }
@@ -155,7 +152,5 @@ const Login = () => {
       </GoogleOAuthProvider>
     </div>
       );
-
-};
-
-export default Login;
+      }
+      export default Login;

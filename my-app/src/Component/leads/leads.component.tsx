@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import './leads.css';
-import { HiChevronDown ,HiSearch } from "react-icons/hi";
+import { SlArrowDown } from "react-icons/sl";
+import { HiChevronDown ,HiChevronRight,HiChevronLeft } from "react-icons/hi";
+import { SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
-import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus } from '../../api/leads.api';
+import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
-
+import {Project} from '../../model/project.model'
+import { getAllEnumFromServer } from '../../api/enum.api';
+import { Enum } from '../../model/enum.model';
+import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
 type NotesColumnProps = {
   notes: Notes[];
 };
@@ -55,37 +60,20 @@ type NotesColumnProps = {
     </div>
   );
 };
-// const leadsData: Lead[] = [
-//   { Id: 1, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'שיחה ראשונית', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 5, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'נקבעה פגישה', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 2, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'נשלחה הצעמ', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 3, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לא טופל', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 4, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'ממתין למקדמה', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 6, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לשלוח הצעמ', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() },
-//   { Id: 7, Name: 'ruti', Phone: '0583209640', Email: 'r583209640@gmail.com', Status: 'lead', Status2: 'לא טופל', BusinessName: 'cloth', LeadSource: 'shira', ActionToPerform: 'change color', Date: new Date() }];
-
-
-const statusOptions = [
-  'ליד חדש',
-  'שיחה ראשונית'
-  ,'פגישת אפיון',
-  'שליחת הצעת מחיר',
-  'נשלחה הצעת מחיר',
-  'שיחת מעקב',
-  'הוצאת חשבונית',
-  'העברה להקמה בפועל',
-];
-
 const Leads: React.FC = () => {
 
 const [leads, setLeads] = useState<Lead[]>([]);
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusOptions2, setStatusOptions2] = useState<Enum[]>([]);
+  const [balanceStatusOptions, setBalanceStatusOptions] = useState<Enum[]>([]);
+  const [statusOptions, setStatusOptions] = useState<Enum[]>([]);
 
-  // מערך לאחסון סטטוס השינויים של הלידים
+ //עמודים
+  const [page, setPage] = useState(0);
+  const leadsPerPage = 7;
+  const totalPages = Math.ceil(leads.length / leadsPerPage);
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
-  // מערך לאחסון האובייקטים של הלידים ששונו
-  const [modifiedLeads, setModifiedLeads] = useState<Lead[]>();
   const [filters, setFilters] = useState({
     "שם פרטי": '',
     "שם משפחה": '',
@@ -115,6 +103,9 @@ const [leads, setLeads] = useState<Lead[]>([]);
   });
   const dispatch = useDispatch();
   const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
+  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead);
+  console.log("status",leadStatus,"leads",leadsState);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -132,14 +123,44 @@ const [leads, setLeads] = useState<Lead[]>([]);
           dispatch(setAllLeads(data));
         }
         setLeads(data);
-        setModifiedLeads(data);
         setLeadsChanges(new Array(data.length).fill(false));
       } catch (error) {
         console.error('Error fetching leads:', error);
       }
     };
-  
-    fetchData();
+    const fetchEnums = async () => {
+      try {
+        const statusEnums = await getAllEnumFromServer(3); 
+        const balanceStatusEnums = await getAllEnumFromServer(2); 
+       console.log(statusEnums);
+       console.log(balanceStatusEnums);
+        setStatusOptions2(statusEnums);
+        setBalanceStatusOptions(balanceStatusEnums);
+        
+      } catch (error) {
+        console.error('Error fetching enums:', error);
+      }
+    };
+
+    const fetchStatusEnums = async () => {
+      debugger
+      try {
+        let data ;
+        console.log("Current status lead state:", leadStatus.allStatusLead);
+        if (leadStatus.allStatusLead.length) {
+          data = leadStatus.allStatusLead;
+        } else {
+          data = await getAllEnumFromServer(5);
+        }
+        console.log("Data to dispatch:", data); // בדוק את הנתונים לפני שליחתם
+        dispatch(setAllStatusLeads(data));
+        setStatusOptions(data);
+        console.log("Updated status lead state:", leadStatus.allStatusLead);
+      } catch (error) {
+        console.error('Error fetching leads:', error);
+      }
+    };
+    fetchStatusEnums();fetchEnums(); fetchData();
   }, [dispatch]);
   
   //convert date
@@ -167,17 +188,19 @@ const formatDateForInput = (date:any) => {
   return `${year}-${month}-${day}`;
 };
 
-  const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
-  const currentUserType = 'Manager';
-    
+const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
+ const userId= sessionStorage.getItem('userId')  
+ const currentUserType=sessionStorage.getItem('userType') 
+ console.log(currentUserType);
+ 
 
   const handleStatus2Change = (id: string, newStatus2: string) => {
-    const updatedLeads = modifiedLeads!.map((lead) =>
+    const updatedLeads = leads!.map((lead) =>
       lead.id === id ? { ...lead, status: newStatus2 } : lead
     );
-    setModifiedLeads(updatedLeads);
+    setLeads(updatedLeads);
 
-    const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
+    const updatedIndex = leads!.findIndex((l) => l.id === id);
            if (updatedIndex !== -1) {
              const updatedChanges = [...leadsChanges!]; 
              updatedChanges[updatedIndex] = true; 
@@ -205,7 +228,7 @@ const formatDateForInput = (date:any) => {
         '<input id="swal-input4" class="swal2-input" placeholder="אמייל" >'+
         '<input id="swal-input5" class="swal2-input" placeholder="מקור הליד" >'+
         '<input id="swal-input8" class="swal2-input" placeholder="שם העסק">'+
-        '<textarea id="swal-input9" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
+        '<textarea id="swal-input99" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
         focusConfirm: false,
       showCancelButton: true,
 
@@ -217,7 +240,7 @@ const formatDateForInput = (date:any) => {
         const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
         const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
         const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-        const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
+        const freeText = (document.getElementById('swal-input99') as HTMLInputElement).value;
 
         if (!firstName || !lastName || !phone || !email || !source || !businessName || !freeText ) {
           Swal.showValidationMessage('אנא מלא את כל השדות');
@@ -260,7 +283,7 @@ const formatDateForInput = (date:any) => {
         const newLead = response.data;
         newLead.createdDate = new Date(newLead.createdDate);
         newLead.lastContacted = new Date(newLead.lastContacted);
-        setModifiedLeads([...modifiedLeads!, newLead]);
+        setLeads([...leads!, newLead]);
         setLeads([...leads, newLead]);
         dispatch(addLead2(newLead))  
         Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
@@ -274,17 +297,29 @@ const formatDateForInput = (date:any) => {
 
     });
   };
-  
+
+  const handlePageChange = (direction: 'next' | 'prev') => {
+    setPage((prevPage) => {
+      if (direction === 'next') {
+        return Math.min(prevPage + 1, totalPages - 1);
+      } else if (direction === 'prev') {
+        return Math.max(prevPage - 1, 0);
+      } else {
+        return prevPage;
+      }
+    });
+  };
+
   // פונקציה להמרת ליד ללקוח
-  const handleConvertLead = async () => {
+  const handleConvertLeadToProject = async () => {
     const result = await Swal.fire({
       title: 'האם אתה בטוח?',
-      text: "האם אתה בטוח שאתה רוצה להמיר את הליד ללקוח?",
+      text: "האם אתה בטוח שאתה רוצה להמיר את הליד לפרויקט?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'כן!, המיר ללקוח',
+      confirmButtonText: 'כן!, המיר לפרויקט',
       cancelButtonText: 'ביטול',
       customClass: {
         confirmButton: 'button1',
@@ -293,58 +328,122 @@ const formatDateForInput = (date:any) => {
     });
   
     if (result.isConfirmed) {
-      debugger;
-      const response = await convertToCustomer(selectedLeadId!);
-      console.log(response);
+      const lead = leads.find(lead => lead.id === selectedLeadId);
   
-      if (response.status === 200) {
-        const customer = response.data;
+      if (!lead) {
+        Swal.fire('Error', 'לא נמצא ליד להמרה', 'error');
+        return;
+      }
   
-        Swal.fire({
-          title: 'עריכת לקוח',
-          html: `
-            <input id="swal-input1" class="swal2-input" value="${customer.firstName}" placeholder="שם פרטי">
-            <input id="swal-input2" class="swal2-input" value="${customer.lastName}" placeholder="שם משפחה">
-            <input id="swal-input3" class="swal2-input" value="${customer.email}" placeholder="אימייל">
-            <input id="swal-input4" class="swal2-input" value="${customer.businessName}" placeholder="שם העסק">
-            <input id="swal-input5" class="swal2-input" value="${customer.source}" placeholder="מקור הליד">
-            <div>
-            <select id="select_customer" class="swal2-input">
-              <option value="Active" ${customer.status === 'Active' ? 'selected' : ''}>Active</option>
-              <option value="Inactive" ${customer.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
-              <option value="Done" ${customer.status === 'Done' ? 'selected' : ''}>Done</option>
-            </select>
-            </div>
-          `,
-          focusConfirm: false,
-          showCancelButton: true,
-          preConfirm: () => {
-            const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-            const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-            const email = (document.getElementById('swal-input3') as HTMLInputElement).value;
-            const businessName = (document.getElementById('swal-input4') as HTMLInputElement).value;
-            const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-            const status = (document.getElementById('swal-input6') as HTMLSelectElement).value;
-            return { firstName, lastName, email, businessName, source, status };
+      const { firstName, lastName, email, businessName, source } = lead;
+  
+      const { value: formValues } = await Swal.fire({
+        title: 'יצירת פרויקט חדש',
+        html: `
+          <input id="swal-input1" class="swal2-input" value="${firstName}" placeholder="שם פרטי">
+          <input id="swal-input2" class="swal2-input" value="${lastName}" placeholder="שם משפחה">
+          <input id="swal-input3" class="swal2-input" value="${email}" placeholder="אימייל">
+          <input id="swal-input4" class="swal2-input" value="${businessName}" placeholder="שם העסק">
+          <input id="swal-input5" class="swal2-input" value="${source}" placeholder="מקור הליד">
+          <input id="swal-input6" class="swal2-input" placeholder="מחיר כולל">
+          <input id="swal-input7" class="swal2-input" placeholder="מחיר ששולם">
+          <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
+          <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
+          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
+        `,
+        // <select id="swal-input11" class="swal2-input">
+        //     ${statusOptions2.map(
+        //       (status) =>
+        //         `<option value="${status.key}">${status.value}</option>`
+        //     ).join('')}
+        //   </select>
+        //   <select id="swal-input12" class="swal2-input">
+        //     ${balanceStatusOptions.map(
+        //       (balanceStatus) =>
+        //         `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
+        //     ).join('')}
+        //   </select>
+
+        focusConfirm: false,
+        showCancelButton: true,
+
+        
+        preConfirm: () => {
+          const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
+          const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
+          const email = (document.getElementById('swal-input3') as HTMLInputElement).value;
+          const businessName = (document.getElementById('swal-input4') as HTMLInputElement).value;
+          const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
+          const totalPrice = (document.getElementById('swal-input6') as HTMLInputElement).value;
+          const pricePaid = (document.getElementById('swal-input7') as HTMLInputElement).value;
+          const urlDrive = (document.getElementById('swal-input8') as HTMLInputElement).value;
+          const urlFigma = (document.getElementById('swal-input9') as HTMLInputElement).value;
+          const urlWordpress = (document.getElementById('swal-input10') as HTMLInputElement).value;
+  
+          if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
+            Swal.showValidationMessage('יש למלא את כל השדות');
+            return false;
           }
-        }).then((editResult) => {
-          if (editResult.isConfirmed) {
-            const editedCustomer = editResult.value;
-            console.log('Edited Customer:', editedCustomer);
-          }
-        });
+        }
+      });
+      
   
-        setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
-        setModifiedLeads(modifiedLeads!.filter((lead) => lead.id !== selectedLeadId));
-        setSelectedLeadId(null);
-        dispatch(deleteLead(selectedLeadId!));
-      } else {
-        Swal.fire('Error', 'שגיאה לא ניתן להמיר ללקוח', 'error');
+      if (formValues) {
+        debugger
+        const selectedStatus = statusOptions2.find(status => status.value === "TODO");
+        const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
+        console.log(selectedBalanceStatus);
+        console.log(selectedStatus);
+        
+        
+        const defaultEnum = { id: '', key: "", value: '' };
+  
+        const project: Project = {
+          ProjectId: '',
+          FirstName: formValues.firstName,
+          LastName: formValues.lastName,
+          BusinessName: formValues.businessName,
+          Email: formValues.email,
+          Source: formValues.source,
+          Status:  selectedStatus!,
+          EndDate: new Date(),
+          BalanceStatus: selectedBalanceStatus!,
+          CreatedAt: new Date(),
+          UpdatedAt: new Date(),
+          TotalPrice: formValues.totalPrice,
+          PricePaid: formValues.pricePaid,
+          _balance: formValues.totalPrice - formValues.pricePaid,
+          Tasks: [],
+          Credentials: [],
+          UrlWordpress: formValues.UrlWordpress,
+          UrlDrive: formValues.urlDrive,
+          UrlFigma: formValues.urlFigma
+        };
+  
+
+          debugger
+          const response = await convertToProject(project);
+          if (response.status === 200) {
+            console.log('New Project Created:', response.data);
+            setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
+            dispatch(deleteLead(selectedLeadId!));
+           const response2=await convertToCustomer(lead.id);
+           if(response2.status===200){
+             console.log("sucess");
+           }
+           else
+           console.log("fail");         
+            setSelectedLeadId(null);
+            Swal.fire('Success', 'הפרויקט נוצר בהצלחה!', 'success');
+          } else {
+            Swal.fire('Error', ' שגיאה ביצירת הפרויקט ', 'error');
+          }
+        
       }
     }
   };
   
-
+  
   const getStatusClass = (status: string) => {
     switch (status.trim()) {
       case 'ליד חדש':
@@ -393,7 +492,6 @@ const formatDateForInput = (date:any) => {
   };
 
   const filteredLeads = leads.filter(lead => {
-    debugger
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true; 
       debugger
@@ -428,12 +526,12 @@ const formatDateForInput = (date:any) => {
   
   //change Action
   const handleActionToPerformChange = (id: string, newValue: string) => {
-     const updatedLeads = modifiedLeads!.map((lead) =>
+     const updatedLeads = leads!.map((lead) =>
        lead.id === id ? { ...lead, freeText: newValue } : lead
      );
-     setModifiedLeads(updatedLeads);
+     setLeads(updatedLeads);
 
-     const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
+     const updatedIndex = leads!.findIndex((l) => l.id === id);
             if (updatedIndex !== -1) {
               const updatedChanges = [...leadsChanges!]; 
               updatedChanges[updatedIndex] = true; 
@@ -441,6 +539,9 @@ const formatDateForInput = (date:any) => {
             }
 
   };
+
+  const filteredLeads2 = filteredLeads.slice(page * leadsPerPage, (page + 1) * leadsPerPage);
+
   const handleChange=(id:string)=>{
     Swal.fire({
       title: "הכנס טקסט חופשי",
@@ -468,53 +569,59 @@ const formatDateForInput = (date:any) => {
     })
       }
 
-      const handleEditLead =()=>{
-        console.log(currentUser);
-        
-        const lead = leads.find((l) => l.id === selectedLeadId);
-        if (!lead) {
-          Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
-          return;
-        }
-          Swal.fire({
-            title: 'עריכת ליד',
-            html: `
-              <div>
-                <input id="swal-input1" class="swal2-input" placeholder="שם פרטי" value="${lead.firstName}">
-                <input id="swal-input2" class="swal2-input" placeholder="שם משפחה" value="${lead.lastName}">
-                <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
-                <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
-                <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
-                <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
-                <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
-                 <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
-                 <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
-                  ${statusOptions.map ((status) => `<option value="${status}" ${lead.status === status ? 'selected' : ''}>${status}</option>`) }
-                </select>
-            `,
-            focusConfirm: false,
-            showCancelButton: true,
-        
-    
-          preConfirm: () => {
-            const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-            const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-            const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
-            const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
-            const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-            const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
-            const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-            const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
-            const status = (document.getElementById('swal-input10') as HTMLInputElement).value;
+        const handleEditLead =()=>{
+          console.log(currentUser);
+          
+          const lead = leads.find((l) => l.id === selectedLeadId);
+          if (!lead) {
+            Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
+            return;
+          }
+          console.log(statusOptions);   
+            Swal.fire({
+              title: 'עריכת ליד',
+              html: `
+                <div>
+                  <input id="swal-input1" class="swal2-input" placeholder="שם פרטי" value="${lead.firstName}">
+                  <input id="swal-input2" class="swal2-input" placeholder="שם משפחה" value="${lead.lastName}">
+                  <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
+                  <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
+                  <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
+                  <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
+                  <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
+                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
+                  <div>
+                  <select id="swal-input100" class="swal2-input class={getStatusClass(lead.Status2)}">
+                    ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
+                  </select>
+                  </div>
+              `,
+              focusConfirm: false,
+              showCancelButton: true,
+              inputAttributes: {
+                style:'height: 100px',
+              },
+          
+      
+            preConfirm: () => {
+              const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
+              const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
+              const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
+              const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
+              const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
+              const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
+              const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
+              const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
+              const status = (document.getElementById('swal-input100') as HTMLInputElement).value;
 
-            if (!firstName || !lastName || !phone || !email || !source  || !lastContacted || !businessName || !freeText || !status) {
-              Swal.showValidationMessage('אנא מלא את כל השדות');
-              return null;
-            }
-    
-            if (!validateEmail(email)) {
-              Swal.showValidationMessage('כתובת האימייל לא תקינה');
-              return null;
+              if (!firstName || !lastName || !phone || !email || !source  || !lastContacted || !businessName || !freeText || !status) {
+                Swal.showValidationMessage('אנא מלא את כל השדות');
+                return null;
+              }
+      
+              if (!validateEmail(email)) {
+                Swal.showValidationMessage('כתובת האימייל לא תקינה');
+                return null;
             }
     
             if (!handlePhoneNumberChange(phone)) {
@@ -541,10 +648,10 @@ const formatDateForInput = (date:any) => {
           debugger
           if (result.isConfirmed && result.value) {
             const updatedLead = result.value;
-            const updatedModifiedLeads = modifiedLeads!.map((l) => (l.id === lead.id ? updatedLead : l));
-            setModifiedLeads(updatedModifiedLeads);
+            const updatedModifiedLeads = leads!.map((l) => (l.id === lead.id ? updatedLead : l));
+            setLeads(updatedModifiedLeads);
       
-            const updatedIndex = modifiedLeads!.findIndex((l) => l.id === lead.id);
+            const updatedIndex = leads!.findIndex((l) => l.id === lead.id);
             if (updatedIndex !== -1) {
               const updatedChanges = [...leadsChanges!]; 
               updatedChanges[updatedIndex] = true;
@@ -561,16 +668,16 @@ const formatDateForInput = (date:any) => {
       try {
         for (let i = 0; i < leadsChanges!.length; i++) {
           if (leadsChanges![i]) {
-            const updatedLead = modifiedLeads![i];
+            const updatedLead = leads![i];
             const response = await updateLeadChanges(updatedLead,updatedLead.id);
             console.log(response);      
           }
         }
         Swal.fire('Success', 'שמירה בוצעה בהצלחה', 'success');
         setLeadsChanges(new Array<boolean>(leads.length).fill(false)); 
-        console.log(modifiedLeads);
+        console.log(leads);
         
-        setLeads(modifiedLeads!)
+        setLeads(leads!)
       } catch (error) {
         console.error('Error saving leads:', error);
         Swal.fire('Error', 'השמירה נכשלה', 'error');
@@ -606,8 +713,8 @@ const formatDateForInput = (date:any) => {
                 style={{ width: "100%" }}>
                <option value="">הכל</option> 
               {statusOptions.map(option => (
-               <option key={option} value={option}>
-               {option}
+               <option key={option.key} value={option.value}>
+               {option.value}
               </option>
              ))}
                </select>
@@ -627,7 +734,7 @@ const formatDateForInput = (date:any) => {
               </tr>
             </thead>
             <tbody>
-              {filteredLeads.map((lead) => (
+              {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
                   <td>
                     <NotesColumn notes={lead.notes} />
@@ -651,7 +758,7 @@ const formatDateForInput = (date:any) => {
                         className={getStatusClass(lead.status)}
                       >
                         {statusOptions.map((status) => (
-                          <option key={status} value={status} className='select'>{status}</option>
+                          <option key={status.key} value={status.value} className='select'>{status.value}</option>
                         ))}
                       </select>
                    
@@ -661,7 +768,7 @@ const formatDateForInput = (date:any) => {
                   <td >{lead.lastName}</td>
                   <td>{lead.firstName}</td>
                   <td>
-                    {currentUserType === 'Manager' &&
+                    {currentUserType === 'admin' &&
                       <button
                         className={`circle-button ${selectedLeadId === lead.id ? 'clicked' : ''}`}
                         onClick={() => setSelectedLeadId(lead.id)}
@@ -671,36 +778,42 @@ const formatDateForInput = (date:any) => {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+  <tr>
+    <td colSpan={12} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>    
+        {currentUserType === 'admin' && selectedLeadId && (
+          <button className="convert-lead-button" onClick={handleConvertLeadToProject}>
+            →
+            <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
+          </button>
+        )}
+        {currentUser && selectedLeadId && (
+          <button className="convert-lead-button" onClick={handleEditLead}>
+            <GrUpdate className="icon" />
+            <span className='add' style={{ fontSize: 15, color: '#636363' }}>עדכון ליד</span>
+          </button>
+        )}
+        <button className="add-lead-button" onClick={handleAddLead}>
+          +
+          <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת ליד</span>
+        </button>
+      </div>
+    </td>
+  </tr>
+</tfoot>
           </table>
-        </div>
-        <td 
-        colSpan={10} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#636363' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div>
-              <button className="add-lead-button" onClick={handleAddLead} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
-                +
-                <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת ליד</span>
-              </button>
-            </div>
-            {currentUserType === 'Manager' && selectedLeadId && (
-              <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center' }}>
-                <button className="convert-lead-button" onClick={handleConvertLead} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}>→
-                  <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
-                </button>
-              </div>
-            )}
-          { currentUser && selectedLeadId && (
-              <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
-                <button className="convert-lead-button" onClick={handleEditLead} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}><GrUpdate />
-                  <span className='add' style={{ fontSize: 15, color: '#636363' }}> עדכון ליד </span>
-                </button>
-              </div>
-            )}
           </div>
+        <div className="pagination">
+        <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} >
+          <SlArrowDown className="icon" />
+          </button>
+          <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
+          <SlArrowUp className="icon"/>
+          </button>
+        </div>
+        <button onClick={()=>save()} style={{}}>save</button>
 
-        </td>
-
-    <button onClick={()=>save()}>save</button>
       </div>
     </div>
   );
