@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from "../../assets/images/logo.png"
+import { User } from '../../model/user.model';
 
 
 
 const Nav = () => {
-  const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
-  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserId:string,UserTypeId:string,UserTypeName:string ,UserFirstName:string,UserLastName:string} } }) => state.user.currentUser);
+  // const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
+  // const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserId:string,UserTypeId:string,UserTypeName:string ,UserFirstName:string,UserLastName:string} } }) => state.user.currentUser);
+
+  const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,12 +27,17 @@ const Nav = () => {
       greeting = 'ערב טוב';
     }
   
-    return `${currentUser.UserFirstName} ${currentUser.UserLastName}, ${greeting}:)`;
+    return `${currentUser?.firstName} ${currentUser?.lastName}, ${greeting}:)`;
   }
   useEffect(() => {
     // if (currentUserType === "customer")
     //   navigate('/not-found');
-  }, [currentUserType, navigate]);
+  }, [currentUser, navigate]);
+
+  if (!currentUser) {
+    return <div>Loading...</div>; // או כל תוכן חלופי מתאים בזמן הטעינה
+  }
+
   return (
     <>
 <div id='imgandnav'>
@@ -38,12 +46,12 @@ const Nav = () => {
         <nav className='nav'>
           <ul className='nav-list'>
          
-           {currentUser.UserTypeName === "customer" ? (
+           {currentUser?.typeUser?.description === "customer" ? (
         <p>{ getGreetingMessage()}</p>
       ) : (
         <p>הזן פרטי גישה כדי להתחבר למערכת</p>
       )}
-            {currentUserType === "admin" && <>
+            {currentUser?.typeUser?.description === "admin" && <>
               <li className={`nav-item ${location.pathname.includes('/dashboard' )? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li>
             <li className={`nav-item ${location.pathname.includes( '/leads' )? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
             <li className={`nav-item ${location.pathname.includes('/customers' )? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
@@ -58,7 +66,7 @@ const Nav = () => {
       </div>
       <img src={logo} alt="" id='img' />
       </div>
-      <Outlet />
+      {/* <Outlet /> */}
     </>
 
    

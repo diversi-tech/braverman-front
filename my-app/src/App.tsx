@@ -13,17 +13,16 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
-
-    if (!sessionStorage.getItem("isAuthenticated")) {
+    if (!sessionStorage.getItem("userId")) {
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  });
 
   return (
     <>
     <Nav></Nav>
-      {/* <Outlet /> */}
+
+      <Outlet />
     </>
   );
 };

@@ -1,5 +1,11 @@
+import { User } from "../../model/user.model";
 
-export const setUser = (UserEmail, UserPassword, UserId,UserTypeId,UserTypeName,UserFirstName,UserLastName) => {
+export const setUser = (user) => {
   debugger
-  return { type: 'SET_CURRENT_USER', payload: {UserEmail, UserPassword,UserId,UserTypeId,UserTypeName,UserFirstName,UserLastName,UserPassword, UserEmail  } };
+  return { type: 'SET_CURRENT_USER', payload: {user } };
+};
+
+export const updateUser = (user ) => {
+  debugger
+  return { type: 'UPDATE_CURRENT_USER', payload: {user } };
 };

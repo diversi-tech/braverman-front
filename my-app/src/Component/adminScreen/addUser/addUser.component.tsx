@@ -6,8 +6,10 @@ const AddUser: React.FC = () => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userType, setUserType] = useState({id:'',description:''});
+  const [typeUser, setTypeUser] = useState({id:'',description:''});
   const [password, setPassword] = useState('');
+  const [id, setId] = useState('');
+  const [projectsId, setProjectsId] = useState([]);
 
   const addNewUser=async(newUser:User)=>{
     try{
@@ -20,12 +22,15 @@ const AddUser: React.FC = () => {
   }
   const handleAddUser = async() => {
     // יצירת אובייקט משתמש חדש
+    
     const newUser: User = {
       email,
       firstName,
       lastName,
-      userType,
-      password
+      typeUser,
+      password,
+      projectsId,
+      id
     };
 
     // כאן תוכל להוסיף לוגיקה לשליחת המשתמש לשרת או עיבוד נוסף
@@ -36,7 +41,7 @@ const AddUser: React.FC = () => {
     setEmail('');
     setFirstName('');
     setLastName('');
-    setUserType({id:'',description:''});
+    setTypeUser({id:'',description:''});
     setPassword('');
   };
 
@@ -61,7 +66,7 @@ const AddUser: React.FC = () => {
         </div>
         <div>
           <label>User Type:</label>
-          <select value={userType.description} onChange={(e) => setUserType({...userType,description : e.target.value})} required>
+          <select value={typeUser.description} onChange={(e) => setTypeUser({...typeUser,description : e.target.value})} required>
             <option value="">Select User Type</option>
             <option value="admin">Admin</option>
             <option value="user">User</option>

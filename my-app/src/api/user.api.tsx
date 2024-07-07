@@ -22,7 +22,7 @@ export const getUsers = async () => {
   };
 export const getUserById=async (userId:string)=>{
     try{
-    const response= await axios.get(`https://localhost:7119/api/User/${userId}`);
+    const response= await axios.get(`https://localhost:7119/api/User/GetById/${userId}`);
     return [response.data];
     }
     catch (error) {
@@ -31,18 +31,29 @@ export const getUserById=async (userId:string)=>{
       }
 }
 
-export const updateUser=async(userId:string,newUser:User)=>
+export const UpdateUserAPI = (newUser:User)=>
 {
-  try
-  {
-    const response=await axios.put(`https://localhost:7119/api/User/${userId}`,newUser);
-    return response.data;
-  }
-  catch(error)
-  {
-    console.error('error update user: ',error);
-    return error;
+  debugger
+  console.log(newUser);
+  
+  return axios.put(`https://localhost:7119/api/User/UpdateUser`,newUser);
+  //   const response= axios.put(`https://localhost:7119/api/User`,newUser);
+  //   return response
+  // }
+  // catch(error)
+  // {
+  //   console.error('error update user: ',error);
+  //   return error;
     
-  }
+  // }
 }
 
+export const GetAllProjectPerUser = async (userId :string) => {
+  try {
+      const response = await axios.get(`https://localhost:7119/api/User/GetAllProjectPerUserAsync/${userId}`);
+      return [...response.data];
+  } catch (error) {
+      console.error('Error fetching task categories:', error);
+      return [];
+  }
+};

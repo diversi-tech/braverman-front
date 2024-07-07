@@ -4,13 +4,14 @@ import { setUser } from '../../Redux/User/userAction';
 import { LoginUser } from '../../api/user.api';
 import { log } from 'console';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../../model/user.model';
 
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
 
 
-  const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserId:string,UserTypeId:string,UserTypeName:string ,UserFirstName:string,UserLastName:string} } }) => state.user.currentUser);
+  const currentUser = useSelector((state:{ user: { currentUser:User } }) => state.user.currentUser);
 //   const currentUser = useSelector((state: { userReducer: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.userReducer.currentUser);
    console.log(currentUser);
   
@@ -26,12 +27,12 @@ const Login = () => {
         const x = response;
         console.log(x); 
           console.log(x.data);
-          debugger
+          
         alert("success")
-        dispatch(setUser(UserEmail,UserPassword,x.data.id,x.data.userType.id,x.data.userType.description,x.data.firstName,x.data.lastName));
+        dispatch(setUser(x.data));
         sessionStorage.setItem("userId", x.data.id);
         
-            // navigate("/home");
+            navigate("/updateUser");
         
         }
         else

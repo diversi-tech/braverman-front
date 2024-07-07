@@ -1,8 +1,17 @@
+import { Project } from "./Project";
+import { UserType } from "./userType.model";
+
+
+
 export interface User {
-    email: string;
-    firstName: string;
-    lastName: string;
-    userType: {id:string,description:string};
-    password: string;
-  }
+  // constructor(
+    email: string,
+    password: string,
+    id: string,
+    typeUser:UserType,
+    firstName: string,
+    lastName: string,
+    projectsId: string[]
+  // ) {}
+}
   

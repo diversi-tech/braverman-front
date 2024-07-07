@@ -9,7 +9,8 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import { createBrowserRouter,RouterProvider,
+import {
+  createBrowserRouter, RouterProvider,
 } from "react-router-dom";
 import { Dashboard } from './Component/dashboard/dashboard.component';
 import { Bookkeeping } from './Component/bookkeeping/bookkeeping.component';
@@ -22,6 +23,7 @@ import Login from './Component/login/Login';
 import Nav from './Component/nav/nav.component';
 import { NotFound } from './Component/notFound/notFound.component';
 import ProjectsTable from './Component/customers/costumers.component';
+import UpdateUser from './Component/UpdateUser/UpdateUser';
 
 
 const router = createBrowserRouter([
@@ -31,44 +33,48 @@ const router = createBrowserRouter([
     children: [
       {
 
-        path:'login',
-        Component:Login
+        path: 'login',
+        Component: Login,
       },
       {
-        path:'home',
-        Component:Nav,
-        children:[
-          {
-            path: 'dashboard',
-            Component: Dashboard,
-          },{
-            path: 'leads',
-            Component: Leads,
-          },{
-            path: 'customers',
-            Component: ProjectsTable,
-          },{
-            path: 'staff',
-            Component: Staff,
-          }, {
-            path: 'tasks',
-            Component: Tasks,
-          },{
-            path: 'bookkeeping',
-            Component: Bookkeeping,
-          },
-        ]
+        path: 'updateUser',
+        Component: UpdateUser
       },
-     {
-        path:'not-found',
-        Component:NotFound
-      }
-      
-    
-        
- ] }]
-      
-                        
+      // {
+      //   path:'home',
+      //   Component:Nav,
+      //   children:[
+      {
+        path: 'dashboard',
+        Component: Dashboard,
+      }, {
+        path: 'leads',
+        Component: Leads,
+      }, {
+        path: 'customers',
+        Component: ProjectsTable,
+      }, {
+        path: 'staff',
+        Component: Staff,
+      }, {
+        path: 'tasks',
+        Component: Tasks,
+      }, {
+        path: 'bookkeeping',
+        Component: Bookkeeping,
+      },
+    ]
+  },
+  {
+    path: 'not-found',
+    Component: NotFound
+  }
+
+
+
+]
+
+
 );
 
 

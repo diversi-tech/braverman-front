@@ -61,7 +61,7 @@ const ShowUsers =  () => {
             <td>{user.password}</td>
             <td>
               {role === "admin" && <select
-                value={user.userType.description}
+                value={user.typeUser.description}
                 onChange={(e) => handleUserTypeChange(index, e.target.value)}
               >
                 {userTypesDescription.map((type) => (
@@ -71,7 +71,7 @@ const ShowUsers =  () => {
                 ))}
               </select>}
               {
-                role !== "admin" && user.userType.description
+                role !== "admin" && user.typeUser.description
               }
             </td>
           </tr>

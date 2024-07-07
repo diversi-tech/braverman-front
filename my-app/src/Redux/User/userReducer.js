@@ -1,6 +1,8 @@
+import { User } from "../../model/user.model";
+
 const initialState = {
   isAuthenticated: false,
-  currentUser: {UserEmail:'',UserPassword:'',UserId:'',UserTypeId:'',UserTypeName:'', UserFirstName: '', UserLastName: '' },
+  currentUser: {} ,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -12,6 +14,13 @@ const userReducer = (state = initialState, action) => {
 
         currentUser: action.payload,
       };
+      case 'UPDATE_CURRENT_USER':
+        return {
+          ...state,
+          isAuthenticated: true,
+  
+          currentUser: action.payload,
+        };
     default:
       return state;
   }
