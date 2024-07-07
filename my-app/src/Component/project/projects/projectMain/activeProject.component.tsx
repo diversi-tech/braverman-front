@@ -7,6 +7,8 @@ import { Enum } from '../../../../model/enum.model';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@material-ui/core';
 import { getStatusProject,filterByStatus } from "../../../../api/projectStatus.api";
 import MenuItem from '@material-ui/core/MenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
 
 const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) => {
   const editDialogRef = useRef<HTMLDivElement>(null);
@@ -27,6 +29,10 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
   const [filterName, setFilterName] = useState<string>('');
   const [filterEmail, setFilterEmail] = useState<string>('');
   const [filterPhone, setFilterPhone] = useState<string>('');
+  const dispatch = useDispatch();
+  const projectStatusReducer=useSelector((state: { projectStatus: { allStatusProject: { [key: string]: Enum[] } } }) => state.projectStatus);
+  
+ 
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -34,9 +40,16 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
         const response = await getProject();
         setProjects(response.data);
         setallProjects(response.data);
-        console.log("projects");
-        console.log(projects);
-        
+        let data;
+      if(projectStatusReducer.allStatusProject.length) {
+        data=projectStatusReducer.allStatusProject;
+      }
+      else{
+        const response1 = await getStatusProject();
+        dispatch(setAllStatusProject(response1.data));
+        data=response1.data;
+       }
+       setProjectStatus(data);
         setLoading(false); // Set loading to false once data is fetched
         const response1 = await getStatusProject();
         setProjectStatus(response1.data);
