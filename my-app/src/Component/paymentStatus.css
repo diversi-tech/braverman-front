@@ -1,0 +1,370 @@
+
+.uploads1{
+  /* העלאת חשבונית */
+  /* float: right; */
+  /* flex-wrap: wrap; */
+  margin-right: 10px; /* Adjust margin between checkbox and text */
+ 
+  display: flex;
+  white-space: nowrap;
+
+  /* position: absolute; */
+  left: 75.15%;
+  right: 18.69%;
+  top: 82.42%;
+  bottom: 15.53%;
+  font-family: 'Ping HL';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 80.1%;
+  /* or 8px */
+  text-align: center;
+  
+  color: #757576;
+  
+  
+  }
+.uploads2{/* העלאת חשבונית */
+  margin-right: 10px; /* Adjust margin between checkbox and text */
+ 
+  display: flex;
+  white-space: nowrap;
+    /* position: absolute; */
+    left: 65.51%;
+    right: 28.33%;
+    top: 82.42%;
+    bottom: 15.53%;
+    
+    font-family: 'Ping HL';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 80.1%;
+    /* or 8px */
+    text-align: center;
+    
+    color: #757576;
+    
+    
+    }
+    .uploads3{/* העלאת חשבונית */
+      margin-right: 10px; /* Adjust margin between checkbox and text */
+ 
+      display: flex;
+      white-space: nowrap;
+        /* position: absolute; */
+        left: 57.17%;
+        right: 36.67%;
+        top: 82.42%;
+        bottom: 15.53%;
+        
+        font-family: 'Ping HL';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 80.1%;
+        /* or 8px */
+        text-align: right;
+        
+        color: #757576;
+        
+        
+        }
+        .uploads4{/* העלאת חשבונית */
+          margin-right: 10px; /* Adjust margin between checkbox and text */
+ 
+          display: flex;
+          white-space: nowrap;
+            /* position: absolute; */
+            left: 47.78%;
+            right: 46.06%;
+            top: 82.42%;
+            bottom: 15.53%;
+            
+            font-family: 'Ping HL';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 80.1%;
+            /* or 8px */
+            text-align: right;
+            
+            color: #757576;
+            
+            
+            }
+.payments-container {
+  display: flex; /* Use flexbox to align items horizontally*/
+   /* flex-wrap: wrap;Wrap items to the next line if they exceed container width */
+  
+  
+  /* Rectangle 12 */
+position: absolute;
+left: 36.92%;
+right: 9.19%;
+top: 77.05%;
+bottom: 14.65%;
+
+background: #F1F7FF;
+border-radius: 15px;
+
+  
+}
+
+.payment-option {
+  /* margin-right: -50px; */
+  flex-wrap: wrap;
+   /* display: flex;/*Ensure each option is displayed inline */
+   /*  align-items: center; Align items vertically within each option */
+   margin-right:  40px; 
+   margin-top: 15px;
+  /* Adjust spacing between options */
+}
+
+#name2{/* תשלום 2/3 */
+  white-space: nowrap;
+  /* margin-right: 60px; Adjust margin between checkbox and text */
+float: left;
+    /* position: absolute; */
+    left: 65.51%;
+    right: 28.33%;
+    top: 80.37%;
+    bottom: 17.58%;
+    margin-left: 60px;
+    font-family: 'Ping HL';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 80.1%;
+    /* or 10px */
+    text-align: right;
+    margin-top: 10px;
+
+    color: #002046;
+    
+    
+    }
+    #name3{/* תשלום 3/3 */
+        /* /*position: absolute;*/ 
+        float: left;
+        margin-left: 60px;
+        left: 57.12%;
+        right: 36.72%;
+        top: 80.37%;
+        bottom: 17.58%;
+        white-space: nowrap;
+        /* margin-right: 60px; Adjust margin between checkbox and text */
+
+        font-family: 'Ping HL';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 80.1%;
+        /* or 10px */
+        text-align: right;
+        margin-top: 10px;
+
+        color: #002046;
+        
+        }
+        #name1{/* תשלום 1/3 מקדמה */
+          /* float: right; */
+          float: left;
+          margin-left: 60px;
+                      /* position: absolute; */
+                      left: 75.15%;
+                      right: 18.69%;
+                      top: 80.37%;
+                      bottom: 17.58%;
+                      white-space: nowrap;
+                       margin-left: 60px;/* Adjust margin between checkbox and text */
+
+                      font-family: 'Ping HL';
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 13px;
+                      line-height: 80.1%;
+                      /* or 10px */
+                      text-align: right;
+                      margin-top: 10px;
+
+                      color: #002046;
+                      }
+    #name4{/* אם יש תשלום נוסף */
+        /*position: absolute;*/
+        float: left;
+        margin-left: 60px;
+        left: 47.63%;
+        right: 46.21%;
+        top: 80.37%;
+        bottom: 17.58%;
+         margin-left: 60px; 
+        /* Adjust margin between checkbox and text */ 
+        white-space: nowrap;
+padding-left: 50px;
+        font-family: 'Ping HL';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 80.1%;
+        /* or 10px */
+        text-align: right;
+        margin-top: 10px;
+        color: #002046;
+        
+        }
+        #playments{/* תשלומים: */
+
+            position: absolute;
+            /* left: 83.59%; */
+            right: 10.25%;
+            top: 80.37%;
+            bottom: 17.58%;
+            margin-right: -60px;
+            font-family: 'Ping HL';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 80.1%;
+            /* or 10px */
+            text-align: right;
+            margin-left: 10px;
+            color: #002046;
+            margin-top: -25px;
+            }
+            .MuiIconButton-root {
+              padding: 0;
+          }
+            .checkbox2{/* Ellipse 117 */
+
+                box-sizing: border-box;
+                float: right;
+                margin-left: 10px; /* Adjust margin between checkbox and text */
+                margin-top: 10px;
+                /* position: absolute; */
+                width: 34px;
+                height: 34px;
+                left: 1434px;
+                top: 811px;
+                
+                background: #FFFFFF;
+                border: 1px solid #002046;
+                }
+                .checkbox3{/* Ellipse 118 */
+
+                  box-sizing: border-box;
+                  float: right;
+                  margin-left: 10px; /* Adjust margin between checkbox and text */
+                  margin-top: 10px;
+                  /* position: absolute; */
+                  width: 34px;
+                  height: 34px;
+                  left: 1268px;
+                  top: 811px;
+                  
+                  background: #FFFFFF;
+                  border: 1px solid #002046;
+                  }
+                .checkbox4{/* Ellipse 116 */
+
+                    box-sizing: border-box;
+                    float: right;
+                    margin-left: 10px; /* Adjust margin between checkbox and text */
+                    margin-top: 10px;
+                    /* /*position: absolute;*/ 
+                    width: 34px;
+                    height: 34px;
+                    left: 1625px;
+                    top: 811px;
+                    
+                    background: #FFFFFF;
+                    border: 1px solid #002046;
+                    }
+
+                    .checkbox1{/* Ellipse 116 */
+                      /* box-sizing: border-box; */
+                      float: right;
+                      margin-left: 10px; /* Adjust margin between checkbox and text */
+                      margin-top: 10px;
+                      display: inline-block;
+                      /* position: relative; */
+                      /* position: absolute;   */
+                      width: 34px;
+                      height: 34px;
+                      left: 1625px;
+                      top: 811px;
+                      background: #FFFFFF;
+                      border: 1px solid #002046 ;
+                      border-radius: 50%;
+                      cursor: pointer;
+
+                      }
+                      input{  
+                        outline: none; 
+                        border: none;
+                        /* opacity: 0; */
+                        cursor: pointer;
+                        position: absolute;
+                      }
+                   
+                      
+                        .checkbox{/* Ellipse 119 */
+                         box-sizing: border-box;
+                             float: right;
+                      margin-left: 10px; /* Adjust margin between checkbox and text */
+                      margin-top: 10px;
+                            /* position: absolute; */
+                            width: 34px;
+                            height: 34px;
+                            left: 1080px;
+                            top: 811px;
+                            
+                            background: #FFFFFF;
+                            border: 1px solid #002046;
+                            }
+                         
+
+/* Adjust styling for the file input and checkbox as needed */
+.payment-option input[type="file"],
+.payment-option input[type="checkbox"] {
+  margin-right: 5px; /* Example: Add margin between elements */
+}
+
+
+
+
+
+
+
+
+
+
+
+ .rounded-checkbox {
+  width:35px;
+  height: 35px;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid black;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: 15px; /* Adjust margin between checkbox and text */
+  /* margin-top: -5px; */
+/* margin-right: 20px; */
+ }  
+ CheckCircleOutlineTwoTone{  vertical-align: middle;
+
+  margin-left: 0; /* מוריד את המרווחים של ה-mui רוקם */
+  padding-right:0; /* מוריד את הריווחים של ה-mui רוקם */ }
+/* .rounded-checkbox:checked { */
+   /* width:"14"; height:"12"; viewBox:"0 0 14 12"; fill:"none"; xmlns:"http://www.w3.org/2000/svg"
+/*   appearance: auto; 
+  clip-path: circle(50% at 50% 50%); */
+  /* background-color: rgb(28, 28, 35); */
+/* } */
+
+
+
