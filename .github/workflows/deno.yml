@@ -3,20 +3,13 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # או שם של הבראנץ' הראשי שלך
-
+      -  gh-pages 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+	@@ -23,9 +19,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
