@@ -1,0 +1,52 @@
+
+
+.project-details {
+  padding-left: 50%;
+    background-color: #F1F7FF; /* צבע רקע תכלת */
+     /* פונט Ping HL */
+    font-size: 15px; /* גודל פונט 15px */
+    font-weight: 400; /* משקל פונט 400 */
+    width: 100%; /* רוחב קבוע */
+    height: 100%; /* גובה קבוע */
+    border-radius: 15px; /* פינות מעוגלות */
+    box-sizing: border-box; /* כולל מרווח פנימי בתוך גודל הרכיב */
+  }
+  
+  .project-details h2 {
+    margin-bottom: 10px; /* מרווח תחתון כותרת */
+  }
+  
+  .text  {
+    
+    margin-bottom: 20px; /* מרווח בין פריטי הרשימה */
+  }
+  .project-wrapper {
+    display: flex;
+    justify-content: space-between; /* כדי להפריד בין שתי הקומפוננטות לצדיהם */
+  }
+  
+  .project-column {
+    width: 48%; 
+  }
+  #projectDetails{
+    Width:767px;
+    Height:266px;
+    margin-right: 40px;
+  }
+  #projectDetail{
+    Width:
+221px;
+Height:
+362px;
+
+
+  }
+.buttonCircle{
+width: 38px;
+height: 38px;
+border-radius: 35px;
+text-align: center;
+  }
+  .project-column{
+    margin-right: 3%;
+  }

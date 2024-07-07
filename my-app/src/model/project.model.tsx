@@ -1,25 +1,33 @@
-import {Task} from "../model/task.model";
-import {Credential} from "./credential.model";
+import { Task } from "./task.model";
+import { Credential } from "./credential.model";
 import { Enum } from "./enum.model";
 
 export interface Project {
-      ProjectId:string
-      FirstName: string
-      LastName: string
-      BusinessName: string
-      Email:string
-      Source:string
-      Status:Enum
-      EndDate:Date
-      BalanceStatus: Enum
-      CreatedAt:Date
-      UpdatedAt:Date
-      TotalPrice: number
-      PricePaid: number
-     _balance:number
-     Tasks:Task[]
-     Credentials:Credential[]
-     UrlWordpress:string
-     UrlDrive:string
-     UrlFigma:string
+  projectId: string;
+  firstName: string;
+  lastName: string;
+  businessName: string;
+  email: string;
+  source: string;
+  status: Enum;
+  endDate: Date; // Assuming it's a string representation of a date
+  balanceStatus: {
+    id: string;
+    key: string;
+    value: string;
+  };
+  createdAt: Date; // Assuming it's a string representation of a date
+  updatedAt: Date; // Assuming it's a string representation of a date
+  totalPrice: number;
+  pricePaid: number;
+  balance: number;
+  tasks: Task[];
+  credentials: Credential[];
+  urlFigma: string;
+  urlDrive: string;
+  urlWordpress: string;
+  freeText: string;
 }
+
+
+
