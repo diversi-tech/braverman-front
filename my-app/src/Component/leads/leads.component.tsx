@@ -15,51 +15,67 @@ import {Project} from '../../model/project.model'
 import { getAllEnumFromServer } from '../../api/enum.api';
 import { Enum } from '../../model/enum.model';
 import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
-type NotesColumnProps = {
+
+
+interface NotesColumnProps {
   notes: Notes[];
-};
+  leadId: string;
+  addNote: (note: Notes) => void;
+}
+
 
  //Notes
- const NotesColumn: React.FC<NotesColumnProps> = ({ notes }) => {
+ const NotesColumn: React.FC<NotesColumnProps> = ({ notes, leadId, addNote }) => {
   const [showAllNotes, setShowAllNotes] = useState(false);
-  const [selectedNoteIndex, setSelectedNoteIndex] = useState<number | null>(null);
 
+  const handleNoteClick = async () => {
+    const allNotesContent = notes.map((note, index) => `<p key=${index}>${note.content}</p>`).join('');
+    const { value: formValues } = await Swal.fire({
+      title: 'הערות',
+      html: `
+        <div>
+          ${allNotesContent}
+          <input id="swal-input-content" class="swal2-input" placeholder="הערה חדשה">
+          <input id="swal-input-created-by" class="swal2-input" placeholder="נוצר על ידי">
+        </div>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'הוסף הערה',
+      cancelButtonText: 'ביטול',
+      preConfirm: () => {
+        const content = (document.getElementById('swal-input-content') as HTMLInputElement).value;
+        const createdBy = (document.getElementById('swal-input-created-by') as HTMLInputElement).value;
 
-  const toggleNotes = () => {
-    setShowAllNotes(!showAllNotes);
-  }; 
+        if (!content || !createdBy) {
+          Swal.showValidationMessage('יש למלא את כל השדות');
+          return false;
+        }
 
-  const toggleNoteDetails = (index: number) => {
-    setSelectedNoteIndex(selectedNoteIndex === index ? null : index);
+        return { content, createdBy };
+      }
+    });
+
+    if (formValues) {
+      const newNote: Notes = {
+        content: formValues.content,
+        id:'',
+        createdBy: formValues.createdBy,
+        timestamp: new Date(),
+        leadsId: leadId
+      };
+
+      addNote(newNote);
+    }
   };
 
   return (
-    <div>
-      <button onClick={toggleNotes} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-        {showAllNotes ? <FaChevronUp size={24} /> : <FaChevronDown size={24} />}
-      </button>
-      {showAllNotes && (
-        <ul style={{ padding: '0', listStyle: 'none', margin: 0 }}>
-          {notes.map((note: Notes, index: number) => (
-            <li 
-              key={index} 
-              style={{ borderBottom: '1px solid #ccc', padding: '10px', cursor: 'pointer' }} 
-              onClick={() => toggleNoteDetails(index)}
-            >
-              {note.content}
-              {selectedNoteIndex === index && (
-                <div style={{ marginTop: '10px' }}>
-                  <p><strong>Creator:</strong> {note.createdBy}</p>
-                  <p><strong>Due Date:</strong> </p>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div onClick={handleNoteClick} style={{ cursor: 'pointer' }}>
+      {notes.length > 0 ? notes[notes.length - 1].content : 'אין הערות'}
     </div>
   );
 };
+
 const Leads: React.FC = () => {
 
 const [leads, setLeads] = useState<Lead[]>([]);
@@ -683,7 +699,15 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
         Swal.fire('Error', 'השמירה נכשלה', 'error');
       }
      }
+     const addNote = (newNote: Notes) => {
+      setLeads(leads.map(lead => 
+          lead.id === newNote.leadsId 
+          ? { ...lead, notes: [...lead.notes, newNote] } 
+          : lead
+      ));
+  };
 
+  
       
       
   return (
@@ -737,7 +761,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
               {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
                   <td>
-                    <NotesColumn notes={lead.notes} />
+                    <NotesColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
                   </td>
                   <td
                     className="editable"

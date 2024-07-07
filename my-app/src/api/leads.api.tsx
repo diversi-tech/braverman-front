@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Lead } from '../model/leads.model';
 import { Project } from '../model/project.model';
+import { Notes } from '../model/notes.model';
 
 const convertDateStringToDateTime = (dateString: string | Date): string => {
   if (dateString instanceof Date) {
@@ -68,4 +69,7 @@ export const convertToProject = async (project: Project) => {
     }
     throw error;
   }
+}
+export const addNote = async (note: Notes) => {
+
 }
