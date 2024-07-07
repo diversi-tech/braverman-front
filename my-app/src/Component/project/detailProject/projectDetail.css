@@ -1,0 +1,66 @@
+.project-details {
+  background-color: #f1f7ff;
+  font-family: 'Ping HL', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: right;
+  width: 100%; /* שימוש ברוחב 100% כדי שיתאים לאזור התצוגה */
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.styleSection{
+  margin: -8%;
+  text-align: right;
+  width: 100%; /* שימוש ברוחב 100% כדי שיתאים לאזור התצוגה */
+  display: flex;
+  flex-direction: row; /* שימוש בפריסת flex עם כיוון רוחבי */
+  justify-content: space-between; /* מרווחים באופן אופטימלי בין הקטעים */
+}
+.styleSection .section {
+width: 80% /* חישוב רוחב בהתאם לגודל הדף */
+ 
+}
+
+.project-details h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.project-details p {
+  margin-bottom: 5px;
+}
+
+.project-details a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.project-details a:hover {
+  color: #0056b3;
+}
+
+.project-details button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.project-details .section:last-child {
+  margin-right: 0; /* להסיר את הרווח המרגיע בצד האחרון */
+}
+#descrption{
+  padding-right: 10%;
+
+}
+.section{
+  padding-right: 40%;
+}
+.editButton{
+  margin-top: -59%;
+  margin-right:47%;
+}
+.saveButton{
+  padding-top: 20%;
+}
+
