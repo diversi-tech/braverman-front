@@ -8,8 +8,7 @@ export const TaskCategories = () => {
     const handleCategoryAdded = () => {
       setRefreshCategories(!refreshCategories); // משנה את ה-state כדי להפעיל רינדור מחדש
     };
-    return(
-        <>
+    return(<>
 
         <ShowTasksCategory refresh={refreshCategories}/>
         <AddTaskCategory  onCategoryAdded={handleCategoryAdded}/>
