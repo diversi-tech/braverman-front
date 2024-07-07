@@ -57,6 +57,7 @@ export const convertToProject = async (project: Project) => {
     createdAt: new Date(project.createdAt).toISOString(),
     updatedAt: new Date(project.updatedAt).toISOString(),
     endDate: new Date(project.endDate).toISOString(),
+
   };
   console.log('Sending project data to server:', projectToConvert);
   try {

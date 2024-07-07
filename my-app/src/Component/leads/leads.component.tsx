@@ -370,12 +370,13 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           updatedAt: new Date(),
           totalPrice: formValues.totalPrice,
           pricePaid: formValues.pricePaid,
-          _balance: formValues.totalPrice - formValues.pricePaid,
+          balance: formValues.totalPrice - formValues.pricePaid,
           tasks: [],
           credentials: [],
           urlWordpress: formValues.UrlWordpress,
           urlDrive: formValues.urlDrive,
-          urlFigma: formValues.urlFigma
+          urlFigma: formValues.urlFigma,
+          freeText:"",
         };
   
 

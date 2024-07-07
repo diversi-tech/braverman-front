@@ -40,8 +40,7 @@ const AddUser: React.FC = () => {
     setPassword('');
   };
 
-  return (
-    <div>
+  return (<div>
       <h2>Add User </h2>
       <form onSubmit={(e) => { 
         e.preventDefault();
