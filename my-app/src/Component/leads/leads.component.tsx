@@ -308,8 +308,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           <input id="swal-input7" class="swal2-input" placeholder="מחיר ששולם">
           <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
           <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
-          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
-        `,
+          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">`,
         // <select id="swal-input11" class="swal2-input">
         //     ${statusOptions2.map(
         //       (status) =>
@@ -343,6 +342,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             Swal.showValidationMessage('יש למלא את כל השדות');
             return false;
           }
+  
         }
       });
       
@@ -357,25 +357,25 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
         
   
         const project: Project = {
-          ProjectId: '',
-          FirstName: formValues.firstName,
-          LastName: formValues.lastName,
-          BusinessName: formValues.businessName,
-          Email: formValues.email,
-          Source: formValues.source,
-          Status:  selectedStatus!,
-          EndDate: new Date(),
-          BalanceStatus: selectedBalanceStatus!,
-          CreatedAt: new Date(),
-          UpdatedAt: new Date(),
-          TotalPrice: formValues.totalPrice,
-          PricePaid: formValues.pricePaid,
+          projectId: '',
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          businessName: formValues.businessName,
+          email: formValues.email,
+          source: formValues.source,
+          status:  selectedStatus!,
+          endDate: new Date(),
+          balanceStatus: selectedBalanceStatus!,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          totalPrice: formValues.totalPrice,
+          pricePaid: formValues.pricePaid,
           _balance: formValues.totalPrice - formValues.pricePaid,
-          Tasks: [],
-          Credentials: [],
-          UrlWordpress: formValues.UrlWordpress,
-          UrlDrive: formValues.urlDrive,
-          UrlFigma: formValues.urlFigma
+          tasks: [],
+          credentials: [],
+          urlWordpress: formValues.UrlWordpress,
+          urlDrive: formValues.urlDrive,
+          urlFigma: formValues.urlFigma
         };
   
 

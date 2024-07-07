@@ -125,10 +125,10 @@ const Login = () => {
       </div>
       </div>
          {/* כפתור התחברות מהירה */}
-      <div>
+      <div >
         <button type="button" id='linkq' >
         <GoogleOAuthProvider clientId={clientId}>
-        <div>
+        <div id='login2'>
           <GoogleLogin
             onSuccess={onSuccess}
             onError={onFailure}

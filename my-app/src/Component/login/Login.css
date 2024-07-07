@@ -140,6 +140,9 @@ input::placeholder::placeholder {
     text-align: right;
     color: #002046;
 }
+#login2{
+    width: 400px;
+}
 
 /* @import url('https://www.typotheque.com/webfonts/tutorial');
 
