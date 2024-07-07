@@ -1,15 +1,11 @@
-name: Build and Test My App
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - gh-pages
-
+      -  gh-pages 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,9 +19,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./my-app
 
-      - name: Build the app
+      - name: Build project
         run: npm run build
+        working-directory: ./my-app
 
-      - name: Run tests
-        run: npm test
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./my-app/build
