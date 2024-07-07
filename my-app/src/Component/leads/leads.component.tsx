@@ -715,7 +715,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             <tbody>
               {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
-                  <td>
+                  <td style={{width:'17%'}}>
                     <NoteColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
                   </td>
                   <td>{lead.businessName}</td>

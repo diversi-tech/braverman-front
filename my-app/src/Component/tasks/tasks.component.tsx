@@ -47,7 +47,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, user }) => {
                     {filteredTasks.map(task => (
                         <li key={task.task_id}>
                             <h2>{task.task_name}</h2>
-                            <p>Status: {task.status}</p>
+                            <p>Status: {task.status.value}</p>
                             <p>Assigned to: {task.assigned_to}</p>
                             <p>Comment: {task.comment}</p>
                         </li>
