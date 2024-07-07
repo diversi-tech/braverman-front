@@ -6,7 +6,7 @@ import { SlArrowDown } from "react-icons/sl";
 import { HiChevronDown ,HiChevronRight,HiChevronLeft } from "react-icons/hi";
 import { SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
-import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject } from '../../api/leads.api';
+import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject, addNewNote } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -15,66 +15,9 @@ import {Project} from '../../model/project.model'
 import { getAllEnumFromServer } from '../../api/enum.api';
 import { Enum } from '../../model/enum.model';
 import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
+import { NoteColumn } from './note.component';
 
 
-interface NotesColumnProps {
-  notes: Notes[];
-  leadId: string;
-  addNote: (note: Notes) => void;
-}
-
-
- //Notes
- const NotesColumn: React.FC<NotesColumnProps> = ({ notes, leadId, addNote }) => {
-  const [showAllNotes, setShowAllNotes] = useState(false);
-
-  const handleNoteClick = async () => {
-    const allNotesContent = notes.map((note, index) => `<p key=${index}>${note.content}</p>`).join('');
-    const { value: formValues } = await Swal.fire({
-      title: 'הערות',
-      html: `
-        <div>
-          ${allNotesContent}
-          <input id="swal-input-content" class="swal2-input" placeholder="הערה חדשה">
-          <input id="swal-input-created-by" class="swal2-input" placeholder="נוצר על ידי">
-        </div>
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: 'הוסף הערה',
-      cancelButtonText: 'ביטול',
-      preConfirm: () => {
-        const content = (document.getElementById('swal-input-content') as HTMLInputElement).value;
-        const createdBy = (document.getElementById('swal-input-created-by') as HTMLInputElement).value;
-
-        if (!content || !createdBy) {
-          Swal.showValidationMessage('יש למלא את כל השדות');
-          return false;
-        }
-
-        return { content, createdBy };
-      }
-    });
-
-    if (formValues) {
-      const newNote: Notes = {
-        content: formValues.content,
-        id:'',
-        createdBy: formValues.createdBy,
-        timestamp: new Date(),
-        leadsId: leadId
-      };
-
-      addNote(newNote);
-    }
-  };
-
-  return (
-    <div onClick={handleNoteClick} style={{ cursor: 'pointer' }}>
-      {notes.length > 0 ? notes[notes.length - 1].content : 'אין הערות'}
-    </div>
-  );
-};
 
 const Leads: React.FC = () => {
 
@@ -412,7 +355,6 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
         console.log(selectedStatus);
         
         
-        const defaultEnum = { id: '', key: "", value: '' };
   
         const project: Project = {
           ProjectId: '',
@@ -700,11 +642,24 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
       }
      }
      const addNote = (newNote: Notes) => {
-      setLeads(leads.map(lead => 
-          lead.id === newNote.leadsId 
-          ? { ...lead, notes: [...lead.notes, newNote] } 
-          : lead
-      ));
+      addNewNote(newNote).then(x=>{
+        if(x.status===201){
+          setLeads(leads.map(lead => 
+            lead.id === newNote.leadId 
+            ? { ...lead, notes: [...lead.notes, newNote] } 
+            : lead
+        ));
+        }
+        
+       
+      })
+      .catch(x=>{
+        console.log("error");
+        
+      })
+      
+
+
   };
 
   
@@ -720,11 +675,11 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           <table className="table">
             <thead>
               <tr>
-                {(['הערות','טקסט חופשי', 'שם העסק', 'תאריך פניה אחרונה', 'תאריך יצירת הליד', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
+                {(['הערות', 'שם העסק', 'תאריך פניה אחרונה', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
                   <th key={col}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     {col}
-                    <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 ,}}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>
+                    <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>
                     </button>
                     </div>
                     <div style={{ display: "flex" }}>
@@ -761,19 +716,10 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
               {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
                   <td>
-                    <NotesColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
+                    <NoteColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
                   </td>
-                  <td
-                    className="editable"
-                    onClick={() => {
-                      handleChange(lead.id)
-                    }}
-                  >
-                    {lead.freeText}
-              </td>
                   <td>{lead.businessName}</td>
                   <td>{convertDateTimeToDate(lead.lastContacted)}</td>
-                  <td>{convertDateTimeToDate(lead.createdDate)}</td>
                   <td>{lead.source}</td>
                   <td>
                       <select
@@ -790,7 +736,8 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                   <td className='email'>{lead.email}</td>
                   <td className='phone'>{lead.phone}</td>
                   <td >{lead.lastName}</td>
-                  <td>{lead.firstName}</td>
+                  <td >{lead.firstName}</td>
+
                   <td>
                     {currentUserType === 'admin' &&
                       <button
@@ -804,7 +751,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             </tbody>
             <tfoot>
   <tr>
-    <td colSpan={12} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
+    <td colSpan={11} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>    
         {currentUserType === 'admin' && selectedLeadId && (
           <button className="convert-lead-button" onClick={handleConvertLeadToProject}>

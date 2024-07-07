@@ -214,7 +214,7 @@ const ProjectsTable: React.FC = () => {
                 <td>{`${project.first_name} ${project.last_name}`}</td>
                 <td>{project.business_name}</td>
                 <td>{project.email}</td>
-                <td>{project.status}</td>
+                {/* <td>{project.status}</td> */}
               </tr>
               {expandedRow === project.customer_id && (
                 <tr>

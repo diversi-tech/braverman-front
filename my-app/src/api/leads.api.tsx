@@ -70,6 +70,20 @@ export const convertToProject = async (project: Project) => {
     throw error;
   }
 }
-export const addNote = async (note: Notes) => {
-
+export const addNewNote = async (note: Notes) => {
+  const projectToConvert = {
+    ...note,
+    timestamp: new Date(note.timestamp).toISOString(),
+  };
+  try {
+    debugger
+    return await axios.post('https://localhost:7119/api/Note', projectToConvert);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Server responded with an error:', error.response?.data);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
+    throw error;
+  }
 }

@@ -1,4 +1,5 @@
-import { Status } from "../enum/statusCostumer.enum";
+//import { Status } from "../enum/statusCostumer.enum";
+import { Enum } from "./enum.model";
 
 export interface Costumer {
   customer_id: string;
@@ -6,7 +7,7 @@ export interface Costumer {
   last_name: string;
   business_name: string;
   email: string;
-  status: Status;
+  status: Enum;
   project_description: string;
   access_details: string;
   comments: string;
