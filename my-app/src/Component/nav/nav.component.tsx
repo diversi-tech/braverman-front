@@ -67,6 +67,7 @@ const Nav = () => {
           </header>
         </div>
         <img src={logo} alt="" id='img' />
+        
       </div>
       {/* <Outlet /> */}
     </>
