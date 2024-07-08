@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import 'primeicons/primeicons.css';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primeflex/primeflex.css';
@@ -24,8 +23,7 @@ import Nav from './Component/nav/nav.component';
 import { NotFound } from './Component/notFound/notFound.component';
 import ProjectsTable from './Component/customers/costumers.component';
 import UpdateUser from './Component/UpdateUser/UpdateUser';
-
-
+import {MainProject} from "./Component/project/projects/projectMain/mainProject.component";
 const router = createBrowserRouter([
   {
     path: '',
@@ -33,48 +31,43 @@ const router = createBrowserRouter([
     children: [
       {
 
-        path: 'login',
-        Component: Login,
+        path:'login',
+        Component:Login
       },
       {
         path: 'updateUser',
         Component: UpdateUser
       },
-      // {
-      //   path:'home',
-      //   Component:Nav,
-      //   children:[
-      {
-        path: 'dashboard',
-        Component: Dashboard,
-      }, {
-        path: 'leads',
-        Component: Leads,
-      }, {
-        path: 'customers',
-        Component: ProjectsTable,
-      }, {
-        path: 'staff',
-        Component: Staff,
-      }, {
-        path: 'tasks',
-        Component: Tasks,
-      }, {
-        path: 'bookkeeping',
-        Component: Bookkeeping,
-      },
-    ]
-  },
-  {
-    path: 'not-found',
-    Component: NotFound
-  }
-
-
-
-]
-
-
+          {
+            path: 'dashboard',
+            Component: Dashboard,
+          },{
+            path: 'leads',
+            Component: Leads,
+          },{
+            path: 'customers',
+            Component: MainProject,
+          },{
+            path: 'staff',
+            Component: Staff,
+          }, {
+            path: 'tasks',
+            Component: Tasks,
+          },{
+            path: 'bookkeeping',
+            Component: Bookkeeping,
+          }
+        ]},
+     {
+        path:'not-found',
+        Component:NotFound
+      }
+      
+    
+      
+ ] 
+  
+                        
 );
 
 

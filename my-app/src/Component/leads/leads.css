@@ -39,7 +39,7 @@
     font-family: 'Ping HL', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F1F7FF; /* Set background color for the whole page */
+    background-color: #F1F7FF; 
     color: #002046;
   }
   
@@ -48,7 +48,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px; 
+    margin-top: 30px; 
     margin-bottom: 50px; 
   }
   
@@ -60,11 +60,22 @@
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
   }
+  .lead-management-title{
+      display: flex;
+      align-items: center;
+      justify-content: center; /* This centers the title horizontally */
+      width: 100%; /* Makes sure the container takes the full width */
+      height: 100px; /* Adjust this height as needed */
+     /* margin-top: 0; */
+     height: 30px;
+     text-align: center;
+  }
   
   /* Table container styles */
   .table-container {
     width: 100%;
     overflow-x: auto; /* Enable horizontal scrolling if needed */
+    margin-top: 0;
   }
   
   /* Table styles */
@@ -84,7 +95,7 @@
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
-    height: 55px;
+    height: 50px;
     padding: 0px;
     color: #002046;
     border: none; /* No border inside cells */
@@ -92,17 +103,19 @@
     vertical-align: middle; /* אנכי אמצעי */
     word-break: break-word; /* למניעת קטיעת מילים */
   }
+
   
   /* Header cell */
   .table th {
     color: #002046;
     background-color: transparent; /* Transparent background for header */
     position: relative;
+    height: 21px;
   }
   
   /* Border between header cells */
   .table th:not(:last-child) {
-    border-right: 1px solid #D9D9D9;
+    /* border-right: 1px solid #D9D9D9; */
     padding: 8px;
   }
   
@@ -151,7 +164,6 @@
   
   .status-select {
     width: 100%;
-    height: 10%;
     border: none;
     background: none;
     font-size: inherit;
@@ -193,7 +205,8 @@
   }
   
   .swal2-input {
-    margin: 5px;
+    height: 80px;
+    margin: 4px;
   }
   
   .select {
@@ -312,4 +325,136 @@
   .notes-container.hide {
     animation: slideUp 0.3s ease forwards;
   }
+  .button1 {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: hsl(0, 0%, 100%);
+    border-radius: 10px;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    background-color: #ff0081;
+    box-shadow: rgba(233, 30, 99, 0.5);
+  }
+  
+  .button1::after,
+  .button1::before {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .button1::before {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    left: -2em;
+    right: -2em;
+    top: -2em;
+    bottom: -2em;
+    background-repeat: no-repeat;
+    background-image: radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, white 20%, transparent 20%),
+      radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+      /*  */
+        radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, white 20%, transparent 20%),
+      radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, #ff0081 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, white 20%, transparent 20%);
+    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+      10% 10%, 18% 18%, 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
+      20% 20%;
+    background-position: 18% 40%, 20% 31%, 30% 30%, 40% 30%, 50% 30%, 57% 30%,
+      65% 30%, 80% 32%, 15% 60%, 83% 60%, 18% 70%, 25% 70%, 41% 70%, 50% 70%,
+      64% 70%, 80% 71%;
+  }
+  
+  .button1:hover::before {
+    background-position: 5% 44%, -5% 20%, 7% 5%, 23% 0%, 37% 0, 58% -2%, 80% 0%,
+      100% -2%, -5% 80%, 100% 55%, 2% 100%, 23% 100%, 42% 100%, 60% 95%, 70% 96%,
+      100% 100%;
+    background-size: 0% 0%;
+    transition: background-position 0.5s ease-in-out,
+      background-size 0.75s ease-in-out;
+  }
+  #select_customer{
+    width: 63%;
+    /* height: 100%; */
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    
+  }
+  
+  .pagination button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    color: #000;
+
+  }
+  
+  .pagination button:disabled {
+    color: #ddd;
+    cursor: not-allowed;
+  }
+  
+ 
+  .icon {
+    font-size: 12px; 
+  }
+  .add-lead-button,
+.convert-lead-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: white;
+  color: #636363;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.add-lead-button span.add,
+.convert-lead-button span.add {
+  margin-left: 5px;
+}
+
+tfoot td {
+  text-align: right; /* Ensure content is aligned to the right */
+  padding: 10px 0;
+  color: #636363;
+}
+
+tfoot div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px; /* Space between the buttons */
+}
+#swal-input100{
+  width: 63%;
+  height: 50px;
+}
+#swal-input99{
+  width: 63%;
+  height: 80px;
+}
+
+  
   
