@@ -11,11 +11,7 @@ export interface Project {
   source: string;
   status: Enum;
   endDate: Date; // Assuming it's a string representation of a date
-  balanceStatus: {
-    id: string;
-    key: string;
-    value: string;
-  };
+  balanceStatus:Enum
   createdAt: Date; // Assuming it's a string representation of a date
   updatedAt: Date; // Assuming it's a string representation of a date
   totalPrice: number;
