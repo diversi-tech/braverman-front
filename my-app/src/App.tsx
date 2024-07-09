@@ -24,7 +24,7 @@ const App = () => {
  
 
   return (
-    <>
+    <>y
      <Nav></Nav>
       {/* <Outlet /> */}
       <Outlet />
