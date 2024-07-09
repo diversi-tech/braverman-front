@@ -5,4 +5,5 @@ export interface Task {
     status: TaskStatus; 
     assigned_to: string;
     comment: string;
+    levelUrgencyStatus:string;
   }
