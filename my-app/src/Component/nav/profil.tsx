@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography,Avatar } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import './profil.css'
-import gravatar from 'gravatar';
 // import { useLocation, useNavigate } from 'react-router-dom';
 
 // const type = sessionStorage.getItem("userType")
 const ProfileIcon: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
+const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -23,11 +22,10 @@ const ProfileIcon: React.FC = () => {
         console.log('User logged out');
         window.location.href = '../../login/Login.tsx';
     };
-    const gravatarUrl = gravatar.url(currentUser.UserEmail, { s: '200', d: 'retro' });
+
     return (
 
         <div id='imgprof'>
-                  <Avatar src={gravatarUrl} alt={currentUser.UserFirstName} />
             <IconButton
                 edge="end"
                 color="inherit"
@@ -56,7 +54,7 @@ const ProfileIcon: React.FC = () => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}>
-                    <Typography variant="h6">  {currentUser.UserFirstName}</Typography>
+                    <Typography variant="h6">Name:  {currentUser.UserFirstName}</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                     <Typography variant="subtitle1">Email: {currentUser.UserEmail}</Typography>
