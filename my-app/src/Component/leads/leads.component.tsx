@@ -6,7 +6,7 @@ import { SlArrowDown } from "react-icons/sl";
 import { HiChevronDown ,HiChevronRight,HiChevronLeft } from "react-icons/hi";
 import { SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
-import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject } from '../../api/leads.api';
+import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus,convertToProject, addNewNote } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -15,51 +15,10 @@ import {Project} from '../../model/project.model'
 import { getAllEnumFromServer } from '../../api/enum.api';
 import { Enum } from '../../model/enum.model';
 import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
-type NotesColumnProps = {
-  notes: Notes[];
-};
-
- //Notes
- const NotesColumn: React.FC<NotesColumnProps> = ({ notes }) => {
-  const [showAllNotes, setShowAllNotes] = useState(false);
-  const [selectedNoteIndex, setSelectedNoteIndex] = useState<number | null>(null);
+import { NoteColumn } from './note.component';
 
 
-  const toggleNotes = () => {
-    setShowAllNotes(!showAllNotes);
-  }; 
 
-  const toggleNoteDetails = (index: number) => {
-    setSelectedNoteIndex(selectedNoteIndex === index ? null : index);
-  };
-
-  return (
-    <div>
-      <button onClick={toggleNotes} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-        {showAllNotes ? <FaChevronUp size={24} /> : <FaChevronDown size={24} />}
-      </button>
-      {showAllNotes && (
-        <ul style={{ padding: '0', listStyle: 'none', margin: 0 }}>
-          {notes.map((note: Notes, index: number) => (
-            <li 
-              key={index} 
-              style={{ borderBottom: '1px solid #ccc', padding: '10px', cursor: 'pointer' }} 
-              onClick={() => toggleNoteDetails(index)}
-            >
-              {note.content}
-              {selectedNoteIndex === index && (
-                <div style={{ marginTop: '10px' }}>
-                  <p><strong>Creator:</strong> {note.createdBy}</p>
-                  <p><strong>Due Date:</strong> </p>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
 const Leads: React.FC = () => {
 
 const [leads, setLeads] = useState<Lead[]>([]);
@@ -350,24 +309,11 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
           <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
           <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
-        `,
-        // <select id="swal-input11" class="swal2-input">
-        //     ${statusOptions2.map(
-        //       (status) =>
-        //         `<option value="${status.key}">${status.value}</option>`
-        //     ).join('')}
-        //   </select>
-        //   <select id="swal-input12" class="swal2-input">
-        //     ${balanceStatusOptions.map(
-        //       (balanceStatus) =>
-        //         `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
-        //     ).join('')}
-        //   </select>
+           <input id="swal-input11" class="swal2-input" placeholder="טקסט חופשי">
 
+        `,
         focusConfirm: false,
         showCancelButton: true,
-
-        
         preConfirm: () => {
           const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
           const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
@@ -379,25 +325,34 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           const urlDrive = (document.getElementById('swal-input8') as HTMLInputElement).value;
           const urlFigma = (document.getElementById('swal-input9') as HTMLInputElement).value;
           const urlWordpress = (document.getElementById('swal-input10') as HTMLInputElement).value;
-  
+          const freeText = (document.getElementById('swal-input11') as HTMLInputElement).value;
+      
           if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
             Swal.showValidationMessage('יש למלא את כל השדות');
-            return false;
+            return null;
           }
+      
+          return {
+            firstName,
+            lastName,
+            email,
+            businessName,
+            source,
+            totalPrice,
+            pricePaid,
+            urlDrive,
+            urlFigma,
+            urlWordpress,
+            freeText
+
+          };
         }
       });
       
-  
       if (formValues) {
-        debugger
         const selectedStatus = statusOptions2.find(status => status.value === "TODO");
         const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
-        console.log(selectedBalanceStatus);
-        console.log(selectedStatus);
-        
-        
-        const defaultEnum = { id: '', key: "", value: '' };
-  
+      
         const project: Project = {
           projectId: '',
           firstName: formValues.firstName,
@@ -405,7 +360,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           businessName: formValues.businessName,
           email: formValues.email,
           source: formValues.source,
-          status:  selectedStatus!,
+          status: selectedStatus!,
           endDate: new Date(),
           balanceStatus: selectedBalanceStatus!,
           createdAt: new Date(),
@@ -415,12 +370,12 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           balance: formValues.totalPrice - formValues.pricePaid,
           tasks: [],
           credentials: [],
-          urlWordpress: formValues.UrlWordpress,
+          urlWordpress: formValues.urlWordpress,
           urlDrive: formValues.urlDrive,
           urlFigma: formValues.urlFigma,
-          freeText:"",
+          freeText: formValues.freeText
         };
-  
+      
 
           debugger
           const response = await convertToProject(project);
@@ -684,7 +639,28 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
         Swal.fire('Error', 'השמירה נכשלה', 'error');
       }
      }
+     const addNote = (newNote: Notes) => {
+      addNewNote(newNote).then(x=>{
+        if(x.status===201){
+          setLeads(leads.map(lead => 
+            lead.id === newNote.leadId 
+            ? { ...lead, notes: [...lead.notes, newNote] } 
+            : lead
+        ));
+        }
+        
+       
+      })
+      .catch(x=>{
+        console.log("error");
+        
+      })
+      
 
+
+  };
+
+  
       
       
   return (
@@ -697,11 +673,11 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           <table className="table">
             <thead>
               <tr>
-                {(['הערות','טקסט חופשי', 'שם העסק', 'תאריך פניה אחרונה', 'תאריך יצירת הליד', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
+                {(['הערות', 'שם העסק', 'תאריך פניה אחרונה', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
                   <th key={col}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     {col}
-                    <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 ,}}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>
+                    <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>
                     </button>
                     </div>
                     <div style={{ display: "flex" }}>
@@ -737,20 +713,11 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             <tbody>
               {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
-                  <td>
-                    <NotesColumn notes={lead.notes} />
+                  <td style={{width:'17%'}}>
+                    <NoteColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
                   </td>
-                  <td
-                    className="editable"
-                    onClick={() => {
-                      handleChange(lead.id)
-                    }}
-                  >
-                    {lead.freeText}
-              </td>
                   <td>{lead.businessName}</td>
                   <td>{convertDateTimeToDate(lead.lastContacted)}</td>
-                  <td>{convertDateTimeToDate(lead.createdDate)}</td>
                   <td>{lead.source}</td>
                   <td>
                       <select
@@ -767,7 +734,8 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                   <td className='email'>{lead.email}</td>
                   <td className='phone'>{lead.phone}</td>
                   <td >{lead.lastName}</td>
-                  <td>{lead.firstName}</td>
+                  <td >{lead.firstName}</td>
+
                   <td>
                     {currentUserType === 'admin' &&
                       <button
@@ -781,7 +749,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             </tbody>
             <tfoot>
   <tr>
-    <td colSpan={12} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
+    <td colSpan={11} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>    
         {currentUserType === 'admin' && selectedLeadId && (
           <button className="convert-lead-button" onClick={handleConvertLeadToProject}>
