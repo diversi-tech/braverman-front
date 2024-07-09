@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
-import logo from "../../assets/images/logo.png"
-
+import logo from '../../assets/images/logo.png'
 
 
 const Nav = () => {
