@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { Outlet, useNavigate } from 'react-router-dom';
 import Nav from './Component/nav/nav.component';
+import { TaskCategories } from './Component/adminScreen/taskCategories/taskCategoriesMain/taskCategories.component';
 
 const App = () => {
   const isAuthenticated = useSelector((state: { user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
@@ -26,7 +27,6 @@ const App = () => {
     <>
      <Nav></Nav>
       {/* <Outlet /> */}
-    
       <Outlet />
     </>
   );
