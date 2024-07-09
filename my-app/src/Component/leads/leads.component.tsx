@@ -308,24 +308,12 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           <input id="swal-input7" class="swal2-input" placeholder="מחיר ששולם">
           <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
           <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
-          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">`,
-        // <select id="swal-input11" class="swal2-input">
-        //     ${statusOptions2.map(
-        //       (status) =>
-        //         `<option value="${status.key}">${status.value}</option>`
-        //     ).join('')}
-        //   </select>
-        //   <select id="swal-input12" class="swal2-input">
-        //     ${balanceStatusOptions.map(
-        //       (balanceStatus) =>
-        //         `<option value="${balanceStatus.key}">${balanceStatus.value}</option>`
-        //     ).join('')}
-        //   </select>
+          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
+           <input id="swal-input11" class="swal2-input" placeholder="טקסט חופשי">
 
+        `,
         focusConfirm: false,
         showCancelButton: true,
-
-        
         preConfirm: () => {
           const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
           const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
@@ -337,25 +325,34 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           const urlDrive = (document.getElementById('swal-input8') as HTMLInputElement).value;
           const urlFigma = (document.getElementById('swal-input9') as HTMLInputElement).value;
           const urlWordpress = (document.getElementById('swal-input10') as HTMLInputElement).value;
-  
+          const freeText = (document.getElementById('swal-input11') as HTMLInputElement).value;
+      
           if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
             Swal.showValidationMessage('יש למלא את כל השדות');
-            return false;
+            return null;
           }
-  
+      
+          return {
+            firstName,
+            lastName,
+            email,
+            businessName,
+            source,
+            totalPrice,
+            pricePaid,
+            urlDrive,
+            urlFigma,
+            urlWordpress,
+            freeText
+
+          };
         }
       });
       
-  
       if (formValues) {
-        debugger
         const selectedStatus = statusOptions2.find(status => status.value === "TODO");
         const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
-        console.log(selectedBalanceStatus);
-        console.log(selectedStatus);
-        
-        
-  
+      
         const project: Project = {
           projectId: '',
           firstName: formValues.firstName,
@@ -363,7 +360,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           businessName: formValues.businessName,
           email: formValues.email,
           source: formValues.source,
-          status:  selectedStatus!,
+          status: selectedStatus!,
           endDate: new Date(),
           balanceStatus: selectedBalanceStatus!,
           createdAt: new Date(),
@@ -373,12 +370,12 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
           balance: formValues.totalPrice - formValues.pricePaid,
           tasks: [],
           credentials: [],
-          urlWordpress: formValues.UrlWordpress,
+          urlWordpress: formValues.urlWordpress,
           urlDrive: formValues.urlDrive,
           urlFigma: formValues.urlFigma,
-          freeText:"",
+          freeText: formValues.freeText
         };
-  
+      
 
           debugger
           const response = await convertToProject(project);
