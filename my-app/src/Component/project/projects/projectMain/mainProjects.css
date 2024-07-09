@@ -1,0 +1,62 @@
+body {
+  background-color: #F1F7FF;
+  
+}
+
+.main-project-container {
+  display: flex;
+  justify-content: center;
+  direction: rtl;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  /* מיקום בין הקומפוננטות יהיה בצד ימין */
+  align-items: flex-start;
+}
+
+.project-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  /* מרווח בין כל פרויקט */
+}
+
+/* .project-detail {
+  } */
+.projectFinish {
+  padding-right: 10px;
+
+}
+
+.customerProjects {
+  padding-left: 40px;
+  width: 1400px;
+
+}
+
+.circle {
+  Width: 34px;
+  Height:34px;
+  border-radius: 20px;
+  background-color: #F1F7FF;
+}
+
+#buttonProject {
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+ 
+  background-color: white;
+}
+.buttonCircle{
+
+  width: 38px;
+  height: 38px;
+  border-radius: 35px;
+  text-align: center;
+    }
+    

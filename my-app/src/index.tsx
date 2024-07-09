@@ -21,9 +21,7 @@ import Login from './Component/login/Login';
 import Nav from './Component/nav/nav.component';
 import { NotFound } from './Component/notFound/notFound.component';
 import ProjectsTable from './Component/customers/costumers.component';
-import {ProjectStatus} from './Component/projectStatus/projectStatus.component';
-
-
+import {MainProject} from "./Component/project/projects/projectMain/mainProject.component";
 const router = createBrowserRouter([
   {
     path: '',
@@ -45,7 +43,7 @@ const router = createBrowserRouter([
             Component: Leads,
           },{
             path: 'customers',
-            Component: ProjectsTable,
+            Component: MainProject,
           },{
             path: 'staff',
             Component: Staff,
@@ -55,10 +53,6 @@ const router = createBrowserRouter([
           },{
             path: 'bookkeeping',
             Component: Bookkeeping,
-          },
-          {
-            path: 'projectStatus',
-            Component: ProjectStatus,
           }
         ]},
       // },
