@@ -14,7 +14,7 @@ export const TaskCategories = () => {
 
   const handleCategoryAdded = () => {
     setRefreshCategories(!refreshCategories);
-    setShowAddCategory(false); // Close the add category component after adding a category
+    setShowAddCategory(false); 
   };
 
   return (

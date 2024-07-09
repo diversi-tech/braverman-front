@@ -13,21 +13,20 @@ const App = () => {
   //const isAuthenticated = sessionStorage.getItem('userId')
   const navigate = useNavigate();
 
-  // useEffect(() => {
+  useEffect(() => {
 
     
-  //   if (!sessionStorage.getItem("userId")) {
-  //     navigate('/Login');
-  //   }
-  // }, [navigate]);
+    if (!sessionStorage.getItem("userId")) {
+      navigate('/Login');
+    }
+  }, [navigate]);
 
  
 
   return (
     <>
-     {/* <Nav></Nav> */}
+     <Nav></Nav>
       {/* <Outlet /> */}
-    <TaskCategories/>
       <Outlet />
     </>
   );
