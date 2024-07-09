@@ -20,3 +20,13 @@ export const getProject = () => {
 export const deleteProject = (projectId: string) => {
     return axios.delete(`https://localhost:7119/api/Project/Delete/${projectId}`);
 }
+export const getProjectById=async (projectId:string)=>{
+      try{
+      const response= await axios.get(`https://localhost:7119/api/Project/GetById/${projectId}`);
+      return response.data;
+      }
+      catch (error) {
+          console.error('Error fetching user:', error);
+          return []; 
+        }
+  }

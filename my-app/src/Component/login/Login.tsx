@@ -37,7 +37,7 @@ const Login = () => {
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
         if (x.data.userType.description === "customer")
-          navigate("/projectStatus");
+          navigate("/showProjectStatus");
         else if (x.data.userType.description === "admin"){
           debugger
           navigate("/leads");}
