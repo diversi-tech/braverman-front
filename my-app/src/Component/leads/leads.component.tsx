@@ -547,8 +547,10 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                   <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                   <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                   <div>
-                  <select id="swal-input100" class="swal2-input class={getStatusClass(lead.Status2)}">
-                    ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
+                  <select id="swal-input100" class="swal2-input">
+                    ${statusOptions.map((status) => `
+                      <option value="${status.value}" ${status.value === lead.status ? 'selected' : ''}>${status.value}</option>
+                    `).join('')}
                   </select>
                   </div>
               `,
