@@ -82,7 +82,7 @@ input::placeholder::placeholder {
     text-align: center;
     color: #002046;
 }
-#l{
+.login{
     background-color: #ffffff;
     position:fixed;
     width: 1350px;
@@ -91,7 +91,7 @@ input::placeholder::placeholder {
     left: 93px;
     gap: 0px;
     border-radius: 15px 15px 15px 15px;
-    opacity: 0px;
+    /* opacity: 0px; */
 } 
 
 .ok {

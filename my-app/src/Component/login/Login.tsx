@@ -35,7 +35,6 @@ const Login = () => {
         alert("success");
         dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
-
         sessionStorage.setItem("userType", x.data.userType.description);
         if (x.data.userType.description === "customer")
           navigate("/projectStatus");
@@ -50,7 +49,6 @@ const Login = () => {
     } else {
       alert('נא להכניס מייל וסיסמא');
     }
-
   };
 
   const clientId = '412263291390-jkirnvmjnk6qbera6qcdq3k6cotqk9o7.apps.googleusercontent.com';
@@ -92,7 +90,7 @@ const Login = () => {
   };
 
   return (
-    <div id='l'>
+     <div className='login' >
     <p id='p'>התחברות למערכת</p>
     <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
       <div id='allin'>
