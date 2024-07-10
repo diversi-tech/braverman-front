@@ -18,7 +18,7 @@ export const AddTaskCategory: React.FC<{
     if (editCategory) {
       setCategoryName(editCategory.categoryName);
       setWeeksRequired(editCategory.weeksForExecution);
-      setIsMandatory(editCategory.stageId !== -1);
+      setIsMandatory(editCategory.sortOrder !== -1);
     }
   }, [editCategory]);
 
@@ -49,7 +49,8 @@ export const AddTaskCategory: React.FC<{
         taskCategoryId: editCategory ? editCategory.taskCategoryId : "",
         categoryName: categoryName,
         weeksForExecution: weeksRequired,
-        stageId: mandatoryValue
+        sortOrder: mandatoryValue,
+        stageId:editCategory ? editCategory.stageId : ""
       }
 
       if (editCategory) {

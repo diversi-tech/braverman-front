@@ -40,7 +40,7 @@ export const ShowTasksCategory: React.FC<{
                             <tr key={index}>
                                 <td>{category.categoryName}</td>
                                 <td>{category.weeksForExecution}</td>
-                                <td>{category.stageId !== null ? category.stageId : ''}</td>
+                                <td>{category.sortOrder !== null ? category.sortOrder : ''}</td>
                                 <td>
                                     <button onClick={() => onEditCategoryClick(category)}>ערוך</button>
                                 </td>
