@@ -24,7 +24,7 @@ export const getUsers = async () => {
 export const getUserById=async (userId:string)=>{
   debugger
     try{
-    const response= await axios.get(`https://localhost:7119/api/User/${userId}`);
+    const response= await axios.get(`https://localhost:7119/api/User/GetById?id=${userId}`);
     return [response.data];
     }
     catch (error) {

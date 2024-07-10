@@ -28,7 +28,7 @@ const endDate = dateObject.toISOString().split('T')[0];
             <p>סטטוס פרויקט:</p>
             {/* {שם קטגורית המשימה שהסטטוס שלה הוא הראשון שלא נעשה} */}
            <p style={{color:"gray"}}>{project.stat}</p>
-            <p> תאריך משואר לסיום:</p>
+            <p> תאריך משוער לסיום:</p>
             <p style={{color:"gray"}}>{endDate}</p>
         </Box>
 
