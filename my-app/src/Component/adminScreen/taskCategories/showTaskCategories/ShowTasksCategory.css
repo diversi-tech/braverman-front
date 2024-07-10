@@ -1,0 +1,57 @@
+.table-container {
+    margin: 0 auto !important;
+    width: 50% !important;
+    text-align: center !important;
+  }
+  
+  .styled-table {
+    width: 100%; /* קובע את רוחב הטבלה כך שתתפוס את כל רוחב הקונטיינר */
+    border-collapse: collapse;
+    font-size: 18px;
+    direction: rtl;
+  }
+  
+  .styled-table thead tr {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+    text-align: center; /* ממרכז את הטקסט */
+  }
+  
+  .styled-table tbody tr {
+    background-color: white; /* צבע הרקע של כל השורות בטבלה */
+  }
+  
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: white; /* צבע הרקע של שורות זוגיות */
+  }
+  
+  .styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #F1F7FF;
+  }
+  
+  .styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #F1F7FF;
+  }
+  
+  #tdAddCategory {
+    text-align: right;
+    color: gray;
+  }
+  
+  #textAddCategory {
+    margin-right: 3%;
+  }
+  
+  #addCategoryButton {
+    font-size: larger;
+    cursor: pointer;
+  }
+  
