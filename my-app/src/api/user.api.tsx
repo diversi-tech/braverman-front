@@ -55,5 +55,7 @@ export const updateUser=async(userId:string,newUser:User)=>
     console.log(userEmail);
     return axios.post(`${apiUrl}User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
 }
+
+
   
 
