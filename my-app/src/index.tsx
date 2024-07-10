@@ -16,6 +16,7 @@ import { NotFound } from './Component/notFound/notFound.component';
 import ProjectsTable from './Component/customers/costumers.component';
 import { MainProject } from './Component/project/projects/projectMain/mainProject.component';
 import Nav from './Component/nav/nav.component';
+import UserTable from './Component/user/user.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
@@ -36,6 +37,8 @@ root.render(
             <Route path="/customers" element={<ProjectsTable />} />
             <Route path="/main-project" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
+            <Route path='/user' element={<UserTable />} />
+
             </Route>
           </Routes>
         </HashRouter>
