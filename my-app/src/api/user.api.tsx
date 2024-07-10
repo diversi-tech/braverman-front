@@ -2,7 +2,8 @@ import axios from 'axios';
 import { User} from "../model/user.model";
 
 axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
-const apiUrl = process.env.REACT_APP_BRAVERMAN;
+// const apiUrl = process.env.REACT_APP_BRAVERMAN;
+ const apiUrl = "https://localhost:7119/api/"
 
 
 export const addUser = (user:User) => {
@@ -18,6 +19,7 @@ return axios.post(`${apiUrl}User/Login?UserEmail=${encodeURIComponent(userEmail)
 
 export const getUsers = async () => {
     try {
+      debugger
       const response = await axios.get(`${apiUrl}User/GetAll`);
       return [...response.data]; 
     } catch (error) {
