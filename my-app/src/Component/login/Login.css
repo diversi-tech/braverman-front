@@ -1,13 +1,15 @@
 #username {
-    top: 37.21%;
+    top: 39%;
     bottom: 54.37%;
+    border: none;
 
 }
 
 .textBox {
     position: absolute;
-    width: 779px;
-    left: calc(50% - 779px/2 + 0.5px);
+    width: 600px;
+    height: 55px;
+    left: calc(50% - 779px/2 + 70px);
     background: #F1F7FF;
     border-radius: 15px;
     font-family: 'tutorial';
@@ -17,6 +19,8 @@
     line-height: 36px;
     text-align: right;
     color: #002046;
+    align-content: center;
+    z-index: 1;
 }
 
 input::placeholder::placeholder {
@@ -25,16 +29,20 @@ input::placeholder::placeholder {
     height: 60px;
     left: calc(50% - 277px/2 + 235.5px);
     top: 378px;
-   
+
 }
+
 #password {
-    top: 48.23%;
+    top:50.5%;
     bottom: 43.35%;
+    border: none;
+    
+    
 }
 
 #submit {
-    left: calc(50% - 779px/2 + 5px);
-    top: 59.46%;
+    left: calc(50% - 779px/2 + 70px);
+    top: 62%;
     bottom: 32.12%;
 }
 
@@ -44,7 +52,7 @@ input::placeholder::placeholder {
     width: 81px;
     height: 28px;
     left: calc(50% - 81px/2 + 20.5px);
-    top: 27%;
+    top: 18%;
     z-index: 2;
     font-family: 'tutorial';
     font-style: normal;
@@ -52,15 +60,20 @@ input::placeholder::placeholder {
     font-size: 30px;
     line-height: 36px;
     text-align: center;
+   
 
+}
+#allin{
+    bottom: 10px;
+    align-content: center;
 }
 #p {
     /* v */
     position: absolute;
-    width: 446px;
+    width: 300px;
     height: 60px;
-    left: calc(50% - 446px/2);
-    top: 150px;
+    left: calc(50% - 340px/2);
+    top:80px;
     font-family: 'tutorial';
     font-style: normal;
     font-weight: 700;
@@ -69,6 +82,18 @@ input::placeholder::placeholder {
     text-align: center;
     color: #002046;
 }
+.login{
+    background-color: #ffffff;
+    position:fixed;
+    width: 1350px;
+    height: 600px;
+    top: 100px;
+    left: 93px;
+    gap: 0px;
+    border-radius: 15px 15px 15px 15px;
+    /* opacity: 0px; */
+} 
+
 .ok {
     /* Vector v*/
     position: absolute;
@@ -80,34 +105,49 @@ input::placeholder::placeholder {
     height: 50%;
     color: #002046;
 }
+
 #linkq {
     /* Rectangle 13 */
     position: absolute;
-    width: 452px;
-    left: calc(50% - 452px/2);
+    width: 400px;
+    left: calc(50% - 450px/2);
     top: 75.68%;
-    bottom: 15.9%;
+    bottom: 15%;
     background: #F1F7FF;
     border-radius: 15px;
+    border: none;
 }
+
+#login{
+    background-color: #ffffff;
+    width:100px;
+    height: 100px;
+    z-index: 0;
+}
+
 #q {
     /* התחברות מהירה */
     position: absolute;
     width: 200px;
     height: 60px;
-    left: calc(50% - 277px/2 - 41.5px);
-    top: 5px;
+    left: calc(50% - 277px/2);
+    top: -15px;;
     font-family: 'tutorial';
     font-style: normal;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 180%;
     line-height: 36px;
     text-align: right;
     color: #002046;
 }
-@import url('https://www.typotheque.com/webfonts/tutorial');
-body { font-family: 'tutorial';
-    border-radius: 15px;
-    border: none;
-    background-color: #ffffff
-}
+
+/* @import url('https://www.typotheque.com/webfonts/tutorial');
+
+body {
+    width:100%;
+    height: 100%;
+    gap: 0px;
+    border-radius: 15px 15px 15px 15px;
+    opacity: 0px;
+    /* border: none; */
+    /* background-color: #ffffff */

@@ -1,12 +1,10 @@
 import axios from 'axios';
-
-const serviceURL = `https://localhost:7119/`
-
+axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
+const apiUrl = process.env.REACT_APP_BRAVERMAN
 export const getAllEnumFromServer = async (int : Number) => {
-    let res = await axios.get(`${serviceURL}api/LookUpBase/GetAllLookUpBase?e=${int}`)
+    let res = await axios.get(`${apiUrl}api/LookUpBase/GetAllLookUpBase?e=${int}`)
     if (res) {
         console.log(res);
         return await res.data;
     }
-} 
-
+}

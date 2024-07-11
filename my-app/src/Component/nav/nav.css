@@ -5,7 +5,49 @@
 
 .nav {
     display: flex;
-    justify-content: center;
+    .user-table-container {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 20px;
+      }
+      
+      .table-title {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px; /* רווחים בין השורות */
+      }
+      
+      th, td {
+        border: none; /* אין קווים בין העמודות */
+        padding: 12px;
+        text-align: center;
+      }
+      
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+      }
+      
+      .table-row {
+        border-top: 1px solid #d9d9d9; /* קווי הפרדה בין השורות */
+      }
+      
+      .icon-cell {
+        text-align: center;
+      }
+      
+      .icon {
+        margin-right: 5px;
+      }
+        justify-content: center;
 
 }
 
@@ -35,7 +77,6 @@
 
 
 .active {
-
     border-bottom: 3px solid #002046;
 }
 
@@ -45,7 +86,7 @@
     top: 50.38px;
     left: 105px;
     gap: 0px;
-    opacity: 0px;
+    /* opacity: 0px; */
 
 }
 

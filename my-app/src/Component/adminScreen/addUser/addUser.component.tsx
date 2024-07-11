@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { User} from "../../../model/user.model";
 import { addUser } from "../../../api/user.api";
+import { UserType } from '../../../model/userType.model';
 const AddUser: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userType, setUserType] = useState({id:'',description:''});
+  // const [userType, setUserType] = useState<UserType>();
+  const [userType, setTypeUser] = useState({id:'',description:''});
+  const [projectsId, setProjectsId] = useState([]);
   const [password, setPassword] = useState('');
 
   const addNewUser=async(newUser:User)=>{
@@ -21,10 +24,12 @@ const AddUser: React.FC = () => {
   const handleAddUser = async() => {
     // יצירת אובייקט משתמש חדש
     const newUser: User = {
+      id:'',
       email,
       firstName,
       lastName,
-      userType,
+       userType,
+       projectsId,
       password
     };
 
@@ -36,12 +41,11 @@ const AddUser: React.FC = () => {
     setEmail('');
     setFirstName('');
     setLastName('');
-    setUserType({id:'',description:''});
+    setTypeUser({id:'',description:''});
     setPassword('');
   };
 
-  return (
-    <div>
+  return (<div>
       <h2>Add User </h2>
       <form onSubmit={(e) => { 
         e.preventDefault();
@@ -61,7 +65,7 @@ const AddUser: React.FC = () => {
         </div>
         <div>
           <label>User Type:</label>
-          <select value={userType.description} onChange={(e) => setUserType({...userType,description : e.target.value})} required>
+          <select value={userType.description} onChange={(e) => setTypeUser({...userType,description : e.target.value})} required>
             <option value="">Select User Type</option>
             <option value="admin">Admin</option>
             <option value="user">User</option>

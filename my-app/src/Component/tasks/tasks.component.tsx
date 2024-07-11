@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { Task } from '../../model/task.model'
 import React, { useEffect, useState } from 'react';
 import { getAllEnumFromServer } from "../../api/enum.api";
-import { getAllProjectFromServer } from "../../api/project.api";
 import { addTask, getAllTaskFromServer, UpDateTask } from "../../api/task.api";
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -27,6 +26,7 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import Swal from "sweetalert2";
 import { addNewTask } from "../../Redux/Task/taskAction";
 import { TaskStatus } from "../../enum/taskStatus.enum";
+import { getProject } from "../../api/project.api";
 export const Tasks = () => {
 
     //משתנים
@@ -176,9 +176,8 @@ export const Tasks = () => {
             }
             else {
                 debugger
-                const resAllproject = await getAllProjectFromServer();
-                console.log("resAllproject", resAllproject);
-                data = resAllproject;
+                const resAllproject = await getProject();
+                data = resAllproject.data;
                 dispatch(setAllProject(resAllproject));
                 debugger
             }
