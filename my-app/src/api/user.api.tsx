@@ -2,8 +2,7 @@ import axios from 'axios';
 import { User} from "../model/user.model";
 
 axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
-// const apiUrl = process.env.REACT_APP_BRAVERMAN;
- const apiUrl = "https://localhost:7119/api/"
+const apiUrl = process.env.REACT_APP_BRAVERMAN;
 
 
 export const addUser = (user:User) => {
