@@ -18,7 +18,6 @@ return axios.post(`${apiUrl}User/Login?UserEmail=${encodeURIComponent(userEmail)
 
 export const getUsers = async () => {
     try {
-      debugger
       const response = await axios.get(`${apiUrl}User/GetAll`);
       return [...response.data]; 
     } catch (error) {
@@ -56,7 +55,5 @@ export const updateUser=async(userId:string,newUser:User)=>
     console.log(userEmail);
     return axios.post(`${apiUrl}User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
 }
-
-
   
 
