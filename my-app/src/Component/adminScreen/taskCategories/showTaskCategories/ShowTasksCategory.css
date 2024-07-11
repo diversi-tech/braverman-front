@@ -1,57 +1,98 @@
-.table-container {
-    margin: 0 auto !important;
-    width: 50% !important;
-    text-align: center !important;
-  }
-  
-  .styled-table {
-    width: 100%; /* קובע את רוחב הטבלה כך שתתפוס את כל רוחב הקונטיינר */
-    border-collapse: collapse;
-    font-size: 18px;
-    direction: rtl;
-  }
-  
-  .styled-table thead tr {
-    background-color: white;
-    color: black;
-    font-weight: bold;
-  }
-  
-  .styled-table th,
-  .styled-table td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
-    text-align: center; /* ממרכז את הטקסט */
-  }
-  
-  .styled-table tbody tr {
-    background-color: white; /* צבע הרקע של כל השורות בטבלה */
-  }
-  
-  .styled-table tbody tr:nth-of-type(even) {
-    background-color: white; /* צבע הרקע של שורות זוגיות */
-  }
-  
-  .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #F1F7FF;
-  }
-  
-  .styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #F1F7FF;
-  }
-  
-  #tdAddCategory {
-    text-align: right;
-    color: gray;
-  }
-  
-  #textAddCategory {
-    margin-right: 3%;
-  }
-  
-  #addCategoryButton {
-    font-size: larger;
-    cursor: pointer;
-  }
-  
+.table-container-categories {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+  direction: rtl;
+}
+
+.styled-table thead tr {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border: 1px solid #dddddd;
+  text-align: center;
+}
+
+/* הגדרות לעמודה הרביעית */
+.styled-table th:nth-child(4),
+.styled-table td:nth-child(4) {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* הסתרת התא העליון */
+.styled-table th:nth-child(4) {
+  display: none;
+}
+
+.styled-table td:nth-child(4) {
+  background-color:#F1F7FF !important;
+}
+.styled-table tbody tr {
+  background-color: white;
+  position: relative;
+}
+
+/* הסרת פס תחתון בתא האחרון של העמודה הרביעית */
+.styled-table tbody tr:last-of-type td:nth-child(4) {
+  border-bottom: none !important;
+}
+
+/* הסתרת התא התחתון */
+.styled-table tbody tr:last-of-type td:nth-child(4) {
+  display: none;
+}
+
+
+#tdAddCategory {
+  text-align: right;
+  color: gray;
+}
+
+#textAddCategory {
+  margin-right: 3%;
+}
+
+#addCategoryButton {
+  font-size: larger;
+  cursor: pointer;
+}
+
+.styled-table .edit-icon-cell {
+  display: none;
+}
+
+.styled-table tbody tr:hover .edit-icon-cell {
+  display: table-cell;
+}
+
+.styled-table button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+}
+.edit-icon-cell{
+  background: none;
+}
+
+.styled-table button i {
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+/* הוספת הגדרת רוחב לעמודה האחרונה */
+.styled-table .col-edit {
+  width: 10%;
+}

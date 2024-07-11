@@ -24,15 +24,21 @@ export const ShowTasksCategory: React.FC<{
 
     return (
         <div id="bodyContainer">
-            <div className="table-container">
+            <div className="table-container-categories">
                 <h1>קטגוריות משימות</h1>
                 <table className="styled-table">
+                    <colgroup>
+                        <col />
+                        <col />
+                        <col />
+                        <col className="col-edit" />
+                    </colgroup>
                     <thead>
                         <tr>
                             <th>שם הקטגוריה</th>
                             <th>מס' שבועות נדרש לביצוע</th>
                             <th>מספר שלב</th>
-                            <th>עריכה</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,13 +47,15 @@ export const ShowTasksCategory: React.FC<{
                                 <td>{category.categoryName}</td>
                                 <td>{category.weeksForExecution}</td>
                                 <td>{category.sortOrder !== null ? category.sortOrder : ''}</td>
-                                <td>
-                                    <button onClick={() => onEditCategoryClick(category)}>ערוך</button>
+                                <td className="edit-icon-cell">
+                                    <button onClick={() => onEditCategoryClick(category)}>
+                                        <i className="material-icons edit-icon">edit</i>
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                         <tr>
-                            <td colSpan={4} id="tdAddCategory">
+                            <td colSpan={3} id="tdAddCategory">
                                 <span id="addCategoryButton" onClick={onAddCategoryClick}>+</span> 
                                 <span id="textAddCategory">להוספת קטגוריה</span>
                             </td>

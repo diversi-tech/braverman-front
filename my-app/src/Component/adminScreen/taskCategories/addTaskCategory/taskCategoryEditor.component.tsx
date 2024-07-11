@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { addCategory, updateCategory } from "../../../../api/taskCategory.api"; // ודא שיש לך פונקציה לעדכון קטגוריה ב-API
 import { TaskCategory } from "../../../../model/taskCategory.model";
-import './addTaskCategory.css';
+import './taskCategoryEditor.css';
 
 export const AddTaskCategory: React.FC<{ 
   onCategoryAdded: () => void, 
