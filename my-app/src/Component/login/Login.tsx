@@ -50,6 +50,7 @@ const Login = () => {
     const credentials = jwtDecode<GoogleCredentials>(googleUser.credential);
     console.log(credentials);
     LoginWithGoogle(credentials.email).then((response) => {
+      debugger
       if (response.status === 200) {
         const x = response;
         console.log(x);
@@ -57,8 +58,14 @@ const Login = () => {
         Swal.fire('Success', 'התחברת בהצלחה', 'success');
         dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
-        navigate("/home");
-      } else {
+        sessionStorage.setItem("userType", x.data.userType.description);
+        if(x.data.userType.description==="customer")
+          navigate("/projectStatus");
+        else if(x.data.userType.description==="admin")
+          navigate("/leads");
+        else
+          navigate("/leads");
+              } else {
         Swal.showValidationMessage('מייל וסיסמא לא קיימים');
       }
     })

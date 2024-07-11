@@ -5,7 +5,22 @@
 body{
   background: #F1F7FF;
 }
+/* @import url('https://webfonts.typotheque.com/WF-039261-012388.css');
 
+@font-face {
+  font-family: 'CustomFont';
+  src: url('https://webfonts.typotheque.com/WF-039261-012388.css');
+} */
+@import url('https://webfonts.typotheque.com/WF-039261-012388.css');
 
+@font-face {
+  font-family: 'CustomFont';
+  src: url('https://webfonts.typotheque.com/WF-039261-012388.css');
 
+font-style: normal;
+font-weight: normal;
+font-stretch: normal;
+font-variant: normal;
+color: aquamarine;
+}
 

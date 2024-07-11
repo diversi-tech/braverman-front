@@ -1,8 +1,14 @@
 import { TaskStatus } from "../enum/taskStatus.enum";
+import { TaskCategory } from "./taskCategory.model";
 export interface Task {
-    task_id: string;
-    task_name: string;
-    status: TaskStatus; 
-    assigned_to: string;
-    comment: string;
-  }
+  taskId: string;
+  taskName: string;
+  assignedTo: string;
+  comment: string;
+  projectId: string;
+  description: string;
+  taskCategory: TaskCategory
+  status: TaskStatus;
+  canBeApprovedByManager: null;
+  levelUrgencyStatus: string;
+}

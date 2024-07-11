@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         // children:[
           {
             path: 'dashboard',
-            Component: Dashboard,
+            Component: Bookkeeping,
           },{
             path: 'leads',
             Component: Leads,
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
           {
             path: 'projectStatus',
             Component: ProjectStatus,
-          }
+          },
         ]},
       // },
      {

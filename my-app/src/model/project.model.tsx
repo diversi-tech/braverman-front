@@ -4,8 +4,8 @@ import {Task} from "../model/task.model";
 import {Credential} from "./credential.model";
 
 export interface Project {
-      ProjectId:string
-      FirstName: string
+      projectId:string
+      firstName: string
       LastName: string
       BusinessName: string
       Email:string

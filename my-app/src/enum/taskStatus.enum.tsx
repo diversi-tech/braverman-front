@@ -1,5 +1,5 @@
-export enum TaskStatus {
-    TODO = 'TODO',
-    IN_PROGRESS = 'IN PROGRESS',
-    DONE = 'DONE',
-  }
+export interface TaskStatus {
+  id: string
+  key: string
+  value: string
+}

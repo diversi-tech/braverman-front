@@ -25,7 +25,7 @@ export const ShowTasksCategory : React.FC<{ refresh: boolean }> = ({ refresh }) 
       <h1>Task Categories</h1>
       <ul>
         {tasksCategories.map((category) => (
-          <li key={category.id}>{category.description}</li>
+          <li key={category.taskCategoryId}>{category.categoryName}</li>
         ))}
       </ul>
     </div>

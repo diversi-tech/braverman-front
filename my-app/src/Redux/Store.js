@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './User/userReducer';
 import leadsReducer from './Leads/leadsReducer';
+import taskReducer from './Task/taskReducer';
+import enumsReducer from './Enums/enumsReducer';
+import projectReducer from './Project/projectReducer';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     leads : leadsReducer,
-  }
+    Task : taskReducer,
+    LevelUrgencyStatus : enumsReducer,
+    Project : projectReducer,
+    }
 });
 
 export default store;

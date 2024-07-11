@@ -2,27 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import './leads.css';
-import { HiChevronDown ,HiSearch } from "react-icons/hi";
+import { HiChevronDown, HiSearch } from "react-icons/hi";
 import { GrUpdate } from "react-icons/gr";
-import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStatus } from '../../api/leads.api';
+import { addLead, convertToCustomer, getAllLeads, updateLeadChanges, filterByStatus } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
+import { setAllLeads, deleteLead, addLead2 } from '../../Redux/Leads/leadsAction';
 
 type NotesColumnProps = {
   notes: Notes[];
 };
 
- //Notes
- const NotesColumn: React.FC<NotesColumnProps> = ({ notes }) => {
+//Notes
+const NotesColumn: React.FC<NotesColumnProps> = ({ notes }) => {
   const [showAllNotes, setShowAllNotes] = useState(false);
   const [selectedNoteIndex, setSelectedNoteIndex] = useState<number | null>(null);
 
 
   const toggleNotes = () => {
     setShowAllNotes(!showAllNotes);
-  }; 
+  };
 
   const toggleNoteDetails = (index: number) => {
     setSelectedNoteIndex(selectedNoteIndex === index ? null : index);
@@ -36,9 +36,9 @@ type NotesColumnProps = {
       {showAllNotes && (
         <ul style={{ padding: '0', listStyle: 'none', margin: 0 }}>
           {notes.map((note: Notes, index: number) => (
-            <li 
-              key={index} 
-              style={{ borderBottom: '1px solid #ccc', padding: '10px', cursor: 'pointer' }} 
+            <li
+              key={index}
+              style={{ borderBottom: '1px solid #ccc', padding: '10px', cursor: 'pointer' }}
               onClick={() => toggleNoteDetails(index)}
             >
               {note.content}
@@ -68,7 +68,7 @@ type NotesColumnProps = {
 const statusOptions = [
   'ליד חדש',
   'שיחה ראשונית'
-  ,'פגישת אפיון',
+  , 'פגישת אפיון',
   'שליחת הצעת מחיר',
   'נשלחה הצעת מחיר',
   'שיחת מעקב',
@@ -78,7 +78,7 @@ const statusOptions = [
 
 const Leads: React.FC = () => {
 
-const [leads, setLeads] = useState<Lead[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -89,7 +89,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
   const [filters, setFilters] = useState({
     "שם פרטי": '',
     "שם משפחה": '',
-    "טלפון":'',
+    "טלפון": '',
     "אימייל": '',
     "מקור הליד": '',
     "תאריך יצירת הליד": '',
@@ -97,13 +97,13 @@ const [leads, setLeads] = useState<Lead[]>([]);
     "שם העסק": '',
     "טקסט חופשי": '',
     "הערות": '',
-    "סטטוס":''
+    "סטטוס": ''
   });
 
   const [filterInputsVisible, setFilterInputsVisible] = useState({
     "שם פרטי": false,
     "שם משפחה": false,
-    "טלפון":false,
+    "טלפון": false,
     "אימייל": false,
     "מקור הליד": false,
     "תאריך יצירת הליד": false,
@@ -138,38 +138,38 @@ const [leads, setLeads] = useState<Lead[]>([]);
         console.error('Error fetching leads:', error);
       }
     };
-  
+
     fetchData();
   }, [dispatch]);
-  
+
   //convert date
-  const convertDateTimeToDate = (date:any) => {
-  if (typeof date === 'string') 
-    if (date.includes('-')) {
-      date = new Date(date);
-    } else {
-      return date;
-    }
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); 
-  const day = String(date.getDate()).padStart(2, '0');
+  const convertDateTimeToDate = (date: any) => {
+    if (typeof date === 'string')
+      if (date.includes('-')) {
+        date = new Date(date);
+      } else {
+        return date;
+      }
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
 
-  return `${day}/${month}/${year}`;
-};
+    return `${day}/${month}/${year}`;
+  };
 
 
 
-const formatDateForInput = (date:any) => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0'); 
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-};
+  const formatDateForInput = (date: any) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
   const currentUserType = 'Manager';
-    
+
 
   const handleStatus2Change = (id: string, newStatus2: string) => {
     const updatedLeads = modifiedLeads!.map((lead) =>
@@ -178,11 +178,11 @@ const formatDateForInput = (date:any) => {
     setModifiedLeads(updatedLeads);
 
     const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
-           if (updatedIndex !== -1) {
-             const updatedChanges = [...leadsChanges!]; 
-             updatedChanges[updatedIndex] = true; 
-             setLeadsChanges(updatedChanges);
-           }
+    if (updatedIndex !== -1) {
+      const updatedChanges = [...leadsChanges!];
+      updatedChanges[updatedIndex] = true;
+      setLeadsChanges(updatedChanges);
+    }
   };
 
   const validateEmail = (email: string): boolean => {
@@ -199,14 +199,14 @@ const formatDateForInput = (date:any) => {
     debugger
     Swal.fire({
       title: 'הוספת ליד חדש',
-      html:'<input id="swal-input1" class="swal2-input" placeholder="שם פרטי" >'+
-        '<input id="swal-input2" class="swal2-input" placeholder="שם משפחה" >'+
-        '<input id="swal-input3" class="swal2-input" placeholder="טלפון" >'+
-        '<input id="swal-input4" class="swal2-input" placeholder="אמייל" >'+
-        '<input id="swal-input5" class="swal2-input" placeholder="מקור הליד" >'+
-        '<input id="swal-input8" class="swal2-input" placeholder="שם העסק">'+
+      html: '<input id="swal-input1" class="swal2-input" placeholder="שם פרטי" >' +
+        '<input id="swal-input2" class="swal2-input" placeholder="שם משפחה" >' +
+        '<input id="swal-input3" class="swal2-input" placeholder="טלפון" >' +
+        '<input id="swal-input4" class="swal2-input" placeholder="אמייל" >' +
+        '<input id="swal-input5" class="swal2-input" placeholder="מקור הליד" >' +
+        '<input id="swal-input8" class="swal2-input" placeholder="שם העסק">' +
         '<textarea id="swal-input9" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
-        focusConfirm: false,
+      focusConfirm: false,
       showCancelButton: true,
 
       preConfirm: () => {
@@ -214,37 +214,37 @@ const formatDateForInput = (date:any) => {
         const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
         const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
         const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
-        const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
+        const email = (document.getElementById('swal-input4') as HTMLSelectElement).value;
         const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
         const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
         const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
 
-        if (!firstName || !lastName || !phone || !email || !source || !businessName || !freeText ) {
+        if (!firstName || !lastName || !phone || !email || !source || !businessName || !freeText) {
           Swal.showValidationMessage('אנא מלא את כל השדות');
           return null;
         }
-  
+
         if (!validateEmail(email)) {
           Swal.showValidationMessage('כתובת האימייל לא תקינה');
           return null;
         }
-  
+
         if (!handlePhoneNumberChange(phone)) {
           Swal.showValidationMessage('מס טלפון לא תקין');
           return null;
         }
-  
+
         return {
-          id:"",
+          id: "",
           firstName: firstName,
           lastName: lastName,
-          phone:phone,
+          phone: phone,
           email: email,
           source: source,
           createdDate: new Date().toISOString(),
           lastContacted: new Date().toISOString(),
           businessName: businessName,
-          freeText:freeText,
+          freeText: freeText,
           notes: new Array<Notes>,
           status: 'ליד חדש'
         };
@@ -252,29 +252,29 @@ const formatDateForInput = (date:any) => {
     }).then(async (result) => {
       debugger
       console.log(result);
-      
+
       if (result.isConfirmed && result.value) {
 
         try {
-        const response =await addLead(result.value)
-        const newLead = response.data;
-        newLead.createdDate = new Date(newLead.createdDate);
-        newLead.lastContacted = new Date(newLead.lastContacted);
-        setModifiedLeads([...modifiedLeads!, newLead]);
-        setLeads([...leads, newLead]);
-        dispatch(addLead2(newLead))  
-        Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
-      }
+          const response = await addLead(result.value)
+          const newLead = response.data;
+          newLead.createdDate = new Date(newLead.createdDate);
+          newLead.lastContacted = new Date(newLead.lastContacted);
+          setModifiedLeads([...modifiedLeads!, newLead]);
+          setLeads([...leads, newLead]);
+          dispatch(addLead2(newLead))
+          Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
+        }
 
-      catch(error){
-        Swal.fire("error", 'שגיאה בהוספת הליד', 'error');
+        catch (error) {
+          Swal.fire("error", 'שגיאה בהוספת הליד', 'error');
 
+        }
       }
-    }
 
     });
   };
-  
+
   // פונקציה להמרת ליד ללקוח
   const handleConvertLead = async () => {
     const result = await Swal.fire({
@@ -291,15 +291,15 @@ const formatDateForInput = (date:any) => {
         cancelButton: 'button1'
       }
     });
-  
+
     if (result.isConfirmed) {
       debugger;
       const response = await convertToCustomer(selectedLeadId!);
       console.log(response);
-  
+
       if (response.status === 200) {
         const customer = response.data;
-  
+
         Swal.fire({
           title: 'עריכת לקוח',
           html: `
@@ -333,7 +333,7 @@ const formatDateForInput = (date:any) => {
             console.log('Edited Customer:', editedCustomer);
           }
         });
-  
+
         setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
         setModifiedLeads(modifiedLeads!.filter((lead) => lead.id !== selectedLeadId));
         setSelectedLeadId(null);
@@ -343,7 +343,7 @@ const formatDateForInput = (date:any) => {
       }
     }
   };
-  
+
 
   const getStatusClass = (status: string) => {
     switch (status.trim()) {
@@ -372,22 +372,22 @@ const formatDateForInput = (date:any) => {
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
     setFilters({ ...filters, [key]: e.target.value });
-};
+  };
 
- const filterStatus =(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
-  setFilters({ ...filters, [key]: e.target.value });
-  console.log(e.target.value);
-   filterByStatus(e.target.value).then
-   ((response) => {
-     if (response.status === 200) {
-      setFilters({ ...filters, [key]: e.target.value }); 
-      console.log(response.data);
-     }
-   })
-   .catch((error) => {  
-     console.log(error);
-   });
- }
+  const filterStatus = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+    setFilters({ ...filters, [key]: e.target.value });
+    console.log(e.target.value);
+    filterByStatus(e.target.value).then
+      ((response) => {
+        if (response.status === 200) {
+          setFilters({ ...filters, [key]: e.target.value });
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   const toggleFilterInput = (key: keyof typeof filterInputsVisible) => {
     setFilterInputsVisible({ ...filterInputsVisible, [key]: !filterInputsVisible[key] });
   };
@@ -395,7 +395,7 @@ const formatDateForInput = (date:any) => {
   const filteredLeads = leads.filter(lead => {
     debugger
     return Object.entries(filters).every(([key, value]) => {
-      if (!value) return true; 
+      if (!value) return true;
       debugger
       switch (key) {
         case 'שם פרטי':
@@ -418,30 +418,30 @@ const formatDateForInput = (date:any) => {
           return lead.businessName.toLowerCase().includes(value.toLowerCase());
         case 'טקסט חופשי':
           return lead.freeText.toLowerCase().includes(value.toLowerCase());
-   //   case 'הערות':
-         // return lead.notes.toLowerCase().includes(value.toLowerCase());
+        //   case 'הערות':
+        // return lead.notes.toLowerCase().includes(value.toLowerCase());
         default:
           return true;
       }
     });
   });
-  
+
   //change Action
   const handleActionToPerformChange = (id: string, newValue: string) => {
-     const updatedLeads = modifiedLeads!.map((lead) =>
-       lead.id === id ? { ...lead, freeText: newValue } : lead
-     );
-     setModifiedLeads(updatedLeads);
+    const updatedLeads = modifiedLeads!.map((lead) =>
+      lead.id === id ? { ...lead, freeText: newValue } : lead
+    );
+    setModifiedLeads(updatedLeads);
 
-     const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
-            if (updatedIndex !== -1) {
-              const updatedChanges = [...leadsChanges!]; 
-              updatedChanges[updatedIndex] = true; 
-              setLeadsChanges(updatedChanges);
-            }
+    const updatedIndex = modifiedLeads!.findIndex((l) => l.id === id);
+    if (updatedIndex !== -1) {
+      const updatedChanges = [...leadsChanges!];
+      updatedChanges[updatedIndex] = true;
+      setLeadsChanges(updatedChanges);
+    }
 
   };
-  const handleChange=(id:string)=>{
+  const handleChange = (id: string) => {
     Swal.fire({
       title: "הכנס טקסט חופשי",
       input: "textarea",
@@ -455,30 +455,31 @@ const formatDateForInput = (date:any) => {
         try {
           debugger
           console.log(action);
-          handleActionToPerformChange(id,action) 
+          handleActionToPerformChange(id, action)
           Swal.fire({
-              title: "המשימה שונתה בהצלחה",
-              icon: "success"      
+            title: "המשימה שונתה בהצלחה",
+            icon: "success"
           });
         } catch (error) {
           Swal.showValidationMessage(`
             Request failed: ${error}
           `);
-        }}
-    })
-      }
-
-      const handleEditLead =()=>{
-        console.log(currentUser);
-        
-        const lead = leads.find((l) => l.id === selectedLeadId);
-        if (!lead) {
-          Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
-          return;
         }
-          Swal.fire({
-            title: 'עריכת ליד',
-            html: `
+      }
+    })
+  }
+
+  const handleEditLead = () => {
+    console.log(currentUser);
+
+    const lead = leads.find((l) => l.id === selectedLeadId);
+    if (!lead) {
+      Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
+      return;
+    }
+    Swal.fire({
+      title: 'עריכת ליד',
+      html: `
               <div>
                 <input id="swal-input1" class="swal2-input" placeholder="שם פרטי" value="${lead.firstName}">
                 <input id="swal-input2" class="swal2-input" placeholder="שם משפחה" value="${lead.lastName}">
@@ -489,96 +490,96 @@ const formatDateForInput = (date:any) => {
                 <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                  <select id="swal-input10" class="swal2-input class={getStatusClass(lead.Status2)}">
-                  ${statusOptions.map ((status) => `<option value="${status}" ${lead.status === status ? 'selected' : ''}>${status}</option>`) }
+                  ${statusOptions.map((status) => `<option value="${status}" ${lead.status === status ? 'selected' : ''}>${status}</option>`)}
                 </select>
             `,
-            focusConfirm: false,
-            showCancelButton: true,
-        
-    
-          preConfirm: () => {
-            const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-            const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-            const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
-            const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
-            const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-            const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
-            const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-            const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
-            const status = (document.getElementById('swal-input10') as HTMLInputElement).value;
+      focusConfirm: false,
+      showCancelButton: true,
 
-            if (!firstName || !lastName || !phone || !email || !source  || !lastContacted || !businessName || !freeText || !status) {
-              Swal.showValidationMessage('אנא מלא את כל השדות');
-              return null;
-            }
-    
-            if (!validateEmail(email)) {
-              Swal.showValidationMessage('כתובת האימייל לא תקינה');
-              return null;
-            }
-    
-            if (!handlePhoneNumberChange(phone)) {
-              Swal.showValidationMessage('מס טלפון לא תקין');
-              return null;
-            }
-    
-            return {
-              id: lead.id,
-              firstName: firstName,
-              lastName: lastName,
-              phone:phone,
-              email: email,
-              source: source,
-              createdDate: lead.createdDate,
-              lastContacted: convertDateTimeToDate(lastContacted),
-              businessName: businessName,
-              freeText:freeText,
-              notes:lead.notes,
-              status: status
-            };
-          }
-        }).then((result) => {
-          debugger
-          if (result.isConfirmed && result.value) {
-            const updatedLead = result.value;
-            const updatedModifiedLeads = modifiedLeads!.map((l) => (l.id === lead.id ? updatedLead : l));
-            setModifiedLeads(updatedModifiedLeads);
-      
-            const updatedIndex = modifiedLeads!.findIndex((l) => l.id === lead.id);
-            if (updatedIndex !== -1) {
-              const updatedChanges = [...leadsChanges!]; 
-              updatedChanges[updatedIndex] = true;
-              setLeadsChanges(updatedChanges);
-            }
-      
-            Swal.fire('Success', 'הליד עודכן בהצלחה', 'success');
-          }
-        });
-      };
 
-     const save= async()=>{
-      debugger
-      try {
-        for (let i = 0; i < leadsChanges!.length; i++) {
-          if (leadsChanges![i]) {
-            const updatedLead = modifiedLeads![i];
-            const response = await updateLeadChanges(updatedLead,updatedLead.id);
-            console.log(response);      
-          }
+      preConfirm: () => {
+        const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
+        const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
+        const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
+        const email = (document.getElementById('swal-input4') as HTMLSelectElement).value;
+        const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
+        const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
+        const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
+        const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
+        const status = (document.getElementById('swal-input10') as HTMLInputElement).value;
+
+        if (!firstName || !lastName || !phone || !email || !source || !lastContacted || !businessName || !freeText || !status) {
+          Swal.showValidationMessage('אנא מלא את כל השדות');
+          return null;
         }
-        Swal.fire('Success', 'שמירה בוצעה בהצלחה', 'success');
-        setLeadsChanges(new Array<boolean>(leads.length).fill(false)); 
-        console.log(modifiedLeads);
-        
-        setLeads(modifiedLeads!)
-      } catch (error) {
-        console.error('Error saving leads:', error);
-        Swal.fire('Error', 'השמירה נכשלה', 'error');
-      }
-     }
 
-      
-      
+        if (!validateEmail(email)) {
+          Swal.showValidationMessage('כתובת האימייל לא תקינה');
+          return null;
+        }
+
+        if (!handlePhoneNumberChange(phone)) {
+          Swal.showValidationMessage('מס טלפון לא תקין');
+          return null;
+        }
+
+        return {
+          id: lead.id,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          email: email,
+          source: source,
+          createdDate: lead.createdDate,
+          lastContacted: convertDateTimeToDate(lastContacted),
+          businessName: businessName,
+          freeText: freeText,
+          notes: lead.notes,
+          status: status
+        };
+      }
+    }).then((result) => {
+      debugger
+      if (result.isConfirmed && result.value) {
+        const updatedLead = result.value;
+        const updatedModifiedLeads = modifiedLeads!.map((l) => (l.id === lead.id ? updatedLead : l));
+        setModifiedLeads(updatedModifiedLeads);
+
+        const updatedIndex = modifiedLeads!.findIndex((l) => l.id === lead.id);
+        if (updatedIndex !== -1) {
+          const updatedChanges = [...leadsChanges!];
+          updatedChanges[updatedIndex] = true;
+          setLeadsChanges(updatedChanges);
+        }
+
+        Swal.fire('Success', 'הליד עודכן בהצלחה', 'success');
+      }
+    });
+  };
+
+  const save = async () => {
+    debugger
+    try {
+      for (let i = 0; i < leadsChanges!.length; i++) {
+        if (leadsChanges![i]) {
+          const updatedLead = modifiedLeads![i];
+          const response = await updateLeadChanges(updatedLead, updatedLead.id);
+          console.log(response);
+        }
+      }
+      Swal.fire('Success', 'שמירה בוצעה בהצלחה', 'success');
+      setLeadsChanges(new Array<boolean>(leads.length).fill(false));
+      console.log(modifiedLeads);
+
+      setLeads(modifiedLeads!)
+    } catch (error) {
+      console.error('Error saving leads:', error);
+      Swal.fire('Error', 'השמירה נכשלה', 'error');
+    }
+  }
+
+
+
   return (
     <div className="page-container">
       <div className="lead-management-container">
@@ -589,35 +590,35 @@ const formatDateForInput = (date:any) => {
           <table className="table">
             <thead>
               <tr>
-                {(['הערות','טקסט חופשי', 'שם העסק', 'תאריך פניה אחרונה', 'תאריך יצירת הליד', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
+                {(['הערות', 'טקסט חופשי', 'שם העסק', 'תאריך פניה אחרונה', 'תאריך יצירת הליד', 'מקור הליד', 'סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
                   <th key={col}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    {col}
-                    <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 ,}}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>
-                    </button>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      {col}
+                      <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0, }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+                      </button>
                     </div>
                     <div style={{ display: "flex" }}>
-                      
-                    {filterInputsVisible[col] && (
-                   col === 'סטטוס' ? (
-                  <select
-                 value={filters[col]}
-                 onChange={(e) => filterStatus(e, col)}
-                style={{ width: "100%" }}>
-               <option value="">הכל</option> 
-              {statusOptions.map(option => (
-               <option key={option} value={option}>
-               {option}
-              </option>
-             ))}
-               </select>
-                    ) : 
-                        <input
-                          type="text"
-                          value={filters[col]}
-                          onChange={(e) => handleFilterChange(e, col)}
-                          style={{width:"100%"}}
-                        />
+
+                      {filterInputsVisible[col] && (
+                        col === 'סטטוס' ? (
+                          <select
+                            value={filters[col]}
+                            onChange={(e) => filterStatus(e, col)}
+                            style={{ width: "100%" }}>
+                            <option value="">הכל</option>
+                            {statusOptions.map(option => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        ) :
+                          <input
+                            type="text"
+                            value={filters[col]}
+                            onChange={(e) => handleFilterChange(e, col)}
+                            style={{ width: "100%" }}
+                          />
                       )}
                     </div>
                   </th>
@@ -639,22 +640,22 @@ const formatDateForInput = (date:any) => {
                     }}
                   >
                     {lead.freeText}
-              </td>
+                  </td>
                   <td>{lead.businessName}</td>
                   <td>{convertDateTimeToDate(lead.lastContacted)}</td>
                   <td>{convertDateTimeToDate(lead.createdDate)}</td>
                   <td>{lead.source}</td>
                   <td>
-                      <select
-                        value={lead.status}
-                        onChange={(e) => handleStatus2Change(lead.id, e.target.value)}
-                        className={getStatusClass(lead.status)}
-                      >
-                        {statusOptions.map((status) => (
-                          <option key={status} value={status} className='select'>{status}</option>
-                        ))}
-                      </select>
-                   
+                    <select
+                      value={lead.status}
+                      onChange={(e) => handleStatus2Change(lead.id, e.target.value)}
+                      className={getStatusClass(lead.status)}
+                    >
+                      {statusOptions.map((status) => (
+                        <option key={status} value={status} className='select'>{status}</option>
+                      ))}
+                    </select>
+
                   </td>
                   <td className='email'>{lead.email}</td>
                   <td className='phone'>{lead.phone}</td>
@@ -673,8 +674,8 @@ const formatDateForInput = (date:any) => {
             </tbody>
           </table>
         </div>
-        <td 
-        colSpan={10} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#636363' }}>
+        <td
+          colSpan={10} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#636363' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div>
               <button className="add-lead-button" onClick={handleAddLead} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
@@ -689,8 +690,8 @@ const formatDateForInput = (date:any) => {
                 </button>
               </div>
             )}
-          { currentUser && selectedLeadId && (
-              <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
+            {currentUser && selectedLeadId && (
+              <div className="add-lead-button-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <button className="convert-lead-button" onClick={handleEditLead} style={{ fontSize: 15, color: '#636363', backgroundColor: "white", border: 0 }}><GrUpdate />
                   <span className='add' style={{ fontSize: 15, color: '#636363' }}> עדכון ליד </span>
                 </button>
@@ -700,7 +701,7 @@ const formatDateForInput = (date:any) => {
 
         </td>
 
-    <button onClick={()=>save()}>save</button>
+        <button onClick={() => save()}>save</button>
       </div>
     </div>
   );
