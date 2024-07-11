@@ -4,6 +4,9 @@
     border: none;
 
 }
+html, body {
+    overflow-x: hidden ; 
+    }
 
 .textBox {
     position: absolute;
@@ -140,6 +143,12 @@ input::placeholder::placeholder {
     text-align: right;
     color: #002046;
 }
+.custom-google-login-button {
+    margin-left: 26%;
+    overflow: hidden;
+    max-width: 300px;
+}
+   
 
 /* @import url('https://www.typotheque.com/webfonts/tutorial');
 
