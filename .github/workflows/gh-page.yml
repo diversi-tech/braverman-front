@@ -18,7 +18,10 @@ concurrency:
 
 jobs:
   deploy:
-    permissions: write-all 
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -47,6 +50,7 @@ jobs:
         uses: actions/configure-pages@v3
         with:
           enablement: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
