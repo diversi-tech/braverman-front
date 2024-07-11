@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   deploy:
-    permissions: write-all  # ההרשאות צריכות להיות בתוך ה-job
+    permissions: write-all 
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
