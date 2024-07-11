@@ -16,7 +16,7 @@ const UserTable = () => {
     const [userTypes, setTypes]=useState<UserType[]>([])
     const [users, setUsers] = useState<User[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const usersPerPage = 8;
+    const usersPerPage = 7;
      const userState = useSelector((state: { user: { allUser: { [key: string]: User[] } } }) => state.user);
      let dispatch = useDispatch();
 
@@ -62,9 +62,7 @@ const UserTable = () => {
       <table>
         <thead>
           <tr className="table-header-row">
-          <th>סיסמה</th>
           <th>פרויקטים</th>
-
             <th>אימייל</th>
             <th>ניהול תפקיד</th>
             <th>שם משתמש</th>
@@ -75,7 +73,6 @@ const UserTable = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>   
-             <td>{user.password}</td>
              <td>   {user.projectsId.join(', ')}  <CiLock /></td>
             
               <td>{user.email}</td>
