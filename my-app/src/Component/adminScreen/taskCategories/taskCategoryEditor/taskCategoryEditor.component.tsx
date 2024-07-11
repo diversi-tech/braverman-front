@@ -3,11 +3,12 @@ import { addCategory, updateCategory } from "../../../../api/taskCategory.api"; 
 import { TaskCategory } from "../../../../model/taskCategory.model";
 import './taskCategoryEditor.css';
 
-export const AddTaskCategory: React.FC<{ 
-  onCategoryAdded: () => void, 
-  onClose: () => void, 
-  editCategory: TaskCategory |null
+export const AddTaskCategory: React.FC<{
+  onCategoryAdded: () => void,
+  onClose: () => void,
+  editCategory: TaskCategory | null
 }> = ({ onCategoryAdded, onClose, editCategory }) => {
+
   const [categoryName, setCategoryName] = useState('');
   const [weeksRequired, setWeeksRequired] = useState<number | undefined>(undefined);
   const [isMandatory, setIsMandatory] = useState(true);
@@ -18,7 +19,7 @@ export const AddTaskCategory: React.FC<{
     if (editCategory) {
       setCategoryName(editCategory.categoryName);
       setWeeksRequired(editCategory.weeksForExecution);
-      setIsMandatory(editCategory.sortOrder !== -1);
+      setIsMandatory(editCategory.sortOrder !== null);
     }
   }, [editCategory]);
 
@@ -49,18 +50,22 @@ export const AddTaskCategory: React.FC<{
         taskCategoryId: editCategory ? editCategory.taskCategoryId : "",
         categoryName: categoryName,
         weeksForExecution: weeksRequired,
-        sortOrder: mandatoryValue,
-        stageId:editCategory ? editCategory.stageId : ""
+        sortOrder: editCategory ? isMandatory ? editCategory.sortOrder != null ? editCategory.sortOrder : mandatoryValue : mandatoryValue : mandatoryValue,
+        stageId: editCategory ? editCategory.stageId : ""
       }
 
       if (editCategory) {
-        await updateCategory(categoryData.taskCategoryId,categoryData); // ודא שיש לך פונקציה כזו ב-API
+        console.log("update");
+        console.log(categoryData);
+
+
+        await updateCategory(categoryData.taskCategoryId, categoryData); // ודא שיש לך פונקציה כזו ב-API
         setMessage(`קטגוריה "${categoryData.categoryName}" עודכנה בהצלחה!`);
       } else {
         const result = await addCategory(categoryData);
         setMessage(`קטגוריה "${result.categoryName}" נוספה בהצלחה!`);
       }
-      
+
       setCategoryName('');
       setWeeksRequired(undefined);
       setIsMandatory(true);
