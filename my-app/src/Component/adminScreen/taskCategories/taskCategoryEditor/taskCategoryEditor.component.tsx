@@ -55,11 +55,7 @@ export const AddTaskCategory: React.FC<{
       }
 
       if (editCategory) {
-        console.log("update");
-        console.log(categoryData);
-
-
-        await updateCategory(categoryData.taskCategoryId, categoryData); // ודא שיש לך פונקציה כזו ב-API
+       await updateCategory(categoryData.taskCategoryId, categoryData); // ודא שיש לך פונקציה כזו ב-API
         setMessage(`קטגוריה "${categoryData.categoryName}" עודכנה בהצלחה!`);
       } else {
         const result = await addCategory(categoryData);
