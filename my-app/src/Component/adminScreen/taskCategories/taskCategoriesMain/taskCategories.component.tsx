@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AddTaskCategory } from "../addTaskCategory/addTaskCategory.component";
+import { AddTaskCategory } from "../taskCategoryEditor/taskCategoryEditor.component";
 import { ShowTasksCategory } from "../showTaskCategories/showTasksCategory.component";
 import './taskCategories.css';
 import { TaskCategory } from "../../../../model/taskCategory.model";
