@@ -4,8 +4,7 @@ import { Project } from '../model/project.model';
 import { Notes } from '../model/notes.model';
 
 axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
-// const apiUrl = process.env.REACT_APP_BRAVERMAN;
-const apiUrl = "https://localhost:7119/api/"
+const apiUrl = process.env.REACT_APP_BRAVERMAN;
 
 const convertDateStringToDateTime = (dateString: string | Date): string => {
   if (dateString instanceof Date) {
