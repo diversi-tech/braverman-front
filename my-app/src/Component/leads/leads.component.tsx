@@ -10,12 +10,14 @@ import { addLead, convertToCustomer, getAllLeads, updateLeadChanges,filterByStat
 import { Lead } from '../../model/leads.model';
 import { Notes } from '../../model/notes.model';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { setAllLeads,deleteLead,addLead2 } from '../../Redux/Leads/leadsAction';
+import { setAllLeads,deleteLead,addLead2,updateLead } from '../../Redux/Leads/leadsAction';
 import {Project} from '../../model/project.model'
 import { getAllEnumFromServer } from '../../api/enum.api';
 import { Enum } from '../../model/enum.model';
 import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
 import { NoteColumn } from './note.component';
+import ReactDOM from 'react-dom';
+import UpdateLead from './updateLead.component';
 
 
 
@@ -526,100 +528,34 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
       }
 
         const handleEditLead =()=>{
-          console.log(currentUser);
-          
-          const lead = leads.find((l) => l.id === selectedLeadId);
-          if (!lead) {
-            Swal.fire('שגיאה', 'הליד שנבחר לא נמצא', 'error');
-            return;
-          }
-          console.log(statusOptions);   
+            const lead = leads.find((l) => l.id === selectedLeadId);
+            if (!lead) {
+              Swal.fire('Error', 'Selected lead not found', 'error');
+              return;
+            }
+        
             Swal.fire({
               title: 'עריכת ליד',
-              html: `
-                <div>
-                  <input id="swal-input1" class="swal2-input" placeholder="שם פרטי" value="${lead.firstName}">
-                  <input id="swal-input2" class="swal2-input" placeholder="שם משפחה" value="${lead.lastName}">
-                  <input id="swal-input3" class="swal2-input" placeholder="טלפון" value="${lead.phone}">
-                  <input id="swal-input4" class="swal2-input" placeholder="אמייל" value="${lead.email}">
-                  <input id="swal-input5" class="swal2-input" placeholder="מקור הליד" value="${lead.source}">
-                  <input id="swal-input7" class="swal2-input" type="date" placeholder="תאריך פניה אחרונה" value="${formatDateForInput(lead.lastContacted)}">
-                  <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
-                  <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
-                  <div>
-                  <select id="swal-input100" class="swal2-input">
-                    ${statusOptions.map((status) => `
-                      <option value="${status.value}" ${status.value === lead.status ? 'selected' : ''}>${status.value}</option>
-                    `).join('')}
-                  </select>
-                  </div>
-              `,
-              focusConfirm: false,
-              showCancelButton: true,
-              inputAttributes: {
-                style:'height: 100px',
+              html: '<div id="update-lead-container"></div>',
+              showCloseButton: true,
+              showCancelButton: false,
+              showConfirmButton: false,
+              didOpen: () => {
+                const container = document.getElementById('update-lead-container');
+                if (container) {
+                  ReactDOM.render(
+                    <UpdateLead lead={lead} statusOptions={statusOptions} onUpdate={(updatedLead: Lead) => {
+                      const updatedLeads = leads.map(l => l.id === updatedLead.id ? updatedLead : l);
+                      setLeads(updatedLeads);
+                      dispatch(updateLead(updatedLead));
+                    }} />,
+                    container
+                  );
+                }
               },
-          
-      
-            preConfirm: () => {
-              const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-              const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-              const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
-              const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
-              const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-              const lastContacted = (document.getElementById('swal-input7') as HTMLInputElement).value;
-              const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-              const freeText = (document.getElementById('swal-input9') as HTMLInputElement).value;
-              const status = (document.getElementById('swal-input100') as HTMLInputElement).value;
-
-              if (!firstName || !lastName || !phone || !email || !source  || !lastContacted || !businessName || !freeText || !status) {
-                Swal.showValidationMessage('אנא מלא את כל השדות');
-                return null;
-              }
-      
-              if (!validateEmail(email)) {
-                Swal.showValidationMessage('כתובת האימייל לא תקינה');
-                return null;
-            }
-    
-            if (!handlePhoneNumberChange(phone)) {
-              Swal.showValidationMessage('מס טלפון לא תקין');
-              return null;
-            }
-    
-            return {
-              id: lead.id,
-              firstName: firstName,
-              lastName: lastName,
-              phone:phone,
-              email: email,
-              source: source,
-              createdDate: lead.createdDate,
-              lastContacted: convertDateTimeToDate(lastContacted),
-              businessName: businessName,
-              freeText:freeText,
-              notes:lead.notes,
-              status: status
-            };
-          }
-        }).then((result) => {
-          debugger
-          if (result.isConfirmed && result.value) {
-            const updatedLead = result.value;
-            const updatedModifiedLeads = leads!.map((l) => (l.id === lead.id ? updatedLead : l));
-            setLeads(updatedModifiedLeads);
-      
-            const updatedIndex = leads!.findIndex((l) => l.id === lead.id);
-            if (updatedIndex !== -1) {
-              const updatedChanges = [...leadsChanges!]; 
-              updatedChanges[updatedIndex] = true;
-              setLeadsChanges(updatedChanges);
-            }
-      
-            Swal.fire('Success', 'הליד עודכן בהצלחה', 'success');
-          }
-        });
-      };
+            });
+          };
+  
 
      const save= async()=>{
       debugger
@@ -715,7 +651,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             <tbody>
               {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
-                  <td style={{width:'17%'}}>
+                  <td style={{width:'17%',alignItems:'right'}}>
                     <NoteColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
                   </td>
                   <td>{lead.businessName}</td>

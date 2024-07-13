@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { TaskCategory } from "../../../../model/taskCategory.model";
 import { getTaskCategories } from "../../../../api/taskCategory.api";
 import './ShowTasksCategory.css';
+import React from "react";
 
 export const ShowTasksCategory: React.FC<{ 
   refresh: boolean, 

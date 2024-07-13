@@ -71,7 +71,7 @@ const UserTable = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {currentUsers.map((user) => (
             <tr key={user.id}>   
              <td>   {user.projectsId.join(', ')}  <CiLock /></td>
             
@@ -89,14 +89,14 @@ const UserTable = () => {
           onClick={handlePreviousPage} 
           disabled={currentPage === 1}
         > 
-         <SlArrowDown className="icon"/>
+         <SlArrowUp className="icon"/>
         </button>
         <button 
           className="pagination-button" 
           onClick={handleNextPage} 
           disabled={indexOfLastUser >= users.length}
         >
-         <SlArrowUp className="icon"/>
+         <SlArrowDown className="icon"/>
         </button>
       </div>
        
