@@ -87,7 +87,7 @@ const Login = () => {
     console.log('Login Failed');
   };
   return (
-    <div id='l'>
+    <div id='login'>
     <p id='p'>התחברות למערכת</p>
     <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
       <div id='allin'>
@@ -121,10 +121,10 @@ const Login = () => {
       </div>
       </div>
          {/* כפתור התחברות מהירה */}
-      <div>
+      <div >
         <button type="button" id='linkq' >
         <GoogleOAuthProvider clientId={clientId}>
-        <div>
+        <div id='login2'>
           <GoogleLogin
             onSuccess={onSuccess}
             onError={onFailure}
@@ -135,7 +135,8 @@ const Login = () => {
         </button>
       </div>
       </form>
-    </div>
+      
+    </div> 
       );
       }
       export default Login;
