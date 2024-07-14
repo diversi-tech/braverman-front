@@ -185,7 +185,7 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
         label="בחר סטטוס"
         fullWidth
         value={filterStatus}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>)  => setFilterStatus(e.target.value)}
+        onChange={(e) => setFilterStatus(e.target.value)}
       >
         {
           <MenuItem key={"allProject"} value={-1}>
@@ -211,31 +211,31 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
           className='filter'
           label="🔎 שם העסק"
           value={filterBusinessName}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>)  => setFilterBusinessName(e.target.value)}
+          onChange={(e) => setFilterBusinessName(e.target.value)}
         />
         <TextField
           className='filter'
           label="🔎 סוג הפרויקט"
           value={filterSource}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>)  => setFilterSource(e.target.value)}
+          onChange={(e) => setFilterSource(e.target.value)}
         />
         <TextField
           className='filter'
           label="🔎 שם איש קשר"
           value={filterName}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>)  => setFilterName(e.target.value)}
+          onChange={(e) => setFilterName(e.target.value)}
         />
         <TextField
           className='filter'
           label="🔎 מספר טלפון"
           value={filterPhone}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>)  => setFilterPhone(e.target.value)}
+          onChange={(e) => setFilterPhone(e.target.value)}
         />
         <TextField
           className='filter'
           label="🔎 אימייל"
           value={filterEmail}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>)  => setFilterEmail(e.target.value)}
+          onChange={(e) => setFilterEmail(e.target.value)}
         />
         
         <Button id="buttonClear" color="primary" onClick={handleClearFilters}>
@@ -381,6 +381,3 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
 }
 
 export default ActiveProjects;
-
-
-
