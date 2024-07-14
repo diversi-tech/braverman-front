@@ -1,5 +1,17 @@
+export const SET_ALL_USERS = 'SET_ALL_USERS';
 
-export const setUser = (UserEmail, UserPassword, UserId,UserTypeId,UserTypeName,UserFirstName,UserLastName) => {
-  debugger
-  return { type: 'SET_CURRENT_USER', payload: {UserEmail, UserPassword,UserId,UserTypeId,UserTypeName,UserFirstName,UserLastName,UserPassword, UserEmail  } };
-};
+
+export const setAllUsers = (users) => ({
+  type: SET_ALL_USERS,
+  payload: users,
+});
+
+export const updateUser = (updateUser) => ({
+  type: 'UPDATE_USER',
+  payload: updateUser,
+});
+
+export const addUser = (newUser) => ({
+  type: 'ADD_USER',
+  payload: newUser,
+});
