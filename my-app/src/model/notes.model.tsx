@@ -4,4 +4,5 @@ export interface Notes {
     createdBy:string;
     timestamp:Date;
     leadId:string
+    noteType:string
 }

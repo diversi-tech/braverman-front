@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector, } from 'react-redux';
-import { setUser } from '../../Redux/User/userAction';
+// import { setUser } from '../../Redux/User/userAction';
 import { log } from 'console';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
@@ -17,8 +17,8 @@ interface GoogleCredentials {
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
-  const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
-  console.log(currentUser);
+  // const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
+  // console.log(currentUser);
   const dispatch = useDispatch();
   const nav = useNavigate()
   const navigate = useNavigate();
@@ -33,11 +33,15 @@ const Login = () => {
         console.log(x);
         console.log(x.data);
         alert("success");
-        dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
+        // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
-        if (x.data.userType.description === "customer")
-          navigate("/showProjectStatus");
+        sessionStorage.setItem("firstName", x.data.firstName);
+        sessionStorage.setItem("lastName", x.data.lastName);
+        sessionStorage.setItem("email", x.data.email);
+        if (x.data.userType.description === "customer"){
+          debugger
+          navigate("/projectStatus");}
         else if (x.data.userType.description === "admin"){
           debugger
           navigate("/leads");}
@@ -62,12 +66,13 @@ const Login = () => {
         console.log(x);
         console.log(x.data);
         Swal.fire('Success', 'התחברת בהצלחה', 'success');
-        dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
+        // dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
 
-        if (x.data.userType.description === "customer")
-          navigate("/projectStatus");
+        if (x.data.userType.description === "customer"){
+          debugger
+          navigate("/projectStatus");}
         else if (x.data.userType.description === "admin"){
           debugger
           navigate("/leads");}
@@ -90,7 +95,7 @@ const Login = () => {
   };
 
   return (
-    <div id='l'>
+     <div className='login' >
     <p id='p'>התחברות למערכת</p>
     <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
       <div id='allin'>
@@ -128,13 +133,13 @@ const Login = () => {
       <div >
         <button type="button" id='linkq' >
         <GoogleOAuthProvider clientId={clientId}>
-        <div id='login2'>
+        <div className="custom-google-login-button">
           <GoogleLogin
             onSuccess={onSuccess}
             onError={onFailure}
           // buttonText="התחברות עם Google"
           />
-        </div>
+          </div>
       </GoogleOAuthProvider>
         </button>
       </div>

@@ -1,8 +1,12 @@
 import axios from 'axios';
+import { TaskCategory } from '../model/taskCategory.model';
+
+axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
+const apiUrl = process.env.REACT_APP_BRAVERMAN
 
 export const getTaskCategories = async () => {
     try {
-        const response = await axios.get('https://localhost:7119/api/TaskCategory/getAll');
+        const response = await axios.get(`${apiUrl}TaskCategory`);
         return [...response.data];
     } catch (error) {
         console.error('Error fetching task categories:', error);
@@ -10,16 +14,31 @@ export const getTaskCategories = async () => {
     }
 };
 
-
-
-export const addCategory = async (taskCategory: string) => {
-
-
+export const addCategory = async (taskCategory: TaskCategory) => {
     try {
-        const response=await axios.post(`https://localhost:7119/api/TaskCategory/addTaskCategory`,taskCategory);
+        const response=await axios.post(`${apiUrl}TaskCategory`,taskCategory);
         return response.data; 
       } catch (error) {
         console.error('Error adding task category:', error);
+        throw error;
+      }
+}
+
+export const updateCategory = async (categoryId:string, taskCategory: TaskCategory) => {
+    try {
+        const response=await axios.put(`${apiUrl}TaskCategory/${categoryId}`,taskCategory);
+        return response.data; 
+      } catch (error) {
+        console.error('Error update task category:', error);
+        throw error;
+      }
+}
+export const deleteCategory = async (categoryId:string) => {
+    try {
+        const response=await axios.delete(`${apiUrl}TaskCategory/${categoryId}`);
+        return response.data; 
+      } catch (error) {
+        console.error('Error delete task category:', error);
         throw error;
       }
 }
