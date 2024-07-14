@@ -9,6 +9,7 @@
   border-collapse: collapse;
   font-size: 18px;
   direction: rtl;
+  border-top: 1px solid #F1F7FF;
 }
 
 .styled-table thead tr {
@@ -95,4 +96,10 @@
 /* הוספת הגדרת רוחב לעמודה האחרונה */
 .styled-table .col-edit {
   width: 10%;
+}
+
+#aa{
+  border: none !important;
+  background-color: #F1F7FF !important;
+
 }
