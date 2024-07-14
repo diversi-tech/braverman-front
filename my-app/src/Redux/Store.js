@@ -10,7 +10,6 @@ const store = configureStore({
     leads : leadsReducer,
     statusLead: statusLeadReducer,
     projectStatus:statusProjectReducer,
-
   }
 });
 

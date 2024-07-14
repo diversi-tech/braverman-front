@@ -53,7 +53,8 @@ const NotesColumn: React.FC<NotesColumnProps> = ({ notes, leadId, addNote }) => 
         id: '',
         createdBy: formValues.createdBy,
         timestamp: new Date(),
-        leadId: leadId
+        leadId: leadId,
+        noteType:''
       };
       addNote(newNote);
     }

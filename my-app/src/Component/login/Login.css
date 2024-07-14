@@ -4,6 +4,9 @@
     border: none;
 
 }
+/* html, body {
+    overflow-x: hidden ; 
+    } */
 
 .textBox {
     position: absolute;
@@ -20,7 +23,7 @@
     text-align: right;
     color: #002046;
     align-content: center;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 input::placeholder::placeholder {
@@ -53,7 +56,7 @@ input::placeholder::placeholder {
     height: 28px;
     left: calc(50% - 81px/2 + 20.5px);
     top: 18%;
-    z-index: 2;
+    /* z-index: 2; */
     font-family: 'tutorial';
     font-style: normal;
     font-weight: 700;
@@ -82,7 +85,7 @@ input::placeholder::placeholder {
     text-align: center;
     color: #002046;
 }
-#l{
+.login{
     background-color: #ffffff;
     position:fixed;
     width: 1350px;
@@ -91,7 +94,7 @@ input::placeholder::placeholder {
     left: 93px;
     gap: 0px;
     border-radius: 15px 15px 15px 15px;
-    opacity: 0px;
+    /* opacity: 0px; */
 } 
 
 .ok {
@@ -118,13 +121,19 @@ input::placeholder::placeholder {
     border: none;
 }
 
-#login{
-    background-color: #ffffff;
-    width:100px;
-    height: 100px;
-    z-index: 0;
+#login{width: 90%;
+    /* height: 90%; */
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    padding: 20%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing:90%;
+    margin-left: 5%;
+    margin-top: 2.5%;
+    
+    
 }
-
+    
 #q {
     /* התחברות מהירה */
     position: absolute;
@@ -140,6 +149,12 @@ input::placeholder::placeholder {
     text-align: right;
     color: #002046;
 }
+.custom-google-login-button {
+    margin-left: 26%;
+    overflow: hidden;
+    max-width: 300px;
+}
+   
 
 /* @import url('https://www.typotheque.com/webfonts/tutorial');
 
