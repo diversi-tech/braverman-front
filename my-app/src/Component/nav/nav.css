@@ -83,13 +83,14 @@
 #img {
     width: 179px;
     height: 38px;
-    top: 50.38px;
+    top: 55px;
     left: 105px;
+    margin: 5px 0px;
+    align-items:center ;
     gap: 0px;
-    /* opacity: 0px; */
+    opacity: 0px;
 
 }
-
 #imgandnav {
     direction: rtl;
     display: flex;

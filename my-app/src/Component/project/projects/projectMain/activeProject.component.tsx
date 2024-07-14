@@ -381,6 +381,3 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
 }
 
 export default ActiveProjects;
-
-
-
