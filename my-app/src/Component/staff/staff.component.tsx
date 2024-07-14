@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const Staff = () => {
-    const role = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
+    const role = sessionStorage.getItem("userType")
 const navigate=useNavigate();
 useEffect(() => {
     if (role !== "admin") {
