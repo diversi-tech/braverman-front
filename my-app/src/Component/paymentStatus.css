@@ -99,7 +99,8 @@
    /* flex-wrap: wrap;Wrap items to the next line if they exceed container width */
   
   
-  /* Rectangle 12 */
+/* Rectangle 12 */
+
 position: absolute;
 left: 36.92%;
 right: 9.19%;
@@ -248,7 +249,7 @@ padding-left: 50px;
                 left: 1434px;
                 top: 811px;
                 
-                background: #FFFFFF;
+                /* background: #FFFFFF; */
                 border: 1px solid #002046;
                 }
                 .checkbox3{/* Ellipse 118 */

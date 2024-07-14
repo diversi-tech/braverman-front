@@ -1,10 +1,14 @@
-import { combineReducers, createStore } from 'redux';
-import userReducer from './userReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './User/userReducer';
+import leadsReducer from './Leads/leadsReducer';
+import statusLeadReducer from './enum/statusLeadReducer';
 
-const rootReducer = combineReducers({
-  user: userReducer 
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+    leads : leadsReducer,
+    statusLead: statusLeadReducer
+  }
 });
 
-const store = createStore(rootReducer);
-window.store = store;
 export default store;

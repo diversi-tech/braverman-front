@@ -1,26 +1,38 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+
 import './App.css';
-import Login from '../../my-app/src/Component/Login';
-import WorkerNav from './Component/workerNav.component';
-import AdminNav from './Component/adminNav.component';
-import Nav from './Component/nav.component'
+
+
+import { useSelector } from 'react-redux';
+
+import { Outlet, useNavigate } from 'react-router-dom';
+import Nav from './Component/nav/nav.component';
 
 import PaymentsStatusComponent from './Component/paymentStatus.coponent';
 const App = () => {
-  const isAuthenticated = useSelector((state:{ user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
-  // const currentUser = useSelector((state:{ user: { currentUser: {UserEmail:string,UserPassword:string,UserType:string } } }) => state.user.currentUser);
+  const isAuthenticated = useSelector((state: { user: { isAuthenticated: boolean } }) => state.user.isAuthenticated);
+  //const isAuthenticated = sessionStorage.getItem('userId')
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    
+    if (!sessionStorage.getItem("userId")) {
+      navigate('/Login');
+    }
+  }, [navigate]);
+
+ 
 
   return (
-    <div className="App">
-      {!isAuthenticated ? (
-        // <Login />
-        
-        <PaymentsStatusComponent />
-      ) : (
-        <Nav/>
-      )}
-    </div>
+
+    <>
+     {/* <Nav></Nav> */}
+     <PaymentsStatusComponent></PaymentsStatusComponent>
+      {/* <Outlet /> */}
+    
+      {/* <Outlet /> */}
+    </>
   );
 };
 
