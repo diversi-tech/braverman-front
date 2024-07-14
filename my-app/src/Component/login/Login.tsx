@@ -128,13 +128,13 @@ const Login = () => {
       <div >
         <button type="button" id='linkq' >
         <GoogleOAuthProvider clientId={clientId}>
-        <div id='login2'>
+        <div className="custom-google-login-button">
           <GoogleLogin
             onSuccess={onSuccess}
             onError={onFailure}
           // buttonText="התחברות עם Google"
           />
-        </div>
+          </div>
       </GoogleOAuthProvider>
         </button>
       </div>
