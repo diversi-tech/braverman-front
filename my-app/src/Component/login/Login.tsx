@@ -36,6 +36,9 @@ const Login = () => {
         // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
+        sessionStorage.setItem("firstName", x.data.firstName);
+        sessionStorage.setItem("lastName", x.data.lastName);
+        sessionStorage.setItem("email", x.data.email);
         if (x.data.userType.description === "customer")
           navigate("/projectStatus");
         else if (x.data.userType.description === "admin"){
