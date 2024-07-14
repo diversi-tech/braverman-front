@@ -547,8 +547,10 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                   <input id="swal-input8" class="swal2-input" placeholder="שם העסק" value="${lead.businessName}">
                   <input id="swal-input9" class="swal2-input" placeholder="טקסט חופשי" value="${lead.freeText}">
                   <div>
-                  <select id="swal-input100" class="swal2-input class={getStatusClass(lead.Status2)}">
-                    ${statusOptions.map ((status) => `<option value="${status.value}" 'selected' : ''}>${status.value}</option>`) }
+                  <select id="swal-input100" class="swal2-input">
+                    ${statusOptions.map((status) => `
+                      <option value="${status.value}" ${status.value === lead.status ? 'selected' : ''}>${status.value}</option>
+                    `).join('')}
                   </select>
                   </div>
               `,
@@ -747,9 +749,9 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                 </tr>
               ))}
             </tbody>
-            <tfoot>
+            <tfoot >
   <tr>
-    <td colSpan={11} style={{ textAlign: 'right', padding: '10px 0', color: '#636363' }}>
+    <td colSpan={11} style={{ textAlign: 'right', padding: '7px 0', color: '#636363' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>    
         {currentUserType === 'admin' && selectedLeadId && (
           <button className="convert-lead-button" onClick={handleConvertLeadToProject}>
@@ -757,7 +759,7 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
             <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
           </button>
         )}
-        {currentUser && selectedLeadId && (
+        { selectedLeadId && (
           <button className="convert-lead-button" onClick={handleEditLead}>
             <GrUpdate className="icon" />
             <span className='add' style={{ fontSize: 15, color: '#636363' }}>עדכון ליד</span>

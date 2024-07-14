@@ -1,4 +1,7 @@
 export interface TaskCategory {
-    id:string,
-    description:string
+    taskCategoryId:string,
+    categoryName:string,
+    weeksForExecution:number,
+    stageId:string,
+    sortOrder:number|null
 }
