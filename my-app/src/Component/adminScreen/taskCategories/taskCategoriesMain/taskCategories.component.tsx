@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AddTaskCategory } from "../taskCategoryEditor/taskCategoryEditor.component";
+import { TaskCategoriesEditor } from "../taskCategoryEditor/taskCategoryEditor.component";
 import { ShowTasksCategory } from "../showTaskCategories/showTasksCategory.component";
 import './taskCategories.css';
 import { TaskCategory } from "../../../../model/taskCategory.model";
@@ -34,7 +34,7 @@ export const TaskCategories = () => {
         onEditCategoryClick={handleEditCategory} 
       />
       {showAddCategory && 
-        <AddTaskCategory 
+        <TaskCategoriesEditor 
           onCategoryAdded={handleCategoryAdded} 
           onClose={toggleAddCategory} 
           editCategory={editCategory} 
