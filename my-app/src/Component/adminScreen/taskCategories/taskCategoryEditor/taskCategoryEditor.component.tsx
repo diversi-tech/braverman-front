@@ -4,7 +4,7 @@ import { TaskCategory } from "../../../../model/taskCategory.model";
 import './taskCategoryEditor.css';
 import React from "react";
 
-export const AddTaskCategory: React.FC<{
+export const TaskCategoriesEditor: React.FC<{
   onCategoryAdded: () => void,
   onClose: () => void,
   editCategory: TaskCategory | null
