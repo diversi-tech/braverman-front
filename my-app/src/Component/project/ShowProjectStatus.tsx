@@ -10,6 +10,7 @@ import { getProjectById } from "../../api/project.api";
 
 
 export const ShowProjectStatus = () => {
+  debugger
   const [user, setUser] = useState([{ projectsId: [] }]);
   const listProject = {
     projectId: null,
@@ -166,6 +167,7 @@ export const ShowProjectStatus = () => {
 
   return (
     <>
+    <p>ggggggggggggggggggg</p>
       {console.log("show: " + { show })}
       {show?.map(p =>(
         <>

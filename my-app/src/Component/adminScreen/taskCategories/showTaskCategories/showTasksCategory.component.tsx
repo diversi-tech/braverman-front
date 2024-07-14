@@ -1,0 +1,69 @@
+import { useEffect, useState } from "react";
+import { TaskCategory } from "../../../../model/taskCategory.model";
+import { getTaskCategories } from "../../../../api/taskCategory.api";
+import './ShowTasksCategory.css';
+import React from "react";
+
+export const ShowTasksCategory: React.FC<{ 
+  refresh: boolean, 
+  onAddCategoryClick: () => void, 
+  onEditCategoryClick: (category: TaskCategory) => void 
+}> = ({ refresh, onAddCategoryClick, onEditCategoryClick }) => {
+    const [tasksCategories, setTasksCategories] = useState<TaskCategory[]>([]);
+
+    useEffect(() => {
+        async function getData() {
+            try {
+                const data = await getTaskCategories();
+                setTasksCategories(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        getData();
+    }, [refresh]);
+
+    return (
+        <div id="bodyContainer">
+            <div className="table-container-categories">
+                <h1>קטגוריות משימות</h1>
+                <table className="styled-table">
+                    <colgroup>
+                        <col />
+                        <col />
+                        <col />
+                        <col className="col-edit" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>שם הקטגוריה</th>
+                            <th>מס' שבועות נדרש לביצוע</th>
+                            <th>מספר שלב</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tasksCategories.map((category, index) => (
+                            <tr key={index}>
+                                <td>{category.categoryName}</td>
+                                <td>{category.weeksForExecution}</td>
+                                <td>{category.sortOrder !== null ? category.sortOrder : ''}</td>
+                                <td className="edit-icon-cell">
+                                    <button onClick={() => onEditCategoryClick(category)}>
+                                        <i className="material-icons edit-icon">edit</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        <tr>
+                            <td colSpan={3} id="tdAddCategory">
+                                <span id="addCategoryButton" onClick={onAddCategoryClick}>+</span> 
+                                <span id="textAddCategory">להוספת קטגוריה</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
