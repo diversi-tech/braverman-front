@@ -4,9 +4,9 @@
     border: none;
 
 }
-html, body {
+/* html, body {
     overflow-x: hidden ; 
-    }
+    } */
 
 .textBox {
     position: absolute;
