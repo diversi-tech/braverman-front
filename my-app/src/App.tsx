@@ -11,7 +11,7 @@ const App = () => {
   useEffect(() => {
     debugger
     if (!sessionStorage.getItem("userId")) {
-      navigate('/leads');
+      navigate('/Login');
     }
   }, [navigate]);
 
