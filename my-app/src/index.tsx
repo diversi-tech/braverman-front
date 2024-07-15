@@ -40,7 +40,7 @@ root.render(
             <Route path="/main-project" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
-
+            <Route path='/UpdateUser' element={<UpdateUser />} />
             </Route>
           </Routes>
         </HashRouter>

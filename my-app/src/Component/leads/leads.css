@@ -45,6 +45,7 @@
   
   /* Page container */
   .page-container {
+    font-family: 'CustomFont'!important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -421,6 +422,7 @@
   }
   .add-lead-button,
 .convert-lead-button {
+  font-family: 'CustomFont'!important;
   display: flex;
   align-items: center;
   border: none;
@@ -455,6 +457,8 @@ tfoot div {
   width: 63%;
   height: 80px;
 }
-
+.select{
+  font-family: 'CustomFont'!important;
+}
   
   
