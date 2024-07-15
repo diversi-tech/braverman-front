@@ -17,6 +17,7 @@ import ProjectsTable from './Component/customers/costumers.component';
 import { MainProject } from './Component/project/projects/projectMain/mainProject.component';
 import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
+import UpdateUser from './Component/user/UpdateUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
@@ -28,6 +29,7 @@ root.render(
             <Route path="/" element={<App />}>
             <Route path="/nav" element={<Nav />}></Route>
             <Route path="/login" element={<Login />} />
+            <Route path="/updateUser" element={<UpdateUser />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />
             <Route path="/staff" element={<Staff />} />
