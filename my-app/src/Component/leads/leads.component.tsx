@@ -580,12 +580,14 @@ const formatDateForInput = (date:any) => {
                     {filterInputsVisible[col] && (
                    col === 'סטטוס' ? (
                   <select
+                  className='select'
                  value={filters[col]}
                  onChange={(e) => filterStatus(e, col)}
-                style={{ width: "100%" }}>
-               <option value="">הכל</option> 
+                style={{ width: "100%" }} 
+                >
+               <option value="" className='select'>הכל</option> 
               {statusOptions.map(option => (
-               <option key={option.key} value={option.value}>
+               <option key={option.key} value={option.value} className='select'>
                {option.value}
               </option>
              ))}

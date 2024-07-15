@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAllUsers } from '../../Redux/User/userAction';
 import { FaUserEdit } from "react-icons/fa";
 import { GetById } from '../../api/project.api';
+import { useNavigate } from 'react-router-dom';
 
 interface UserWithProjectsNames extends User {
   projectsNames: string[];
@@ -74,9 +75,9 @@ const UserTable = () => {
     const handlePreviousPage = () => {
         setCurrentPage(currentPage - 1);
     };
-
+    let nav=useNavigate();
     const updateUser = async (user: User) => {
-        alert("המשתמש נשמר בהצלחה");
+      nav("/UpdateUser");
     };
 
     return (
