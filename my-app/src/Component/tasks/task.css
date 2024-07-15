@@ -1,0 +1,116 @@
+
+
+  
+
+
+
+
+@font-face {
+
+  font-family: 'CustomFont';
+
+  src: url('https://webfonts.typotheque.com/WF-039261-012388.css');
+
+
+
+
+font-style: normal;
+
+font-weight: normal;
+
+font-stretch: normal;
+
+font-variant: normal;
+
+color: aquamarine;
+
+}
+
+
+
+
+.swal2-input {
+
+   margin: 5px;
+
+ }
+
+
+
+
+ .select {
+
+   background-color: #ffffff;
+
+ }
+
+
+
+
+ .swal2-select {
+
+   width: 100%;
+
+   padding: 0.75em;
+
+   font-size: 1em;
+
+   border: 1px solid #dcdcdc;
+
+   border-radius: 4px;
+
+   margin-top: 0.5em;
+
+   appearance: none;
+
+   -webkit-appearance: none;
+
+   -moz-appearance: none;
+
+ }
+
+
+
+
+ .swal2-select option {
+
+   background-color: white;
+
+ }
+
+
+
+
+ .swal2-select .default-option {
+
+   background-color: lightgray;
+
+ }
+
+ #swal-input8 {
+
+   width: 63%;
+
+   margin-top: 7px;
+
+   height: 50px;
+
+   border-radius: 5px;
+
+   border: rgba(81, 81, 80, 0.153) 1.5px solid;
+
+}
+
+#swal-input9  {
+
+  width: 63%;
+
+  margin-top: 7px;
+
+  height: 50px;
+
+  border-radius: 5px;
+
+  border: rgba(81, 81, 80, 0.153) 1.5px solid;
+
+}
