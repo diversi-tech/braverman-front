@@ -1,12 +1,15 @@
 
 
 import { useEffect, useState } from "react";
-import { CheckCircleOutlineTwoTone, Task } from "@mui/icons-material";
+import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box } from "@mui/material";
 import { getUserById } from "../../api/user.api";
 import { MoreStatus } from "./moreStatus";
 import { getProjectById } from "../../api/project.api";
+import React from "react"
+
+
 
 
 export const ShowProjectStatus = () => {
@@ -70,7 +73,9 @@ export const ShowProjectStatus = () => {
     urlWordpress: "string",
   };
   const [data, setData] = useState([{ ...listProject }]);
-  let countNoFinishTask=0;
+  let countNoFinishTask = 0;
+  let isCriticalSectionLocked = false;
+  let list = [{}]
   // האוביקטים הבאים לצורך התצוגה
   let taskShow = {
     taskCategoryName: "",
@@ -87,9 +92,8 @@ export const ShowProjectStatus = () => {
         taskShow.status = 0
         countNoFinishTask++
       }
-      if (!taskMap.has(t.taskCategory.categoryName) || t.status < taskMap.get(t.taskCategory.categoryName).status) {
+      if (!taskMap.has(t.taskCategory.categoryName) || t.status < taskMap.get(t.taskCategory.categoryName).status)
         taskMap.set(t.taskCategory.categoryName, t);
-      }
     });
     return Array.from(taskMap.values());
   }
@@ -121,57 +125,77 @@ export const ShowProjectStatus = () => {
     }
   });
   //============2:useEffect=======================
-  if (user[0]?.projectsId[0] && (data.length == 1 && !(data[0]?.projectId))) {
-    fetchData();
-  }
-
+  if (user[0]?.projectsId[0] && !data[0]?.projectId) { takeProject() }
   // שליפת הפרויקטים של המשתמש הנוכחי
-  async function fetchData() {
-    debugger
-    data.pop();
-    for (let i = 0; i < user[0]?.projectsId?.length; i++) {
-      const project = await getProjectById(user[0]?.projectsId[i]);
-      if (project && Object.keys(project).length > 0) {
-        setData(prevData => [...prevData, project]);
-      }
-    }
-  };
 
+  async function takeProject() {
+    debugger
+
+    data.pop();
+    if (!isCriticalSectionLocked) {
+      isCriticalSectionLocked = true;
+      for (let i = 0; i < user[0]?.projectsId?.length; i++) {
+
+        try {
+          const project = await getProjectById(user[0]?.projectsId[i]);
+          if (project && Object.keys(project).length > 0) {
+            list.push(project)
+          }
+        } finally {
+          isCriticalSectionLocked = false;
+        }
+      }
+      fullData()
+    } else {
+      // Handle the critical section being already locked
+      // You can wait, retry later, or implement another strategy
+    }
+
+  }
+  const sampleObject = list.reduce((acc, obj) => {
+    for (const key in obj) {
+        if (!acc.hasOwnProperty(key)) {
+            acc[key] = obj[key];
+        }
+    }
+    return acc;
+}, {});
+  function fullData() {
+    debugger
+    if(sampleObject(list)==user[0].projectsId.length)
+       setData(prevData => [...prevData, list]);
+    else takeProject()
+    }
+  
   //============3======================
   // הכנסת הנתונים לתצוגה
-  if (data[0]?.projectId && show[0]?.projectName == '') {
-    debugger
-    fullShow()
-  }
-  function fullShow() {
+  if (data[0]?.projectId && data.length == user[0].projectsId.length && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
     debugger
     dataShow.map(d => dataShow.pop())//איפוס מערך הפרויקטים המוצגים לפני שממלא למשתמש הנוכחי
     for (let i = 0; i < data?.length; i++) {
-       countNoFinishTask = 0;
+      countNoFinishTask = 0;
       progectShow.projectName = data[i].firstName + " " + data[i].lastName;
       progectShow.statusProject = data[i].status.key
       progectShow.endDate = data[i].endDate;
       progectShow.totalPrice = data[i].totalPrice;
       progectShow.pricePaid = data[i].pricePaid;
+      progectShow.tashsShow = [{ key: "", categoryName: "" }]
       const tasksProject = data[i].tasks;
       let rezult = getUniqueTasksWithLowestStatus(tasksProject);
       rezult.map(r =>
         progectShow.tashsShow.push(
           { key: r.status.key, categoryName: r.taskCategory.categoryName }
         ));
-
       dataShow.push(progectShow)
-      setShow(dataShow)
     }
+    setShow(dataShow)
   };
 
   return (
     <>
-    <p>ggggggggggggggggggg</p>
-      {console.log("show: " + { show })}
-      {show?.map(p =>(
-        <>
-      
+      {show?.map(p => (
+        <div style={{ paddingTop: "7%" }}>
+
           <Box
             sx={{
               width: "100%",
@@ -184,35 +208,40 @@ export const ShowProjectStatus = () => {
               borderBlock: 4,
               textAlign: "initial",
               color: "black",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <p style={{ fontSize: "170%" }}>שלבי הפרויקט   :  </p>
-            {p.tashsShow?.map(t => (t.categoryName!=""&&
-              <>
-                {p.statusProject == "4" ? (
-                  <div>
-                    <CheckCircleOutlineTwoTone />
-                    <p>הפרויקט הושלם בהצלחה!</p>
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: "row" }}>
+            <div>
+              <p style={{ fontSize: "170%" }}>שלבי הפרויקט   :  </p>
+              {p.tashsShow?.map(t => (t.categoryName != "" &&
+                <>
+                  {p.statusProject == "4" ? (
+                    <div>
+                      <CheckCircleOutlineTwoTone />
+                      <p>הפרויקט הושלם בהצלחה!</p>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: "row" }}>
                       <div style={{ display: 'flex', flexDirection: "row" }}>
-                      {t.key == "4" ? <CheckCircleOutlineTwoTone /> :<RadioButtonUncheckedIcon />}
+                        {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
                         {p.stat == t.categoryName
                           ? <p style={{ backgroundColor: "#F1F7FF" }}>{t.categoryName}</p>
                           : <p>{t.categoryName}</p>}
                       </div>
-                    
-                  </div>
-                )}
-              </>)
-            )}
-            <div style={{ display: "flex", flexDirection: "row" ,paddingTop:"29%"}}>
+
+                    </div>
+                  )}
+                </>)
+              )}
+
+            </div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
               {/* <compunent stay me ansowor/> */}
               {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
             </div>
           </Box>
-        </>))}
+        </div>))}
 
 
 
