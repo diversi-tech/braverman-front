@@ -26,31 +26,21 @@ export const getUsers = async () => {
       return []; 
     }
   };
-export const getUserById=async (userId:string)=>{
-    try{
-    const response= await axios.get(`${apiUrl}User/${userId}`);
-    return [response.data];
+  export const getUserById = async (userId: string) => {
+    try {
+  debugger
+      const response = await axios.get(`https://localhost:7119/api/User/GetById?id=${userId}`);
+      return [response.data];
     }
     catch (error) {
-        console.error('Error fetching user:', error);
-        return []; 
-      }
+      console.error('Error fetching user:', error);
+      return [];
+    }
+  }
+export const UpdateUserAPI = (newUser: User) => {
+  return axios.put(`https://localhost:7119/api/User/UpdateUser`, newUser);
 }
 
-export const updateUser=async(userId:string,newUser:User)=>
-{
-  try
-  {
-    const response=await axios.put(`${apiUrl}User/${userId}`,newUser);
-    return response.data;
-  }
-  catch(error)
-  {
-    console.error('error update user: ',error);
-    return error;
-    
-  }
-  }
   export const LoginWithGoogle=async(userEmail:string)=>{
     debugger
     console.log(userEmail);
