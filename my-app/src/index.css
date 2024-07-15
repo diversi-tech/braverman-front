@@ -1,5 +1,10 @@
+@font-face {
+  font-family: 'CustomFont';
+  src: url('../public/Fonts/RAG-Sans-1.1-ExtraLight.otf') format('opentype');
+}
+
 :root {
-  font-synthesis: none;
+  /* font-synthesis: none; */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,6 +16,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--surface-card);
+  font-family: 'CustomFont'!important;
 }
 
 
@@ -22,8 +28,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
-
+/* 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */
