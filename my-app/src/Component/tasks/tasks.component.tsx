@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Task } from '../../model/task.model'
 import React, { useEffect, useState } from 'react';
 import { getAllEnumFromServer } from "../../api/enum.api";
-import { addTask, getAllTaskFromServer, UpDateTask } from "../../api/tasx.api";
+import { addTask, getAllTaskFromServer, UpDateTask } from "../../api/task.api";
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import CircleIcon from '@mui/icons-material/Circle';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
