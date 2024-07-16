@@ -13,8 +13,7 @@ import { Staff } from './Component/staff/staff.component';
 import { Tasks } from './Component/tasks/tasks.component';
 import { Bookkeeping } from './Component/bookkeeping/bookkeeping.component';
 import { NotFound } from './Component/notFound/notFound.component';
-import ProjectsTable from './Component/customers/costumers.component';
-import { MainProject } from './Component/project/projects/projectMain/mainProject.component';
+import {MainProject} from './Component/project/projects/projectMain/mainProject.component';
 import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
@@ -37,8 +36,7 @@ root.render(
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/bookkeeping" element={<Bookkeeping />} />
             <Route path="/not-found" element={<NotFound />} />
-            <Route path="/customers" element={<ProjectsTable />} />
-            <Route path="/main-project" element={<MainProject />} />
+            <Route path="/customers" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
