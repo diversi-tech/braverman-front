@@ -163,9 +163,14 @@ import {
     Card,
     CardContent,
 } from "@mui/material";
-const UpdateUser = () => {
+interface UserId{
+    userId: string
+}
+const UpdateUser: React.FC<UserId> =({userId}) => {
     const dispatch = useDispatch();
+   // const s = sessionStorage.getItem("userId");
     const s = sessionStorage.getItem("userId");
+
     const [currentUser, setCurrentUser] = useState<User>();
     const [allProjects, setAllProjects] = useState<Project[]>([]);
     const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
