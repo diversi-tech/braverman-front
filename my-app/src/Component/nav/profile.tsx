@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import './profil.css'
+import './profile.css'
 // import { useLocation, useNavigate } from 'react-router-dom';
 
 // const type = sessionStorage.getItem("userType")
