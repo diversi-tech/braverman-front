@@ -17,6 +17,7 @@ import ProjectsTable from './Component/customers/costumers.component';
 import { MainProject } from './Component/project/projects/projectMain/mainProject.component';
 import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
+import ShowProjectStatus from './Component/project/ShowProjectStatus';
 import UpdateUser from './Component/user/UpdateUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -40,6 +41,7 @@ root.render(
             <Route path="/main-project" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
+            <Route path='/projectStatus' element={<ShowProjectStatus />} />
             <Route path='/UpdateUser' element={<UpdateUser />} />
             </Route>
           </Routes>
@@ -47,5 +49,4 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
 reportWebVitals();
