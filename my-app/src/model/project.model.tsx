@@ -4,6 +4,7 @@ import { Enum } from "./enum.model";
 
 export interface Project {
   projectId: string;
+  freeText: string;
   firstName: string;
   lastName: string;
   businessName: string;
@@ -17,12 +18,12 @@ export interface Project {
   totalPrice: number;
   pricePaid: number;
   balance: number;
+  stageStatus: Enum;
   tasks: Task[];
   credentials: Credential[];
   urlFigma: string;
   urlDrive: string;
   urlWordpress: string;
-  freeText: string;
 }
 
 

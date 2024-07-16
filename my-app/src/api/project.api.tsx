@@ -17,7 +17,8 @@ export const getCustomerProjec = (customerId: string) => {
 export const updateProject = (projectData: any) => {
     console.log("projectData");
     console.log(projectData);
-    return axios.put(`${apiUrl}Project/Update`,projectData);
+    
+    return axios.put('https://localhost:7119/api/Project/Update',projectData);
 }
 
 

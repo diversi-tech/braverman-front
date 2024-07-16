@@ -327,12 +327,14 @@ const formatDateForInput = (date:any) => {
           totalPrice: formValues.totalPrice,
           pricePaid: formValues.pricePaid,
           balance: formValues.totalPrice - formValues.pricePaid,
+          stageStatus: selectedBalanceStatus!,
           tasks: [],
           credentials: [],
           urlWordpress: formValues.urlWordpress,
           urlDrive: formValues.urlDrive,
           urlFigma: formValues.urlFigma,
-          freeText: formValues.freeText
+          freeText: formValues.freeText,
+
         };
       
 
