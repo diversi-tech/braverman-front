@@ -76,7 +76,7 @@ const UserTable = () => {
         setCurrentPage(currentPage - 1);
     };
     let nav=useNavigate();
-    const updateUser = async (user: User) => {
+    const updateUser = async (user: string) => {
       nav("/UpdateUser");
     };
 
@@ -102,7 +102,7 @@ const UserTable = () => {
                             <td>{user.email}</td>
                             <td>{user.userType?.description}</td>
                             <td>{user.firstName} {user.lastName}</td>
-                            <td onClick={() => updateUser(user)}><FaUserEdit className='user-icon' /></td>
+                            <td onClick={() => updateUser(user.id)}><FaUserEdit className='user-icon' /></td>
                         </tr>
                     ))}
                 </tbody>

@@ -105,7 +105,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
     };
 
     const fetchStatusEnums = async () => {
-      debugger
       try {
         let data ;
         console.log("Current status lead state:", leadStatus.allStatusLead);
@@ -133,6 +132,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
     } else {
       return date;
     }
+    debugger
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); 
   const day = String(date.getDate()).padStart(2, '0');
@@ -334,9 +334,6 @@ const formatDateForInput = (date:any) => {
           urlFigma: formValues.urlFigma,
           freeText: formValues.freeText
         };
-      
-
-          debugger
           const response = await convertToProject(project);
           if (response.status === 200) {
             console.log('New Project Created:', response.data);
@@ -515,7 +512,6 @@ const formatDateForInput = (date:any) => {
   
 
      const save= async()=>{
-      debugger
       try {
         for (let i = 0; i < leadsChanges!.length; i++) {
           if (leadsChanges![i]) {
@@ -598,6 +594,7 @@ const formatDateForInput = (date:any) => {
                           value={filters[col]}
                           onChange={(e) => handleFilterChange(e, col)}
                           style={{width:"100%"}}
+                          className='select'
                         />
                       )}
                     </div>

@@ -29,7 +29,7 @@ root.render(
             <Route path="/" element={<App />}>
             <Route path="/nav" element={<Nav />}></Route>
             <Route path="/login" element={<Login />} />
-            <Route path="/updateUser" element={<UpdateUser />} />
+            <Route path='/updateUser' element={<UpdateUser userId="someUserId" />} /> 
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />
             <Route path="/staff" element={<Staff />} />
@@ -40,7 +40,6 @@ root.render(
             <Route path="/main-project" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
-            <Route path='/UpdateUser' element={<UpdateUser />} />
             </Route>
           </Routes>
         </HashRouter>
