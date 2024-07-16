@@ -18,6 +18,7 @@ import { setAllStatusLeads } from '../../Redux/enum/statusLeadAction';
 import { NoteColumn } from './note.component';
 import ReactDOM from 'react-dom';
 import UpdateLead from './updateLead.component';
+import AddLeadForm from './addLead.component';
 
 
 
@@ -149,7 +150,7 @@ const formatDateForInput = (date:any) => {
   return `${year}-${month}-${day}`;
 };
 
-const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
+// const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
  const userId= sessionStorage.getItem('userId')  
  const currentUserType=sessionStorage.getItem('userType') 
  console.log(currentUserType);
@@ -180,82 +181,38 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
   };
 
   const handleAddLead = () => {
-    debugger
     Swal.fire({
       title: 'הוספת ליד חדש',
-      html:'<input id="swal-input1" class="swal2-input" placeholder="שם פרטי" >'+
-        '<input id="swal-input2" class="swal2-input" placeholder="שם משפחה" >'+
-        '<input id="swal-input3" class="swal2-input" placeholder="טלפון" >'+
-        '<input id="swal-input4" class="swal2-input" placeholder="אמייל" >'+
-        '<input id="swal-input5" class="swal2-input" placeholder="מקור הליד" >'+
-        '<input id="swal-input8" class="swal2-input" placeholder="שם העסק">'+
-        '<textarea id="swal-input99" class="swal2-input" placeholder="טקסט חופשי"></textarea>',
-        focusConfirm: false,
-      showCancelButton: true,
-
-      preConfirm: () => {
-        debugger
-        const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-        const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-        const phone = (document.getElementById('swal-input3') as HTMLInputElement).value;
-        const email = (document.getElementById('swal-input4') as HTMLSelectElement).value ;
-        const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-        const businessName = (document.getElementById('swal-input8') as HTMLInputElement).value;
-        const freeText = (document.getElementById('swal-input99') as HTMLInputElement).value;
-
-        if (!firstName || !lastName || !phone || !email || !source || !businessName || !freeText ) {
-          Swal.showValidationMessage('אנא מלא את כל השדות');
-          return null;
+      html: '<div id="add-lead-container"></div>',
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        const container = document.getElementById('add-lead-container');
+        if (container) {
+          ReactDOM.render(
+            <AddLeadForm
+              // open={true}
+              leads={leads}
+              setLeads={setLeads}
+              handleLeadAdded={async (newLead: Lead) => {
+                try {
+                  const response = await addLead(newLead);
+                  const addedLead = response.data;
+                  addedLead.createdDate = new Date(addedLead.createdDate);
+                  addedLead.lastContacted = new Date(addedLead.lastContacted);
+                  setLeads([...leads, addedLead]);
+                  dispatch(addLead2(addedLead));
+                  Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
+                } catch (error) {
+                  Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
+                }
+              }}
+            />,
+            container
+          );
         }
-  
-        if (!validateEmail(email)) {
-          Swal.showValidationMessage('כתובת האימייל לא תקינה');
-          return null;
-        }
-  
-        if (!handlePhoneNumberChange(phone)) {
-          Swal.showValidationMessage('מס טלפון לא תקין');
-          return null;
-        }
-  
-        return {
-          id:"",
-          firstName: firstName,
-          lastName: lastName,
-          phone:phone,
-          email: email,
-          source: source,
-          createdDate: new Date().toISOString(),
-          lastContacted: new Date().toISOString(),
-          businessName: businessName,
-          freeText:freeText,
-          notes: new Array<Notes>,
-          status: 'ליד חדש'
-        };
-      }
-    }).then(async (result) => {
-      debugger
-      console.log(result);
-      
-      if (result.isConfirmed && result.value) {
-
-        try {
-        const response =await addLead(result.value)
-        const newLead = response.data;
-        newLead.createdDate = new Date(newLead.createdDate);
-        newLead.lastContacted = new Date(newLead.lastContacted);
-        setLeads([...leads!, newLead]);
-        setLeads([...leads, newLead]);
-        dispatch(addLead2(newLead))  
-        Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
-      }
-
-      catch(error){
-        Swal.fire("error", 'שגיאה בהוספת הליד', 'error');
-
-      }
-    }
-
+      },
     });
   };
 
@@ -623,12 +580,14 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                     {filterInputsVisible[col] && (
                    col === 'סטטוס' ? (
                   <select
+                  className='select'
                  value={filters[col]}
                  onChange={(e) => filterStatus(e, col)}
-                style={{ width: "100%" }}>
-               <option value="">הכל</option> 
+                style={{ width: "100%" }} 
+                >
+               <option value="" className='select'>הכל</option> 
               {statusOptions.map(option => (
-               <option key={option.key} value={option.value}>
+               <option key={option.key} value={option.value} className='select'>
                {option.value}
               </option>
              ))}
