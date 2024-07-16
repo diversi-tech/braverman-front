@@ -4,17 +4,11 @@ import { useEffect, useState } from "react";
 import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box } from "@mui/material";
-import { getUserById } from "../../api/user.api";
 import { MoreStatus } from "./moreStatus";
-import { getProjectById } from "../../api/project.api";
-import React from "react"
-
-
-
+import { getCustomerProjects} from "../../api/project.api";
 
 export const ShowProjectStatus = () => {
   debugger
-  const [user, setUser] = useState([{ projectsId: [] }]);
   const listProject = {
     projectId: null,
     firstName: "string",
@@ -73,9 +67,6 @@ export const ShowProjectStatus = () => {
     urlWordpress: "string",
   };
   const [data, setData] = useState([{ ...listProject }]);
-  let countNoFinishTask = 0;
-  let isCriticalSectionLocked = false;
-  let list = [{}]
   // האוביקטים הבאים לצורך התצוגה
   let taskShow = {
     taskCategoryName: "",
@@ -85,10 +76,11 @@ export const ShowProjectStatus = () => {
 
   const getUniqueTasksWithLowestStatus = (tasksProject: { [key: string]: any }[]) => {
     const taskMap = new Map();
+    let countNoFinishTask = 0;
     tasksProject.forEach(t => {
-      if (t.status.value != "DONE") {
+      if (t.status.value != "DONETODO") {
         if (countNoFinishTask == 0)
-          progectShow.stat = taskShow.taskCategoryName;
+          progectShow.stat = t.taskCategory.categoryName;
         taskShow.status = 0
         countNoFinishTask++
       }
@@ -106,90 +98,48 @@ export const ShowProjectStatus = () => {
     totalPrice: 0,
     tashsShow: [{ key: "", categoryName: "" }]
   }
-  // צריך לבדוק אם מכניס כבר אוביקט מהסוג
-  //  כי אז הללולאה של השואת השמות לא תעבוד נכון בפעם הראשונה
-  const dataShow = [progectShow]
+  let dataShow = [progectShow]
   const [show, setShow] = useState(dataShow);
   //============1:useEffect=======================
   useEffect(() => {
-    // שליפת נתוני המשתמש הנוכחי
-    if (user[0]?.projectsId[0] == null) {
+    if (!data[0].projectId) {
       const task = async () => {
         const userId = sessionStorage.getItem("userId");
         if (userId) {
-          const c = await getUserById(userId);
-          debugger
-          setUser(c)
+         let rezult= await getCustomerProjects(userId)
+         console.log(rezult)
+          setData(rezult)
         }
       }; task();
     }
   });
-  //============2:useEffect=======================
-  if (user[0]?.projectsId[0] && !data[0]?.projectId) { takeProject() }
-  // שליפת הפרויקטים של המשתמש הנוכחי
-
-  async function takeProject() {
-    debugger
-
-    data.pop();
-    if (!isCriticalSectionLocked) {
-      isCriticalSectionLocked = true;
-      for (let i = 0; i < user[0]?.projectsId?.length; i++) {
-
-        try {
-          const project = await getProjectById(user[0]?.projectsId[i]);
-          if (project && Object.keys(project).length > 0) {
-            list.push(project)
-          }
-        } finally {
-          isCriticalSectionLocked = false;
-        }
-      }
-      fullData()
-    } else {
-      // Handle the critical section being already locked
-      // You can wait, retry later, or implement another strategy
-    }
-
-  }
-  const sampleObject = list.reduce((acc, obj) => {
-    for (const key in obj) {
-        if (!acc.hasOwnProperty(key)) {
-            acc[key] = obj[key];
-        }
-    }
-    return acc;
-}, {});
-  function fullData() {
-    debugger
-    if(sampleObject(list)==user[0].projectsId.length)
-       setData(prevData => [...prevData, list]);
-    else takeProject()
-    }
-  
-  //============3======================
+ 
+  //============2======================
   // הכנסת הנתונים לתצוגה
-  if (data[0]?.projectId && data.length == user[0].projectsId.length && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
+  if (data[0]?.projectId&& (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
     debugger
     dataShow.map(d => dataShow.pop())//איפוס מערך הפרויקטים המוצגים לפני שממלא למשתמש הנוכחי
     for (let i = 0; i < data?.length; i++) {
-      countNoFinishTask = 0;
-      progectShow.projectName = data[i].firstName + " " + data[i].lastName;
-      progectShow.statusProject = data[i].status.key
-      progectShow.endDate = data[i].endDate;
-      progectShow.totalPrice = data[i].totalPrice;
-      progectShow.pricePaid = data[i].pricePaid;
-      progectShow.tashsShow = [{ key: "", categoryName: "" }]
+      let newProgectShow = {
+          ...progectShow,
+          projectName: data[i].firstName + " " + data[i].lastName,
+          statusProject: data[i].status.key,
+          endDate: data[i].endDate,
+          totalPrice: data[i].totalPrice,
+          pricePaid: data[i].pricePaid,
+          tashsShow: [{ key: "", categoryName: "" }]
+      };
+  
       const tasksProject = data[i].tasks;
       let rezult = getUniqueTasksWithLowestStatus(tasksProject);
-      rezult.map(r =>
-        progectShow.tashsShow.push(
-          { key: r.status.key, categoryName: r.taskCategory.categoryName }
-        ));
-      dataShow.push(progectShow)
-    }
-    setShow(dataShow)
-  };
+      rezult.forEach(r =>
+          newProgectShow.tashsShow.push(
+              { key: r.status.key, categoryName: r.taskCategory.categoryName }
+          ));
+      newProgectShow.stat=progectShow.stat
+      dataShow.push(newProgectShow);
+  }
+  setShow(dataShow);}
 
   return (
     <>
@@ -209,7 +159,7 @@ export const ShowProjectStatus = () => {
               textAlign: "initial",
               color: "black",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
             }}
           >
             <div>
@@ -236,7 +186,7 @@ export const ShowProjectStatus = () => {
               )}
 
             </div>
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ display: "flex", flexDirection: "column" ,width:"50%",paddingRight:"12%"}}>
               {/* <compunent stay me ansowor/> */}
               {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
             </div>
