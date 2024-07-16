@@ -45,6 +45,7 @@
   
   /* Page container */
   .page-container {
+    font-family: 'CustomFont'!important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -329,13 +330,13 @@
     outline: none;
     border: none;
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 15px 30px;
     font-size: 12px;
     font-weight: 700;
     color: hsl(0, 0%, 100%);
-    border-radius: 10px;
+    border-radius: 7px;
     text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
     position: relative;
     background-color: #ff0081;
     box-shadow: rgba(233, 30, 99, 0.5);
@@ -421,6 +422,7 @@
   }
   .add-lead-button,
 .convert-lead-button {
+  font-family: 'CustomFont'!important;
   display: flex;
   align-items: center;
   border: none;
@@ -455,6 +457,8 @@ tfoot div {
   width: 63%;
   height: 80px;
 }
-
+.select{
+  font-family: 'CustomFont'!important;
+}
   
   

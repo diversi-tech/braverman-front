@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from "../../assets/images/logo.png"
-import ProfileIcon from '../nav/profil'
+import ProfileIcon from './profile'
 
 
 const Nav = () => {
