@@ -39,8 +39,9 @@ const Login = () => {
         sessionStorage.setItem("firstName", x.data.firstName);
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
-        if (x.data.userType.description === "customer")
-          navigate("/projectStatus");
+        if (x.data.userType.description === "customer"){
+          debugger
+          navigate("/projectStatus");}
         else if (x.data.userType.description === "admin"){
           debugger
           navigate("/leads");}
@@ -69,8 +70,9 @@ const Login = () => {
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
 
-        if (x.data.userType.description === "customer")
-          navigate("/projectStatus");
+        if (x.data.userType.description === "customer"){
+          debugger
+          navigate("/projectStatus");}
         else if (x.data.userType.description === "admin"){
           debugger
           navigate("/leads");}
