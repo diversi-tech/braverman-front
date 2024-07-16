@@ -5,7 +5,7 @@ import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box } from "@mui/material";
 import { MoreStatus } from "./moreStatus";
-import { getCustomerProjects} from "../../api/project.api";
+import { getCustomerProjects } from "../../api/project.api";
 
 export const ShowProjectStatus = () => {
   debugger
@@ -73,7 +73,6 @@ export const ShowProjectStatus = () => {
     status: 1,
   }
 
-
   const getUniqueTasksWithLowestStatus = (tasksProject: { [key: string]: any }[]) => {
     const taskMap = new Map();
     let countNoFinishTask = 0;
@@ -106,49 +105,67 @@ export const ShowProjectStatus = () => {
       const task = async () => {
         const userId = sessionStorage.getItem("userId");
         if (userId) {
-         let rezult= await getCustomerProjects(userId)
-         console.log(rezult)
+          let rezult = await getCustomerProjects(userId)
+          console.log(rezult)
           setData(rezult)
         }
       }; task();
     }
   });
- 
+
   //============2======================
   // הכנסת הנתונים לתצוגה
-  if (data[0]?.projectId&& (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
+  if (data[0]?.projectId && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
     debugger
     dataShow.map(d => dataShow.pop())//איפוס מערך הפרויקטים המוצגים לפני שממלא למשתמש הנוכחי
     for (let i = 0; i < data?.length; i++) {
       let newProgectShow = {
-          ...progectShow,
-          projectName: data[i].firstName + " " + data[i].lastName,
-          statusProject: data[i].status.key,
-          endDate: data[i].endDate,
-          totalPrice: data[i].totalPrice,
-          pricePaid: data[i].pricePaid,
-          tashsShow: [{ key: "", categoryName: "" }]
+        ...progectShow,
+        projectName: data[i].firstName + " " + data[i].lastName,
+        statusProject: data[i].status.key,
+        endDate: data[i].endDate,
+        totalPrice: data[i].totalPrice,
+        pricePaid: data[i].pricePaid,
+        tashsShow: [{ key: "", categoryName: "" }]
       };
-  
+
       const tasksProject = data[i].tasks;
       let rezult = getUniqueTasksWithLowestStatus(tasksProject);
       rezult.forEach(r =>
-          newProgectShow.tashsShow.push(
-              { key: r.status.key, categoryName: r.taskCategory.categoryName }
-          ));
-      newProgectShow.stat=progectShow.stat
+        newProgectShow.tashsShow.push(
+          { key: r.status.key, categoryName: r.taskCategory.categoryName }
+        ));
+      newProgectShow.stat = progectShow.stat
       dataShow.push(newProgectShow);
+    }
+    setShow(dataShow);
   }
-  setShow(dataShow);}
 
   return (
     <>
+    {show.length>1?show.map(s=><div style={{direction:"rtl",display:"flex",flexDirection:"row"}}>
+      <ul>{s.projectName}</ul>
+      </div>):<Show p={show[0]}></Show>}
       {show?.map(p => (
         <div style={{ paddingTop: "7%" }}>
+          <div style={{maxHeight:"10%"}}>
+            {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
+          </div>
+          <br></br>
+          <br></br>
+          <Show p={p}></Show> 
+        </div>))}
 
-          <Box
+    </>
+  );
+};
+
+export default ShowProjectStatus;
+const Show=({p:{}})=>{
+  return(<>
+  <Box
             sx={{
-              width: "100%",
+              width: "80%",
               margin: "auto",
               maxWidth: 750,
               bgcolor: "#ffffff",
@@ -160,6 +177,7 @@ export const ShowProjectStatus = () => {
               color: "black",
               display: "flex",
               flexDirection: "row",
+              fontSize:"100%"
             }}
           >
             <div>
@@ -186,18 +204,9 @@ export const ShowProjectStatus = () => {
               )}
 
             </div>
-            <div style={{ display: "flex", flexDirection: "column" ,width:"50%",paddingRight:"12%"}}>
+            <div style={{ display: "flex", flexDirection: "column",  paddingRight: "12%" }}>
               {/* <compunent stay me ansowor/> */}
-              {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
             </div>
           </Box>
-        </div>))}
-
-
-
-
-    </>
-  );
-};
-
-export default ShowProjectStatus;
+  </>)
+}

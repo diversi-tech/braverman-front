@@ -1,32 +1,38 @@
 import { Box } from "@mui/material";
 
-export const MoreStatus = ({project}) => {
+export const MoreStatus = ({ project }) => {
     debugger
-const dateObject = new Date(project.endDate);
-const endDate = dateObject.toISOString().split('T')[0];
+    const dateObject = new Date(project.endDate);
+    const endDate = dateObject.toISOString().split('T')[0];
 
     return (<>
         <Box
             sx={{
-                width: "50%",
+                display: "flex",
+                flexDirection: "row-reverse",
+                width: "80%",
                 margin: "auto",
                 borderRadius: 3,
                 p: 3,
                 textAlign: "center",
-                color: "black",
-                border:2,
-                bgcolor:"#F1F7FF"
+                color: "#F1F7FF",
+                border: 2,
+                bgcolor: "#002046",
+                maxHeight: "20%",
+                paddingRight: "5%",
+                textAlign: "center",
             }}>
-            <p>פרטי הפרויקט:</p>
-            <p style={{color:"gray"}}>{project.projectName}</p>
-            <p style={{color:"gray"}}>שולם:{project.pricePaid }</p>
-            <p style={{color:"gray"}}> יתרה לתשלום:{ project.totalPrice-project.pricePaid}</p>
-            <p>סטטוס פרויקט:</p>
+            <p style={{ color: "white" }}>פרטי הפרויקט:</p>
+            <p>:{project.projectName}</p>
+            <p>שולם:{project.pricePaid}</p>
+            <p> יתרה לתשלום:{project.totalPrice - project.pricePaid}</p>
+            <p style={{ color: "white" }}>סטטוס פרויקט:</p>
             {/* {שם קטגורית המשימה שהסטטוס שלה הוא הראשון שלא נעשה} */}
-           <p style={{color:"gray"}}>{project.stat}</p>
-            <p> תאריך משוער לסיום:</p>
-            <p style={{color:"gray"}}>{endDate}</p>
+            <p>{project.stat}</p>
+            <p style={{ color: "white" }}> תאריך משוער לסיום:</p>
+            <p>{endDate}</p>
         </Box>
+
 
     </>)
 }
