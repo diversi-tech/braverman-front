@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import './profil.css'
+import './profile.css'
 // import { useLocation, useNavigate } from 'react-router-dom';
 
 // const type = sessionStorage.getItem("userType")
 const ProfileIcon: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
+//const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -54,10 +54,10 @@ const currentUser = useSelector((state: { user: { currentUser: { UserEmail: stri
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}>
-                    <Typography variant="h6">Name:  {currentUser.UserFirstName}</Typography>
+                    <Typography variant="h6">Name:  {sessionStorage.getItem("firstName")}</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                    <Typography variant="subtitle1">Email: {currentUser.UserEmail}</Typography>
+                    <Typography variant="subtitle1">Email: {sessionStorage.getItem("email")}</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
                     <Typography variant="button">Switch User</Typography>

@@ -4,7 +4,9 @@ import { Project } from '../model/project.model';
 import { Notes } from '../model/notes.model';
 
 axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
-const apiUrl = process.env.REACT_APP_BRAVERMAN;
+// const apiUrl = process.env.REACT_APP_BRAVERMAN;
+ const apiUrl = 'https://localhost:7119/api/';
+
 
 const convertDateStringToDateTime = (dateString: string | Date): string => {
   if (dateString instanceof Date) {
@@ -43,8 +45,10 @@ export const updateLeadChanges = async (lead: Lead, id: string) => {
     lastContacted: convertDateStringToDateTime(lead.lastContacted as unknown as string),
     createdDate: convertDateStringToDateTime(lead.createdDate as unknown as string),
   };
+  debugger
   console.log(leadToUpdate);
-  return await axios.put(`${apiUrl}Leads/${id}`, leadToUpdate);
+  return await axios.put(`https://localhost:7119/api/Leads/${id}`, leadToUpdate);
+  // return await axios.put(`${apiUrl}Leads/${id}`, leadToUpdate);
 }
 
 //filterStatus

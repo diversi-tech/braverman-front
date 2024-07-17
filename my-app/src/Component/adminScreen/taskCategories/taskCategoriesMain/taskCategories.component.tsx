@@ -3,6 +3,7 @@ import { AddTaskCategory } from "../taskCategoryEditor/taskCategoryEditor.compon
 import { ShowTasksCategory } from "../showTaskCategories/showTasksCategory.component";
 import './taskCategories.css';
 import { TaskCategory } from "../../../../model/taskCategory.model";
+import React from "react";
 
 export const TaskCategories = () => {
   const [refreshCategories, setRefreshCategories] = useState(false);

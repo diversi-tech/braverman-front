@@ -36,11 +36,13 @@ const Login = () => {
         // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
+        sessionStorage.setItem("firstName", x.data.firstName);
+        sessionStorage.setItem("lastName", x.data.lastName);
+        sessionStorage.setItem("email", x.data.email);
         if (x.data.userType.description === "customer")
           navigate("/projectStatus");
-        else if (x.data.userType.description === "admin"){
-          debugger
-          navigate("/leads");}
+        else if (x.data.userType.description === "admin")
+          navigate("/leads");
         else
           navigate("/leads");
       } else {
@@ -66,10 +68,9 @@ const Login = () => {
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
 
-        if (x.data.userType.description === "customer")
-          navigate("/projectStatus");
+        if (x.data.userType.description === "customer"){
+          navigate("/projectStatus");}
         else if (x.data.userType.description === "admin"){
-          debugger
           navigate("/leads");}
         else
           navigate("/leads");
@@ -128,13 +129,13 @@ const Login = () => {
       <div >
         <button type="button" id='linkq' >
         <GoogleOAuthProvider clientId={clientId}>
-        <div id='login2'>
+        <div className="custom-google-login-button">
           <GoogleLogin
             onSuccess={onSuccess}
             onError={onFailure}
           // buttonText="התחברות עם Google"
           />
-        </div>
+          </div>
       </GoogleOAuthProvider>
         </button>
       </div>
