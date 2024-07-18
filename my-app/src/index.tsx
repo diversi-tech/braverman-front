@@ -19,6 +19,7 @@ import UserTable from './Component/user/user.component';
 import { TaskCategories } from './Component/adminScreen/taskCategories/taskCategoriesMain/taskCategories.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
 import UpdateUser from './Component/user/UpdateUser';
+import ProjectsTable from './Component/customers/costumers.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
