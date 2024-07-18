@@ -19,6 +19,7 @@ import ReactDOM from 'react-dom';
 import AddUserForm from './addUser.component';
 import Swal from 'sweetalert2';
 import store from '../../Redux/Store';
+import { ProviderWrapper } from './UpdateUser.component';
 
 
 interface UserWithProjectsNames extends User {
@@ -84,10 +85,29 @@ const UserTable = () => {
     const handlePreviousPage = () => {
         setCurrentPage(currentPage - 1);
     };
-    let nav=useNavigate();
-    const updateUser = async (user: string) => {
-      nav("/UpdateUser");
-    };
+    let nav = useNavigate();
+    const updateUser = async (userId: string) => {
+        debugger
+        Swal.fire({
+            title: 'עדכון משתמש',
+            html: '<div id="update-user"></div>',
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const container = document.getElementById('update-user');
+                if (container) {
+                    ReactDOM.render(                        
+                        <ProviderWrapper userId={userId} />,
+                        container
+                    );
+                   
+                }
+                
+            },
+        })
+    }
+
 
 const addUser = () => {
   Swal.fire({
