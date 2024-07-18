@@ -6,9 +6,9 @@ axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
 const apiUrl = 'https://localhost:7119/api/';
 
 
-export const addUser = (user:User) => {
+export const addUserApi = (user:User) => {
     console.log(user);
-    // return axios.put(`http://localhost:3000/meeting/`,user);
+    return axios.post(`${apiUrl}User/PostUser`,user);
 }
 
 export const LoginUser = async(userEmail:string,userPassword:string)=>{
@@ -27,6 +27,7 @@ export const getUsers = async () => {
       return []; 
     }
   };
+
   export const getUserById = async (userId: string) => {
     try {
   debugger
