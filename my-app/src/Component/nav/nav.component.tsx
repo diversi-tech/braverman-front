@@ -38,20 +38,20 @@ const Nav = () => {
             <nav className='nav'>
               <ul className='nav-list'>
 
-                {type === "customer" ? (
+                {type === "לקוח" ? (
                   <>
                   <p>{getGreetingMessage()}</p>
                   <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'projectStatus'}></Link></li>  
                </>  
                   
                 ) :
-                type === "worker" ? (<>
+                type === "עובד" ? (<>
                     {/* <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li> */}
                     <li className={`nav-item ${location.pathname.includes('/leads') ? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
                     <li className={`nav-item ${location.pathname.includes('/customers') ? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
                   </>)
                     :
-                    type === "admin" ? (<>
+                    type === "מנהל" ? (<>
                       {/* <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li> */}
                       <li className={`nav-item ${location.pathname.includes('/leads') ? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
                       <li className={`nav-item ${location.pathname.includes('/customers') ? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
