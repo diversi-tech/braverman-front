@@ -27,6 +27,8 @@ import { addNewTask } from "../../Redux/tasx/taskAction";
 import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
+import { useNavigate } from 'react-router-dom';
+ 
 
 export const Tasks = () => {
 
@@ -273,6 +275,14 @@ export const Tasks = () => {
                     Swal.fire("error", 'שגיאה בהוספת המשימה', 'error');
                 }
             }
+            const Tasks = () => {
+                const navigate = useNavigate();
+              
+                const handleClick = () => {
+                  navigate('./editTask.component.tsx');
+                };
+                return <button onClick={handleClick}>editTask</button>;
+              };
 
         });
     }
