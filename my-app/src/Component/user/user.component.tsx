@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './user.css'; 
+import './user.css';
 import { GetAllProjectPerUser, getUsers } from '../../api/user.api';
 import { UserType } from '../../model/userType.model';
 import { User } from '../../model/user.model';
@@ -12,10 +12,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAllUsers } from '../../Redux/User/userAction';
 import { FaUserEdit } from "react-icons/fa";
 import { GetById } from '../../api/project.api';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import UpdateUser, { ProviderWrapper } from './UpdateUser';
+import ReactDOM from 'react-dom';
 
 interface UserWithProjectsNames extends User {
-  projectsNames: string[];
+    projectsNames: string[];
 }
 
 const UserTable = () => {
@@ -75,56 +78,75 @@ const UserTable = () => {
     const handlePreviousPage = () => {
         setCurrentPage(currentPage - 1);
     };
-    let nav=useNavigate();
-    const updateUser = async (user: User) => {
-      nav("/UpdateUser");
+    let nav = useNavigate();
+    const updateUser = async (userId: string) => {
+        debugger
+        Swal.fire({
+            title: 'עדכון משתמש',
+            html: '<div id="update-user"></div>',
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const container = document.getElementById('update-user');
+                if (container) {
+                    ReactDOM.render(                        
+                        <ProviderWrapper userId={userId} />,
+                        container
+                    );
+                   
+                }
+                
+            },
+        })
+    }
+
+        return (
+            <><div className="user-table-container">
+                <div className="table-title">
+                    תצוגת משתמשי מערכת
+                </div>
+                <table>
+                    <thead>
+                        <tr className="table-header-row">
+                            <th>פרויקטים</th>
+                            <th>אימייל</th>
+                            <th>ניהול תפקיד</th>
+                            <th>שם משתמש</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody className='table-body'>
+                        {currentUsers.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.projectsNames.join(', ')} <CiLock /></td>
+                                <td>{user.email}</td>
+                                <td>{user.userType?.description}</td>
+                                <td>{user.firstName} {user.lastName}</td>
+                                <td onClick={() => updateUser(user.id)}><FaUserEdit className='user-icon' /></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="pagination">
+                    <button
+                        className="pagination-button"
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                    >
+                        <SlArrowUp className="icon" />
+                    </button>
+                    <button
+                        className="pagination-button"
+                        onClick={handleNextPage}
+                        disabled={indexOfLastUser >= users.length}
+                    >
+                        <SlArrowDown className="icon" />
+                    </button>
+                </div>
+            </div>
+            </>
+        );
     };
 
-    return (
-        <div className="user-table-container">
-            <div className="table-title">
-                תצוגת משתמשי מערכת
-            </div>
-            <table>
-                <thead>
-                    <tr className="table-header-row">
-                        <th>פרויקטים</th>
-                        <th>אימייל</th>
-                        <th>ניהול תפקיד</th>
-                        <th>שם משתמש</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody className='table-body'>
-                    {currentUsers.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.projectsNames.join(', ')} <CiLock /></td>
-                            <td>{user.email}</td>
-                            <td>{user.userType?.description}</td>
-                            <td>{user.firstName} {user.lastName}</td>
-                            <td onClick={() => updateUser(user)}><FaUserEdit className='user-icon' /></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="pagination">
-                <button
-                    className="pagination-button"
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                >
-               <SlArrowUp className="icon" />
-                </button>
-                <button
-                    className="pagination-button"
-                    onClick={handleNextPage}
-                    disabled={indexOfLastUser >= users.length}
-                >
-                 <SlArrowDown className="icon" />
-                </button>
-            </div>
-        </div>
-    );
-};
-
-export default UserTable;
+    export default UserTable;
