@@ -31,7 +31,7 @@ export const getAllLeads = () => {
 
 //addLead
 export const addLead = (lead: Lead) => {
-  return axios.post(`${apiUrl}Leads`, lead);
+  return axios.post(`${apiUrl}Leads/GetOpenLeads`, lead);
 }
 
 //Conversion to customer
