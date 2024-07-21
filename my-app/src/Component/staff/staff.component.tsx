@@ -6,13 +6,13 @@ export const Staff = () => {
     const role = sessionStorage.getItem("userType")
 const navigate=useNavigate();
 useEffect(() => {
-    if (role !== "admin") {
+    if (role !== "מנהל") {
         navigate("/not-found");
     }
 }, [role, navigate]);
     return(
         <>
-        {role==="admin"&&<p>staff</p>}
+        {role==="מנהל"&&<p>staff</p>}
         </>
     )
 }

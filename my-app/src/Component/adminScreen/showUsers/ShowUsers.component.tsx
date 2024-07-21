@@ -18,7 +18,7 @@ const ShowUsers =  () => {
       let usersResult;
       let userTypesResult;
       try {
-        if (role === 'admin'||role==="worker") {
+        if (role === 'מנהל'||role==="עובד") {
           usersResult = await getUsers();
         }
         else
@@ -60,7 +60,7 @@ const ShowUsers =  () => {
             <td>{user.lastName}</td>
             <td>{user.password}</td>
             <td>
-              {role === "admin" && <select
+              {role === "מנהל" && <select
                 value={user.userType.description}
                 onChange={(e) => handleUserTypeChange(index, e.target.value)}
               >
@@ -71,7 +71,7 @@ const ShowUsers =  () => {
                 ))}
               </select>}
               {
-                role !== "admin" && user.userType.description
+                role !== "מנהל" && user.userType.description
               }
             </td>
           </tr>

@@ -105,7 +105,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
     };
 
     const fetchStatusEnums = async () => {
-      debugger
+      
       try {
         let data ;
         console.log("Current status lead state:", leadStatus.allStatusLead);
@@ -336,7 +336,7 @@ const formatDateForInput = (date:any) => {
         };
       
 
-          debugger
+          
           const response = await convertToProject(project);
           if (response.status === 200) {
             console.log('New Project Created:', response.data);
@@ -409,7 +409,7 @@ const formatDateForInput = (date:any) => {
   const filteredLeads = leads.filter(lead => {
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true; 
-      debugger
+      
       switch (key) {
         case 'שם פרטי':
           return lead.firstName.toLowerCase().includes(value.toLowerCase());
@@ -469,7 +469,7 @@ const formatDateForInput = (date:any) => {
       showLoaderOnConfirm: true,
       preConfirm: async (action) => {
         try {
-          debugger
+          
           console.log(action);
           handleActionToPerformChange(id,action) 
           Swal.fire({
@@ -515,7 +515,7 @@ const formatDateForInput = (date:any) => {
   
 
      const save= async()=>{
-      debugger
+      
       try {
         for (let i = 0; i < leadsChanges!.length; i++) {
           if (leadsChanges![i]) {
@@ -634,7 +634,7 @@ const formatDateForInput = (date:any) => {
                   <td >{lead.firstName}</td>
 
                   <td>
-                    {currentUserType === 'admin' &&
+                    {currentUserType === 'מנהל' &&
                       <button
                         className={`circle-button ${selectedLeadId === lead.id ? 'clicked' : ''}`}
                         onClick={() => setSelectedLeadId(lead.id)}
@@ -648,7 +648,7 @@ const formatDateForInput = (date:any) => {
   <tr>
     <td colSpan={11} style={{ textAlign: 'right', padding: '7px 0', color: '#636363' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>    
-        {currentUserType === 'admin' && selectedLeadId && (
+        {currentUserType === 'מנהל' && selectedLeadId && (
           <button className="convert-lead-button" onClick={handleConvertLeadToProject}>
             →
             <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>

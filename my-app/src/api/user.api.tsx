@@ -30,7 +30,7 @@ export const getUsers = async () => {
 
   export const getUserById = async (userId: string) => {
     try {
-  debugger
+  
       const response = await axios.get(`https://localhost:7119/api/User/GetById?id=${userId}`);
       return [response.data];
     }
@@ -44,7 +44,7 @@ export const UpdateUserAPI = (newUser: User) => {
 }
 
   export const LoginWithGoogle=async(userEmail:string)=>{
-    debugger
+    
     console.log(userEmail);
     return axios.post(`https://localhost:7119/api/User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
 }
