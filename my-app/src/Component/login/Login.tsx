@@ -39,7 +39,7 @@ const Login = () => {
         sessionStorage.setItem("firstName", x.data.firstName);
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
-        if (x.data.userType.description === "customer")
+        if (x.data.userType.description === "לקוח")
           navigate("/projectStatus");
         else if (x.data.userType.description === "admin")
           navigate("/leads");
