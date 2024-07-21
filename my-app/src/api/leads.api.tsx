@@ -25,13 +25,13 @@ const convertDateStringToDateTime = (dateString: string | Date): string => {
 
 //getAll
 export const getAllLeads = () => {
-  return axios.get(`${apiUrl}Leads`);
+  return axios.get(`${apiUrl}Leads/GetOpenLeads`);
 }
 
 
 //addLead
 export const addLead = (lead: Lead) => {
-  return axios.post(`${apiUrl}Leads/GetOpenLeads`, lead);
+  return axios.post(`${apiUrl}Leads`, lead);
 }
 
 //Conversion to customer
