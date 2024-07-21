@@ -70,6 +70,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   useEffect(() => {
     const fetchData = async () => {
+      debugger
       try {
         let data;
         console.log(leadsState.allLeads);
@@ -126,6 +127,9 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   //convert date
   const convertDateTimeToDate = (date:any) => {
+    if(date==null)
+      return;
+    debugger
   if (typeof date === 'string') 
     if (date.includes('-')) {
       date = new Date(date);
@@ -133,8 +137,8 @@ const [leads, setLeads] = useState<Lead[]>([]);
       return date;
     }
     debugger
-   if(isNaN(date.getTime()))
-    return date;
+   if(isNaN(date))
+     return date;
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); 
   const day = String(date.getDate()).padStart(2, '0');
