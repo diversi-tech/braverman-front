@@ -25,19 +25,17 @@
   text-align: center;
 }
 
-/* הגדרות לעמודה הרביעית */
-.styled-table th:nth-child(4),
-.styled-table td:nth-child(4) {
+.styled-table th:nth-child(5),
+.styled-table td:nth-child(5) {
   background-color: transparent !important;
   border: none !important;
 }
 
-/* הסתרת התא העליון */
-.styled-table th:nth-child(4) {
+.styled-table th:nth-child(5) {
   display: none;
 }
 
-.styled-table td:nth-child(4) {
+.styled-table td:nth-child(5) {
   background-color:#F1F7FF !important;
 }
 .styled-table tbody tr {
@@ -46,12 +44,12 @@
 }
 
 /* הסרת פס תחתון בתא האחרון של העמודה הרביעית */
-.styled-table tbody tr:last-of-type td:nth-child(4) {
+.styled-table tbody tr:last-of-type td:nth-child(5) {
   border-bottom: none !important;
 }
 
 /* הסתרת התא התחתון */
-.styled-table tbody tr:last-of-type td:nth-child(4) {
+.styled-table tbody tr:last-of-type td:nth-child(5) {
   display: none;
 }
 

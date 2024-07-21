@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import { addCategory, updateCategory } from "../../../../api/taskCategory.api"; // ודא שיש לך פונקציה לעדכון קטגוריה ב-API
+import { addCategory, updateCategory } from "../../../../api/taskCategory.api";
 import { TaskCategory } from "../../../../model/taskCategory.model";
 import './taskCategoryEditor.css';
 import React from "react";
+import { User } from "../../../../model/user.model";
+import { getUserById, getUsers } from "../../../../api/user.api";
 
 export const TaskCategoriesEditor: React.FC<{
   onCategoryAdded: () => void,
   onClose: () => void,
-  editCategory: TaskCategory | null
+  editCategory: TaskCategory | null,
+
 }> = ({ onCategoryAdded, onClose, editCategory }) => {
 
   const [categoryName, setCategoryName] = useState('');
@@ -15,12 +18,28 @@ export const TaskCategoriesEditor: React.FC<{
   const [isMandatory, setIsMandatory] = useState(true);
   const [message, setMessage] = useState('');
   const [isMessageVisible, setIsMessageVisible] = useState(false);
+  const [userId, setUserId] = useState<string|undefined>("");
+  const [workers, setWorkers] = useState<User[]>([])
+
+  useEffect(() => {
+    async function getData() {
+
+      try {
+        const usersResult = await getUsers()
+        setWorkers(usersResult.filter((user) => user.userType.description === "עובד"));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    getData();
+  }, []);
 
   useEffect(() => {
     if (editCategory) {
       setCategoryName(editCategory.categoryName);
-      setWeeksRequired(editCategory.weeksForExecution);
+      setWeeksRequired(editCategory.daysForExecution);
       setIsMandatory(editCategory.sortOrder !== null);
+      setUserId(editCategory.userId || "");
     }
   }, [editCategory]);
 
@@ -50,13 +69,14 @@ export const TaskCategoriesEditor: React.FC<{
       const categoryData: TaskCategory = {
         taskCategoryId: editCategory ? editCategory.taskCategoryId : "",
         categoryName: categoryName,
-        weeksForExecution: weeksRequired,
+        daysForExecution: weeksRequired,
         sortOrder: editCategory ? isMandatory ? editCategory.sortOrder != null ? editCategory.sortOrder : mandatoryValue : mandatoryValue : mandatoryValue,
-        stageId: editCategory ? editCategory.stageId : ""
+        stageId: editCategory ? editCategory.stageId : "",
+        userId: userId
       }
 
       if (editCategory) {
-       await updateCategory(categoryData.taskCategoryId, categoryData); // ודא שיש לך פונקציה כזו ב-API
+        await updateCategory(categoryData.taskCategoryId, categoryData);
         setMessage(`קטגוריה "${categoryData.categoryName}" עודכנה בהצלחה!`);
       } else {
         const result = await addCategory(categoryData);
@@ -118,7 +138,22 @@ export const TaskCategoriesEditor: React.FC<{
             />
           </div>
         </div>
-
+        <div className="form-group">
+          <label htmlFor="workerSelect" className="input-label">בחר עובד:</label>
+          <div className="input-wrapper">
+            <select
+              id="workerSelect"
+              value={(workers.find((w)=>w.id===userId))?.firstName+" "+(workers.find((w)=>w.id===userId))?.lastName}
+              onChange={(e) => setUserId((workers.find((w)=>w.firstName+" "+w.lastName===e.target.value))?.id)}
+              required
+            >
+              <option value="">בחר עובד</option>
+              {workers.map(worker => (
+                <option key={worker.id} value={worker.firstName+" "+worker.lastName}>{worker.firstName+" "+worker.lastName}</option>
+              ))}
+            </select>
+          </div>
+        </div>
         <button type="submit" className="submit-button">{editCategory ? 'עדכן קטגוריה' : 'הוסף קטגוריה'}</button>
       </form>
 
