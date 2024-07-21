@@ -43,7 +43,7 @@ export const ShowProjectStatus = () => {
         taskCategory: {
           taskCategoryId: "string",
           categoryName: "string",
-          weeksForExecution: 0,
+          daysForExecution: 0,
           sortOrder: 0
         },
         status: {

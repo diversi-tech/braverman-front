@@ -52,9 +52,10 @@ export const Tasks = () => {
         taskCategory: {
             taskCategoryId: "668d06b4825153a8af0254fd",
             categoryName: " תשלום 1/3 מקדמה",
-            weeksForExecution: 0,
+            daysForExecution: 0,
             stageId: '0',
-            sortOrder: 0        
+            sortOrder: 0 ,
+            userId:""      
         },
         status: {
             "id": "66827898ef39f60dfd5e049f",
@@ -251,7 +252,7 @@ export const Tasks = () => {
                     taskCategory: {
                         taskCategoryId: "668d06b4825153a8af0254fd",
                         categoryName: " תשלום 1/3 מקדמה",
-                        weeksForExecution: 0,
+                        daysForExecution: 0,
                         stageId: null
                     },
                     status: taskStatus.find(t => t.value === status),
