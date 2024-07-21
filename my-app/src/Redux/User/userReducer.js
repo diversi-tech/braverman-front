@@ -4,7 +4,7 @@ const initialState = {
     allUser: [],
   };
 
-  const leadsReducer = (state = initialState, action) => {
+  const UserReducer = (state = initialState, action) => {
     switch (action.type) {
       case SET_ALL_USERS:
         return {
@@ -29,5 +29,5 @@ const initialState = {
     }
   };
   
-  export default leadsReducer;
+  export default UserReducer;
   

@@ -17,7 +17,6 @@ import {MainProject} from './Component/project/projects/projectMain/mainProject.
 import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
-import UpdateUser from './Component/user/UpdateUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
@@ -29,7 +28,6 @@ root.render(
             <Route path="/" element={<App />}>
             <Route path="/nav" element={<Nav />}></Route>
             <Route path="/login" element={<Login />} />
-            <Route path="/updateUser" element={<UpdateUser />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />
             <Route path="/staff" element={<Staff />} />
@@ -40,7 +38,6 @@ root.render(
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
-            <Route path='/UpdateUser' element={<UpdateUser />} />
             </Route>
           </Routes>
         </HashRouter>
@@ -48,3 +45,4 @@ root.render(
   </React.StrictMode>
 );
 reportWebVitals();
+
