@@ -21,6 +21,7 @@ const ProjectFinish: React.FC<{refresh:boolean}> = (refresh) => {
 
   return (
     <div className='styleProject'>
+
       <div className="table-wrapper" id="finishProject">
         <h2 className='titleFinish'>פרויקטים סגורים</h2>
         <table className="TableClose">

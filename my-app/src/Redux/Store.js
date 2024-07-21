@@ -6,6 +6,7 @@ import  statusProjectReducer from "./Project/projectStatusReducer";
 import projectReducer from './Project/projectReducer';
 import taskReducer from './tasx/taskReducer';
 import enumsReducer from './enum/enumReducer';
+import UserTypeReducer from './User/userTypeReducer';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     Task : taskReducer,
     LevelUrgencyStatus : enumsReducer,
     Project : projectReducer,
+    UserType: UserTypeReducer
   }
     }
 );

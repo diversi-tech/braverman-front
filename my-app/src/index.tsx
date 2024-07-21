@@ -17,13 +17,13 @@ import {MainProject} from './Component/project/projects/projectMain/mainProject.
 import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
-import UpdateUser from './Component/user/UpdateUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+<<<<<<< HEAD
 
       <HashRouter>
         <Routes>
@@ -45,7 +45,28 @@ root.render(
           </Route>
         </Routes>
       </HashRouter>
+=======
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<App />}>
+            <Route path="/nav" element={<Nav />}></Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/leads" element={<Leads />} />
+            <Route path="/staff" element={<Staff />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/bookkeeping" element={<Bookkeeping />} />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route path="/customers" element={<MainProject />} />
+            <Route path='/leads' element={<Leads />} />
+            <Route path='/user' element={<UserTable />} />
+            <Route path='/projectStatus' element={<ShowProjectStatus />} />
+            </Route>
+          </Routes>
+        </HashRouter>
+>>>>>>> 9676ac820c0ef981deff57433ea71db1632eab3d
     </Provider>
   </React.StrictMode>
 );
 reportWebVitals();
+

@@ -5,6 +5,7 @@ import "./mainProjects.css"; // כולל את קובץ עיצוב ה- CSS
 
 export const MainProject = () => {
     const [refresh, setFresh] = useState(false);
+
     const onChangeStatusRefresh = () => {
         setFresh(!refresh);
 
@@ -15,7 +16,7 @@ export const MainProject = () => {
         </div>
         <div className="projectFinish">
             <ProjectFinish refresh={refresh} />
-            </div>            
+            </div>
         </div>
     )
 }
