@@ -25,8 +25,9 @@ const convertDateStringToDateTime = (dateString: string | Date): string => {
 
 //getAll
 export const getAllLeads = () => {
-  return axios.get(`${apiUrl}Leads`);
+  return axios.get(`${apiUrl}Leads/GetOpenLeads`);
 }
+
 
 //addLead
 export const addLead = (lead: Lead) => {

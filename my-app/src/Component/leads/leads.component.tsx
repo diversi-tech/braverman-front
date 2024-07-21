@@ -70,6 +70,7 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   useEffect(() => {
     const fetchData = async () => {
+      debugger
       try {
         let data;
         console.log(leadsState.allLeads);
@@ -105,7 +106,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
     };
 
     const fetchStatusEnums = async () => {
-      
       try {
         let data ;
         console.log("Current status lead state:", leadStatus.allStatusLead);
@@ -127,12 +127,18 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   //convert date
   const convertDateTimeToDate = (date:any) => {
+    if(date==null)
+      return;
+    debugger
   if (typeof date === 'string') 
     if (date.includes('-')) {
       date = new Date(date);
     } else {
       return date;
     }
+    debugger
+   if(isNaN(date))
+     return date;
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); 
   const day = String(date.getDate()).padStart(2, '0');
@@ -334,9 +340,6 @@ const formatDateForInput = (date:any) => {
           urlFigma: formValues.urlFigma,
           freeText: formValues.freeText
         };
-      
-
-          
           const response = await convertToProject(project);
           if (response.status === 200) {
             console.log('New Project Created:', response.data);
@@ -409,7 +412,7 @@ const formatDateForInput = (date:any) => {
   const filteredLeads = leads.filter(lead => {
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true; 
-      
+      debugger
       switch (key) {
         case 'שם פרטי':
           return lead.firstName.toLowerCase().includes(value.toLowerCase());
@@ -469,7 +472,7 @@ const formatDateForInput = (date:any) => {
       showLoaderOnConfirm: true,
       preConfirm: async (action) => {
         try {
-          
+          debugger
           console.log(action);
           handleActionToPerformChange(id,action) 
           Swal.fire({
@@ -515,7 +518,6 @@ const formatDateForInput = (date:any) => {
   
 
      const save= async()=>{
-      
       try {
         for (let i = 0; i < leadsChanges!.length; i++) {
           if (leadsChanges![i]) {
@@ -561,7 +563,7 @@ const formatDateForInput = (date:any) => {
   return (
     <div className="page-container">
       <div className="lead-management-container">
-        <h1 className="lead-management-title">Lead Management</h1>
+        <h1 className="lead-management-title">ניהול לידים</h1>
         <div className="search-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
         </div>
         <div className="table-container">
@@ -598,6 +600,7 @@ const formatDateForInput = (date:any) => {
                           value={filters[col]}
                           onChange={(e) => handleFilterChange(e, col)}
                           style={{width:"100%"}}
+                          className='select'
                         />
                       )}
                     </div>
@@ -634,12 +637,11 @@ const formatDateForInput = (date:any) => {
                   <td >{lead.firstName}</td>
 
                   <td>
-                    {currentUserType === 'מנהל' &&
+                     
                       <button
                         className={`circle-button ${selectedLeadId === lead.id ? 'clicked' : ''}`}
                         onClick={() => setSelectedLeadId(lead.id)}
                       ></button>
-                    }
                   </td>
                 </tr>
               ))}
@@ -656,7 +658,7 @@ const formatDateForInput = (date:any) => {
         )}
         { selectedLeadId && (
           <button className="convert-lead-button" onClick={handleEditLead}>
-            <GrUpdate className="icon" />
+            <GrUpdate />
             <span className='add' style={{ fontSize: 15, color: '#636363' }}>עדכון ליד</span>
           </button>
         )}
