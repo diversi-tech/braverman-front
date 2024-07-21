@@ -1,9 +1,8 @@
 
-
 import { useEffect, useState } from "react";
 import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { MoreStatus } from "./moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
 
@@ -67,6 +66,8 @@ export const ShowProjectStatus = () => {
     urlWordpress: "string",
   };
   const [data, setData] = useState([{ ...listProject }]);
+  const [goShow, setgoShow] = useState({ projectName: "" });
+
   // האוביקטים הבאים לצורך התצוגה
   let taskShow = {
     taskCategoryName: "",
@@ -101,7 +102,7 @@ export const ShowProjectStatus = () => {
   const [show, setShow] = useState(dataShow);
   //============1:useEffect=======================
   useEffect(() => {
-    if (!data[0].projectId) {
+    if (!data[0]?.projectId) {
       const task = async () => {
         const userId = sessionStorage.getItem("userId");
         if (userId) {
@@ -121,7 +122,7 @@ export const ShowProjectStatus = () => {
     for (let i = 0; i < data?.length; i++) {
       let newProgectShow = {
         ...progectShow,
-        projectName: data[i].firstName + " " + data[i].lastName,
+        projectName: data[i]?.firstName + " " + data[i]?.lastName,
         statusProject: data[i].status.key,
         endDate: data[i].endDate,
         totalPrice: data[i].totalPrice,
@@ -130,83 +131,111 @@ export const ShowProjectStatus = () => {
       };
 
       const tasksProject = data[i].tasks;
-      let rezult = getUniqueTasksWithLowestStatus(tasksProject);
-      rezult.forEach(r =>
-        newProgectShow.tashsShow.push(
-          { key: r.status.key, categoryName: r.taskCategory.categoryName }
-        ));
+      if (data[i].status.key == "3") { progectShow.stat = "" }
+      else {
+        let rezult = getUniqueTasksWithLowestStatus(tasksProject);
+        rezult?.forEach(r => {
+          debugger
+          newProgectShow.tashsShow.push(
+            { key: r.status.key, categoryName: r.taskCategory.categoryName }
+          )
+        });
+      }
       newProgectShow.stat = progectShow.stat
       dataShow.push(newProgectShow);
     }
     setShow(dataShow);
   }
 
+
   return (
     <>
-    {show.length>1?show.map(s=><div style={{direction:"rtl",display:"flex",flexDirection:"row"}}>
-      <ul>{s.projectName}</ul>
-      </div>):<Show p={show[0]}></Show>}
-      {show?.map(p => (
-        <div style={{ paddingTop: "7%" }}>
-          <div style={{maxHeight:"10%"}}>
-            {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
-          </div>
-          <br></br>
-          <br></br>
-          <Show p={p}></Show> 
-        </div>))}
+      {show.length > 1 &&
+        <div style={{ paddingRight: "10%", direction: "rtl" }}>
+          {show.map(s =>
+            <Button style={{ borderColor: "white", color: "black" }} onClick={() => { setgoShow(s) }}>{s.projectName}</Button>
 
+          )}
+        </div>}
+
+      {goShow.projectName != '' ? <Show props={goShow}></Show>
+        : <Show props={show[0]}></Show>}
     </>
   );
 };
 
 export default ShowProjectStatus;
-const Show=({p:{}})=>{
-  return(<>
-  <Box
-            sx={{
-              width: "80%",
-              margin: "auto",
-              maxWidth: 750,
-              bgcolor: "#ffffff",
-              outline: "none",
-              borderRadius: 3,
-              direction: "rtl",
-              borderBlock: 4,
-              textAlign: "initial",
-              color: "black",
-              display: "flex",
-              flexDirection: "row",
-              fontSize:"100%"
-            }}
-          >
-            <div>
-              <p style={{ fontSize: "170%" }}>שלבי הפרויקט   :  </p>
-              {p.tashsShow?.map(t => (t.categoryName != "" &&
-                <>
-                  {p.statusProject == "4" ? (
-                    <div>
-                      <CheckCircleOutlineTwoTone />
-                      <p>הפרויקט הושלם בהצלחה!</p>
-                    </div>
-                  ) : (
-                    <div style={{ display: 'flex', flexDirection: "row" }}>
-                      <div style={{ display: 'flex', flexDirection: "row" }}>
-                        {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
-                        {p.stat == t.categoryName
-                          ? <p style={{ backgroundColor: "#F1F7FF" }}>{t.categoryName}</p>
-                          : <p>{t.categoryName}</p>}
-                      </div>
 
-                    </div>
-                  )}
-                </>)
-              )}
+const Show = ({ props }: any) => {
+  const task = [{ key: "", categoryName: "" }]
+  if (props)
+    props?.tashsShow?.map((t: { key: string; categoryName: string; }) => {
+      task.push(t)
+    })
 
-            </div>
-            <div style={{ display: "flex", flexDirection: "column",  paddingRight: "12%" }}>
-              {/* <compunent stay me ansowor/> */}
-            </div>
-          </Box>
+  const p =
+  {
+    projectName: props ? props.projectName : "",
+    statusProject: props ? props.statusProject : "",
+    stat: props ? props.stat : "",
+    endDate: props ? props.endDate : "",
+    pricePaid: props ? props.pricePaid : 0,
+    totalPrice: props ? props.totalPrice : 0,
+    tashsShow: props ? task : [{ key: "", categoryName: "" }]
+  }
+  return (<>
+    <br></br>
+    <div>
+      {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
+    </div>
+    <br></br>
+    <br></br>
+    <Box
+      sx={{
+        width: "87%",
+        margin: "auto",
+        bgcolor: "#ffffff",
+        // outline: "none",
+        borderRadius: 3,
+        direction: "rtl",
+        // borderBlock: 4,
+        textAlign: "center",
+        color: "black",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        fontSize: "100%",
+        minHeight: "300%",
+        maxWidth: "87%",
+        flexWrap: "wrap",
+      }}
+    >
+      <div style={{ width: "100%", textAlign: "center" }}>
+        {p.statusProject == "3" ?
+          <div>
+            <CheckCircleOutlineTwoTone />
+            <p>הפרויקט הושלם בהצלחה!</p>
+          </div>
+          :
+
+          (<p style={{ fontSize: "170%", fontWeight: "bold" }}>שלבי הפרויקט:</p> &&
+            p.tashsShow?.map(t => (t?.categoryName != "" &&
+              <>
+
+                <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
+                  {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
+                  {p.stat == t.categoryName
+                    ? <p style={{ backgroundColor: "#F1F7FF", borderRadius: 3, }}>{t.categoryName}</p>
+                    : <p>{t.categoryName}</p>}
+                </div>
+              </>))
+          )}
+
+
+      </div>
+      <div style={{ paddingRight: "12%" }}>
+        {/* <compunent stay me ansowor/> */}
+      </div>
+    </Box>
   </>)
 }
