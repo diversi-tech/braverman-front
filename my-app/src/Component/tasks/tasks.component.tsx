@@ -281,6 +281,7 @@ export const Tasks = () => {
                 const handleClick = () => {
                   navigate('./editTask.component.tsx');
                 };
+                
                 return <button onClick={handleClick}>editTask</button>;
               };
 
@@ -297,6 +298,7 @@ export const Tasks = () => {
                     <table className="table">
                         <thead>
                             <tr >
+                                <button onClick={handleClick}>editTask</button>;
                                 {(['לינקים', 'רמת דחיפות', 'אחראית', 'המשימה', 'שם פרויקט'] as const).map((col) => (
                                     <th key={col}>
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -384,6 +386,7 @@ export const Tasks = () => {
                                     </tbody>
                             })}</>
                         })}
+                        
                         <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
                             +
                             <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>

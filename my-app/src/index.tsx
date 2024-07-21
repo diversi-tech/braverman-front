@@ -36,7 +36,7 @@ root.render(
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/bookkeeping" element={<Bookkeeping />} />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="/customers" element={<ProjectsTable />} />
+          {/* <Route path="/customers" element={<ProjectsTable />} /> */}
           <Route path="/main-project" element={<MainProject />} />
           <Route path='/leads' element={<Leads />} />
           <Route path='/user' element={<UserTable ></UserTable>}/>
