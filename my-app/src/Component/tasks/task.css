@@ -114,3 +114,31 @@ color: aquamarine;
   border: rgba(81, 81, 80, 0.153) 1.5px solid;
 
 }
+.icon {
+  font-size: 12px; 
+  align-items: center;
+  margin-left: 40%;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  color: #000;
+
+}
+
+.pagination button:disabled {
+  color: #ddd;
+  cursor: not-allowed;
+}
+
