@@ -27,7 +27,7 @@ root.render(
     <Provider store={store}>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<App />} ></Route>
+          <Route path="/" element={<App />} >
           <Route path="/nav" element={<Nav />}/>
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -42,7 +42,7 @@ root.render(
           <Route path='/user' element={<UserTable ></UserTable>}/>
           {/* <Route path="/updateUser" element={<UpdateUser></UpdateUser>} ></Route> */}
           <Route path='/projectStatus' element={<ShowProjectStatus />} />
-          
+          </Route>
         </Routes>
       </HashRouter>
     </Provider>
