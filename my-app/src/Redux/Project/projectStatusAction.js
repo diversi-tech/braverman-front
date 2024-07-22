@@ -1,6 +1,6 @@
-export const SET_ALL_STATUS = 'SET_ALL_STATUS';
+export const SET_PROJECT_STATUS = 'SET_PROJECT_STATUS';
 
 export const setAllStatusProject = (status) => ({
-  type: SET_ALL_STATUS,
+  type: SET_PROJECT_STATUS,
   payload: status,
 });

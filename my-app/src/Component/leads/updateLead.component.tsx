@@ -29,7 +29,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
     setFormValues({ ...formValues, [name as string]: value });
   };
 
-  const handleChange2 = (event: SelectChangeEvent<string>) => {
+  const handleChange2 = (event: SelectChangeEvent<string>) => {    
     const { name, value } = event.target;
     setFormValues((prevValues) => ({
       ...prevValues,

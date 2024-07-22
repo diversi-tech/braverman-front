@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import ProjectFinish from "./finishProject.component"
 import ActiveProjects from "./activeProject.component"
-import "./mainProjects.css"; // כולל את קובץ עיצוב ה- CSS
+import "./mainProjects.css";
 
 export const MainProject = () => {
     const [refresh, setFresh] = useState(false);
     const onChangeStatusRefresh = () => {
         setFresh(!refresh);
+        console.log(refresh);
 
     }
     return (<div className="main-project-container">
@@ -15,8 +16,8 @@ export const MainProject = () => {
         </div>
         <div className="projectFinish">
             <ProjectFinish refresh={refresh} />
-            </div>            
         </div>
+    </div>
     )
 }
 

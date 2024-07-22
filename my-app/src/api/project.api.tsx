@@ -5,13 +5,15 @@ axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
 const apiUrl = 'https://localhost:7119/api/';
 
 
-export const getCustomerProjec = (customerId: string) => {
-    console.log(customerId);
-
-    //return axios.get(`https://localhost:7119/api/Project/GetById/${id}`);
-    //צריך לשנות לפונקציה שמחזירה את הפרויקטים לפי id של הcustomer
-    return axios.get(`${apiUrl}Project/GetById/667dec3df9361bd95f17db87`);
-
+export const getCustomerProjects = async (customerId: string) => {
+    try{
+        const rezult =await axios.get(`https://localhost:7119/api/User/GetAllProjectPerUserAsync?userId=${customerId}`);
+    return rezult.data
+    }catch (error) {
+        console.error('Error fetching user:', error);
+        return []; 
+      }
+    
 }
 
 export const updateProject = (projectData: any) => {

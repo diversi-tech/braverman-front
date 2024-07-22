@@ -105,7 +105,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
     };
 
     const fetchStatusEnums = async () => {
-      debugger
       try {
         let data ;
         console.log("Current status lead state:", leadStatus.allStatusLead);
@@ -471,7 +470,6 @@ const formatDateForInput = (date:any) => {
       showLoaderOnConfirm: true,
       preConfirm: async (action) => {
         try {
-          debugger
           console.log(action);
           handleActionToPerformChange(id,action) 
           Swal.fire({
