@@ -25,8 +25,8 @@ export interface Project {
   urlDrive: string;
   urlWordpress: string;
   freeText: string;
-  // workLog: Timer[];
-  // workMonth: WorkMonth[];
+  workLog: Timer[];
+  workMonth: WorkMonth[];
 }
 
 

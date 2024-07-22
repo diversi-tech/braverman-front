@@ -1,17 +1,14 @@
 
 
 import { useEffect, useState } from "react";
-import { CheckCircleOutlineTwoTone, Task } from "@mui/icons-material";
+import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box } from "@mui/material";
-import { getUserById } from "../../api/user.api";
 import { MoreStatus } from "./moreStatus";
-import { getProjectById } from "../../api/project.api";
-
+import { getCustomerProjects} from "../../api/project.api";
 
 export const ShowProjectStatus = () => {
   debugger
-  const [user, setUser] = useState([{ projectsId: [] }]);
   const listProject = {
     projectId: null,
     firstName: "string",
@@ -70,7 +67,6 @@ export const ShowProjectStatus = () => {
     urlWordpress: "string",
   };
   const [data, setData] = useState([{ ...listProject }]);
-  let countNoFinishTask=0;
   // האוביקטים הבאים לצורך התצוגה
   let taskShow = {
     taskCategoryName: "",
@@ -80,16 +76,16 @@ export const ShowProjectStatus = () => {
 
   const getUniqueTasksWithLowestStatus = (tasksProject: { [key: string]: any }[]) => {
     const taskMap = new Map();
+    let countNoFinishTask = 0;
     tasksProject.forEach(t => {
-      if (t.status.value != "DONE") {
+      if (t.status.value != "DONETODO") {
         if (countNoFinishTask == 0)
-          progectShow.stat = taskShow.taskCategoryName;
+          progectShow.stat = t.taskCategory.categoryName;
         taskShow.status = 0
         countNoFinishTask++
       }
-      if (!taskMap.has(t.taskCategory.categoryName) || t.status < taskMap.get(t.taskCategory.categoryName).status) {
+      if (!taskMap.has(t.taskCategory.categoryName) || t.status < taskMap.get(t.taskCategory.categoryName).status)
         taskMap.set(t.taskCategory.categoryName, t);
-      }
     });
     return Array.from(taskMap.values());
   }
@@ -102,76 +98,54 @@ export const ShowProjectStatus = () => {
     totalPrice: 0,
     tashsShow: [{ key: "", categoryName: "" }]
   }
-  // צריך לבדוק אם מכניס כבר אוביקט מהסוג
-  //  כי אז הללולאה של השואת השמות לא תעבוד נכון בפעם הראשונה
-  const dataShow = [progectShow]
+  let dataShow = [progectShow]
   const [show, setShow] = useState(dataShow);
   //============1:useEffect=======================
   useEffect(() => {
-    // שליפת נתוני המשתמש הנוכחי
-    if (user[0]?.projectsId[0] == null) {
+    if (!data[0].projectId) {
       const task = async () => {
         const userId = sessionStorage.getItem("userId");
         if (userId) {
-          const c = await getUserById(userId);
-          debugger
-          setUser(c)
+         let rezult= await getCustomerProjects(userId)
+         console.log(rezult)
+          setData(rezult)
         }
       }; task();
     }
   });
-  //============2:useEffect=======================
-  if (user[0]?.projectsId[0] && (data.length == 1 && !(data[0]?.projectId))) {
-    fetchData();
-  }
-
-  // שליפת הפרויקטים של המשתמש הנוכחי
-  async function fetchData() {
-    debugger
-    data.pop();
-    for (let i = 0; i < user[0]?.projectsId?.length; i++) {
-      const project = await getProjectById(user[0]?.projectsId[i]);
-      if (project && Object.keys(project).length > 0) {
-        setData(prevData => [...prevData, project]);
-      }
-    }
-  };
-
-  //============3======================
+ 
+  //============2======================
   // הכנסת הנתונים לתצוגה
-  if (data[0]?.projectId && show[0]?.projectName == '') {
-    debugger
-    fullShow()
-  }
-  function fullShow() {
+  if (data[0]?.projectId&& (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
     debugger
     dataShow.map(d => dataShow.pop())//איפוס מערך הפרויקטים המוצגים לפני שממלא למשתמש הנוכחי
     for (let i = 0; i < data?.length; i++) {
-       countNoFinishTask = 0;
-      progectShow.projectName = data[i].firstName + " " + data[i].lastName;
-      progectShow.statusProject = data[i].status.key
-      progectShow.endDate = data[i].endDate;
-      progectShow.totalPrice = data[i].totalPrice;
-      progectShow.pricePaid = data[i].pricePaid;
+      let newProgectShow = {
+          ...progectShow,
+          projectName: data[i].firstName + " " + data[i].lastName,
+          statusProject: data[i].status.key,
+          endDate: data[i].endDate,
+          totalPrice: data[i].totalPrice,
+          pricePaid: data[i].pricePaid,
+          tashsShow: [{ key: "", categoryName: "" }]
+      };
+  
       const tasksProject = data[i].tasks;
       let rezult = getUniqueTasksWithLowestStatus(tasksProject);
-      rezult.map(r =>
-        progectShow.tashsShow.push(
-          { key: r.status.key, categoryName: r.taskCategory.categoryName }
-        ));
-
-      dataShow.push(progectShow)
-      setShow(dataShow)
-    }
-  };
+      rezult.forEach(r =>
+          newProgectShow.tashsShow.push(
+              { key: r.status.key, categoryName: r.taskCategory.categoryName }
+          ));
+      newProgectShow.stat=progectShow.stat
+      dataShow.push(newProgectShow);
+  }
+  setShow(dataShow);}
 
   return (
     <>
-    <p>ggggggggggggggggggg</p>
-      {console.log("show: " + { show })}
-      {show?.map(p =>(
-        <>
-      
+      {show?.map(p => (
+        <div style={{ paddingTop: "7%" }}>
+
           <Box
             sx={{
               width: "100%",
@@ -184,35 +158,40 @@ export const ShowProjectStatus = () => {
               borderBlock: 4,
               textAlign: "initial",
               color: "black",
+              display: "flex",
+              flexDirection: "row",
             }}
           >
-            <p style={{ fontSize: "170%" }}>שלבי הפרויקט   :  </p>
-            {p.tashsShow?.map(t => (t.categoryName!=""&&
-              <>
-                {p.statusProject == "4" ? (
-                  <div>
-                    <CheckCircleOutlineTwoTone />
-                    <p>הפרויקט הושלם בהצלחה!</p>
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: "row" }}>
+            <div>
+              <p style={{ fontSize: "170%" }}>שלבי הפרויקט   :  </p>
+              {p.tashsShow?.map(t => (t.categoryName != "" &&
+                <>
+                  {p.statusProject == "4" ? (
+                    <div>
+                      <CheckCircleOutlineTwoTone />
+                      <p>הפרויקט הושלם בהצלחה!</p>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: "row" }}>
                       <div style={{ display: 'flex', flexDirection: "row" }}>
-                      {t.key == "4" ? <CheckCircleOutlineTwoTone /> :<RadioButtonUncheckedIcon />}
+                        {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
                         {p.stat == t.categoryName
                           ? <p style={{ backgroundColor: "#F1F7FF" }}>{t.categoryName}</p>
                           : <p>{t.categoryName}</p>}
                       </div>
-                    
-                  </div>
-                )}
-              </>)
-            )}
-            <div style={{ display: "flex", flexDirection: "row" ,paddingTop:"29%"}}>
+
+                    </div>
+                  )}
+                </>)
+              )}
+
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" ,width:"50%",paddingRight:"12%"}}>
               {/* <compunent stay me ansowor/> */}
               {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
             </div>
           </Box>
-        </>))}
+        </div>))}
 
 
 

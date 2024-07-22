@@ -8,8 +8,7 @@ const endDate = dateObject.toISOString().split('T')[0];
     return (<>
         <Box
             sx={{
-                transform: "translate(-50%, -50%)",
-                width: "30%",
+                width: "50%",
                 margin: "auto",
                 borderRadius: 3,
                 p: 3,

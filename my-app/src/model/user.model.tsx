@@ -10,7 +10,7 @@ export interface User {
   firstName: string,
   lastName: string,
   projectsId: string[],
-  // work: Timer[];
-  // workMonth: WorkMonth[];
+  workLog: Timer[];
+  workMonth: WorkMonth[];
   }
   

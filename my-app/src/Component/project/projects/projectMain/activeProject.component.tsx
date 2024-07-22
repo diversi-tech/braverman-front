@@ -9,7 +9,6 @@ import { getStatusProject,filterByStatus } from "../../../../api/projectStatus.a
 import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
-import Links from '../../../Links/Links';
 
 const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) => {
   const editDialogRef = useRef<HTMLDivElement>(null);
@@ -279,10 +278,9 @@ const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) =
                   <td>{project.email}</td>
                   <td>{project.status.value}</td>
                   <td>
-                    <Links project={project}></Links>
-                    {/* <a href={project.urlFigma} target="_blank" rel="noopener noreferrer">Figma</a>{' '}
+                    <a href={project.urlFigma} target="_blank" rel="noopener noreferrer">Figma</a>{' '}
                     <a href={project.urlDrive} target="_blank" rel="noopener noreferrer">Drive</a>{' '}
-                    <a href={project.urlWordpress} target="_blank" rel="noopener noreferrer">WordPress</a> */}
+                    <a href={project.urlWordpress} target="_blank" rel="noopener noreferrer">WordPress</a>
                   </td>
                   <td>
                     <button className='buttonCircle' onClick={() => handleEditClick(project)}><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
