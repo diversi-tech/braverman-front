@@ -27,6 +27,7 @@ import { addNewTask } from "../../Redux/tasx/taskAction";
 import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
+import Links from "../Links/Links";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
 
@@ -330,8 +331,10 @@ export const Tasks = () => {
                             return <> {filterTask && filterTask.length && filterTask.map((t) => {
                                 return +t.levelUrgencyStatus == 5 - (+l.key) &&
                                     <tbody>
-                                        <tr onClick={() => setSelectedTaskId(t.taskId)} >
-                                            <td>לינקים</td>
+
+                                        <tr onClick={() => setSelectedTaskId(t.taskId)}>
+                                            <td><Links project={t}></Links></td>
+
                                             <td>
                                                 <div id="id01">
                                                     <React.Fragment>
