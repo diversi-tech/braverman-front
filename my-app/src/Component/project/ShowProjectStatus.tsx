@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box, Button } from "@mui/material";
-import { MoreStatus } from "./moreStatus";
+import { MoreStatus } from "../project/moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
 
 export const ShowProjectStatus = () => {
