@@ -5,6 +5,7 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box, Button } from "@mui/material";
 import { MoreStatus } from "./moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
+import { UpFile } from "../upFile";
 
 export const ShowProjectStatus = () => {
   debugger
@@ -184,6 +185,7 @@ const Show = ({ props }: any) => {
     tashsShow: props ? task : [{ key: "", categoryName: "" }]
   }
   return (<>
+  <UpFile/>
     <br></br>
     <div>
       {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
