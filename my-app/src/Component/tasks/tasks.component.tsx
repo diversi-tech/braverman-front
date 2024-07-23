@@ -20,7 +20,6 @@ import IconButton from '@mui/material/IconButton';
 import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
 import { getAllLeads } from "../../api/leads.api";
 import { Lead } from "../../model/leads.model";
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import Swal from "sweetalert2";
 import { addNewTask } from "../../Redux/tasx/taskAction";
@@ -28,6 +27,9 @@ import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
 import Links from "../Links/Links";
+import { GrUpdate } from "react-icons/gr";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
 
 export const Tasks = () => {
 
@@ -42,6 +44,10 @@ export const Tasks = () => {
     const [project, setProject] = useState<Project[]>([]);
     const [open, setOpen] = useState(false);
 
+    const [page, setPage] = useState(0);
+    const taskperPage = 7;
+    const totalPages = Math.ceil(tasks.length / taskperPage);
+
     const [isOpen, setIsOpen] = useState(false);
     const [Myprop, setMyprop] = useState<Task>({
         taskId: '',
@@ -55,7 +61,7 @@ export const Tasks = () => {
             categoryName: " תשלום 1/3 מקדמה",
             weeksForExecution: 0,
             stageId: '0',
-            sortOrder: 0        
+            sortOrder: 0
         },
         status: {
             "id": "66827898ef39f60dfd5e049f",
@@ -83,7 +89,7 @@ export const Tasks = () => {
         fetchDataTask();
         fetchDataProject();
         fetchDataLead();
-         fetchDatastatus();
+        fetchDatastatus();
     }, [dispatch]);
 
     //Reduxשליפה מה 
@@ -114,7 +120,9 @@ export const Tasks = () => {
             }
             else {
                 const resAllTask = await getAllTaskFromServer();
-                data = resAllTask;
+                data = resAllTask
+                console.log("task", data);
+                ;
                 dispatch(setAllLeads(resAllTask));
             }
             debugger
@@ -155,7 +163,7 @@ export const Tasks = () => {
             else {
                 const resAllStatus = await getAllEnumFromServer(3);
                 data = resAllStatus;
-               // dispatch(setAllEnums(resAllStatus));
+                // dispatch(setAllEnums(resAllStatus));
             }
             setTaskStatus(data);
         }
@@ -174,6 +182,7 @@ export const Tasks = () => {
             else {
                 const resAllproject = await getProject();
                 data = resAllproject.data;
+                console.log("resAllproject", data);
                 dispatch(setAllProject(resAllproject));
                 debugger
             }
@@ -278,6 +287,21 @@ export const Tasks = () => {
         });
     }
 
+    const handlePageChange = (direction: 'next' | 'prev') => {
+        setPage((prevPage) => {
+            if (direction === 'next') {
+                return Math.min(prevPage + 1, totalPages - 1);
+            } else if (direction === 'prev') {
+                return Math.max(prevPage - 1, 0);
+            } else {
+                return prevPage;
+            }
+        });
+    };
+    const filterTask = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
+    const handleEditLead = () => {
+        alert("the task update successfully")
+    }
     return (
         <div className="page-container">
             <div className="lead-management-container">
@@ -298,12 +322,13 @@ export const Tasks = () => {
                                         <div style={{ display: "flex" }}>
                                         </div>
                                     </th>))}
+                                <th></th>
                             </tr>
                         </thead>
 
                         {levelUrgencyStatus && levelUrgencyStatus.length && levelUrgencyStatus.map((l) => {
 
-                            return <> {tasks && tasks.length && tasks.map((t) => {
+                            return <> {filterTask && filterTask.length && filterTask.map((t) => {
                                 return +t.levelUrgencyStatus == 5 - (+l.key) &&
                                     <tbody>
                                         <tr onClick={() => setSelectedTaskId(t.taskId)}>
@@ -362,7 +387,7 @@ export const Tasks = () => {
                                                 {project && project.length && project.map((m) => {
                                                     if (m.projectId === t.projectId)
                                                         return <>
-                                                            {m.firstName}
+                                                            {m.businessName}
                                                         </>
                                                 })}</td>
                                             <td>{
@@ -375,15 +400,42 @@ export const Tasks = () => {
                                     </tbody>
                             })}</>
                         })}
-                        <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
+                        {/* <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
                             +
                             <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
-                        </button>
-                        <tr style={{ textAlign: 'center' }} >
-                            <ExpandLessRoundedIcon />
-                            <ExpandMoreRoundedIcon />
-                        </tr>
+                        </button> */}
+
+                        <tfoot >
+                            <tr>
+                                <td colSpan={6} style={{ textAlign: 'right', color: '#636363' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>
+                                        {selectedTaskId && (
+                                            <button className="convert-lead-button" onClick={handleEditLead}>
+                                                <GrUpdate className="icon" />
+                                                <span className='add' style={{ fontSize: 15, color: '#636363', width: '150px' }}>עדכון משימה</span>
+                                            </button>
+                                        )}
+                                        <button className="add-lead-button" onClick={handleAddTask}>
+                                            +
+                                            <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
+                    <tr >
+                        <div className="pagination" style={{ marginLeft: "1550%" }}>
+                            <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} style={{ marginLeft: "500%" }} >
+                                <SlArrowDown className="icon" />
+                            </button>
+                            <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
+                                <SlArrowUp className="icon" />
+                            </button>
+                        </div>
+                        {/* <ExpandLessRoundedIcon /> */}
+                        {/* <ExpandMoreRoundedIcon /> */}
+                    </tr>
                 </div>
             </div>
 

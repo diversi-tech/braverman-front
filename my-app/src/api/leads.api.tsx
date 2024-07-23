@@ -28,6 +28,7 @@ export const getAllLeads = () => {
   return axios.get(`${apiUrl}Leads/GetOpenLeads`);
 }
 
+
 //addLead
 export const addLead = (lead: Lead) => {
   return axios.post(`${apiUrl}Leads`, lead);
