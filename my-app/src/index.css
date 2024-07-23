@@ -11,6 +11,7 @@
 }
 
 body {
+  direction: ltr !important;
   margin: 0;
   padding: 2rem;
   min-width: 320px;
