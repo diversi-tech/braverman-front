@@ -30,7 +30,6 @@ import Links from "../Links/Links";
 import { GrUpdate } from "react-icons/gr";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
-
 export const Tasks = () => {
 
     //משתנים
