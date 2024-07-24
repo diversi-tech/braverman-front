@@ -18,7 +18,6 @@ const store = configureStore({
     Task: taskReducer,
     LevelUrgencyStatus: enumsReducer,
     Project: projectReducer,
-    // Timer: timerReducer
     UserType: UserTypeReducer
   },
 });
