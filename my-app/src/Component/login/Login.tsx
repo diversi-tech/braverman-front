@@ -24,12 +24,12 @@ const Login = () => {
   const nav = useNavigate()
   const navigate = useNavigate();
   const handleLogin = async () => {
-    debugger
+    
     if (UserEmail && UserPassword) {
       console.log('Logging in with', { UserEmail, UserPassword });
       const response = await LoginUser(UserEmail, UserPassword);
       if (response.status === 200) {
-        debugger
+        
         const x = response;
         console.log(x);
         console.log(x.data);
@@ -43,9 +43,9 @@ const Login = () => {
         sessionStorage.setItem("email", x.data.email);
         if (x.data.userType.description === "לקוח")
           navigate("/projectStatus");
-        else if (x.data.userType.description === "admin"){
-          debugger
-          navigate("/leads");}
+        else if (x.data.userType.description === "מנהל")
+          navigate("/leads");
+
         else
           navigate("/leads");
       } else {
@@ -74,10 +74,10 @@ const Login = () => {
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
 
+
         if (x.data.userType.description === "לקוח")
           navigate("/projectStatus");
         else if (x.data.userType.description === "מנהל"){
-          debugger
           navigate("/leads");}
         else
           navigate("/leads");

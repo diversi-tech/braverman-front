@@ -20,7 +20,6 @@ import IconButton from '@mui/material/IconButton';
 import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
 import { getAllLeads } from "../../api/leads.api";
 import { Lead } from "../../model/leads.model";
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import Swal from "sweetalert2";
 import { addNewTask } from "../../Redux/tasx/taskAction";
@@ -28,8 +27,8 @@ import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
 import Links from "../Links/Links";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 export const Tasks = () => {
 
@@ -59,9 +58,11 @@ export const Tasks = () => {
         taskCategory: {
             taskCategoryId: "668d06b4825153a8af0254fd",
             categoryName: " תשלום 1/3 מקדמה",
-            weeksForExecution: 0,
+            daysForExecution: 0,
             stageId: '0',
-            sortOrder: 0
+            sortOrder: 0 ,
+            userId:""      
+
         },
         status: {
             "id": "66827898ef39f60dfd5e049f",
@@ -261,7 +262,7 @@ export const Tasks = () => {
                     taskCategory: {
                         taskCategoryId: "668d06b4825153a8af0254fd",
                         categoryName: " תשלום 1/3 מקדמה",
-                        weeksForExecution: 0,
+                        daysForExecution: 0,
                         stageId: null
                     },
                     status: taskStatus.find(t => t.value === status),
@@ -331,10 +332,8 @@ export const Tasks = () => {
                             return <> {filterTask && filterTask.length && filterTask.map((t) => {
                                 return +t.levelUrgencyStatus == 5 - (+l.key) &&
                                     <tbody>
-
                                         <tr onClick={() => setSelectedTaskId(t.taskId)}>
                                             <td><Links project={t}></Links></td>
-
                                             <td>
                                                 <div id="id01">
                                                     <React.Fragment>
