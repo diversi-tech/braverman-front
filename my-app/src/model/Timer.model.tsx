@@ -8,11 +8,11 @@
 //   }
   
 export interface Timer {
-  id: string;
+  timerId: string;
   startTime: Date;
   endTime?: Date;
   duration?: number; // in minutes
-  taskId?: string;
-  // projectId?: string;
+  projectId?: string;
+  userId?: string;
 
 }

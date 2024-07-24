@@ -148,7 +148,6 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
             projectsId: selectedProjects,
             userType,
             workLog:[],
-            workMonth:[],
         };
 
         try {

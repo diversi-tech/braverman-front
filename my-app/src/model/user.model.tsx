@@ -11,6 +11,5 @@ export interface User {
   lastName: string,
   projectsId: string[],
   workLog: Timer[];
-  workMonth: WorkMonth[];
   }
   

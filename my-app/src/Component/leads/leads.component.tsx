@@ -340,7 +340,6 @@ const formatDateForInput = (date:any) => {
           urlFigma: formValues.urlFigma,
           freeText: formValues.freeText,
           workLog:[],
-          workMonth:[]
 
         };
           const response = await convertToProject(project);

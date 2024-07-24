@@ -26,7 +26,6 @@ export interface Project {
   urlWordpress: string;
   freeText: string;
   workLog: Timer[];
-  workMonth: WorkMonth[];
 }
 
 
