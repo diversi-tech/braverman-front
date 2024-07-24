@@ -7,7 +7,7 @@ import { MoreStatus } from "../project/moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
 import React from "react";
 import ChatBot from "react-chatbotify";
-import MyChatBot2 from "./chatBot";
+import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
