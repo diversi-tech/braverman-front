@@ -22,13 +22,16 @@ import { getAllLeads } from "../../api/leads.api";
 import { Lead } from "../../model/leads.model";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import Swal from "sweetalert2";
-import { addNewTask } from "../../Redux/tasx/taskAction";
+import { addNewTask, setAllTask } from "../../Redux/tasx/taskAction";
 import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
 import Links from "../Links/Links";
 import { GrUpdate } from "react-icons/gr";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import ReactDOM from "react-dom";
+import AddTaskForm from "./addTask.component";
+import { setAllTaskStatus } from "../../Redux/enum/taskStatusAction";
 
 export const Tasks = () => {
 
@@ -77,7 +80,7 @@ export const Tasks = () => {
     const levelState = useSelector((state: { LevelUrgencyStatus: { allEnums: { [key: string]: Enum[] } } }) => state.LevelUrgencyStatus);
     const projectState = useSelector((state: { Project: { allProject: { [key: string]: Project[] } } }) => state.Project);
     const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
-    const taskStatusState = useSelector((state: { leads: { allEnums: { [key: string]: Lead[] } } }) => state.leads);
+    const taskStatusState = useSelector((state: { taskStatus: { allTaskStatus: { [key: string]: Enum[] } } }) => state.taskStatus);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open2 = Boolean(anchorEl);
@@ -98,7 +101,6 @@ export const Tasks = () => {
     const fetchDataLead = async () => {
         try {
             let data;
-            console.log(leadsState.allLeads);
             if (leadsState.allLeads.length) {
                 data = leadsState.allLeads;
             } else {
@@ -115,16 +117,13 @@ export const Tasks = () => {
     const fetchDataTask = async () => {
         try {
             let data;
-            console.log(tasksState.allTask);
             if (tasksState.allTask.length) {
                 data = tasksState.allTask;
             }
             else {
                 const resAllTask = await getAllTaskFromServer();
-                data = resAllTask
-                console.log("task", data);
-                ;
-                dispatch(setAllLeads(resAllTask));
+                data = resAllTask                ;
+                dispatch(setAllTask(resAllTask));
             }
             debugger
             setTasks(data);
@@ -137,7 +136,6 @@ export const Tasks = () => {
     const fetchDataLevel = async () => {
         try {
             let data;
-            console.log(levelState.allEnums);
             if (levelState.allEnums.length) {
                 data = levelState.allEnums;
             }
@@ -157,15 +155,17 @@ export const Tasks = () => {
     const fetchDatastatus = async () => {
         try {
             let data;
-            console.log(taskStatusState.allEnums);
-            if (taskStatusState.allEnums.length) {
-                data = taskStatusState.allEnums;
+            console.log(taskStatusState.allTaskStatus);
+            if (taskStatusState.allTaskStatus.length) {
+                data = taskStatusState.allTaskStatus;
             }
             else {
                 const resAllStatus = await getAllEnumFromServer(3);
                 data = resAllStatus;
-                // dispatch(setAllEnums(resAllStatus));
+                 dispatch(setAllTaskStatus(resAllStatus));
             }
+            console.log("resAllStatus", data);
+            
             setTaskStatus(data);
         }
         catch (error) {
@@ -174,6 +174,7 @@ export const Tasks = () => {
     }
 
     const fetchDataProject = async () => {
+        debugger
         try {
             let data;
             console.log(projectState.allProject);
@@ -225,69 +226,41 @@ export const Tasks = () => {
         console.log("tyr")
     }
     const handleAddTask = () => {
-        debugger
         Swal.fire({
-            title: 'ההוספת משימה חדש',
-            html: '<input id="swal-input1" class="swal2-input" placeholder="שם משימה" >' +
-                '<input id="swal-input2" class="swal2-input" placeholder="שם העובדת" >' +
-                '<input id="swal-input3" class="swal2-input" placeholder="שם הפרויקט" >' +
-                '<input id="swal-input4" class="swal2-input" placeholder="הערה" >' +
-                '<input id="swal-input5" class="swal2-input" placeholder="תאור" >' +
-                '<select id="swal-input8" class="swal2-input"><option>נמוך</option><option>רגיל</option><option>חשוב</option><option>דחוף</option></select>' +
-                '<select id="swal-input9" class="swal2-input"><option>TODO</option><option>IN_PROGRESS</option><option>WAITING</option><option>DONE</option></select>',
-            focusConfirm: false,
-            showCancelButton: true,
-
-            preConfirm: () => {
-                const taskName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-                const assignedTo = (document.getElementById('swal-input2') as HTMLInputElement).value;
-                const projectId = (document.getElementById('swal-input3') as HTMLInputElement).value;
-                const comment = (document.getElementById('swal-input4') as HTMLSelectElement).value;
-                const description = (document.getElementById('swal-input5') as HTMLInputElement).value;
-                const levelUrgency = (document.getElementById('swal-input8') as HTMLInputElement).value;
-                const status = (document.getElementById('swal-input9') as HTMLInputElement).value;
-
-                if (!taskName || !assignedTo || !projectId || !comment || !description || !levelUrgency) {
-                    Swal.showValidationMessage('אנא מלא את כל השדות');
-                    return null;
+            title: 'הוספת משימה חדשה',
+            html: '<div id="add-task-container"></div>',
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const container = document.getElementById('add-task-container');
+                console.log(taskStatus);
+                if (container) {
+                    ReactDOM.render(
+                        <AddTaskForm
+                            levelUrgencyStatus={levelUrgencyStatus}
+                            tasks={tasks}
+                            setTasks={setTasks}
+                            taskStatus={taskStatus}
+                            handleTaskAdded={async (newTask: Task) => {
+                                try {
+                                    const response = await addTask(newTask);
+                                    const addedTask = response.data;
+                                    setTasks([...tasks, addedTask]);
+                                    dispatch(await addTask(addedTask));
+                                    Swal.fire('Success', 'המשימה נוספה בהצלחה', 'success');
+                                } catch (error) {
+                                    Swal.fire('Error', 'שגיאה בהוספת המשימה', 'error');
+                                }
+                            }}
+                        />,
+                        container
+                    );
                 }
-
-                return {
-                    taskId: '',
-                    taskName: taskName,
-                    assignedTo: assignedTo,
-                    comment: comment,
-                    projectId: projectId,
-                    description: description,
-                    taskCategory: {
-                        taskCategoryId: "668d06b4825153a8af0254fd",
-                        categoryName: " תשלום 1/3 מקדמה",
-                        daysForExecution: 0,
-                        stageId: null
-                    },
-                    status: taskStatus.find(t => t.value === status),
-                    canBeApprovedByManager: '',
-                    levelUrgencyStatus: levelUrgencyStatus.find(l => l.value === levelUrgency),
-                };
-            }
-        }).then(async (result) => {
-            if (result.isConfirmed && result.value) {
-
-                try {
-                    let response = await addTask(result.value)
-                    setTasks([...tasks, response]);
-                    dispatch(addNewTask(response));
-                    Swal.fire('Success', 'המשימה נוסף בהצלחה', 'success');
-                }
-
-                catch (error) {
-                    Swal.fire("error", 'שגיאה בהוספת המשימה', 'error');
-                }
-            }
-
+            },
         });
-    }
-
+    };
+   
     const handlePageChange = (direction: 'next' | 'prev') => {
         setPage((prevPage) => {
             if (direction === 'next') {
@@ -300,6 +273,10 @@ export const Tasks = () => {
         });
     };
     const filterTask = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
+    console.log("filterTask", filterTask);
+    console.log("project", project);
+    
+    
     const handleEditLead = () => {
         alert("the task update successfully")
     }

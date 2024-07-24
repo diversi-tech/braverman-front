@@ -32,7 +32,7 @@ const Login = () => {
         const x = response;
         console.log(x);
         console.log(x.data);
-        alert("success");
+        Swal.fire('Success', 'התחברת בהצלחה', 'success');
         // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
@@ -47,7 +47,7 @@ const Login = () => {
         else
           navigate("/leads");
       } else {
-        alert("מייל וסיסמא לא קיימים");
+        Swal.showValidationMessage('מייל וסיסמא לא קיימים');
       }
     } else {
       alert('נא להכניס מייל וסיסמא');

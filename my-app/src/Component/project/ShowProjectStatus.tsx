@@ -5,8 +5,13 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box, Button } from "@mui/material";
 import { MoreStatus } from "../project/moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
+import React from "react";
+import ChatBot from "react-chatbotify";
+import MyChatBot2 from "./chatBot";
 
 export const ShowProjectStatus = () => {
+   const [open, setOpen] = useState(false);
+
   debugger
   const listProject = {
     projectId: null,
@@ -160,6 +165,21 @@ export const ShowProjectStatus = () => {
 
       {goShow.projectName != '' ? <Show props={goShow}></Show>
         : <Show props={show[0]}></Show>}
+
+<div style={{ paddingRight: "12%" }}>
+        {/* <compunent stay me ansowor/> */}
+        <div>
+       {!open &&
+       <button onClick={() => setOpen(!open)}>
+         <ChatBot></ChatBot>
+        {/* {open ? 'Close Chat' : 'Open Chat'} */}
+       </button>}
+       {open && (
+        <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}> <MyChatBot2 />
+         </div>
+      )}
+     </div>
+      </div>
     </>
   );
 };
@@ -233,9 +253,7 @@ const Show = ({ props }: any) => {
 
 
       </div>
-      <div style={{ paddingRight: "12%" }}>
-        {/* <compunent stay me ansowor/> */}
-      </div>
+      
     </Box>
   </>)
 }

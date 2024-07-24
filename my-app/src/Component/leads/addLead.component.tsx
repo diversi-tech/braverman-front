@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { addLead } from  '../../api/leads.api';
 import { addLead2 } from '../../Redux/Leads/leadsAction';
-import validateEmail from './leads.component';
-import handlePhoneNumberChange from './leads.component'
+// import validateEmail from './leads.component';
+// import handlePhoneNumberChange from './leads.component'
 import { Lead } from '../../model/leads.model';
 import store from '../../Redux/Store'
 
@@ -27,6 +27,15 @@ interface AddLeadFormProps {
       businessName: '',
       freeText: ''
     });
+    const [errors, setErrors] = useState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      businessName: '',
+      freeText: '',
+      source: ''
+  });
   
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -35,10 +44,36 @@ interface AddLeadFormProps {
         [name]: value
       });
     };
-  
+    const validateEmail = (email: string) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+  };
+  const handlePhoneNumberChange = (phone: string) => {
+      const regex = /^(\+972|0)([23489]\d{7,8}|5[0-9]\d{7})$/;
+      return regex.test(phone);
+};
+    const validateFields = () => {
+      debugger
+      const newErrors = {
+          firstName: formValues.firstName ? '' : 'שדה חובה',
+          lastName: formValues.lastName ? '' : 'שדה חובה',
+          email: validateEmail(formValues.email) ? '' : 'כתובת אימייל לא תקינה',
+          phone: handlePhoneNumberChange(formValues.phone) ? '' : 'מספר טלפון לא תקין',
+          businessName: formValues.businessName ? '' : 'שדה חובה',
+          freeText: formValues.freeText ? '' : 'שדה חובה',
+          source: formValues.source ? '' : 'שדה חובה',
+      };
+      setErrors(newErrors);
+
+      return Object.values(newErrors).every(error => error === '');
+  };
     const handleAddLead = async () => {
+      debugger
+      
         const { firstName, lastName, phone, email, source, businessName, freeText } = formValues;
-    
+        if (!validateFields()) {
+          return;
+      }
         if (!firstName || !lastName || !phone || !email || !source || !businessName || !freeText) {
           Swal.fire('Error', 'אנא מלא את כל השדות', 'error');
           return;
@@ -74,8 +109,12 @@ interface AddLeadFormProps {
           label="שם פרטי"
           type="text"
           fullWidth
+          multiline
           value={formValues.firstName}
           onChange={handleChange}
+          error={!!errors.firstName}
+          helperText={errors.firstName}
+
         />
         <TextField
           margin="dense"
@@ -83,8 +122,12 @@ interface AddLeadFormProps {
           label="שם משפחה"
           type="text"
           fullWidth
+          multiline
           value={formValues.lastName}
           onChange={handleChange}
+          error={!!errors.lastName}
+          helperText={errors.lastName}
+
         />
         <TextField
           margin="dense"
@@ -92,8 +135,12 @@ interface AddLeadFormProps {
           label="טלפון"
           type="text"
           fullWidth
+          multiline
           value={formValues.phone}
           onChange={handleChange}
+          error={!!errors.phone}
+          helperText={errors.phone}
+
         />
         <TextField
           margin="dense"
@@ -101,8 +148,11 @@ interface AddLeadFormProps {
           label="אמייל"
           type="email"
           fullWidth
+          multiline
           value={formValues.email}
           onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
         />
         <TextField
           margin="dense"
@@ -110,8 +160,11 @@ interface AddLeadFormProps {
           label="מקור הליד"
           type="text"
           fullWidth
+          multiline
           value={formValues.source}
           onChange={handleChange}
+          error={!!errors.source}
+          helperText={errors.source}
         />
         <TextField
           margin="dense"
@@ -119,8 +172,11 @@ interface AddLeadFormProps {
           label="שם העסק"
           type="text"
           fullWidth
+          multiline
           value={formValues.businessName}
           onChange={handleChange}
+          error={!!errors.businessName}
+          helperText={errors.businessName}
         />
         <TextField
           margin="dense"
@@ -132,6 +188,8 @@ interface AddLeadFormProps {
           rows={4}
           value={formValues.freeText}
           onChange={handleChange}
+          error={!!errors.freeText}
+          helperText={errors.freeText}
         />
         <Button onClick={handleAddLead} color="primary">
           הוסף ליד
