@@ -1,13 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import { Button, Typography, Box } from '@mui/material';
-// import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-// import PauseIcon from '@mui/icons-material/Pause';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { User } from '../../model/user.model';
-// import { Timer } from '../../model/Timer.model';
-// import { updateCurrentUser } from '../../Redux/User/userAction';
-// import { addTimer } from '../../api/Timer.api';
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Typography, Dialog, DialogTitle, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
@@ -84,29 +74,6 @@ const TimerComponent: React.FC = () => {
   // Add console logs to check if the project list is correct
   console.log('Projects in state:', projects);
   
-//   const fetchDataProject = async () => {
-//     try {
-//         let data;
-//         console.log(projectState.allProject);
-//         if (projectState.allProject.length) {
-//             data = projectState.allProject;
-//         }
-//         else {
-//             const resAllproject = await getProject();
-//             data = resAllproject.data;
-//             console.log("resAllproject", data);
-//             dispatch(setAllProject(resAllproject));
-//             debugger
-//         }
-//         debugger
-//         setProjects(data);
-//         debugger
-//     }
-//     catch (error) {
-//         console.error('Error fetching task:', error);
-//     }
-// }
-
   const handleStartTimer = (projectId: string) => {
     const timer: Timer = {
       timerId: "", // ניתן לייצר id ייחודי אחר אם נדרש
