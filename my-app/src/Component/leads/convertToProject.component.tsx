@@ -6,6 +6,7 @@ import { Project } from '../../model/project.model';
 import { deleteLead } from '../../Redux/Leads/leadsAction';
 import { Lead } from '../../model/leads.model';
 import { Enum } from '../../model/enum.model';
+import { Timer } from '../../model/Timer.model';
 
 interface ConvertLeadToProjectProps {
   lead: Lead;
@@ -47,7 +48,7 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     const selectedStatus = statusOptions2.find(status => status.value === "TODO");
     const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
 
-    const project: Project = {
+    const Project: Project = {
       projectId: '',
       firstName,
       lastName,
@@ -67,16 +68,19 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       urlWordpress,
       urlDrive,
       urlFigma,
-      freeText
+      freeText, 
+       workLog: [],
+       stageStatus:selectedStatus,
+
     };
 
-    const response = await convertToProject(project);
+    const response = await convertToProject(Project);
     if (response.status === 200) {
       setLeads(leads => leads.filter((l) => l.id !== lead.id));
       dispatch(deleteLead(lead.id));
       const response2 = await convertToCustomer(lead.id);
       if (response2.status === 200) {
-        handleProjectAdded(project);
+        handleProjectAdded(Project);
       } else {
         console.log("fail");
       }

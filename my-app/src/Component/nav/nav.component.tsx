@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from "../../assets/images/logo.png"
 import ProfileIcon from './profile'
+import { Timer } from '../../model/Timer.model';
+import TimerComponent from '../Timer/Timer.component';
 
 
 const Nav = () => {
@@ -12,6 +14,7 @@ const Nav = () => {
   const type=sessionStorage.getItem("userType")
   const navigate = useNavigate();
   const location = useLocation();
+
 
   const getGreetingMessage = () => {
     const hours = new Date().getHours();
@@ -50,6 +53,7 @@ const Nav = () => {
                     {/* <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li> */}
                     <li className={`nav-item ${location.pathname.includes('/leads') ? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
                     <li className={`nav-item ${location.pathname.includes('/customers') ? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
+                    
                   </>)
                     :
 
@@ -62,6 +66,7 @@ const Nav = () => {
                       <li className={`nav-item ${location.pathname.includes('/tasks') ? 'active' : ''}`}><Link to={'tasks'}>משימות</Link></li>
                       {/* <li className={`nav-item ${location.pathname.includes('/bookkeeping') ? 'active' : ''}`}><Link to={'bookkeeping'}>הנה"ח</Link></li> */}
                       <li className={`nav-item ${location.pathname.includes('/taskCategories') ? 'active' : ''}`}><Link to={'taskCategories'}>ניהול משימות</Link></li>
+                      <TimerComponent></TimerComponent>
      </>) :
 
                       <p>הזן פרטי גישה כדי להתחבר למערכת</p>
