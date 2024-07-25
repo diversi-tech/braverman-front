@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { Task } from '../model/task.model';
 
-const serviceURL = `https://localhost:7119/api/`
+const apiUrl = process.env.REACT_APP_BRAVERMAN
 
 export const getAllTaskFromServer = async () => {
     
-    let res = await axios.get(`${serviceURL}Tasks`)
+    let res = await axios.get(`${apiUrl}Tasks`)
     if (res) {
         console.log("resTask",res);
         return await res.data;
@@ -14,7 +14,7 @@ export const getAllTaskFromServer = async () => {
 
 export const UpDateTask = async (t : Task) => {
     debugger
-    let res = await axios.put(`${serviceURL}Tasks/Update`,
+    let res = await axios.put(`${apiUrl}Tasks/Update`,
         t
     )
     if (res) {
@@ -25,7 +25,7 @@ export const UpDateTask = async (t : Task) => {
 
 export const addTask = async (newTask : Task) => {
     debugger
-    let res = await axios.post(`${serviceURL}Tasks/Add`,
+    let res = await axios.post(`${apiUrl}Tasks/Add`,
         newTask
     )
     if (res) {
