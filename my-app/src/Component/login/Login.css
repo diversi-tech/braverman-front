@@ -13,8 +13,9 @@ body {
     left: calc(50% - 779px/2 + 70px);
     background: #F1F7FF;
     border-radius: 15px;
-    font-family: 'tutorial';
-    font-style: normal;
+    font-family: 'CustomFont'!important;
+    /* font-family: 'tutorial'; */
+    /* font-style: normal; */
     font-weight: 400;
     font-size: 30px;
     line-height: 36px;
@@ -24,6 +25,7 @@ body {
     /* z-index: 1; */
 }
 input::placeholder::placeholder {
+    font-family: 'CustomFont'!important;
     position: absolute;
     width: 277px;
     height: 60px;
@@ -31,6 +33,7 @@ input::placeholder::placeholder {
     top: 378px;
 }
 #password {
+    font-family: 'CustomFont'!important;
     top: 50.5%;
     bottom: 43.35%;
     border: none;
@@ -48,10 +51,12 @@ input::placeholder::placeholder {
     left: calc(50% - 81px/2 + 20.5px);
     top: 18%;
     /* z-index: 2; */
-    font-family: 'tutorial';
-    font-style: normal;
+    /* font-family: 'tutorial'; */
+    /* font-style: normal; */
     font-weight: 700;
     font-size: 30px;
+    font-family: 'CustomFont'!important;
+
     line-height: 36px;
     text-align: center;
 }
@@ -66,10 +71,12 @@ input::placeholder::placeholder {
     height: 60px;
     left: calc(50% - 340px/2);
     top: 80px;
-    font-family: 'tutorial';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 40px;
+    /* font-family: 'tutorial'; */
+    /* font-style: normal; */
+    /* font-weight: 700; */
+    /* font-size: 40px; */
+    font-family: 'CustomFont'!important;
+
     line-height: 48px;
     text-align: center;
     color: #002046;
@@ -99,10 +106,9 @@ height: 28px;
 left: calc(50% - 81px/2 + 20.5px);
 top: 18%;
 /* z-index: 2; */
-font-family: 'tutorial';
-font-style: normal;
-font-weight: 700;
-font-size: 30px;
+font-family: 'CustomFont'!important;
+/* font-weight: 700; */
+/* font-size: 30px; */
 line-height: 36px;
 text-align: center;
 }
@@ -117,7 +123,7 @@ width: 300px;
 height: 60px;
 left: calc(50% - 340px/2);
 top:80px;
-font-family: 'tutorial';
+font-family: 'CustomFont'!important;
 font-style: normal;
 font-weight: 700;
 font-size: 40px;
@@ -179,10 +185,10 @@ border: none;
     left: calc(50% - 277px/2);
     top: -15px;
     ;
-    font-family: 'tutorial';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 180%;
+    font-family: 'CustomFont'!important;
+    /* font-style: normal; */
+    /* font-weight: 400; */
+    /* font-size: 180%; */
     line-height: 36px;
     text-align: right;
     color: #002046;
@@ -191,4 +197,8 @@ border: none;
     margin-left: 26%;
     overflow: hidden;
     max-width: 300px;
+}
+body{
+    font-family: 'CustomFont'!important;
+
 }

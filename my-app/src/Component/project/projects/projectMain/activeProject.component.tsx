@@ -18,6 +18,7 @@ import ReactDOM from 'react-dom';
 import UpdateProject from './updateProject.component';
 import store from '../../../../Redux/Store';
 
+
 const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStatus }) => {
   const editDialogRef = useRef<HTMLDivElement>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -36,7 +37,6 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   const [page, setPage] = useState(0);
   const leadsPerPage = 3;
   const totalPages = Math.ceil(projects.length / leadsPerPage);
-  const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
   const projectActive = projects.filter((project) =>
     project.status.value !== "DONE" &&
     project.businessName.includes(filterText) &&
@@ -190,10 +190,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       },
     });
   };
-  const changeStatusDone = () => {
-   console.log("sssff");
-   console.log("hello");
-   
+  const changeStatusDone = () => {   
     onChangeStatus();
 }
   const handleSaveEdit = async () => {
@@ -408,6 +405,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
           </tr>
         </thead>
         <tbody>
+
           {projectActive.map((project, index) => (
             <React.Fragment key={index}>
               <tr>
