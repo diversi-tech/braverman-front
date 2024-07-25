@@ -1,0 +1,49 @@
+/* graph.css */
+
+.pie {
+   
+    display: flex;
+    justify-content: space-between; /* Makes sure there's space between the two graphs */
+    align-items: center; /* Aligns the items vertically center */
+    width: 100%; /* Ensures the container takes up full width */
+    padding: 10px; /* Optional padding around the container */
+  }
+
+.legend-container {
+    margin-bottom: 20px; /* Adds space below the legend */
+  }
+  
+  .legend-container h3 {
+    margin-bottom: 10px; /* Adds space below the title */
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .legend-list {
+    list-style-type: none; /* Removes default list bullets */
+    padding: 0;
+  }
+  
+  .legend-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* Adds space between legend items */
+  }
+  
+  .legend-color-box {
+    width: 20px; /* Width of the color box */
+    height: 20px; /* Height of the color box */
+    margin-right: 10px; /* Space between color box and text */
+  }
+  .graphPie{
+    margin-right:15%;
+  }
+  .filterDate{
+ margin-top: 1%;
+  }
+  .pieStyle{
+    margin-top: 8%;
+    border-radius: 1%;
+    background-color: white;
+
+  }

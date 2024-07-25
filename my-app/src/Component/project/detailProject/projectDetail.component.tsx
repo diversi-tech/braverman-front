@@ -62,6 +62,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
             <p>
               פיגמה: {editing ? (
                 <input
+                  className='editInput'
                   type='text'
                   value={editedUrlFigma}
                   onChange={(e) => setEditedUrlFigma(e.target.value)}
@@ -80,6 +81,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
             <p>
               ניהול אתר: {editing ? (
                 <input
+                  className='editInput'
                   type='text'
                   value={editedUrlWordpress}
                   onChange={(e) => setEditedUrlWordpress(e.target.value)}
@@ -97,6 +99,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
             <p>
               דרייב: {editing ? (
                 <input
+                  className='editInput'
                   type='text'
                   value={editedUrlDrive}
                   onChange={(e) => setEditedUrlDrive(e.target.value)}
@@ -116,6 +119,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
           <h2>הערות</h2>
           {editing ? (
             <textarea
+              className='editInput'
               value={editedFreeText || ""}
               onChange={(e) => setEditedFreeText(e.target.value)}
             />
