@@ -1,3 +1,8 @@
+body{
+  font-family: 'CustomFont'!important;
+  font-weight: 700;
+
+}
 .styleProject {
   background-color: white;
 }
@@ -5,6 +10,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  
 }
 
 caption {
@@ -16,10 +22,14 @@ th,
 td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  font-weight: 700;
+
 }
 
 th {
   text-align: left;
+  font-weight: 700;
+
 }
 
 .btn {
@@ -30,8 +40,6 @@ th {
 }
 
 .button {
-  /* Ellipse 103 */
-
   box-sizing: border-box;
 
   position: absolute;
@@ -50,11 +58,15 @@ th {
 }
 
 .title {
-  padding-right: 50%;
+  padding-right: 45%;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .titleFinish {
-  padding-right: 20%;
+  padding-top: 3%;
+  padding-right: 30%;
+
 
 }
 
@@ -73,4 +85,21 @@ th {
 #buttonClear{
   padding-right: 38%;
   border-radius: 20px;
+}
+.edit-dialog-textfield {
+  margin-bottom: 16px;
+}
+.filter{
+  margin-right: 20px;
+}
+.filter-input {
+  width: 60px; /* רוחב האינפוט */
+  padding: 5px; /* ריפוד פנימי */
+  font-size: 14px; /* גודל גופן */
+  border: 1px solid #ccc; /* גבול */
+  transition: border-color 0.3s ease; /* אנימציה של שינוי צבע הגבול */
+}
+
+.filter-input:focus {
+  outline: none; /* מוחק את המסגרת שמתווספת באופן דיפולטיבי */
 }
