@@ -23,9 +23,9 @@ console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-<<<<<<< HEAD
 
-      <HashRouter>
+
+      {/* <HashRouter>
         <Routes>
           <Route path="/" element={<App />} >
           <Route path="/nav" element={<Nav />}/>
@@ -37,15 +37,16 @@ root.render(
           <Route path="/bookkeeping" element={<Bookkeeping />} />
           <Route path="/not-found" element={<NotFound />} />
           {/* <Route path="/customers" element={<ProjectsTable />} /> */}
-          <Route path="/main-project" element={<MainProject />} />
+          {/* <Route path="/main-project" element={<MainProject />} />
           <Route path='/leads' element={<Leads />} />
-          <Route path='/user' element={<UserTable ></UserTable>}/>
+          <Route path='/user' element={<UserTable ></UserTable>}/> */}
           {/* <Route path="/updateUser" element={<UpdateUser></UpdateUser>} ></Route> */}
-          <Route path='/projectStatus' element={<ShowProjectStatus />} />
+          {/* <Route path='/projectStatus' element={<ShowProjectStatus />} />
           </Route>
         </Routes>
-      </HashRouter>
-=======
+      </HashRouter> */} 
+
+      
         <HashRouter>
           <Routes>
             <Route path="/" element={<App />}>
@@ -64,7 +65,6 @@ root.render(
             </Route>
           </Routes>
         </HashRouter>
->>>>>>> 9676ac820c0ef981deff57433ea71db1632eab3d
     </Provider>
   </React.StrictMode>
 );
