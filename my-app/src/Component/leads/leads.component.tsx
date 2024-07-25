@@ -338,7 +338,9 @@ const formatDateForInput = (date:any) => {
           urlWordpress: formValues.urlWordpress,
           urlDrive: formValues.urlDrive,
           urlFigma: formValues.urlFigma,
-          freeText: formValues.freeText
+          freeText: formValues.freeText,
+          workLog:[],
+
         };
           const response = await convertToProject(project);
           if (response.status === 200) {
