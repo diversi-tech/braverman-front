@@ -1,6 +1,11 @@
+body{
+  font-family: 'CustomFont'!important;
+}
+
+
 .project-details {
   background-color: #f1f7ff;
-  font-family: 'Ping HL', sans-serif;
+  font-family: 'CustomFont'!important;
   font-size: 15px;
   font-weight: 400;
   text-align: right;
@@ -57,10 +62,17 @@ width: 80% /* חישוב רוחב בהתאם לגודל הדף */
   padding-right: 40%;
 }
 .editButton{
-  margin-top: -59%;
-  margin-right:47%;
+  margin-top: -62%;
+  margin-right:40%;
 }
 .saveButton{
   padding-top: 20%;
+}
+.editInput{
+  width: 60px; /* רוחב האינפוט */
+  padding: 3px; /* ריפוד פנימי */
+  font-size: 16px; /* גודל גופן */
+  border: 1px solid #ccc; /* גבול */
+  transition: border-color 0.3s ease; /* אנימציה של שינוי צבע הגבול */
 }
 
