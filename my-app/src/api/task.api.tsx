@@ -4,8 +4,8 @@ import { Task } from '../model/task.model';
 const apiUrl = process.env.REACT_APP_BRAVERMAN
 
 export const getAllTaskFromServer = async () => {
-    
-    let res = await axios.get(`${apiUrl}Tasks`)
+    debugger
+     let res = await axios.get(`${apiUrl}Tasks`)
     if (res) {
         console.log("resTask",res);
         return await res.data;
