@@ -1,6 +1,8 @@
 import { Task } from "./task.model";
 import { Credential } from "./credential.model";
 import { Enum } from "./enum.model";
+import { Timer } from "./Timer.model";
+import { WorkMonth } from "./workMonth.model";
 
 export interface Project {
   projectId: string;
@@ -23,6 +25,7 @@ export interface Project {
   urlDrive: string;
   urlWordpress: string;
   freeText: string;
+  workLog: Timer[];
 }
 
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { TextField, Button, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 import { updateLeadChanges } from '../../api/leads.api';
 import { Lead } from '../../model/leads.model';
 import Swal from 'sweetalert2';
 import { Enum } from '../../model/enum.model';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 
 interface UpdateLeadProps {
   lead: Lead;

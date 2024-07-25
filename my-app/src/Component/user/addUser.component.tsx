@@ -147,6 +147,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
             password,
             projectsId: selectedProjects,
             userType,
+            workLog:[],
         };
 
         try {

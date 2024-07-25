@@ -116,6 +116,7 @@ export const Tasks = () => {
 
     const fetchDataTask = async () => {
         try {
+            debugger
             let data;
             if (tasksState.allTask.length) {
                 data = tasksState.allTask;
