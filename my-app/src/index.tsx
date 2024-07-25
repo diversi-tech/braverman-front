@@ -17,7 +17,7 @@ import {MainProject} from './Component/project/projects/projectMain/mainProject.
 import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
-
+import {DashboardGraph} from "./Component/graphLead/mainGraphLead.component";
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
 root.render(
@@ -27,9 +27,10 @@ root.render(
           <Routes>
             <Route path="/" element={<App />}>
             <Route path="/nav" element={<Nav/>}></Route>
+            <Route path="/st" element={<DashboardGraph />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/leads" element={<MainProject />} />
+            <Route path="/leads" element={<Leads />} />
             <Route path="/staff" element={<Staff />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/bookkeeping" element={<Bookkeeping />} />
