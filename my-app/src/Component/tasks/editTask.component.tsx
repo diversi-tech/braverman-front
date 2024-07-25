@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './editTask.css'
+import './editTask.css';
+
+// הגדרת הממשק למשימה
 interface Task {
   description: string;
   files: File[];
@@ -11,40 +13,32 @@ const TaskEdit: React.FC = () => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTask({ ...task, description: e.target.value });
   };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setTask({ ...task, files: Array.from(e.target.files) });
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // כאן ניתן להוסיף לוגיקה לשמירת המשימה
-    console.log(task);
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="description">תיאור משימה:</label>
-        <textarea
-          id="description"
-          value={task.description}
-          onChange={handleDescriptionChange}
-        />
+    <div className="container">
+      <div className="chat">
+        <input className="input" type="text" placeholder="כתוב תגובה" />
       </div>
-      <div>
-        <label htmlFor="file-upload">העלאת קבצים:</label>
-        <input
-          id="file-upload"
-          type="file"
-          multiple
-          onChange={handleFileChange}
-        />
+      <div className="content">
+        <div className="header">
+          <h2>מרכז כיוון</h2>
+          <p>תקונים | הדרכה איך להתקדם</p>
+        </div>
+        <div className="tabs">
+          <span>תגיות</span>
+          <span>הערות</span>
+          <span className="active">תשובות ופירוט</span>
+          <span>היסטוריית פעולה</span>
+        </div>
+        <div>
+          <textarea
+            className="main-content"
+            id="description"
+            value={task.description}
+            onChange={handleDescriptionChange}
+          />
+      </div>   
       </div>
-      <button type="submit">שמור</button>
-    </form>
+    </div>
   );
 };
 

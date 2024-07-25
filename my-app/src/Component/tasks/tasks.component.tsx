@@ -27,16 +27,11 @@ import { addNewTask } from "../../Redux/tasx/taskAction";
 import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
- 
-=======
+
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
->>>>>>> 9676ac820c0ef981deff57433ea71db1632eab3d
-
 export const Tasks = () => {
-
     //משתנים
 
     const dispatch = useDispatch();
@@ -287,16 +282,6 @@ export const Tasks = () => {
                     Swal.fire("error", 'שגיאה בהוספת המשימה', 'error');
                 }
             }
-            const Tasks = () => {
-                const navigate = useNavigate();
-              
-                const handleClick = () => {
-                  navigate('./editTask.component.tsx');
-                };
-                
-                return <button onClick={handleClick}>editTask</button>;
-              };
-
         });
     }
 
@@ -414,12 +399,11 @@ export const Tasks = () => {
                                     </tbody>
                             })}</>
                         })}
-<<<<<<< HEAD
+
                         
-                        <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
-=======
+                        <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}></button>
                         {/* <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
->>>>>>> 9676ac820c0ef981deff57433ea71db1632eab3d
+
                             +
                             <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
                         </button> */}
@@ -435,7 +419,7 @@ export const Tasks = () => {
                                             </button>
                                         )}
                                         <button className="add-lead-button" onClick={handleAddTask}>
-                                            +
+                                            
                                             <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
                                         </button>
                                     </div>
