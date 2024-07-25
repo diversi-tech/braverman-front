@@ -1,4 +1,6 @@
+import { Timer } from "./Timer.model";
 import { UserType } from "./userType.model";
+import { WorkMonth } from "./workMonth.model";
 
 export interface User {
   email: string,
@@ -7,6 +9,7 @@ export interface User {
   userType:UserType,
   firstName: string,
   lastName: string,
-  projectsId: string[]
+  projectsId: string[],
+  workLog: Timer[];
   }
   

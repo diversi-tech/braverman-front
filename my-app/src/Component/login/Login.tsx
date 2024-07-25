@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { LoginUser, LoginWithGoogle } from '../../api/user.api';
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { setCurrentUser } from '../../Redux/User/userAction';
 
 
 interface GoogleCredentials {
@@ -23,31 +24,32 @@ const Login = () => {
   const nav = useNavigate()
   const navigate = useNavigate();
   const handleLogin = async () => {
-    debugger
+    
     if (UserEmail && UserPassword) {
       console.log('Logging in with', { UserEmail, UserPassword });
       const response = await LoginUser(UserEmail, UserPassword);
       if (response.status === 200) {
-        debugger
+        
         const x = response;
         console.log(x);
         console.log(x.data);
-        alert("success");
+        Swal.fire('Success', 'התחברת בהצלחה', 'success');
+        dispatch(setCurrentUser(x.data))
         // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
         sessionStorage.setItem("firstName", x.data.firstName);
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
-        if (x.data.userType.description === "customer")
+        if (x.data.userType.description === "לקוח")
           navigate("/projectStatus");
-        else if (x.data.userType.description === "admin"){
-          debugger
-          navigate("/leads");}
+        else if (x.data.userType.description === "מנהל")
+          navigate("/leads");
+
         else
           navigate("/leads");
       } else {
-        alert("מייל וסיסמא לא קיימים");
+        Swal.showValidationMessage('מייל וסיסמא לא קיימים');
       }
     } else {
       alert('נא להכניס מייל וסיסמא');
@@ -72,10 +74,10 @@ const Login = () => {
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
 
+
         if (x.data.userType.description === "לקוח")
           navigate("/projectStatus");
         else if (x.data.userType.description === "מנהל"){
-          debugger
           navigate("/leads");}
         else
           navigate("/leads");

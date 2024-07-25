@@ -4,8 +4,7 @@ import { Project } from '../model/project.model';
 import { Notes } from '../model/notes.model';
 
 axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
-// const apiUrl = process.env.REACT_APP_BRAVERMAN;
- const apiUrl = 'https://localhost:7119/api/';
+ const apiUrl = process.env.REACT_APP_BRAVERMAN;
 
 
 const convertDateStringToDateTime = (dateString: string | Date): string => {
@@ -46,7 +45,7 @@ export const updateLeadChanges = async (lead: Lead, id: string) => {
     lastContacted: convertDateStringToDateTime(lead.lastContacted as unknown as string),
     createdDate: convertDateStringToDateTime(lead.createdDate as unknown as string),
   };
-  debugger
+  
   console.log(leadToUpdate);
   return await axios.put(`https://localhost:7119/api/Leads/${id}`, leadToUpdate);
   // return await axios.put(`${apiUrl}Leads/${id}`, leadToUpdate);
@@ -59,7 +58,7 @@ export const filterByStatus = async (status: string) => {
 
 //convertToProject
 export const convertToProject = async (project: Project) => {
-  debugger
+  
   const projectToConvert = {
     ...project,
     createdAt: new Date(project.createdAt).toISOString(),
@@ -85,7 +84,7 @@ export const addNewNote = async (note: Notes) => {
     timestamp: new Date(note.timestamp).toISOString(),
   };
   try {
-    debugger
+    
     return await axios.post(`${apiUrl}Note`, projectToConvert);
   } catch (error) {
     if (axios.isAxiosError(error)) {

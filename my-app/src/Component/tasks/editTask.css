@@ -1,0 +1,161 @@
+.task-edit-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submit-button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+ .upload-container {
+  display: flex;
+  align-items: center;
+}
+
+ .container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+#maink{
+  left: 50%;display: flex;
+  margin-top: 50px;
+  margin-inline: 700px;}
+  .label-container{
+    display: flex;
+    align-items: center;
+  }
+.chat {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+#description{
+  width: 887px;
+height: 293px;
+top: 484px;
+left: 831px;
+gap: 0px;
+border-radius: 15px ;
+border: 1px 0px 0px 0px;
+opacity: 0px;
+border: 1px solid #8D8D8E
+
+}
+#file-upload-button{
+  display: none;
+}
+
+.message .timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.message .text {
+  margin-bottom: 5px;
+}
+
+.message .sender {
+  font-size: 14px;
+  color: #007bff;
+}
+
+.input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.content {
+  width: 70%;
+  padding: 20px;
+}
+
+.header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #343a40;
+}
+
+.header p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs span {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tabs .active {
+  background-color: #007bff;
+  color: white;
+}
+
+.main-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.main-content .date {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 10px;
+}
+ 
+ 

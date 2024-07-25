@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import './leads.css';
 import { SlArrowDown } from "react-icons/sl";
@@ -19,6 +19,8 @@ import { NoteColumn } from './note.component';
 import ReactDOM from 'react-dom';
 import UpdateLead from './updateLead.component';
 import AddLeadForm from './addLead.component';
+import ConvertLeadToProject from './convertToProject.component';
+import store from '../../Redux/Store';
 
 
 
@@ -70,7 +72,6 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   useEffect(() => {
     const fetchData = async () => {
-      debugger
       try {
         let data;
         console.log(leadsState.allLeads);
@@ -127,16 +128,15 @@ const [leads, setLeads] = useState<Lead[]>([]);
   
   //convert date
   const convertDateTimeToDate = (date:any) => {
+    debugger
     if(date==null)
       return;
-    debugger
   if (typeof date === 'string') 
     if (date.includes('-')) {
       date = new Date(date);
     } else {
       return date;
     }
-    debugger
    if(isNaN(date))
      return date;
   const year = date.getFullYear();
@@ -162,12 +162,15 @@ const formatDateForInput = (date:any) => {
  console.log(currentUserType);
  
 
-  const handleStatus2Change = (id: string, newStatus2: string) => {
+  const handleStatus2Change = async(id: string, newStatus2: string) => {
     const updatedLeads = leads!.map((lead) =>
       lead.id === id ? { ...lead, status: newStatus2 } : lead
     );
     setLeads(updatedLeads);
-
+    const lead =updatedLeads.find((lead)=>lead.id===id);
+    debugger
+    const response = await updateLeadChanges(lead,lead.id);
+    
     const updatedIndex = leads!.findIndex((l) => l.id === id);
            if (updatedIndex !== -1) {
              const updatedChanges = [...leadsChanges!]; 
@@ -203,6 +206,7 @@ const formatDateForInput = (date:any) => {
               setLeads={setLeads}
               handleLeadAdded={async (newLead: Lead) => {
                 try {
+                  debugger
                   const response = await addLead(newLead);
                   const addedLead = response.data;
                   addedLead.createdDate = new Date(addedLead.createdDate);
@@ -254,112 +258,32 @@ const formatDateForInput = (date:any) => {
     if (result.isConfirmed) {
       const lead = leads.find(lead => lead.id === selectedLeadId);
   
-      if (!lead) {
-        Swal.fire('Error', 'לא נמצא ליד להמרה', 'error');
-        return;
-      }
-  
-      const { firstName, lastName, email, businessName, source } = lead;
-  
-      const { value: formValues } = await Swal.fire({
+      Swal.fire({
         title: 'יצירת פרויקט חדש',
-        html: `
-          <input id="swal-input1" class="swal2-input" value="${firstName}" placeholder="שם פרטי">
-          <input id="swal-input2" class="swal2-input" value="${lastName}" placeholder="שם משפחה">
-          <input id="swal-input3" class="swal2-input" value="${email}" placeholder="אימייל">
-          <input id="swal-input4" class="swal2-input" value="${businessName}" placeholder="שם העסק">
-          <input id="swal-input5" class="swal2-input" value="${source}" placeholder="מקור הליד">
-          <input id="swal-input6" class="swal2-input" placeholder="מחיר כולל">
-          <input id="swal-input7" class="swal2-input" placeholder="מחיר ששולם">
-          <input id="swal-input8" class="swal2-input" placeholder="קישור דרייב">
-          <input id="swal-input9" class="swal2-input" placeholder="קישור פיגמה">
-          <input id="swal-input10" class="swal2-input" placeholder="קישור וורדפרס">
-           <input id="swal-input11" class="swal2-input" placeholder="טקסט חופשי">
-
-        `,
-        focusConfirm: false,
-        showCancelButton: true,
-        preConfirm: () => {
-          const firstName = (document.getElementById('swal-input1') as HTMLInputElement).value;
-          const lastName = (document.getElementById('swal-input2') as HTMLInputElement).value;
-          const email = (document.getElementById('swal-input3') as HTMLInputElement).value;
-          const businessName = (document.getElementById('swal-input4') as HTMLInputElement).value;
-          const source = (document.getElementById('swal-input5') as HTMLInputElement).value;
-          const totalPrice = (document.getElementById('swal-input6') as HTMLInputElement).value;
-          const pricePaid = (document.getElementById('swal-input7') as HTMLInputElement).value;
-          const urlDrive = (document.getElementById('swal-input8') as HTMLInputElement).value;
-          const urlFigma = (document.getElementById('swal-input9') as HTMLInputElement).value;
-          const urlWordpress = (document.getElementById('swal-input10') as HTMLInputElement).value;
-          const freeText = (document.getElementById('swal-input11') as HTMLInputElement).value;
-      
-          if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
-            Swal.showValidationMessage('יש למלא את כל השדות');
-            return null;
+        html: '<div id="convert-lead-container"></div>',
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          const container = document.getElementById('convert-lead-container');
+          if (container) {
+            ReactDOM.render(
+              <Provider store={store}>
+              <ConvertLeadToProject
+                lead={lead}
+                statusOptions2={statusOptions2}
+                balanceStatusOptions={balanceStatusOptions}
+                setLeads={setLeads}
+                handleProjectAdded={(newProject) => {
+                  Swal.fire('Success', 'הפרויקט נוצר בהצלחה', 'success');
+                }}
+              />,
+              </Provider>,
+              container
+            );
           }
-      
-          return {
-            firstName,
-            lastName,
-            email,
-            businessName,
-            source,
-            totalPrice,
-            pricePaid,
-            urlDrive,
-            urlFigma,
-            urlWordpress,
-            freeText
-
-          };
-        }
+        },
       });
-      
-      if (formValues) {
-        const selectedStatus = statusOptions2.find(status => status.value === "TODO");
-        const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
-      
-        const project: Project = {
-          projectId: '',
-          firstName: formValues.firstName,
-          lastName: formValues.lastName,
-          businessName: formValues.businessName,
-          email: formValues.email,
-          source: formValues.source,
-          status: selectedStatus!,
-          endDate: new Date(),
-          balanceStatus: selectedBalanceStatus!,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          totalPrice: formValues.totalPrice,
-          pricePaid: formValues.pricePaid,
-          balance: formValues.totalPrice - formValues.pricePaid,
-          stageStatus: selectedBalanceStatus!,
-          tasks: [],
-          credentials: [],
-          urlWordpress: formValues.urlWordpress,
-          urlDrive: formValues.urlDrive,
-          urlFigma: formValues.urlFigma,
-          freeText: formValues.freeText,
-
-        };
-          const response = await convertToProject(project);
-          if (response.status === 200) {
-            console.log('New Project Created:', response.data);
-            setLeads(leads.filter((lead) => lead.id !== selectedLeadId));
-            dispatch(deleteLead(selectedLeadId!));
-           const response2=await convertToCustomer(lead.id);
-           if(response2.status===200){
-             console.log("sucess");
-           }
-           else
-           console.log("fail");         
-            setSelectedLeadId(null);
-            Swal.fire('Success', 'הפרויקט נוצר בהצלחה!', 'success');
-          } else {
-            Swal.fire('Error', ' שגיאה ביצירת הפרויקט ', 'error');
-          }
-        
-      }
     }
   };
   
@@ -488,7 +412,7 @@ const formatDateForInput = (date:any) => {
     })
       }
 
-        const handleEditLead =()=>{
+        const handleEditLead= async()=>{
             const lead = leads.find((l) => l.id === selectedLeadId);
             if (!lead) {
               Swal.fire('Error', 'Selected lead not found', 'error');
@@ -505,9 +429,10 @@ const formatDateForInput = (date:any) => {
                 const container = document.getElementById('update-lead-container');
                 if (container) {
                   ReactDOM.render(
-                    <UpdateLead lead={lead} statusOptions={statusOptions} onUpdate={(updatedLead: Lead) => {
+                    <UpdateLead lead={lead} statusOptions={statusOptions} onUpdate={async (updatedLead: Lead) => {
                       const updatedLeads = leads.map(l => l.id === updatedLead.id ? updatedLead : l);
                       setLeads(updatedLeads);
+                      const response = await updateLeadChanges(updatedLead,updatedLead.id);
                       dispatch(updateLead(updatedLead));
                     }} />,
                     container
@@ -597,11 +522,10 @@ const formatDateForInput = (date:any) => {
                </select>
                     ) : 
                         <input
-                          type="text"
+                          // type="text"
                           value={filters[col]}
                           onChange={(e) => handleFilterChange(e, col)}
                           style={{width:"100%"}}
-                          className='select'
                         />
                       )}
                     </div>
@@ -681,7 +605,7 @@ const formatDateForInput = (date:any) => {
           <SlArrowUp className="icon"/>
           </button>
         </div>
-        <button onClick={()=>save()} style={{}}>save</button>
+        {/* <button onClick={()=>save()} style={{}}>save</button> */}
 
       </div>
     </div>
