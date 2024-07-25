@@ -227,6 +227,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="שם פרטי"
                 type="text"
                 fullWidth
+                multiline
                 value={formValues.firstName}
                 onChange={handleChange}
                 error={!!errors.firstName}
@@ -238,6 +239,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="שם משפחה"
                 type="text"
                 fullWidth
+                multiline
                 value={formValues.lastName}
                 onChange={handleChange}
                 error={!!errors.lastName}
