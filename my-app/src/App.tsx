@@ -11,7 +11,7 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    debugger
+    
     if (!sessionStorage.getItem("userId")) {
       navigate('/Login');
     }
