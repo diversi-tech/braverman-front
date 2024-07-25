@@ -26,12 +26,13 @@ import { addNewTask } from "../../Redux/tasx/taskAction";
 import { TaskStatus } from "../../enum/taskStatus.enum";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
+import { useNavigate } from 'react-router-dom';
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import { GrUpdate } from "react-icons/gr";
 import Links from "../Links/Links";
 import { GrUpdate } from "react-icons/gr";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
-
 export const Tasks = () => {
-
     //משתנים
 
     const dispatch = useDispatch();
@@ -284,7 +285,6 @@ export const Tasks = () => {
                     Swal.fire("error", 'שגיאה בהוספת המשימה', 'error');
                 }
             }
-
         });
     }
 
@@ -313,6 +313,7 @@ export const Tasks = () => {
                     <table className="table">
                         <thead>
                             <tr >
+                                <button onClick={handleClick}>editTask</button>;
                                 {(['לינקים', 'רמת דחיפות', 'אחראית', 'המשימה', 'שם פרויקט'] as const).map((col) => (
                                     <th key={col}>
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -401,7 +402,11 @@ export const Tasks = () => {
                                     </tbody>
                             })}</>
                         })}
+
+                        
+                        <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}></button>
                         {/* <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
+
                             +
                             <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
                         </button> */}
@@ -417,7 +422,7 @@ export const Tasks = () => {
                                             </button>
                                         )}
                                         <button className="add-lead-button" onClick={handleAddTask}>
-                                            +
+                                            
                                             <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
                                         </button>
                                     </div>
