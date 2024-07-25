@@ -4,11 +4,12 @@ import { getProject, deleteProject, updateProject } from '../../../../api/projec
 import './projectCostumer.css';
 import { Project } from '../../../../model/project.model';
 import { Enum } from '../../../../model/enum.model';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
 import { getStatusProject,filterByStatus } from "../../../../api/projectStatus.api";
-import MenuItem from '@material-ui/core/MenuItem';
+//  import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
+import { MenuItem } from '@mui/material';
 
 const ActiveProjects: React.FC <{onChangeStatus:()=>void}>= ({onChangeStatus}) => {
   const editDialogRef = useRef<HTMLDivElement>(null);

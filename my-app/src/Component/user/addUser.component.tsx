@@ -261,6 +261,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="סיסמא"
                 type={showPassword ? 'text' : 'password'}
                 fullWidth
+                multiline
                 value={formValues.password}
                 onChange={handleChange}
                 error={!!errors.password}
