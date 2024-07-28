@@ -49,6 +49,7 @@ export const UpdateUserAPI = (newUser: User) => {
 }
 
 export const GetAllProjectPerUser=async (userId:string)=>{
+  debugger
     try{
     const response= await axios.get(`${apiUrl}User/GetAllProjectPerUserAsync?userId=${userId}`);
     return response.data;
