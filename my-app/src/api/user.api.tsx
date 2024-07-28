@@ -30,7 +30,7 @@ export const getUsers = async () => {
   export const getUserById = async (userId: string) => {
     try {
   
-      const response = await axios.get(`{apiUrl}User/GetById?id=${userId}`);
+      const response = await axios.get(`${apiUrl}User/GetById?id=${userId}`);
       return [response.data];
     }
     catch (error) {
@@ -39,13 +39,13 @@ export const getUsers = async () => {
     }
   }
 export const UpdateUserAPI = (newUser: User) => {
-  return axios.put(`{apiUrl}User/UpdateUser`, newUser);
+  return axios.put(`${apiUrl}User/UpdateUser`, newUser);
 }
 
   export const LoginWithGoogle=async(userEmail:string)=>{
-    
+    debugger
     console.log(userEmail);
-    return axios.post(`{apiUrl}LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
+    return axios.post(`${apiUrl}User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
 }
 
 export const GetAllProjectPerUser=async (userId:string)=>{
