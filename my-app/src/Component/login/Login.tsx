@@ -42,7 +42,7 @@ const Login = () => {
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
         if (x.data.userType.description === "לקוח")
-          navigate("/projectStatus");
+          navigate("/quickActions");
         else if (x.data.userType.description === "מנהל")
           navigate("/leads");
 
