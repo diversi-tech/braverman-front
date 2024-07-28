@@ -52,7 +52,7 @@ const MyChatBot2: React.FC = () => {
 
   const checkStatus = async () => {
     const projects = await GetAllProjectPerUser(sessionStorage.getItem("userId")!);
-    return projects[0].status.value;
+    return projects[0].stageStatus.value;
   };
 
   const checkBalance = async () => {
@@ -119,7 +119,7 @@ const MyChatBot2: React.FC = () => {
       path: "get_status",
     },
     get_status: {
-      message: () => `סטטוס הפרויקט הוא ${form.project?.status.value}                     ?האם יש עוד משהו שאוכל לעזור בו`,
+      message: () => `סטטוס הפרויקט הוא ${form.project?.stageStatus.value}                     ?האם יש עוד משהו שאוכל לעזור בו`,
       options: ["כן", "לא"],
       path: (params) => moreHelp(params),
     },
