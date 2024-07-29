@@ -55,7 +55,7 @@ const ReportIssue=() =>{
       <p className="description">{`!היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, האם נתקלת בבעיה באתר? אנא שתף אותנו בפרטים כדי שנוכל לטפל בה. תודה רבה`}</p>
       <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"    />
 
-{/* <button onClick={() => send()}>
+<button className='buttonnnn' onClick={() => send()}>
   <p>שליחה</p>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@ const ReportIssue=() =>{
       d="M14 5l7 7m0 0l-7 7m7-7H3"
     ></path>
   </svg>
-</button> */}
+</button>
     </div>
  
     </div>

@@ -283,7 +283,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
             <td>שם העסק
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["שם העסק"]: !filterInputsVisible["שם העסק"] });
+                setFilterInputsVisible({ ...filterInputsVisible, "שם העסק": !filterInputsVisible["שם העסק"] });
                 handleFilterClose("שם העסק");
               }}
                 style={{ backgroundColor: "white", border: 0 }}
@@ -305,7 +305,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
             <td>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["סוג הפרויקט"]: !filterInputsVisible["סוג הפרויקט"] })
+                setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
                 handleFilterClose("סוג הפרויקט");
               }
               }
@@ -327,7 +327,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
             <td>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["איש קשר"]: !filterInputsVisible["איש קשר"] })
+                setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
                 handleFilterClose("איש קשר");
               }
               } style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
@@ -352,7 +352,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
             <td>אימייל
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["אימייל"]: !filterInputsVisible["אימייל"] })
+                setFilterInputsVisible({ ...filterInputsVisible, "אימייל": !filterInputsVisible["אימייל"] })
                 handleFilterClose("אימייל");
               }}
                 style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
@@ -372,7 +372,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
             </td>
             <td>סטטוס פרויקט
               <br></br>
-              <button className="filter" onClick={() => setFilterInputsVisible({ ...filterInputsVisible, ["סטטוס"]: !filterInputsVisible["סטטוס"] })} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+              <button className="filter" onClick={() => setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
               </button>
               <div className="filter-wrapper">
                 {
