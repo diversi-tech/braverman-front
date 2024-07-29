@@ -49,7 +49,7 @@ const Login = () => {
         else
           navigate("/leads");
       } else {
-        Swal.showValidationMessage('מייל וסיסמא לא קיימים');
+        Swal.fire('error', 'מייל וסיסמא לא קיימים ', 'error');
       }
     } else {
       alert('נא להכניס מייל וסיסמא');
