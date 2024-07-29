@@ -101,8 +101,7 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
   };
 
   return (
-    <div className='styleProject'>
-
+    <div className='styleProject2'>
       <div className="table-wrapper" id="finishProject">
         <h2 className='titleFinish' style={{ fontWeight: '700' }}>פרויקטים סגורים</h2>
         <table className="TableClose">
