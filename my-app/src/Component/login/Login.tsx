@@ -52,7 +52,7 @@ const Login = () => {
         else
           navigate("/leads");
       } else {
-        Swal.fire('Error', 'התחברת בהצלחה', 'error');
+        Swal.fire('Error', 'מייל וסיסמא לא קיימים', 'error');
       }
     } else {
       alert('נא להכניס מייל וסיסמא');
