@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Grid, Typography, IconButton } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography, IconButton, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import './userScreen.css';
@@ -9,7 +9,8 @@ import { GetAllProjectPerUser } from '../../api/user.api';
 import MoreStatus from '../project/moreStatus';
 
 const QuickActions = () => {
-    const [project, setProject] = useState<Project | null>(null);
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [endDate, setEndDate] = useState<string>("");
     const [open, setOpen] = useState(false);
 
@@ -25,7 +26,8 @@ const QuickActions = () => {
                 const projectPerCustomer = await GetAllProjectPerUser(userId);
                 console.log("Projects:", projectPerCustomer);
                 if (projectPerCustomer.length > 0) {
-                    setProject(projectPerCustomer[0]);
+                    setProjects(projectPerCustomer)
+                    setSelectedProject(projectPerCustomer[0]);
                     const dateObject = new Date(projectPerCustomer[0].endDate);
                     setEndDate(dateObject.toISOString().split('T')[0]);
                 }
@@ -34,8 +36,18 @@ const QuickActions = () => {
             console.error("Failed to fetch projects:", error);
         }
     };
+    const handleChangeProject = (event: SelectChangeEvent<string>) => {
+      debugger
+      const projectId = event.target.value as string;
+      const project = projects.find(proj => proj.projectId === projectId) || null;
+      setSelectedProject(project);
+      if (project) {
+          const dateObject = new Date(project.endDate);
+          setEndDate(dateObject.toISOString().split('T')[0]);
+      }
+  };
 
-    if (!project) {
+    if (!selectedProject) {
         return <p>Loading...</p>;
     }
 
@@ -54,7 +66,7 @@ const QuickActions = () => {
           </clipPath>
           </defs>
           </svg>
-          , label: 'לינק לאתר',link:project.urlWordpress},
+          , label: 'לינק לאתר',link:selectedProject.urlWordpress},
       
         { icon: <svg width="35" height="35" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_1439_1131)">
@@ -71,7 +83,7 @@ const QuickActions = () => {
           </clipPath>
           </defs>
           </svg>
-          , label: 'לינק לתקיית הדרייב' ,link:project.urlDrive},
+          , label: 'לינק לתקיית הדרייב' ,link:selectedProject.urlDrive},
 
           {icon: <svg width="35" height="35" viewBox="0 0 39 52" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M38.6826 11.1508L27.8493 0.317383C27.6461 0.114258 27.3711 0 27.0833 0H4.33327C1.94452 0 0 1.9434 0 4.33337V47.6667C0 50.0566 1.94452 52 4.33337 52H34.6667C37.0555 52 39 50.0566 39 47.6666V11.9166C39 11.6289 38.8857 11.3539 38.6826 11.1508ZM28.1666 3.6986L35.3014 10.8334H30.3333C29.1378 10.8334 28.1666 9.86111 28.1666 8.66673V3.6986ZM36.8334 47.6666C36.8334 48.861 35.8621 49.8333 34.6667 49.8333H4.33337C3.13788 49.8333 2.16673 48.861 2.16673 47.6666V4.33337C2.16673 3.13899 3.13798 2.16673 4.33337 2.16673H26V8.66673C26 11.0566 27.9445 13 30.3334 13H36.8334V47.6666Z" fill="#002046"/>
@@ -109,7 +121,7 @@ const QuickActions = () => {
           <path d="M45.4298 24.7345C44.5601 24.7345 43.8548 25.4397 43.8548 26.3095V39.0477C43.8548 41.4312 41.9158 43.3702 39.5323 43.3702H28.9973C28.6561 43.3702 28.3236 43.4805 28.0506 43.687L18.9541 50.5277C18.7231 50.701 18.5061 50.6292 18.3976 50.5697C18.2873 50.5137 18.1053 50.3755 18.1123 50.0937L18.2873 45.0012C18.3013 44.5742 18.1421 44.1595 17.8463 43.8532C17.5506 43.5452 17.1411 43.372 16.7141 43.372H9.3973C7.0138 43.372 5.0748 41.4347 5.0748 39.0495V18.2245C5.0748 15.8322 7.0138 13.8862 9.3973 13.8862H28.8048C29.6746 13.8862 30.3798 13.181 30.3798 12.3112C30.3798 11.4415 29.6746 10.7362 28.8048 10.7362H9.3973C5.2778 10.7362 1.9248 14.0962 1.9248 18.2262V39.0495C1.9248 43.169 5.2778 46.5237 9.3973 46.5237H15.0831L14.9641 49.9922C14.9221 51.4167 15.6798 52.7117 16.9451 53.368C17.4858 53.6497 18.0686 53.788 18.6461 53.788C19.4213 53.788 20.1896 53.5377 20.8441 53.0495L29.5223 46.5237H39.5306C43.6501 46.5237 47.0031 43.1707 47.0031 39.0495V26.3112C47.0048 25.4397 46.2996 24.7345 45.4298 24.7345Z" fill="#002046"/>
           <path d="M53.9435 9.73174C53.6583 8.85674 52.9565 8.20224 52.0658 7.98174L48.0408 6.97899L45.8428 3.46149C44.868 1.89699 42.3235 1.90049 41.3505 3.46149L39.1525 6.97899L35.1275 7.98174C34.2368 8.20224 33.5333 8.85674 33.2498 9.73174C32.9663 10.6067 33.1483 11.55 33.7398 12.2552L36.4068 15.4297L36.1163 19.5667C36.0515 20.4837 36.4575 21.3535 37.2013 21.8942C37.6633 22.2302 38.2058 22.4035 38.7553 22.4035C39.0895 22.4035 39.4273 22.3387 39.751 22.2075L43.5975 20.6535L47.4423 22.2075C48.2945 22.554 49.2465 22.435 49.992 21.896C50.7358 21.3552 51.1418 20.4855 51.0788 19.5667L50.7883 15.4297L53.4553 12.2535C54.045 11.55 54.2288 10.6067 53.9435 9.73174ZM47.9655 13.8915C47.703 14.2047 47.5718 14.6072 47.6015 15.0167L47.8815 18.9892L44.189 17.4965C44 17.4195 43.7988 17.381 43.5993 17.381C43.3998 17.381 43.1985 17.4195 43.0095 17.4965L39.3188 18.9892L39.597 15.0167C39.625 14.609 39.4938 14.2047 39.233 13.8915L36.6728 10.843L40.5368 9.87874C40.9323 9.77899 41.2753 9.53224 41.4905 9.18574L43.601 5.80999L45.7115 9.18574C45.9285 9.53224 46.2698 9.78074 46.6653 9.87874L50.5293 10.843L47.9655 13.8915Z" fill="#002046"/>
           </svg>
-          , label: '😊  נשמח לפידבק',link:"" },
+          , label: '😊  נשמח לפידבק',link:"/feedback" },
       
           { icon: <svg width="35" height="35" viewBox="0 0 58 52" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M51.9151 0H6.55339C3.19799 0 0.468262 2.72985 0.468262 6.08513V30.9787V34.8511C0.468262 38.2064 3.19799 40.9362 6.55339 40.9362H21.2464L19.4762 49.7873H13.7449C13.1338 49.7873 12.6385 50.2826 12.6385 50.8936C12.6385 51.5047 13.1338 52 13.7449 52H44.7236C45.3346 52 45.8299 51.5047 45.8299 50.8936C45.8299 50.2826 45.3346 49.7873 44.7236 49.7873H38.9923L37.2221 40.9362H51.9151C55.2704 40.9362 58.0002 38.2065 58.0002 34.8511V30.9787V6.08513C58.0002 2.72985 55.2705 0 51.9151 0ZM21.7327 49.7873L23.5029 40.9362H34.9655L36.7357 49.7873H21.7327ZM55.7875 34.8511C55.7875 36.9863 54.0504 38.7235 51.9151 38.7235H6.55339C4.41819 38.7235 2.68099 36.9864 2.68099 34.8511V32.0852H55.7874V34.8511H55.7875ZM55.7875 29.8724H2.68099V27.6597H9.3193C9.93036 27.6597 10.4257 27.1644 10.4257 26.5534C10.4257 25.9423 9.93036 25.447 9.3193 25.447H2.68099V6.08513C2.68099 3.94993 4.41808 2.21273 6.55339 2.21273H51.9151C54.0503 2.21273 55.7875 3.94981 55.7875 6.08513V29.8724Z" fill="#002046"/>
@@ -123,7 +135,7 @@ const QuickActions = () => {
         <path d="M10.5246 0L8.62012 3.30873L10.5246 6.99997H13.9755C15.9086 6.99997 17.4755 5.43297 17.4755 3.49999C17.4755 1.567 15.9085 0 13.9755 0H10.5246Z" fill="#FF7361"/>
         <path d="M3.47546 3.49999C3.47546 5.43297 5.04247 6.99997 6.97545 6.99997L8.83211 7.71709L10.5245 6.99997V0H6.97541C5.04247 0 3.47546 1.567 3.47546 3.49999Z" fill="#FF4D12"/>
         <path d="M3.52466 10.5C3.52466 12.4331 5.09166 14 7.02464 14H10.5246V7H7.02464C5.09166 7 3.52466 8.56704 3.52466 10.5Z" fill="#B659FF"/>
-        </svg>, label: 'FIGMA עיצוב ב',link:project.urlFigma },
+        </svg>, label: 'FIGMA עיצוב ב',link:selectedProject.urlFigma },
       ];
       
       
@@ -131,7 +143,35 @@ const QuickActions = () => {
   return (
     <div>
       <div className='div'>
-      {project && project.endDate && <MoreStatus project={project}></MoreStatus>}
+      <div>
+      < Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mt: 3 }}>
+      {projects.length>1 &&(
+      <FormControl variant="outlined" sx={{ minWidth: 300 }}>
+        <InputLabel id="project-select-label">בחר פרויקט</InputLabel>
+        <Select
+          labelId="project-select-label"
+          id="project-select"
+          value={selectedProject ? selectedProject.projectId : ''}
+          onChange={(event: SelectChangeEvent<string>) => handleChangeProject(event)}
+          label="בחר פרויקט"
+        >
+          <MenuItem value="" disabled>בחר פרויקט</MenuItem>
+          {projects.map((project) => (
+            <MenuItem key={project.projectId} value={project.projectId}>
+              {project.businessName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      )}
+      {selectedProject && selectedProject.endDate && (
+        // <Box sx={{ mt: 3 }}>
+          <MoreStatus project={selectedProject} />
+        // </Box>
+      )}
+    </Box>
+</div>
+      {/* {selectedProject && selectedProject.endDate && <MoreStatus project={selectedProject}></MoreStatus>} */}
       </div>
       <Box sx={{ padding: 3, backgroundColor: '#f4f7fc', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}>
         <Typography variant="h5" sx={{ marginBottom: 2, textAlign: 'right', fontSize: "40px", fontWeight: 700, fontFamily: "CustomFont", lineHeight: "48px" }}>
