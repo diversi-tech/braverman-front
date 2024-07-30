@@ -149,8 +149,8 @@ const TimerComponent: React.FC = () => {
         onClick={currentTimer ? handleStopTimer : openProjectDialog}
         sx={{
           borderRadius: '50%',
-          width: 50,
-          height: 50,
+          width: 30,
+          height: 30,
           minWidth: 0,
           padding: 0,
           display: 'flex',

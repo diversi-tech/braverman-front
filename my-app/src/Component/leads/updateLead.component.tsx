@@ -29,7 +29,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
     setFormValues({ ...formValues, [name as string]: value });
   };
 
-  const handleChange2 = (event: SelectChangeEvent<string>) => {
+  const handleChange2 = (event: SelectChangeEvent<string>) => {    
     const { name, value } = event.target;
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -60,6 +60,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
         value={formValues.firstName}
         onChange={handleChange}
         fullWidth
+        multiline
         margin="normal"
       />
       <TextField
@@ -68,6 +69,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
         value={formValues.lastName}
         onChange={handleChange}
         fullWidth
+        multiline
         margin="normal"
       />
       <TextField
@@ -76,6 +78,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
         value={formValues.phone}
         onChange={handleChange}
         fullWidth
+        multiline
         margin="normal"
       />
       <TextField
@@ -84,6 +87,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
         value={formValues.email}
         onChange={handleChange}
         fullWidth
+        multiline
         margin="normal"
       />
       <TextField
@@ -92,6 +96,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
         value={formValues.source}
         onChange={handleChange}
         fullWidth
+        multiline
         margin="normal"
       />
       <TextField
@@ -100,6 +105,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
         value={formValues.businessName}
         onChange={handleChange}
         fullWidth
+        multiline
         margin="normal"
       />
       <TextField

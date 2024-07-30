@@ -1,4 +1,4 @@
-import { SET_ALL_STATUS } from './projectStatusAction';
+import { SET_PROJECT_STATUS } from './projectStatusAction';
 
 const initialState = {
   allStatusProject: [], // המערך שבו נאחסן את כל הסטטוסים
@@ -6,7 +6,7 @@ const initialState = {
 
 const statusProjectReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ALL_STATUS:
+    case SET_PROJECT_STATUS:
       return {
         ...state,
         allStatusProject: action.payload,

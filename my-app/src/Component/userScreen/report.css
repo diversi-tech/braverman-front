@@ -1,0 +1,133 @@
+  .report-issue {
+    background-color: #fff; 
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 84%;
+    height: 80%;
+    margin-left: 7.5%;
+    margin-top: 3%;
+    text-align: right;
+  }
+  
+  .title {
+font-size: 30px;
+font-weight: 700;
+line-height: 36px;
+text-align: center;
+
+  }
+  
+  .description {
+    margin: 0;
+   font-size: 24px;
+  font-weight: 400;
+  line-height: 41.28px;
+  text-align: right;
+
+    margin-right: 7%;
+    color: #002046;
+  }
+  
+  .description2 {
+    margin: -2px;
+   font-size: 20px;
+  font-weight: 400;
+  line-height: 41.28px;
+  text-align: right;
+
+    margin-right: 7%;
+    color: #002046;
+  }
+  
+  .textarea {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 34px;
+    text-align: right;
+    margin-right: 7%;
+    width: 80%;
+    height: 150px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid #002046; 
+    border-radius: 6px;
+  }
+  .div2{
+    margin-top: 20px;
+    height: 100%;
+height: 550px;
+top: 317px;
+left: 98px;
+border-radius: 15px 0px 0px 0px;
+
+  }
+  
+  .buttonnnn {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.buttonnnn {
+  --primary-color: #111;
+  --hovered-color: #c84747;
+  position: relative;
+  display: flex;
+  font-weight: 600;
+  font-size: 20px;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.buttonnnn p {
+  margin: 0;
+  position: relative;
+  font-size: 20px;
+  color: var(--primary-color);
+}
+
+.buttonnnn::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  left: 0;
+  bottom: -7px;
+  background: var(--hovered-color);
+  height: 2px;
+  transition: 0.3s ease-out;
+}
+
+.buttonnnn p::before {
+  position: absolute;
+  content: "שליחה";
+  width: 0%;
+  inset: 0;
+  color: var(--hovered-color);
+  overflow: hidden;
+  transition: 0.3s ease-out;
+}
+
+.buttonnnn:hover::after {
+  width: 100%;
+}
+
+.buttonnnn:hover p::before {
+  width: 100%;
+}
+
+.button:hover svg {
+  transform: translateX(4px);
+  color: var(--hovered-color);
+}
+
+.button svg {
+  color: var(--primary-color);
+  transition: 0.2s;
+  position: relative;
+  width: 15px;
+  transition-delay: 0.2s;
+}

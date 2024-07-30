@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './editTask.css';
+import Documents from './document';
 
 // הגדרת הממשק למשימה
 interface Task {
@@ -38,6 +39,7 @@ const TaskEdit: React.FC = () => {
           />
       </div>   
       </div>
+      <Documents></Documents>
     </div>
   );
 };
