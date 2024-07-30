@@ -1,0 +1,110 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  #main1 {
+    margin-top: 20px;
+  }
+  
+  #maink {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #aaa {
+    /* display: flex; */
+    margin-top: -30px;
+    margin-left: 60%;
+    align-items:first baseline;
+    font-family: Ping HL;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 12.01px;
+    text-align: start;
+    direction: rtl;
+  }
+  
+  #file-upload {
+    display: none;
+  }
+  /* label{
+   right: 100px;
+  } */
+  
+  .upload-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .upload-label span {
+    font-family: Ping HL;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 12.01px;
+    color: #002046;
+  }
+  
+  .cont1 {
+    position: relative;
+    z-index: 0;
+    text-align: center;
+    margin: 15px;
+    width: 182px;
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .button-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display:flex;
+    flex-flow: column;
+  border: none;
+  }
+  button{
+    border: none;
+  }
+  .delete-button{
+    color: rgb(220, 61, 21);
+    opacity: 50%;
+  }
+  .download-button{
+    opacity: 50%;
+  }
+  .drive-b{
+    opacity: 50%;
+  }
+  .drive-b:hover{
+    opacity: 100%;
+    background-color: #DAFFF2;
+    /* : #DAFFF2; */
+  }
+  
+  
+    .kov{
+      margin-right: 50px;
+    }
+  
+  .delete-button:hover{
+   
+    color: azure;
+    background-color:red;
+    opacity: 100;
+  }
+  .download-button:hover{
+  background-color:  #FFDEDA;
+  ;
+    
+  
+    /* background-color: aqua; */
+    opacity: 200%;
+  }
