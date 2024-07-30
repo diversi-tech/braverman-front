@@ -30,8 +30,6 @@ import { useNavigate } from 'react-router-dom';
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { GrUpdate } from "react-icons/gr";
 import Links from "../Links/Links";
-import { GrUpdate } from "react-icons/gr";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 export const Tasks = () => {
     //משתנים
 
