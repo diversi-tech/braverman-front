@@ -24,7 +24,7 @@ export const updateProject = (projectData: any) => {
 
 
 export const getProject = () => {
-    return axios.get(`https://localhost:7119/api/Project`);
+    return axios.get(`${apiUrl}Project`);
 }
 export const deleteProject = (projectId: string) => {
     return axios.delete(`${apiUrl}Project/Delete/${projectId}`);

@@ -19,20 +19,20 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
   const totalPages = Math.ceil(projects.length / projectFinishPage);
   const projectActive = projects.slice(page * projectFinishPage, (page + 1) * projectFinishPage);
 
-  // useEffect(() => {
-  //   const fetchCustomers = async () => {
-  //     try {
-  //       const response = await getProject();
-  //       setProjects(response.data);
-  //       console.log(projects);
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await getProject();
+        setProjects(response.data);
+        console.log(projects);
 
-  //     } catch (error) {
-  //       console.error('Error fetching customers:', error);
-  //     }
-  //   };
+      } catch (error) {
+        console.error('Error fetching customers:', error);
+      }
+    };
 
-  // fetchCustomers();
-  // }, [refresh]);
+  fetchCustomers();
+  }, [refresh]);
 
 
 

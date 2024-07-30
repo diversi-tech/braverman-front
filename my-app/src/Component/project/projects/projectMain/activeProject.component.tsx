@@ -81,23 +81,6 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
     fetchProjects();
   }, [dispatch]);
 
-
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (editProject) {
-      const { name, value } = e.target;
-
-      if (name === 'status') {
-        // Find the corresponding status object by value
-        const selectedStatus = projectStatus.find(status => status.value === value);
-        if (selectedStatus) {
-          setEditProject({ ...editProject, status: selectedStatus });
-        }
-      } else {
-        setEditProject({ ...editProject, [name]: value });
-      }
-    }
-  };
   const handlePageChange = (direction: 'next' | 'prev') => {
     setPage((prevPage) => {
 
@@ -116,9 +99,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   };
 
   const handleEditClick = (project: Project) => {
-    // setEditProject(project);
-    // setOpenEditDialog(true);
-    handleEditLead(project);
+     handleEditLead(project);
   };
 
   const handleCloseEditDialog = () => {
@@ -472,90 +453,6 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
           <SlArrowUp className="icon" />
         </button>
       </div>
-
-      <Dialog
-        open={openEditDialog}
-        onClose={handleCloseEditDialog}
-        ref={editDialogRef}
-      >
-        <DialogTitle>עריכת פרויקט</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin='dense'
-            id='businessName'
-            name='businessName'
-            label='שם העסק'
-            type='text'
-            fullWidth
-            value={editProject?.businessName || ''}
-            onChange={handleChange}
-          />
-          <TextField
-            margin='dense'
-            id='firstName'
-            name='firstName'
-            label='שם פרטי'
-            type='text'
-            fullWidth
-            value={editProject?.firstName || ''}
-            onChange={handleChange}
-          />
-          <TextField
-            margin='dense'
-            id='lastName'
-            name='lastName'
-            label='שם משפחה'
-            type='text'
-            fullWidth
-            value={editProject?.lastName || ''}
-            onChange={handleChange}
-          />
-          <TextField
-            margin='dense'
-            id='phone'
-            name='phone'
-            label='טלפון'
-            type='string'
-            fullWidth
-            value={'phone' || ''}
-          />
-          <TextField
-            margin='dense'
-            id='email'
-            name='email'
-            label='מייל'
-            type='email'
-            fullWidth
-            value={editProject?.email || ''}
-            onChange={handleChange}
-          />
-          <TextField
-            select
-            margin='dense'
-            id='status'
-            name='status'
-            label='סטטוס פרויקט'
-            fullWidth
-            value={editProject?.status?.value || ''}
-            onChange={handleChange}
-          >
-            {projectStatus.map(status => (
-              <MenuItem key={status.id} value={status.value}>
-                {status.value}
-              </MenuItem>
-            ))}
-          </TextField>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseEditDialog} color='primary'>
-            ביטול
-          </Button>
-          <Button onClick={handleSaveEdit} color='primary'>
-            שמור
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 };
