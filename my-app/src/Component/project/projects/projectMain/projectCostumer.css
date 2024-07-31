@@ -1,14 +1,35 @@
+body{
+  font-family: 'CustomFont'!important;
+  font-weight: 700;
+  
+
+}
 .styleProject {
   background-color: white;
+  width: 107%;
+  /* background-color: #FFFFFF; White background for the container */
+  border-radius: 15px; /* Rounded corners */
+  margin-left: 15000px;
+  padding: 10px;
+  margin-top: 3%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.styleProject2{
+  background-color: white;
+  margin-top: 6%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px; /* Rounded corners */
+  margin-right: 100px;
 
+}
 table {
   width: 100%;
   border-collapse: collapse;
+  text-align: center;
 }
 
 caption {
-  text-align: left;
+  /* text-align: left; */
   font-weight: bold;
 }
 
@@ -16,10 +37,27 @@ th,
 td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+
 }
+table thead td {
+  text-align: center;
+  }
+  table thead th {
+    text-align: center;
+    }
 
 th {
-  text-align: left;
+  text-align: center;
+  font-weight: 700;
+
+}
+.filter {
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertically center items */
+  justify-content: center; /* Horizontally center items */
 }
 
 .btn {
@@ -30,8 +68,6 @@ th {
 }
 
 .button {
-  /* Ellipse 103 */
-
   box-sizing: border-box;
 
   position: absolute;
@@ -50,11 +86,16 @@ th {
 }
 
 .title {
-  padding-right: 50%;
+  text-align: center;
+  /* padding-right: 45%; */
+  /* padding-top: 2%; */
+  /* padding-bottom: 2%; */
 }
 
 .titleFinish {
-  padding-right: 20%;
+  padding-top: 3%;
+  padding-right: 30%;
+
 
 }
 
@@ -63,14 +104,47 @@ th {
 }
 
 .filters {
-  width: 100%
+  width: 100%;
+  
 }
 .filter
 {
+  align-items: center;
   margin-right: 3px;
   width: 10%;
 }
 #buttonClear{
   padding-right: 38%;
   border-radius: 20px;
+}
+.edit-dialog-textfield {
+  margin-bottom: 16px;
+}
+.filter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-right: 20px;
+}
+.filter-input {
+  width: 60px; /* רוחב האינפוט */
+  padding: 5px; /* ריפוד פנימי */
+  font-size: 14px; /* גודל גופן */
+  border: 1px solid #ccc; /* גבול */
+  transition: border-color 0.3s ease; /* אנימציה של שינוי צבע הגבול */
+}
+
+.filter-input:focus {
+  outline: none; /* מוחק את המסגרת שמתווספת באופן דיפולטיבי */
+}
+.styleProject .row td {
+  position: relative;
+}
+.links-column {
+  width: 100%;
+}
+
+.pagination .icon {
+  vertical-align: middle;
 }

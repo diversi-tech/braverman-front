@@ -27,23 +27,23 @@ const NotesColumn: React.FC<NotesColumnProps> = ({ notes, leadId, addNote }) => 
         <div class="notes-container">
           ${allNotesContent}
           <input id="swal-input-content" class="swal2-input" placeholder="הערה חדשה">
-          <input id="swal-input-created-by" class="swal2-input" placeholder="נוצר על ידי">
         </div>
       `,
-      focusConfirm: false,
-      showCancelButton: true,
+      // focusConfirm: false,
+      // showCancelButton: true,
+      showCloseButton: true,
       confirmButtonText: 'הוסף הערה',
-      cancelButtonText: 'ביטול',
+      // cancelButtonText: 'ביטול',
       preConfirm: () => {
         const content = (document.getElementById('swal-input-content') as HTMLInputElement).value;
-        const createdBy = (document.getElementById('swal-input-created-by') as HTMLInputElement).value;
+        // const createdBy = sessionStorage.getItem('firstName') + ' ' + sessionStorage.getItem('lastName');
 
-        if (!content || !createdBy) {
+        if (!content) {
           Swal.showValidationMessage('יש למלא את כל השדות');
           return false;
         }
 
-        return { content, createdBy };
+        return { content };
       }
     });
 
@@ -51,7 +51,7 @@ const NotesColumn: React.FC<NotesColumnProps> = ({ notes, leadId, addNote }) => 
       const newNote: Notes = {
         content: formValues.content,
         id: '',
-        createdBy: formValues.createdBy,
+        createdBy: sessionStorage.getItem('firstName') + ' ' + sessionStorage.getItem('lastName'),
         timestamp: new Date(),
         leadId: leadId,
         noteType:''

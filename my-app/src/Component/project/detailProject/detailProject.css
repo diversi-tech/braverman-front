@@ -1,9 +1,10 @@
-
+body{
+  font-family: 'CustomFont'!important;
+}
 
 .project-details {
   padding-left: 50%;
     background-color: #F1F7FF; /* צבע רקע תכלת */
-     /* פונט Ping HL */
     font-size: 15px; /* גודל פונט 15px */
     font-weight: 400; /* משקל פונט 400 */
     width: 100%; /* רוחב קבוע */
@@ -17,7 +18,7 @@
   }
   
   .text  {
-    
+    width: 100%;
     margin-bottom: 20px; /* מרווח בין פריטי הרשימה */
   }
   .project-wrapper {
@@ -29,15 +30,15 @@
     width: 48%; 
   }
   #projectDetails{
-    Width:767px;
+    Width:600px;
     Height:266px;
     margin-right: 40px;
   }
   #projectDetail{
-    Width:
-221px;
-Height:
-362px;
+  Width:
+  221px;
+  Height:
+   362px;
 
 
   }

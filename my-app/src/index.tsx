@@ -18,6 +18,10 @@ import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
 import { TaskCategories } from './Component/adminScreen/taskCategories/taskCategoriesMain/taskCategories.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
+import {DashboardGraph} from "./Component/graphLead/mainGraphLead.component";
+import QuickActions from './Component/userScreen/quickActions';
+import ReportIssue from './Component/userScreen/reportFault';
+import Feedback from './Component/userScreen/feedback';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -28,7 +32,8 @@ root.render(
         <HashRouter>
           <Routes>
             <Route path="/" element={<App />}>
-            <Route path="/nav" element={<Nav />}></Route>
+            <Route path="/nav" element={<Nav/>}></Route>
+            <Route path="/st" element={<DashboardGraph />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />
@@ -41,6 +46,10 @@ root.render(
             <Route path='/user' element={<UserTable />} />
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
               <Route path='/taskCategories' element={<TaskCategories />} />
+              <Route path='/quickActions' element={<QuickActions />} ></Route>
+              <Route path='/reportIssue' element={<ReportIssue />} ></Route>
+              <Route path='/feedback' element={<Feedback />} ></Route>
+
             </Route>
           </Routes>
         </HashRouter>

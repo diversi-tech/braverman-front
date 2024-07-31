@@ -9,6 +9,7 @@ import { LoginUser, LoginWithGoogle } from '../../api/user.api';
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { setCurrentUser } from '../../Redux/User/userAction';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 interface GoogleCredentials {
@@ -18,6 +19,8 @@ interface GoogleCredentials {
 const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
   // const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
   // console.log(currentUser);
   const dispatch = useDispatch();
@@ -29,11 +32,11 @@ const Login = () => {
       console.log('Logging in with', { UserEmail, UserPassword });
       const response = await LoginUser(UserEmail, UserPassword);
       if (response.status === 200) {
-        
+    
         const x = response;
         console.log(x);
         console.log(x.data);
-        alert("success");
+        Swal.fire('Success', 'התחברת בהצלחה', 'success');
         dispatch(setCurrentUser(x.data))
         // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
         sessionStorage.setItem("userId", x.data.id);
@@ -42,14 +45,14 @@ const Login = () => {
         sessionStorage.setItem("lastName", x.data.lastName);
         sessionStorage.setItem("email", x.data.email);
         if (x.data.userType.description === "לקוח")
-          navigate("/projectStatus");
+          navigate("/quickActions");
         else if (x.data.userType.description === "מנהל")
           navigate("/leads");
 
         else
           navigate("/leads");
       } else {
-        alert("מייל וסיסמא לא קיימים");
+        Swal.fire('Error', 'מייל וסיסמא לא קיימים', 'error');
       }
     } else {
       alert('נא להכניס מייל וסיסמא');
@@ -83,7 +86,7 @@ const Login = () => {
           navigate("/leads");
 
       } else {
-        Swal.showValidationMessage('מייל וסיסמא לא קיימים');
+        Swal.fire('Error', 'התחברת בהצלחה', 'error');
       }
     })
       .catch((error) => {
@@ -112,7 +115,7 @@ const Login = () => {
       />
         <div>
           <input
-            type='password'
+            type={!showPassword ? 'password' : ''}
             id="password"
             placeholder=':סיסמא'
             className='textBox'
@@ -120,6 +123,12 @@ const Login = () => {
             onChange={(e) => setUserPassword(e.target.value)}
             required
           />
+           <span
+              className="password-toggle-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </span>
         </div>
         <div id='btn'>
         <button type="submit" className='textBox' id="submit">

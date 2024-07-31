@@ -1,0 +1,33 @@
+/* graph.css */
+
+.grafh {
+    display: flex;
+    justify-content: space-between; /* Makes sure there's space between the two graphs */
+    align-items: center; /* Aligns the items vertically center */
+    width: 100%; /* Ensures the container takes up full width */
+    padding: 10px; /* Optional padding around the container */
+  }
+  
+  .graph1, .graph2 {
+    flex: 1; /* Allows both items to grow and shrink as needed */
+    margin: 0 20px; /* Adds space between the graphs (increased margin) */
+  }
+  
+  .graph1 {
+    margin-top:3.5%;
+
+    padding-right: 2%;
+    max-width: calc(50% - 20px); /* Adjust width considering the margin */
+  }
+  
+  .graph2 {
+    max-width: calc(50% - 20px); /* Adjust width considering the margin */
+  }
+  .h1{
+    padding-left: 50%;
+  }
+  .bar{
+    background-color: white;
+    border-radius:1%;
+  }
+  
