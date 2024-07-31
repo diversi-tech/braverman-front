@@ -1,11 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Paper } from '@mui/material';
-import DownloadIcon from '@mui/icons-material/Download';import { User } from '../../model/user.model';
+import DownloadIcon from '@mui/icons-material/Download';
+import { User } from '../../model/user.model';
 import { Timer } from '../../model/Timer.model';
 import { getTheAmountOfTimeForAllProjects, getTimersGroupedByUserAndProjectAsync } from '../../api/Timer.api';
-import { text } from 'stream/consumers';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
@@ -24,52 +23,39 @@ const AttendanceReport: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 const response = (await getTimersGroupedByUserAndProjectAsync()).data;
                 const users = response[0];
                 const userId = currentUser.id;
-                setUserTimers(users[userId] || []);
+                const userTimers = users[userId] || [];
+                setUserTimers(userTimers);
+                groupTimersByDay(userTimers);
+                calculateTotalDuration(userTimers);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData();
-    }, [currentUser]);
-
-    useEffect(() => {
-        groupTimersByDay(userTimers);
-        calculateTotalDuration(userTimers);
-
-    }, [userTimers]);
+    }, [currentUser.id]);
 
     const groupTimersByDay = (timers: Timer[]) => {
-        const groupedTimerss: { [key: string]: Timer[] } = {};
+        const groupedTimers: { [key: string]: Timer[] } = {};
         timers.forEach((timer) => {
-            const date = new Date(timer.startTime).toLocaleDateString('he-IL');
-            if (!groupedTimerss[date]) {
-                groupedTimerss[date] = [];
+            const date = formatDate(new Date(timer.startTime));
+            if (!groupedTimers[date]) {
+                groupedTimers[date] = [];
             }
-            groupedTimerss[date].push(timer);
+            groupedTimers[date].push(timer);
         });
-        setGroupedTimers(groupedTimerss);
+        setGroupedTimers(groupedTimers);
     };
 
-    const formatDate = (date: Date | string) => {
-        const d = new Date(date);
-        const day = d.getDate().toString().padStart(2, '0');
-        const month = (d.getMonth() + 1).toString().padStart(2, '0');
-        const year = d.getFullYear();
-        return `${day}/${month}/${year}`;
+    const formatDate = (date: Date) => {
+        return new Date(date).toLocaleDateString('en-GB'); // Changed to en-GB for dd/mm/yyyy format
     };
-
 
     const formatTime = (date: Date) => {
-        const d = new Date(date);
-        const hours = d.getHours().toString().padStart(2, '0');
-        const minutes = d.getMinutes().toString().padStart(2, '0');
-        const seconds = d.getSeconds().toString().padStart(2, '0');
-        return `${hours}:${minutes}:${seconds}`;
+        return new Date(date).toISOString().substr(11, 8); // Changed format to hh:mm:ss
     };
 
     const calculateTotalDuration = (timers: Timer[]) => {
@@ -86,8 +72,11 @@ const AttendanceReport: React.FC = () => {
         setTotalDuration(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
     };
 
-    const sortedDates = Object.keys(groupedTimers).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-
+    const sortedDates = Object.keys(groupedTimers).sort((a, b) => {
+        const dateA = new Date(a.split('/').reverse().join('-'));
+        const dateB = new Date(b.split('/').reverse().join('-'));
+        return dateA.getTime() - dateB.getTime();
+    });
 
     const downloadExcel = () => {
         const ws = XLSX.utils.json_to_sheet(
@@ -119,11 +108,11 @@ const AttendanceReport: React.FC = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>תאריך</TableCell>
-                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>שעת התחלה</TableCell>
-                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>שעת סיום</TableCell>
-                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>משך זמן</TableCell>
-                            <TableCell align="center" sx={{ fontWeight: 'bold' }}>פרויקט</TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>תאריך</TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>שעת התחלה</TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>שעת סיום</TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>משך זמן</TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>פרויקט</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

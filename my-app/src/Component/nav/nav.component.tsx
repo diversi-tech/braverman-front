@@ -53,7 +53,7 @@ const Nav = () => {
                     {/* <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'dashboard'}>דשבורד</Link></li> */}
                     <li className={`nav-item ${location.pathname.includes('/leads') ? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
                     <li className={`nav-item ${location.pathname.includes('/customers') ? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
-                    <TimerComponent></TimerComponent>
+                     <TimerComponent></TimerComponent>
                   </>)
                     :
 
