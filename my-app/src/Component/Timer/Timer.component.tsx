@@ -28,7 +28,9 @@ const TimerComponent: React.FC = () => {
         setCurrentTimer(prevTimer => {
           if (prevTimer && prevTimer.startTime) {
             const now = new Date();
-            const duration = now.getTime() - prevTimer.startTime.getTime();
+            const duration = new Date(now.getTime() - prevTimer.startTime.getTime())
+              .toISOString()
+              .substr(11, 8); // פורמט hh:mm:ss
             return {
               ...prevTimer,
               duration: duration,
@@ -37,7 +39,7 @@ const TimerComponent: React.FC = () => {
           return prevTimer;
         });
       }, 1000); // Update every second
-
+  
       setIntervalId(id);
 
       return () => {
@@ -74,12 +76,13 @@ const TimerComponent: React.FC = () => {
   // Add console logs to check if the project list is correct
   console.log('Projects in state:', projects);
   
-  const handleStartTimer = (projectId: string) => {
+  const handleStartTimer = (projectId: string, projectName:string) => {
     const timer: Timer = {
       timerId: "", // ניתן לייצר id ייחודי אחר אם נדרש
       startTime: new Date(),
       projectId: projectId,
-      userId: currentUser.id
+      userId: currentUser.id,
+      projectName: projectName
     };
     setCurrentTimer(timer);
     setProjectDialogOpen(false);
@@ -87,11 +90,15 @@ const TimerComponent: React.FC = () => {
 
   const handleStopTimer = () => {
     if (currentTimer) {
+      const endTime = new Date();
+      const duration = new Date(endTime.getTime() - currentTimer.startTime.getTime())
+      .toISOString()
+      .substr(11, 8); // פורמט hh:mm:ss    
       const updatedTimer: Timer = {
-        ...currentTimer,
-        endTime: new Date(),
-        duration: new Date().getTime() - currentTimer.startTime.getTime(),
-      };
+      ...currentTimer,
+      endTime: endTime,
+      duration: duration,
+    };
       addTimer(updatedTimer)
         .then((x) => 
         {
@@ -114,14 +121,9 @@ const TimerComponent: React.FC = () => {
     }
   };
 
-  const formatDuration = (duration: number | undefined) => {
-    if (duration === undefined) return '0:00:00';
-    const totalSeconds = Math.floor(duration / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
+  const formatDuration = (duration: string | undefined) => {
+    return duration || '00:00:00';
+    };
 
   const openProjectDialog = () => {
     setProjectDialogOpen(true);
@@ -165,12 +167,12 @@ const TimerComponent: React.FC = () => {
         </Typography>
       </Box>
       <Dialog open={isProjectDialogOpen} onClose={closeProjectDialog}>
-  <DialogTitle>Select a Project</DialogTitle>
+  <DialogTitle>בחר פרויקט</DialogTitle>
   <List>
     {projects.map(project => (
       <ListItemButton
         key={project.projectId}
-        onClick={() => handleStartTimer(project.projectId)}
+        onClick={() => handleStartTimer(project.projectId,project.businessName)}
         sx={{ marginBottom: 1 }}
       >
         <ListItemText primary={project.businessName} />
