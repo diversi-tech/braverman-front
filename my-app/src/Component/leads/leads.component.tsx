@@ -398,7 +398,6 @@ const formatDateForInput = (date:any) => {
       showLoaderOnConfirm: true,
       preConfirm: async (action) => {
         try {
-          debugger
           console.log(action);
           handleActionToPerformChange(id,action) 
           Swal.fire({

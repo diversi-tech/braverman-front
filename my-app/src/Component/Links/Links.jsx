@@ -1,7 +1,6 @@
 import { Padding, RadioButtonUnchecked } from "@mui/icons-material"
 import DriveIcon from '@mui/icons-material/DriveEta';
 export const Links=({project})=>{
-  debugger
   
     return(<>
     

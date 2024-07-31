@@ -13,8 +13,8 @@ export const addUserApi = (user:User) => {
 export const LoginUser = async(userEmail:string,userPassword:string)=>{
     debugger
     console.log(userEmail,userPassword);
-    return await axios.post(`https://localhost:7119/api/User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
-// return axios.post(`${apiUrl}User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
+   // return await axios.post(`https://localhost:7119/api/User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
+ return axios.post(`${apiUrl}User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
 }
 
 export const getUsers = async () => {
@@ -30,7 +30,7 @@ export const getUsers = async () => {
   export const getUserById = async (userId: string) => {
     try {
   
-      const response = await axios.get(`https://localhost:7119/api/User/GetById?id=${userId}`);
+      const response = await axios.get(`${apiUrl}User/GetById?id=${userId}`);
       return [response.data];
     }
     catch (error) {
@@ -39,16 +39,17 @@ export const getUsers = async () => {
     }
   }
 export const UpdateUserAPI = (newUser: User) => {
-  return axios.put(`https://localhost:7119/api/User/UpdateUser`, newUser);
+  return axios.put(`${apiUrl}User/UpdateUser`, newUser);
 }
 
   export const LoginWithGoogle=async(userEmail:string)=>{
-    
+    debugger
     console.log(userEmail);
-    return axios.post(`https://localhost:7119/api/User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
+    return axios.post(`${apiUrl}User/LoginByGoogle?UserEmail=${encodeURIComponent(userEmail)}`);
 }
 
 export const GetAllProjectPerUser=async (userId:string)=>{
+  debugger
     try{
     const response= await axios.get(`${apiUrl}User/GetAllProjectPerUserAsync?userId=${userId}`);
     return response.data;

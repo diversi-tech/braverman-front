@@ -8,6 +8,7 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AssistantPhotoIcon from '@mui/icons-material/AssistantPhoto';
 import { User } from '../../model/user.model';
 import { AccountCircle } from '@mui/icons-material';
+import Documents from './document';
 
 interface editTask {
   selectedTaskId: string;
@@ -48,6 +49,7 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, c
         (t.taskId === selectedTaskId && +t.levelUrgencyStatus == 4) && <AssistantPhotoIcon style={{ color: "red" }} />
       )}</div>
       <div>{tasks && tasks.length && tasks.map(t => t.taskId === selectedTaskId && t.levelUrgencyStatus)}</div>
+      <Documents></Documents>
     </div>
   </>);
 };

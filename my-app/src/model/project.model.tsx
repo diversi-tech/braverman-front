@@ -19,13 +19,14 @@ export interface Project {
   totalPrice: number;
   pricePaid: number;
   balance: number;
+  stageStatus: Enum;
   tasks: Task[];
   credentials: Credential[];
   urlFigma: string;
   urlDrive: string;
   urlWordpress: string;
   freeText: string;
-  workLog: Timer[];
+  workLog: string[];
 }
 
 

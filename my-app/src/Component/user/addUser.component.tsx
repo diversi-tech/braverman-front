@@ -262,6 +262,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="סיסמא"
                 type={showPassword ? 'text' : 'password'}
                 fullWidth
+                // multiline
                 value={formValues.password}
                 onChange={handleChange}
                 error={!!errors.password}
@@ -274,11 +275,15 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                                 onClick={handleClickShowPassword}
                                 onMouseDown={handleMouseDownPassword}
                             >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                
+                                {showPassword ? <VisibilityOff /> : <Visibility /> }
                             </IconButton>
                         </InputAdornment>
+                        
                     ),
+                    
                 }}
+                
             />
 
             <FormControl fullWidth style={{ marginTop: '10px' }} error={!!errors.userType}>
