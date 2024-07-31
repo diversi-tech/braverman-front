@@ -44,10 +44,10 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       return;
     }
 
-    const selectedStatus = statusOptions2.find(status => status.value === "TODO");
-    const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
+    const selectedStatus = statusOptions2.find(status => status.key === "1");
+    const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.key === "4");
 
-    const project: Project = {
+    const project : Project = {
       projectId: '',
       firstName,
       lastName,
@@ -67,7 +67,8 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       urlWordpress,
       urlDrive,
       urlFigma,
-      freeText
+      freeText,
+      workLog: []
     };
 
     const response = await convertToProject(project);
