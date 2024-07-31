@@ -93,6 +93,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
             status: taskStatus,
             canBeApprovedByManager: null,
             levelUrgencyStatus: levelUrgency.key,
+            LastUpdateStatusUserId:sessionStorage.getItem("userId")
         };
 
         try {
