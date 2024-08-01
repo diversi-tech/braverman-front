@@ -60,7 +60,7 @@ const ProfileIcon: React.FC = () => {
                     <Typography variant="subtitle1">Email: {sessionStorage.getItem("email")}</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
-                    <Typography variant="button">Switch User</Typography>
+                    <Typography variant="button">החלף משתמש</Typography>
                 </MenuItem>
             </Menu></div>);
 };

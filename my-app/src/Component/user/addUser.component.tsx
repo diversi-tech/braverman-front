@@ -147,6 +147,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
             password,
             projectsId: selectedProjects,
             userType,
+            workLog:[],
         };
 
         try {
@@ -226,6 +227,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="שם פרטי"
                 type="text"
                 fullWidth
+                multiline
                 value={formValues.firstName}
                 onChange={handleChange}
                 error={!!errors.firstName}
@@ -237,6 +239,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="שם משפחה"
                 type="text"
                 fullWidth
+                multiline
                 value={formValues.lastName}
                 onChange={handleChange}
                 error={!!errors.lastName}
@@ -259,6 +262,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 label="סיסמא"
                 type={showPassword ? 'text' : 'password'}
                 fullWidth
+                // multiline
                 value={formValues.password}
                 onChange={handleChange}
                 error={!!errors.password}
@@ -271,11 +275,15 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                                 onClick={handleClickShowPassword}
                                 onMouseDown={handleMouseDownPassword}
                             >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                
+                                {showPassword ? <VisibilityOff /> : <Visibility /> }
                             </IconButton>
                         </InputAdornment>
+                        
                     ),
+                    
                 }}
+                
             />
 
             <FormControl fullWidth style={{ marginTop: '10px' }} error={!!errors.userType}>

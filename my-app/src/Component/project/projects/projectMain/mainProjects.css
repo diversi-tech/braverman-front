@@ -1,6 +1,7 @@
 body {
   background-color: #F1F7FF;
-  
+  font-family: 'CustomFont'!important;
+ 
 }
 
 .main-project-container {
@@ -13,7 +14,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  /* מיקום בין הקומפוננטות יהיה בצד ימין */
   align-items: flex-start;
 }
 
@@ -22,19 +22,16 @@ body {
   flex-direction: row;
   align-items: flex-start;
   margin-bottom: 20px;
-  /* מרווח בין כל פרויקט */
 }
 
-/* .project-detail {
-  } */
 .projectFinish {
-  padding-right: 10px;
+  padding-right: 1px;
 
 }
 
 .customerProjects {
   padding-left: 40px;
-  width: 1400px;
+  width: 65%;
 
 }
 
@@ -58,5 +55,5 @@ body {
   height: 38px;
   border-radius: 35px;
   text-align: center;
-    }
+}
     

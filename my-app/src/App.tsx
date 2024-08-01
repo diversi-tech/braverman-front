@@ -5,14 +5,16 @@ import Nav from './Component/nav/nav.component';
 import Leads from './Component/leads/leads.component';
 import ContactOptions from './Component/ContactOption/ContactOption';
 import ChatForm from './Component/ContactOption/Chat';
-import { UpFile } from './Component/upFile';
+import MoreStatus from './Component/project/moreStatus';
+
 
 
 const App = () => {
+  
   const navigate = useNavigate();
 
   useEffect(() => {
-    debugger
+    
     if (!sessionStorage.getItem("userId")) {
       navigate('/Login');
     }
@@ -24,7 +26,7 @@ const App = () => {
     <ChatForm></ChatForm> */}
       <Nav />
       <Outlet />
-      <UpFile/>
+      <MoreStatus ></MoreStatus>
     </>
   );
 };

@@ -1,18 +1,21 @@
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import  { Dashboardee } from "./DashboardUser.component";
+import DashboardComponent, {  } from "./User.component";
+import AttendanceReport from "../Timer/AttendanceReport.component";
 
 export const Dashboard = () => {
-    const role = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
-    const navigate=useNavigate();
-    useEffect(() => {
-        if (role !== "admin"&&role!=="worker") {
-            navigate("/not-found");
-        }
-    }, [role, navigate]);
+    const role = sessionStorage.getItem("userType")
+const navigate=useNavigate();
+useEffect(() => {
+    if (role !== "מנהל") {
+        navigate("/not-found");
+    }
+}, [role, navigate]);
     return(
         <>
-        {role!=="customer"&& <p>dashboard</p>}
+        <AttendanceReport></AttendanceReport>
         </>
     )
 }
