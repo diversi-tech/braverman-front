@@ -207,8 +207,11 @@ body{
 .password-toggle-icon{
     position: absolute;
     top: 54.5%;
-    right: 1050px;
+    right: 68%;
     transform: translateY(-50%);
     cursor: pointer;
     z-index: 10;
+}
+.my-confirm-button{
+    background-color: #00397C;
 }
