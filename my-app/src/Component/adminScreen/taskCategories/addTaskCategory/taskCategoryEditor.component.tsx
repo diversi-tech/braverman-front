@@ -55,7 +55,7 @@ export const TaskCategoriesEditor: React.FC<{
     }
 
     if (weeksRequired === undefined || weeksRequired < 0) {
-      setMessage('מספר שבועות נדרש חייב להיות מספר שאינו שלילי');
+      setMessage('מספר ימים נדרש ,חייב להיות מספר שאינו שלילי');
       setIsMessageVisible(true);
       setTimeout(() => {
         setIsMessageVisible(false);
@@ -115,7 +115,7 @@ export const TaskCategoriesEditor: React.FC<{
           </div>
         </div>
         <div className="form-group">
-          <label htmlFor="weeksRequired" className="input-label">מס' שבועות נדרש לביצוע:</label>
+          <label htmlFor="weeksRequired" className="input-label">מס' ימים נדרש לביצוע:</label>
           <div className="input-wrapper">
             <input
               type="number"

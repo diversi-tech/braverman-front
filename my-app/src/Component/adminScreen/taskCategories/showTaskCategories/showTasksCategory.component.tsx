@@ -42,7 +42,7 @@ export const ShowTasksCategory: React.FC<{
                     <thead>
                         <tr>
                             <th>שם הקטגוריה</th>
-                            <th>מס' שבועות נדרש לביצוע</th>
+                            <th>מס' ימים נדרש לביצוע</th>
                             <th>מספר שלב</th>
                             <th>מבצעת</th>
                             <th></th>
