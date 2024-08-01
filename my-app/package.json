@@ -44,6 +44,7 @@
     "redux": "^5.0.1",
     "router-dom": "^2.2.11",
     "styled-components": "^6.1.8",
+    "stylis-plugin-rtl": "^2.1.1",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.6",
     "sweetalert2-react-content": "^5.0.7",
