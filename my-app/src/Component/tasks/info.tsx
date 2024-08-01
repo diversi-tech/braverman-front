@@ -23,7 +23,7 @@ export const Info = () => {
     useEffect(() => {
         if (logData !== null) { 
             Swal.fire({
-                title: 'פרטי המשימה',
+                title: 'פרטי שינויי סטטוסים',
                 html: '<div id="task-modal-container"></div>',
                 showCloseButton: true,
                 showCancelButton: false,
