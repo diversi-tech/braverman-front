@@ -19,7 +19,7 @@ export const ShowTasksCategory: React.FC<{
                 const data = await getTaskCategories();
                 const users=await getUsers()
                 setTasksCategories(data);
-                setUsersDetails(users.filter((worker)=>worker.userType.description==="עובד"));
+                setUsersDetails(users.filter((worker)=>worker.userType.description==="עובד"));                 
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -49,19 +49,23 @@ export const ShowTasksCategory: React.FC<{
                         </tr>
                     </thead>
                     <tbody>
-                        {tasksCategories.map((category, index) => (
-                            <tr key={index}>
-                                <td>{category.categoryName}</td>
-                                <td>{category.daysForExecution}</td>
-                                <td>{category.sortOrder !== null ? category.sortOrder : ''}</td>
-                                <td>{usersDetails.find((worker)=>worker.id===category.userId)?.firstName+" "+usersDetails.find((worker)=>worker.id===category.userId)?.lastName}</td>
-                                <td className="edit-icon-cell">
-                                    <button onClick={() => onEditCategoryClick(category)}>
-                                        <i className="material-icons edit-icon">edit</i>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                    {tasksCategories.map((category, index) => {
+                            const worker = usersDetails.find((worker) => worker.id === category.userId);
+                            return (
+                                <tr key={index}>
+                                    <td>{category.categoryName}</td>
+                                    <td>{category.daysForExecution}</td>
+                                    <td>{category.sortOrder !== null ? category.sortOrder : ''}</td>
+                                    <td>{worker ? `${worker.firstName} ${worker.lastName}` : ''}</td>
+                                    <td className="edit-icon-cell">
+                                        <button onClick={() => onEditCategoryClick(category)}>
+                                            <i className="material-icons edit-icon">edit</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    
                         <tr>
                             <td colSpan={4} id="tdAddCategory">
                                 <span id="addCategoryButton" onClick={onAddCategoryClick}>+</span> 

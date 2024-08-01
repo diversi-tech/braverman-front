@@ -46,9 +46,7 @@ export const TaskStatusChanges = ({ logData }) => {
   
   return (
     <div>
-      <div style={{ display: 'flex', textAlign: 'center', direction: 'rtl' }}>
-        <div>{data[0].taskName}</div>
-      </div>
+        <div style={{textAlign:'center', fontWeight:'bolder'}}>{data[0].taskName}</div>
       <table style={{ width: '100%', marginTop: '20px', textAlign: 'center', borderCollapse: 'collapse', direction: 'rtl' }}>
         <thead>
           <tr>
