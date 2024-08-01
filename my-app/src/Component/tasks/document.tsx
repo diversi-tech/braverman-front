@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './document.css';
 import { FaDownload } from 'react-icons/fa';
+import { importFile } from '../../api/upFileTDrive';
 
 interface Task {
   description: string;
@@ -25,8 +26,8 @@ const Documents: React.FC = () => {
       return { ...prevTask, files: newFiles };
     });
   };
-  const drive=() =>{
-
+  const drive=async () =>{
+   await importFile(task.files[0])
   }
 
   const handleFileClick = (file: File) => {
