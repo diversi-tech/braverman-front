@@ -94,3 +94,9 @@ input[type="checkbox"] {
   
   color: white;
 }
+#workerSelect,
+#buttonSubmit,
+#categoryName,
+#weeksRequired{
+  font-family: 'CustomFont';
+}

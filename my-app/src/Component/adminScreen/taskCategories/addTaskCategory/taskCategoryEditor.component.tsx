@@ -100,7 +100,7 @@ export const TaskCategoriesEditor: React.FC<{
   return (
     <div className="form-container">
       <button id="closeAdd" onClick={onClose}><i className="material-icons">close</i></button>
-      <h1>{editCategory ? 'עריכת קטגוריה' : 'הוספת קטגוריה'}</h1>
+      <h1 id="title">{editCategory ? 'עריכת קטגוריה' : 'הוספת קטגוריה'}</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="categoryName" className="input-label">שם הקטגוריה:</label>
@@ -154,7 +154,7 @@ export const TaskCategoriesEditor: React.FC<{
             </select>
           </div>
         </div>
-        <button type="submit" className="submit-button">{editCategory ? 'עדכן קטגוריה' : 'הוסף קטגוריה'}</button>
+        <button id="buttonSubmit" type="submit" className="submit-button">{editCategory ? 'עדכן קטגוריה' : 'הוסף קטגוריה'}</button>
       </form>
 
       {isMessageVisible && <p className="message">{message}</p>}
