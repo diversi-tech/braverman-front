@@ -69,7 +69,8 @@ width: 80% /* חישוב רוחב בהתאם לגודל הדף */
   padding-top: 20%;
 }
 .editInput{
-  width: 60px; /* רוחב האינפוט */
+  height: 10px;
+   width: 60px; 
   padding: 3px; /* ריפוד פנימי */
   font-size: 16px; /* גודל גופן */
   border: 1px solid #ccc; /* גבול */

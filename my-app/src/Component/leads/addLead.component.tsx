@@ -8,6 +8,8 @@ import { addLead2 } from '../../Redux/Leads/leadsAction';
 // import handlePhoneNumberChange from './leads.component'
 import { Lead } from '../../model/leads.model';
 import store from '../../Redux/Store'
+import './addLead.css'
+
 
 interface AddLeadFormProps {
     // open: boolean;
@@ -103,6 +105,8 @@ interface AddLeadFormProps {
   return (
     <div>
         <TextField
+          sx={{ textAlign: 'right' }}
+          className='textt'
           autoFocus
           margin="dense"
           name="firstName"
@@ -117,6 +121,8 @@ interface AddLeadFormProps {
 
         />
         <TextField
+           sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="lastName"
           label="שם משפחה"
@@ -130,6 +136,8 @@ interface AddLeadFormProps {
 
         />
         <TextField
+          sx={{ textAlign: 'right' }}
+         className='textt'
           margin="dense"
           name="phone"
           label="טלפון"
@@ -143,6 +151,8 @@ interface AddLeadFormProps {
 
         />
         <TextField
+          sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="email"
           label="אמייל"
@@ -155,6 +165,8 @@ interface AddLeadFormProps {
           helperText={errors.email}
         />
         <TextField
+           sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="source"
           label="מקור הליד"
@@ -167,6 +179,8 @@ interface AddLeadFormProps {
           helperText={errors.source}
         />
         <TextField
+          sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="businessName"
           label="שם העסק"
@@ -179,6 +193,8 @@ interface AddLeadFormProps {
           helperText={errors.businessName}
         />
         <TextField
+          sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="freeText"
           label="טקסט חופשי"
