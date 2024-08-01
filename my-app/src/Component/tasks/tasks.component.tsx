@@ -74,6 +74,7 @@ export const Tasks = () => {
         },
         canBeApprovedByManager: null,
         levelUrgencyStatus: '1',
+        LastUpdateStatusUserId:''
     });
 
     const tasksState = useSelector((state: { Task: { allTask: { [key: string]: Task[] } } }) => state.Task);

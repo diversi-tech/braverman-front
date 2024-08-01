@@ -13,7 +13,7 @@ export const getAllTaskFromServer = async () => {
 export const getTaskById = async (taskId: string) => {
 
     try {
-        let response = await axios.get(`https://localhost:7119/api/Tasks/GetById/${taskId}`);
+        let response = await axios.get(`${apiUrl}Tasks/GetById/${taskId}`);
 
         return response.data;
     }
