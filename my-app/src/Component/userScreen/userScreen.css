@@ -1,0 +1,39 @@
+.div{
+    margin-top: 20px;
+}
+.card {
+    /* margin-top: 20%; */
+    background: #FFFFFF;
+    border: 1px solid #000000;
+   border-radius: 15px; 
+    padding: 10px; 
+    /* left: calc(50% - 429px/2 + 678.5px); */
+    bottom: 34.47%;
+    background: #FFFFFF;
+    /* top: 45.99%; */
+    position: relative; 
+    box-sizing: border-box;
+    text-align: right;
+  }
+  /* Rectangle 31 */
+.grid{
+    margin-top: 100%;
+}
+
+  .arrow {
+        position: absolute;
+        bottom: 20px; 
+         left: 10px;
+        height: 20px;
+        width: 20px;
+  }
+  .label{
+    font-family: 'CustomFont'!important;
+   font-size: 40px;
+  font-weight: 700;
+  line-height: 50px;
+text-align: right;
+
+  }
+
+

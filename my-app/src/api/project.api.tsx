@@ -6,7 +6,7 @@ const apiUrl = process.env.REACT_APP_BRAVERMAN
 
 export const getCustomerProjects = async (customerId: string|any) => {
     try{
-        const rezult =await axios.get(`https://localhost:7119/api/User/GetAllProjectPerUserAsync?userId=${customerId}`);
+        const rezult =await axios.get(`${apiUrl}User/GetAllProjectPerUserAsync?userId=${customerId}`);
     return rezult.data
     }catch (error) {
         // console.error('Error fetching user:', error);
@@ -19,7 +19,7 @@ export const updateProject = (projectData: any) => {
     console.log("projectData");
     console.log(projectData);
     
-    return axios.put('https://localhost:7119/api/Project/Update',projectData);
+    return axios.put(`${apiUrl}Project/Update`,projectData);
 }
 
 
@@ -32,7 +32,7 @@ export const deleteProject = (projectId: string) => {
 
 export const getProjectById=async (projectId:string)=>{
       try{
-      const response= await axios.get(`https://localhost:7119/api/Project/GetById/${projectId}`);
+      const response= await axios.get(`${apiUrl}Project/GetById/${projectId}`);
       return response.data;
       }
       catch (error) {

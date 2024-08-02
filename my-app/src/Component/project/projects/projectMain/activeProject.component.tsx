@@ -4,9 +4,9 @@ import { getProject, deleteProject, updateProject } from '../../../../api/projec
 import './projectCostumer.css';
 import { Project } from '../../../../model/project.model';
 import { Enum } from '../../../../model/enum.model';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, MenuItem } from '@mui/material';
 import { getStatusProject, filterByStatus } from '../../../../api/projectStatus.api';
-import MenuItem from '@material-ui/core/MenuItem';
+//import MenuItem from '@material-ui/core/MenuItem';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
 import { setAllProject, deleteProjectReducer, updateProjectReducer } from '../../../../Redux/Project/projectAction';
@@ -35,7 +35,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   const [filterPhone, setFilterPhone] = useState<string>('');
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [page, setPage] = useState(0);
-  const leadsPerPage = 3;
+  const leadsPerPage = 4;
   const totalPages = Math.ceil(projects.length / leadsPerPage);
   const projectActive = projects.filter((project) =>
     project.status.value !== "DONE" &&
@@ -261,14 +261,21 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
         <thead>
           <tr className='row'>
             <td></td>
-            <td>שם העסק
+            <td style={{textAlign:"center",marginRight:"10px"}}>שם העסק
               <br></br>
-              <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["שם העסק"]: !filterInputsVisible["שם העסק"] });
+              <button  className="filter"  onClick={() => {
+                setFilterInputsVisible({ ...filterInputsVisible, "שם העסק": !filterInputsVisible["שם העסק"] });
                 handleFilterClose("שם העסק");
               }}
-                style={{ backgroundColor: "white", border: 0 }}
-              ><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+              style={{
+                   backgroundColor: "white",
+                    border: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: 'auto'
+                  }}
+              ><HiChevronDown style={{ marginTop: "5px",textAlign:"center" }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -281,16 +288,17 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                       className="filter-input"
                     />
                   )}
+                  
               </div>
             </td>
-            <td>סוג הפרויקט
+            <td style={{textAlign:"center"}}>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["סוג הפרויקט"]: !filterInputsVisible["סוג הפרויקט"] })
+                setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
                 handleFilterClose("סוג הפרויקט");
               }
               }
-                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:'33px' }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -305,13 +313,13 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td>איש קשר
+            <td style={{textAlign:"center"}}>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["איש קשר"]: !filterInputsVisible["איש קשר"] })
+                setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
                 handleFilterClose("איש קשר");
               }
-              } style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+              } style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" ,marginLeft:"33px"}} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -326,17 +334,17 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td>טלפון
+            <td style={{textAlign:"center"}}>טלפון
               <br></br>
               <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
             </td>
-            <td>אימייל
+            <td style={{textAlign:"center"}}>אימייל
               <br></br>
               <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, ["אימייל"]: !filterInputsVisible["אימייל"] })
+                setFilterInputsVisible({ ...filterInputsVisible, "אימייל": !filterInputsVisible["אימייל"] })
                 handleFilterClose("אימייל");
               }}
-                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:"39px" }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -351,9 +359,9 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td>סטטוס פרויקט
+            <td style={{textAlign:"right"}}>סטטוס פרויקט
               <br></br>
-              <button className="filter" onClick={() => setFilterInputsVisible({ ...filterInputsVisible, ["סטטוס"]: !filterInputsVisible["סטטוס"] })} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+              <button className="filter" onClick={() => setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:"44px" }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -378,10 +386,10 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
 
             </td>
-            <td style={{ width: '5%', fontWeight: '600' }}>לינקים
+            <td style={{ width: 'auto', fontWeight: '600', marginBottom:'3px'}} className="links-column" >לינקים
               <br></br>
-              <HiChevronDown className="filter" style={{ marginTop: "5px", alignItems: "center" }} />
-            </td>
+              <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />  
+                        </td>
             <td></td>
           </tr>
         </thead>
@@ -394,16 +402,19 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   <button
                     id='buttonProject'
                     onClick={() => handleButtonClick(project.projectId)}
+                   
                   >
-                    {project.projectId === expandedRow ? '-' : '+'}
+    <span style={{ fontSize: '17px', cursor: 'pointer' }}>
+      {project.projectId === expandedRow ? '-' : '+'}
+      </span>
                   </button>
                 </td>
-                <td>{project.businessName}</td>
-                <td>{project.source}</td>
-                <td>{`${project.firstName} ${project.lastName}`}</td>
-                <td>פרויקט</td>
-                <td>{project.email}</td>
-                <td>{project.status.value}</td>
+                <td style={{ textAlign: 'center' }}>{project.businessName}</td>
+                <td style={{ textAlign: 'center' }}>{project.source}</td>
+                <td style={{ textAlign: 'center' }}>{`${project.firstName} ${project.lastName}`}</td>
+                <td style={{ textAlign: 'center' }}>פרויקט</td>
+                <td style={{ textAlign: 'center' }}>{project.email}</td>
+                <td style={{ textAlign: 'center' }}>{project.status.value}</td>
                 <td>
                   <Links project={project}></Links>
                 </td>

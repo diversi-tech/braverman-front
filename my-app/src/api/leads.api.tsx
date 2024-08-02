@@ -47,7 +47,7 @@ export const updateLeadChanges = async (lead: Lead, id: string) => {
   };
   
   console.log(leadToUpdate);
-  return await axios.put(`https://localhost:7119/api/Leads/${id}`, leadToUpdate);
+  return await axios.put(`${apiUrl}Leads/${id}`, leadToUpdate);
   // return await axios.put(`${apiUrl}Leads/${id}`, leadToUpdate);
 }
 

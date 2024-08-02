@@ -119,7 +119,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
           <h2>הערות</h2>
           {editing ? (
             <textarea
-              className='editInput'
+              className=''
               value={editedFreeText || ""}
               onChange={(e) => setEditedFreeText(e.target.value)}
             />
