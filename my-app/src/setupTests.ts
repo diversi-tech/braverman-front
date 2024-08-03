@@ -4,8 +4,3 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
-// Enzyme setup
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16'; // או גרסה מתאימה שלך
-
-configure({ adapter: new Adapter() });

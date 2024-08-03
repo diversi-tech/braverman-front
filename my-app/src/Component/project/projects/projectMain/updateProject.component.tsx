@@ -59,11 +59,13 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
         const selectedStatus = projectStatus.find(status => status.value === value);
 
         setFormValues((prevValues) => ({
-            ...prevValues,
+        ...prevValues,
             [name as string]: selectedStatus,
         }));
          
          };
+
+
 
     const handleSubmit = async () => {
         
@@ -76,7 +78,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
             console.log(UpdatedMyProject);
             const response = await updateProject(UpdatedMyProject);
             onUpdate(UpdatedMyProject);
-            if (UpdatedMyProject.status.value === "DONE") {
+            if (UpdatedMyProject.status.value == "בוצע") {
                 onChangeStatusDone();
               } 
             Swal.fire('Success', 'הפרויקט עודכן בהצלחה', 'success');
@@ -132,11 +134,20 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 multiline
                 margin="normal"
             />
+             <TextField
+                name="adress"
+                label="כתובת"
+                value={"adress" || ''}
+                onChange={handleChange}
+                fullWidth
+                multiline
+                margin="normal"
+            />
             <FormControl fullWidth margin="normal">
                 <InputLabel>סטטוס</InputLabel>
                 <Select
                     name="status"
-                    value={formValues.status?.value || ''}
+                    value={formValues.status?.value }
                     onChange={handleChange2}
                 >
                     {projectStatus.map((status) => (

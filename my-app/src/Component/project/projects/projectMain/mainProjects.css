@@ -5,8 +5,8 @@ body {
 }
 
 .main-project-container {
+  margin-top:1.5%;
   display: flex;
-  justify-content: center;
   direction: rtl;
 }
 
@@ -23,15 +23,8 @@ body {
   align-items: flex-start;
   margin-bottom: 20px;
 }
-
-.projectFinish {
-  padding-right: 1px;
-
-}
-
 .customerProjects {
-  padding-left: 40px;
-  width: 65%;
+  padding-left: 60px;
 
 }
 
@@ -40,20 +33,30 @@ body {
   Height:34px;
   border-radius: 20px;
   background-color: #F1F7FF;
+  border: 2px solid #002046; 
 }
 
 #buttonProject {
   width: 34px;
   height: 34px;
   border-radius: 20px;
- 
   background-color: white;
 }
-.buttonCircle{
 
+.buttonCircle {
   width: 38px;
   height: 38px;
   border-radius: 35px;
+  border: 2px solid #002046; 
   text-align: center;
+  align-items: center;
+  background-color: transparent; 
 }
+
+.buttonCircle svg {
+  color: #002046; /* ודא שהצבע של האייקון תואם לצבע המסגרת */
+}
+
+
+
     

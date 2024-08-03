@@ -4,9 +4,8 @@ import { getProject, deleteProject, updateProject } from '../../../../api/projec
 import './projectCostumer.css';
 import { Project } from '../../../../model/project.model';
 import { Enum } from '../../../../model/enum.model';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, MenuItem } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, MenuItem, CircularProgress } from '@mui/material';
 import { getStatusProject, filterByStatus } from '../../../../api/projectStatus.api';
-//import MenuItem from '@material-ui/core/MenuItem';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
 import { setAllProject, deleteProjectReducer, updateProjectReducer } from '../../../../Redux/Project/projectAction';
@@ -35,10 +34,10 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   const [filterPhone, setFilterPhone] = useState<string>('');
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [page, setPage] = useState(0);
-  const leadsPerPage = 4;
+  const leadsPerPage = 6;
   const totalPages = Math.ceil(projects.length / leadsPerPage);
   const projectActive = projects.filter((project) =>
-    project.status.value !== "DONE" &&
+    project.status.value !== "בוצע" &&
     project.businessName.includes(filterText) &&
     project.source.includes(filterSource) &&
     `${project.firstName} ${project.lastName}`.includes(filterName) &&
@@ -53,6 +52,8 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       try {
         let dataProject;
         if (projectReducer.allProject.length) {
+          console.log("ifActive");
+          console.log(projectReducer.allProject);
           dataProject = projectReducer.allProject;
         }
         else {
@@ -65,6 +66,8 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
         setProjects(dataProject);
         let data;
         if (projectStatusReducer.allStatusProject.length) {
+          console.log("ifActive");
+          console.log();
           data = projectStatusReducer.allStatusProject;
         } else {
           const response1 = await getStatusProject();
@@ -99,13 +102,10 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   };
 
   const handleEditClick = (project: Project) => {
-     handleEditLead(project);
+    handleEditLead(project);
   };
 
-  const handleCloseEditDialog = () => {
-    setEditProject(null);
-    setOpenEditDialog(false);
-  };
+
 
   const handleDelete = (projectId: string) => {
     Swal.fire({
@@ -171,28 +171,13 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       },
     });
   };
-  const changeStatusDone = () => {   
+  const changeStatusDone = () => {
     onChangeStatus();
-}
-  const handleSaveEdit = async () => {
-    if (editProject) {
-      try {
-        dispatch(updateProjectReducer(editProject))
-        const response = await updateProject(editProject);
-        console.log('Project updated successfully:', response.data);
-        const updatedProjects = projects.map(p => p.projectId === editProject.projectId ? editProject : p);
-        setProjects(updatedProjects);
-        if (editProject.status.value === "DONE") {
-          onChangeStatus();
-        }
-        handleCloseEditDialog();
-      } catch (error) {
-        console.error('Error updating project:', error);
-      }
-    }
-  };
+  }
 
   const handleFilterClose = (filterName: string) => {
+    if(filterName=="סטטוס")
+       filterByStatusFunc("-1");
     switch (filterName) {
       case "שם העסק":
         setFilterText('');
@@ -214,6 +199,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       default:
         break;
     }
+   
   };
 
   const filterByStatusFunc = async (selectedStatus: string) => {
@@ -222,11 +208,12 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       console.log(selectedStatus);
       if (selectedStatus == "-1") {
         setProjects(allProjects);
-      } else {
+      }
+      else {
         const filteredProjects = projectStatus.filter(project =>
           project.value === selectedStatus
         );
-
+        console.log(filteredProjects[0].key);
         const response = await filterByStatus(filteredProjects[0].key);
         setProjects(response.data);
       }
@@ -249,33 +236,33 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <CircularProgress className="loading"/>;
   }
+
 
 
   return (
     <div className='styleProject'>
-
       <h1 className='title'><b>פרויקטים</b></h1>
       <table style={{ width: '100%' }}>
         <thead>
           <tr className='row'>
             <td></td>
-            <td style={{textAlign:"center",marginRight:"10px"}}>שם העסק
+            <td style={{ textAlign: "center", marginRight: "10px" }}>שם העסק
               <br></br>
-              <button  className="filter"  onClick={() => {
+              <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "שם העסק": !filterInputsVisible["שם העסק"] });
                 handleFilterClose("שם העסק");
               }}
-              style={{
-                   backgroundColor: "white",
-                    border: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: 'auto'
-                  }}
-              ><HiChevronDown style={{ marginTop: "5px",textAlign:"center" }} />
+                style={{
+                  backgroundColor: "white",
+                  border: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 'auto'
+                }}
+              ><HiChevronDown style={{ marginTop: "5px", textAlign: "center" }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -288,17 +275,17 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                       className="filter-input"
                     />
                   )}
-                  
+
               </div>
             </td>
-            <td style={{textAlign:"center"}}>סוג הפרויקט
+            <td style={{ textAlign: "center" }}>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
                 handleFilterClose("סוג הפרויקט");
               }
               }
-                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:'33px' }} />
+                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: '33px' }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -313,13 +300,13 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{textAlign:"center"}}>איש קשר
+            <td style={{ textAlign: "center" }}>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
                 handleFilterClose("איש קשר");
               }
-              } style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" ,marginLeft:"33px"}} />
+              } style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "33px" }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -334,17 +321,17 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{textAlign:"center"}}>טלפון
+            <td style={{ textAlign: "center" }}>טלפון
               <br></br>
               <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
             </td>
-            <td style={{textAlign:"center"}}>אימייל
+            <td style={{ textAlign: "center" }}>אימייל
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "אימייל": !filterInputsVisible["אימייל"] })
                 handleFilterClose("אימייל");
               }}
-                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:"39px" }} />
+                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "39px" }} />
               </button>
               <div className="filter-wrapper">
                 {
@@ -359,37 +346,38 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{textAlign:"right"}}>סטטוס פרויקט
+            <td style={{ textAlign: "right" }}>סטטוס פרויקט
               <br></br>
-              <button className="filter" onClick={() => setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:"44px" }} />
+              <button className="filter" onClick={() =>{ setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })
+              handleFilterClose("סטטוס");}} 
+              style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "44px" }} />
               </button>
               <div className="filter-wrapper">
                 {
                   filterInputsVisible["סטטוס"] && (
-                    <TextField
-                      select
-                      margin="dense"
-                      id="filterStatus"
+                    <select
+                      className='selectAll'
                       value={filterStatus}
                       onChange={(e) => filterByStatusFunc(e.target.value)}
+                      style={{ width: "100%" }}
                     >
-                      <MenuItem key={"allProject"} value={-1}>
-                        כל הפרויקטים
-                      </MenuItem>
-                      {projectStatus.filter(status => status.value !== "DONE").map(status => (
-                        <MenuItem key={status.id} value={status.value}>
+                      <option key={"allProject"} value={-1} className='select'>כל הפרויקטים
+                      </option>
+                      {projectStatus.filter(s=>s.value!="בוצע").map(status => (
+                        <option key={status.id} value={status.value} className='select'>
                           {status.value}
-                        </MenuItem>
+                        </option>
                       ))}
-                    </TextField>
+                    </select>
+
+
                   )}
               </div>
-
             </td>
-            <td style={{ width: 'auto', fontWeight: '600', marginBottom:'3px'}} className="links-column" >לינקים
+            <td style={{ width: 'auto', fontWeight: '600', marginBottom: '3px' }} className="links-column" >לינקים
               <br></br>
-              <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />  
-                        </td>
+              <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+            </td>
             <td></td>
           </tr>
         </thead>
@@ -400,13 +388,13 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               <tr>
                 <td>
                   <button
-                    id='buttonProject'
+                    id='buttonProject' className='buttonCircle'
                     onClick={() => handleButtonClick(project.projectId)}
-                   
+
                   >
-    <span style={{ fontSize: '17px', cursor: 'pointer' }}>
-      {project.projectId === expandedRow ? '-' : '+'}
-      </span>
+                    <span style={{ fontSize: '17px', cursor: 'pointer' }}>
+                      {project.projectId === expandedRow ? '-' : '+'}
+                    </span>
                   </button>
                 </td>
                 <td style={{ textAlign: 'center' }}>{project.businessName}</td>
@@ -436,7 +424,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                       />
                     </svg>
                   </button>
-                  <button
+                  <button id="trash"
                     className='buttonCircle'
                     onClick={() => handleDelete(project.projectId)}
                   >
@@ -457,12 +445,13 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
         </tbody>
       </table>
       <div className="pagination">
+      <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
+          <SlArrowUp className="icon" />
+        </button>
         <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} >
           <SlArrowDown className="icon" />
         </button>
-        <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
-          <SlArrowUp className="icon" />
-        </button>
+        
       </div>
     </div>
   );
