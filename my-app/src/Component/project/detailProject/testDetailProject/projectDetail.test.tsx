@@ -44,14 +44,11 @@ const project: Project = {
 
 test('renders ProjectDetail component', () => {      
   render(
-    <MemoryRouter> {/* Wrap your component with MemoryRouter */}
+    <MemoryRouter> 
       <ProjectDetail project={project} />
     </MemoryRouter>
   );
 
-  // Check for the business name
   expect(screen.getByText('stYut')).toBeInTheDocument(); 
-
-  // Check for the project description text
   expect(screen.getByText(/תאור הפרויקט/i)).toBeInTheDocument();
 });
