@@ -112,7 +112,8 @@ const BarChart = () => {
             tooltip: {
                 callbacks: {
                     label: function (context:any) {
-                        const value = context.raw as number;
+                        const value = 1
+                        // context.raw as number;
                         return value + '%';
                     }
                 }
