@@ -15,4 +15,5 @@ export interface Task {
   canBeApprovedByManager: null;
   levelUrgencyStatus: string;
   LastUpdateStatusUserId:string;
+   startDate: Date;
 }

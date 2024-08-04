@@ -3,6 +3,7 @@ import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectCha
 import Swal from 'sweetalert2';
 import { Task } from '../../model/task.model';
 import { Enum } from '../../model/enum.model';
+import Rtl from '../rtl/rtl';
 
 interface AddTaskFormProps {
     tasks: Task[];
@@ -90,6 +91,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 userId: sessionStorage.getItem('userId'),
                 sortOrder: 0
             },
+            startDate: new Date(),
             status: taskStatus,
             canBeApprovedByManager: null,
             levelUrgencyStatus: levelUrgency.key,
@@ -105,7 +107,9 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
 
     return (
         <div>
+          <Rtl>
             <TextField
+                dir='rtl'
                 autoFocus
                 margin="dense"
                 name="taskName"
@@ -119,6 +123,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 onChange={handleInputChange}
             />
             <TextField
+                dir='rtl'
                 margin="dense"
                 name="assignedTo"
                 label="שם העובדת"
@@ -131,6 +136,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 onChange={handleInputChange}
             />
             <TextField
+                dir='rtl'
                 margin="dense"
                 name="projectId"
                 label="שם הפרויקט"
@@ -143,6 +149,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 onChange={handleInputChange}
             />
             <TextField
+                dir='rtl'
                 margin="dense"
                 name="comment"
                 label="הערה"
@@ -183,6 +190,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 </Select>
             </FormControl>
             <TextField
+                dir='rtl'
                 margin="dense"
                 name="description"
                 label="תאור"
@@ -195,6 +203,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 error={!!errors.description}
                 helperText={errors.description}
             />
+             </Rtl>
             <Button onClick={handleAddTask} color="primary">
                 הוסף משימה
             </Button>
