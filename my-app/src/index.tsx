@@ -22,6 +22,7 @@ import {DashboardGraph} from "./Component/graphLead/mainGraphLead.component";
 import QuickActions from './Component/userScreen/quickActions';
 import ReportIssue from './Component/userScreen/reportFault';
 import Feedback from './Component/userScreen/feedback';
+import UrgentTasksTable from './Component/dashboard/urgentTasks';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -49,6 +50,7 @@ root.render(
               <Route path='/quickActions' element={<QuickActions />} ></Route>
               <Route path='/reportIssue' element={<ReportIssue />} ></Route>
               <Route path='/feedback' element={<Feedback />} ></Route>
+              <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
 
             </Route>
           </Routes>
