@@ -9,7 +9,7 @@ export interface User {
   userType:UserType,
   firstName: string,
   lastName: string,
-   projectsId: { [projectId: string]: string },
   workLog: string[];
+  projectsId: { [projectId: string]: string};
   }
   

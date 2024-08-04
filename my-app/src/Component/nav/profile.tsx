@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import './profile.css'
+import Rtl from '../rtl/rtl';
 // import { useLocation, useNavigate } from 'react-router-dom';
 
 // const type = sessionStorage.getItem("userType")
@@ -34,7 +35,7 @@ const ProfileIcon: React.FC = () => {
                 // aria-haspopup="true"
                 onClick={handleMenu}
             >
-                <AccountCircle />
+                <AccountCircle sx={{ width: 40, height: 40 }} />
             </IconButton>
             <Menu
                 className='prof'
@@ -53,14 +54,15 @@ const ProfileIcon: React.FC = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>
-                    <Typography variant="h6">Name:  {sessionStorage.getItem("firstName")}</Typography>
+          
+          <MenuItem onClick={handleClose} sx={{ textAlign: 'right',direction:'rtl' }} > 
+                    <Typography variant="h6" style={{ fontFamily:'CustomFont',fontSize:'20px'}} >שם משתמש:  {sessionStorage.getItem("firstName")}</Typography> 
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <Typography variant="subtitle1">Email: {sessionStorage.getItem("email")}</Typography>
+                <MenuItem onClick={handleClose} sx={{ textAlign: 'right',direction:'rtl',fontFamily:'CustomFont' }}>
+                    <Typography variant="h6"style={{ fontFamily:'CustomFont',fontSize:'20px'}} >אימייל: {sessionStorage.getItem("email")} </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                    <Typography variant="button">החלף משתמש</Typography>
+                <MenuItem onClick={handleLogout} sx={{ textAlign:'center',direction:'rtl',fontFamily:'CustomFont' }}>
+                    <Typography variant="button" style={{ fontFamily:'CustomFont',fontSize:'20px', fontWeight:'700' ,marginRight:'30%'}}>החלף משתמש</Typography>
                 </MenuItem>
             </Menu></div>);
 };

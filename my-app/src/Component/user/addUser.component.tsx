@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, TextField, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, IconButton, InputAdornment, FormHelperText } from '@mui/material';
+import { Button, TextField, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, IconButton, InputAdornment, FormHelperText, OutlinedInput } from '@mui/material';
 import Swal from 'sweetalert2';
 import { User } from '../../model/user.model';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Project } from '../../model/project.model';
 import { getProject } from '../../api/project.api';
 import { setAllProject } from '../../Redux/Project/projectAction';
-
+import Rtl from '../rtl/rtl';
+import './user.css';
 interface AddUserFormProps {
     users: User[];
     setUser: React.Dispatch<React.SetStateAction<User[]>>;
@@ -24,7 +25,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
     const [userTypes, setUserTypes] = useState<UserType[]>([]);
     const [showPassword, setShowPassword] = useState(false);
     const [projects, setProjects] = useState<Project[]>([]);
-    const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+    const [selectedProjects, setSelectedProjects] = useState<{ [projectId: string]: string }>({});
     const [errors, setErrors] = useState({
         firstName: '',
         lastName: '',
@@ -92,8 +93,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
             ...errors,
             [name]: ''
         });
-
-        setSelectedProjects([]);
+        setSelectedProjects({});
     };
 
     //check password
@@ -180,7 +180,12 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
     //project selection
     const handleProjectSelection = (event: SelectChangeEvent<string[]>) => {
         const { value } = event.target;
-        setSelectedProjects(typeof value === 'string' ? value.split(', ') : value);
+        const selected = typeof value === 'string' ? value.split(',') : value;
+        const projectsMap = selected.reduce((acc, projectId) => {
+            acc[projectId] = projects.find(project => project.projectId === projectId)?.businessName || '';
+            return acc;
+        }, {} as { [projectId: string]: string });
+        setSelectedProjects(projectsMap);
     };
 
     //render project selection
@@ -191,22 +196,26 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
 
         if (!isCustomerOrEmployee) return null;
         return (
+            <Rtl>
             <FormControl fullWidth style={{ marginTop: '10px' }}>
                 <InputLabel>בחר פרויקטים</InputLabel>
                 <Select
+                  dir='rtl'
                     multiple
-                    value={selectedProjects}
+                    value={Object.keys(selectedProjects)}
                     onChange={handleProjectSelection}
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="בחר פרויקטים" />}
+
                     fullWidth
                     renderValue={(selected) => (
-                      <div>
-    {(selected as string[]).map((projectId, index) => (
-        <span key={projectId}>
-            {index > 0 && ", "}
-            {projects.find(project => project.projectId === projectId)?.businessName}
-        </span>
-    ))}
-</div>
+                        <div>
+                            {(selected as string[]).map((projectId, index) => (
+                                <span key={projectId}>
+                                    {index > 0 && ", "}
+                                    {projects.find(project => project.projectId === projectId)?.businessName}
+                                </span>
+                            ))}
+                        </div>
                     )}
                 >
                     {projects.map((project) => (
@@ -216,12 +225,15 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                     ))}
                 </Select>
             </FormControl>
+            </Rtl>
         );
     };
 
     return (
         <div>
+         <Rtl>   
             <TextField
+               dir='rtl'
                 margin="dense"
                 name="firstName"
                 label="שם פרטי"
@@ -234,6 +246,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 helperText={errors.firstName}
             />
             <TextField
+               dir='rtl'
                 margin="dense"
                 name="lastName"
                 label="שם משפחה"
@@ -246,6 +259,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 helperText={errors.lastName}
             />
             <TextField
+                 dir='rtl'
                 margin="dense"
                 name="email"
                 label="אמייל"
@@ -257,6 +271,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 helperText={errors.email}
             />
             <TextField
+                dir='rtl'
                 margin="dense"
                 name="password"
                 label="סיסמא"
@@ -285,26 +300,35 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                 }}
                 
             />
-
             <FormControl fullWidth style={{ marginTop: '10px' }} error={!!errors.userType}>
                 <InputLabel>סוג משתמש</InputLabel>
+
                 <Select
+                    dir='rtl'
                     value={formValues.userType ? formValues.userType.id : ''}
                     onChange={handleUserTypeChange}
                     fullWidth
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="סוג משתמש" />}
+
                 >
                     {userTypes.map((type) => (
-                        <MenuItem key={type.id} value={type.id}>
+                        <MenuItem key={type.id} value={type.id} style={{ direction: 'rtl' }} dir='rtl'>
+                            
                             {type.description}
                         </MenuItem>
                     ))}
                 </Select>
                 <FormHelperText>{errors.userType}</FormHelperText>
             </FormControl>
+            </Rtl>
             {renderProjectsSelection()}
-            <Button onClick={handleAddUser} color="primary">
+            <button onClick={handleAddUser}  className="btn-primary" style={{marginLeft:'33%',marginTop:'6px', marginBottom:'-6px', width:'170px'}}>
+  <span className="button__text" style={{marginRight:'40%'}}>הוספת משתמש</span>
+  <span className="button__icon" style={{marginLeft:'10%'}}><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" className="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+</button>
+            {/* <Button onClick={handleAddUser} color="primary">
                 הוסף משתמש
-            </Button>
+            </Button> */}
         </div>
     );
 };
