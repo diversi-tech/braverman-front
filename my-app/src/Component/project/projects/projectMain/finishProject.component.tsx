@@ -145,6 +145,7 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
                     </td>
                     <td style={{ textAlign: 'center' }}><button
                       className='buttonCircle'
+                      data-testid={`delete-button-${project.projectId}`} 
                       onClick={() => handleDelete(project.projectId)}
                     >
 
