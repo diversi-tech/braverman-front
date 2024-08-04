@@ -322,9 +322,9 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
             </FormControl>
             </Rtl>
             {renderProjectsSelection()}
-            <button onClick={handleAddUser}  className="btn-primary" style={{marginLeft:'33%',marginTop:'6px', marginBottom:'-6px'}}>
-  <span className="button__text" style={{textAlign:'left', marginLeft:'5%'}}>הוספת משתמש</span>
-  <span className="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" className="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+            <button onClick={handleAddUser}  className="btn-primary" style={{marginLeft:'33%',marginTop:'6px', marginBottom:'-6px', width:'170px'}}>
+  <span className="button__text" style={{marginRight:'40%'}}>הוספת משתמש</span>
+  <span className="button__icon" style={{marginLeft:'10%'}}><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" className="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
 </button>
             {/* <Button onClick={handleAddUser} color="primary">
                 הוסף משתמש
