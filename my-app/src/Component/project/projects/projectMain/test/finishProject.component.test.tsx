@@ -47,12 +47,22 @@ test('renders ProjectFinish component and handles pagination and delete project'
     expect(screen.getAllByText('John Doe').length).toBeGreaterThan(0);
   });
 
-  // fireEvent.click(screen.getByRole('button'));
+  const deleteButton = screen.getByTestId('delete-button-1');
+  fireEvent.click(deleteButton);
 
-  // expect(deleteProject).toHaveBeenCalledWith('1'); 
+  await waitFor(() => {
+    expect(screen.getByText('האם אתה בטוח שברצונך למחוק?')).toBeInTheDocument();
+  });
 
-  // await waitFor(() => {
-  //   expect(screen.queryByText('John Doe')).toBeNull();
-  // });
+  const confirmButton = screen.getByText('כן, מחק!');
+  fireEvent.click(confirmButton);
+
+  await waitFor(() => {
+    expect(deleteProject).toHaveBeenCalledWith('1');
+  });
+
+  await waitFor(() => {
+    expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
+  });
   
 });
