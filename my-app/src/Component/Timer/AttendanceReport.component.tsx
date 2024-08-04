@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 import { log } from 'console';
 import { getUserById } from '../../api/user.api';
 import { blue } from '@mui/material/colors';
+import { useParams } from 'react-router-dom';
 interface TimersData {
     users: { [key: string]: Timer[] };
     projects: { [key: string]: Timer[] };
@@ -22,15 +23,14 @@ const AttendanceReport: React.FC = () => {
     const [userTimers, setUserTimers] = useState<Timer[]>([]);
     const [full, setFull] = useState<boolean>(false);
     const [user, setUser] = useState<User>();
-    const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
 
-
+    let id = useParams()
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = (await getTimersGroupedByUserAndProjectAsync()).data;
                 const users = response[0];
-                const userId = sessionStorage.getItem("userId")
+                const {userId} = id
                 const userTimers = users[userId] || [];
                 setUserTimers(userTimers);
                 groupTimersByDay(userTimers);
