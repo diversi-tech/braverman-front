@@ -1,6 +1,7 @@
 @font-face {
 	font-family: 'CustomFont';
-	src: url("https://webfonts.typotheque.com/WF-039261-012388-002673-01198636e676e4eb7f3579a996093698.woff2") format("woff2");
+	src: url("https://cors-anywhere.herokuapp.com/https://webfonts.typotheque.com/WF-039261-012388-002673-01198636e676e4eb7f3579a996093698.woff2") format("woff2");
+
 }
 
 
