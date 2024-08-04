@@ -58,14 +58,14 @@ export const Tasks = () => {
         comment: 'try',
         projectId: '668d3bfa8d0828f533b2a85f',
         description: 'try',
+        startDate: new Date(),
         taskCategory: {
             taskCategoryId: "668d06b4825153a8af0254fd",
             categoryName: " תשלום 1/3 מקדמה",
             daysForExecution: 0,
             stageId: '0',
             sortOrder: 0 ,
-            userId:""      
-
+            userId:"",                
         },
         status: {
             "id": "66827898ef39f60dfd5e049f",
