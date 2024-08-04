@@ -20,9 +20,11 @@ import { TaskCategories } from './Component/adminScreen/taskCategories/taskCateg
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
 import {DashboardGraph} from "./Component/graphLead/mainGraphLead.component";
 import { Info } from './Component/tasks/info';
+
 import QuickActions from './Component/userScreen/quickActions';
 import ReportIssue from './Component/userScreen/reportFault';
 import Feedback from './Component/userScreen/feedback';
+import AttendanceReport from './Component/Timer/AttendanceReport.component';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -30,10 +32,10 @@ console.log('REACT_APP_BRAVERMAN:', process.env.REACT_APP_BRAVERMAN);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<App />}>
-            <Route path="/nav" element={<Nav/>}></Route>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="/nav" element={<Nav />}></Route>
             <Route path="/st" element={<DashboardGraph />} />
             <Route path="/tehila" element={<Info />} />
             <Route path="/login" element={<Login />} />
@@ -46,15 +48,16 @@ root.render(
             <Route path="/customers" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
+            <Route path='/AttendanceReport/:userId' element={<AttendanceReport />} />
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
-              <Route path='/taskCategories' element={<TaskCategories />} />
-              <Route path='/quickActions' element={<QuickActions />} ></Route>
-              <Route path='/reportIssue' element={<ReportIssue />} ></Route>
-              <Route path='/feedback' element={<Feedback />} ></Route>
+            <Route path='/taskCategories' element={<TaskCategories />} />
+            <Route path='/quickActions' element={<QuickActions />} ></Route>
+            <Route path='/reportIssue' element={<ReportIssue />} ></Route>
+            <Route path='/feedback' element={<Feedback />} ></Route>
 
-            </Route>
-          </Routes>
-        </HashRouter>
+          </Route>
+        </Routes>
+      </HashRouter>
     </Provider>
   </React.StrictMode>
 );
