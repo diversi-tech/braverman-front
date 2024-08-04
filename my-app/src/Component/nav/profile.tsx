@@ -62,7 +62,7 @@ const ProfileIcon: React.FC = () => {
                     <Typography variant="h6"style={{ fontFamily:'CustomFont',fontSize:'20px'}} >אימייל: {sessionStorage.getItem("email")} </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLogout} sx={{ textAlign:'center',direction:'rtl',fontFamily:'CustomFont' }}>
-                    <Typography variant="button" style={{ fontFamily:'CustomFont',fontSize:'20px', fontWeight:'700' ,marginRight:'30%'}}>החלף משתמש</Typography>
+                    <Typography variant="button" style={{ fontFamily:'CustomFont',fontSize:'20px', fontWeight:'700' }}>החלף משתמש</Typography>
                 </MenuItem>
             </Menu></div>);
 };
