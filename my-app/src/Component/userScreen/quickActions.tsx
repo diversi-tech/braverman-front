@@ -174,9 +174,22 @@ const QuickActions = () => {
       {/* {selectedProject && selectedProject.endDate && <MoreStatus project={selectedProject}></MoreStatus>} */}
       </div>
       <Box sx={{ padding: 3, backgroundColor: '#f4f7fc', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}>
-        <Typography variant="h5" sx={{ marginBottom: 2, textAlign: 'right', fontSize: "40px", fontWeight: 700, fontFamily: "CustomFont", lineHeight: "48px" }}>
-          ?פעולות מהירות - מה ברצונכם לעשות היום
-        </Typography>
+      <Typography
+      sx={{
+        marginBottom: 2,
+        textAlign: 'right',
+        fontSize: '35px',
+        fontWeight: 700,
+        fontFamily: 'CustomFont',
+        lineHeight: '48px',
+        '@media (max-width: 600px)': {
+          marginBottom:"30px",
+          fontSize: '22px !important', /* גודל קטן יותר למובייל */
+        },
+      }}
+    >
+      ?פעולות מהירות - מה ברצונכם לעשות היום
+    </Typography>
         <Grid container spacing={2}  marginTop={"5%"} marginBottom={"5%"} >
           {actions.map((action, index) => (
             <Grid item xs={12} sm={6} md={3} key={index} >

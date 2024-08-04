@@ -97,7 +97,10 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
         event.preventDefault();
         const updatedUser = {
             ...currentUser!,
-            projectsId: selectedProjects,
+            projectsId: selectedProjects.reduce((acc, projectId) => {
+                acc[projectId] = projectId;
+                return acc;
+            }, {}),
         };
         dispatch(updateUser(updatedUser));
         UpdateUserAPI(updatedUser!)

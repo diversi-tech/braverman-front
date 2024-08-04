@@ -49,8 +49,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px; 
-    margin-bottom: 50px; 
+    margin-top: 50px; 
+    margin-bottom: 30px; 
   }
   
   /* Lead management container */
@@ -91,7 +91,7 @@
   .table th,
   .table td {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 400;
     line-height: 12.01px;
     text-align: center;
     margin-left: 5px;
@@ -161,6 +161,7 @@
     border: none;
     font-size: inherit;
     text-align: center;
+    font-family: "CustomFont"!important;
   }
   
   .status-select {
@@ -327,6 +328,7 @@
     animation: slideUp 0.3s ease forwards;
   }
   .button1 {
+    font-family: 'CustomFont'!important;
     outline: none;
     border: none;
     cursor: pointer;
@@ -459,6 +461,23 @@ tfoot div {
 }
 .select{
   font-family: 'CustomFont'!important;
+  font-weight: 400;
+ 
 }
-  
+.select2{
+  font-family: 'CustomFont'!important;
+  font-weight: 400;
+  text-align: right;
+}
+.custom-select {
+  appearance: none; /* Remove default arrow */
+  color: #000000;
+  font-weight: 400;
+
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+}
+.my-confirm-button{
+  background-color: #00397C;
+}
   

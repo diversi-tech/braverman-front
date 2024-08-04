@@ -140,7 +140,9 @@ const TimerComponent: React.FC = () => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 2
+        padding: 2,
+        marginRight: 50
+        
       }}
     >
       <Button
@@ -156,7 +158,7 @@ const TimerComponent: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 30
+          fontSize: 30,
         }}
       >
         {currentTimer ? <PauseIcon /> : <PlayArrowIcon />}

@@ -188,8 +188,9 @@ border: none;
     width: 200px;
     height: 60px;
     left: calc(50% - 277px/2);
-    top: -15px;
-    ;
+    margin-top: 15%;
+    /* top: -10px; */
+    
     font-family: 'CustomFont'!important;
     /* font-style: normal; */
     /* font-weight: 400; */
@@ -212,8 +213,11 @@ body{
     display: flex;
     flex-wrap: nowrap;
     top: 54.5%;
-    right: 1050px;
+    right: 68%;
     transform: translateY(-50%);
     cursor: pointer;
     z-index: 10;
+}
+.my-confirm-button{
+    background-color: #00397C;
 }

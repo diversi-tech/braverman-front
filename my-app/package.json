@@ -14,8 +14,8 @@
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.5",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/date-fns": "^2.6.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.91",
     "@types/react": "^18.2.67",
@@ -23,9 +23,15 @@
     "@types/react-modal": "^3.16.3",
     "axios": "^1.6.8",
     "chart.js": "^4.4.3",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "chartjs-plugin-datalabels": "^2.2.0",
+<<<<<<< HEAD
     "file-saver": "^2.0.5",
     "html-webpack-plugin": "^5.6.0",
+=======
+    "date-fns": "^3.6.0",
+    "file-saver": "^2.0.5",
+>>>>>>> de3eea0f34b3cdd51b72a8a0b458bc35280c018a
     "jwt-decode": "^4.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
@@ -44,8 +50,14 @@
     "router-dom": "^2.2.11",
     "source-map-loader": "^5.0.0",
     "styled-components": "^6.1.8",
+    "stylis-plugin-rtl": "^2.1.1",
     "sweetalert": "^2.1.2",
+<<<<<<< HEAD
     "sweetalert2": "^11.6.13",
+=======
+    "sweetalert2": "^11.10.6",
+    "sweetalert2-react-content": "^5.0.7",
+>>>>>>> de3eea0f34b3cdd51b72a8a0b458bc35280c018a
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
@@ -76,8 +88,17 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+<<<<<<< HEAD
     "@types/file-saver": "^2.0.7",
     "@types/xlsx": "^0.0.35",
+=======
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
+    "@types/file-saver": "^2.0.7",
+    "@types/jest": "^29.5.12",
+    "@types/xlsx": "^0.0.36",
+    "jest": "^29.7.0",
+>>>>>>> de3eea0f34b3cdd51b72a8a0b458bc35280c018a
     "webpack-dev-server": "^5.0.3"
   }
 }
