@@ -1,7 +1,7 @@
 import React from 'react';
 import './detailProject.css';
 import { Project } from "../../../model/project.model";
-const convertDateTimeToDate = (date:any) => {
+export const convertDateTimeToDate = (date:any) => {
   if(date==null)
     return;
 if (typeof date === 'string') 
@@ -24,7 +24,7 @@ const ProjectDetail: React.FC<{project:Project} > = ({ project }) => {
     <div className="project-details">
       <h2 className="inline-text">פרטי הפרויקט</h2>
       <div>
-        <div className='text'id="textPaid">שולם: {project.pricePaid}</div>
+        <div className='text' id="textPaid">שולם: {project.pricePaid}</div>
         <div className='text'>יתרה לתשלום: {project.totalPrice-project.pricePaid}</div> 
         <div className='text' >סטטוס פרויקט: {project.status.value}</div>
         <div className='text'>כתובת הלקוח:</div>

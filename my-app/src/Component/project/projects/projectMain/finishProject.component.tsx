@@ -6,15 +6,13 @@ import Links from '../../../Links/Links';
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { HiOutlineTrash } from 'react-icons/hi';
 import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setAllProject } from '../../../../Redux/Project/projectAction';
 
 const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [page, setPage] = useState(0);
-  const dispatch = useDispatch();
-  const projectReducer = useSelector((state: { Project: { allProject: { [key: string]: Project[] } } }) => state.Project);
   const projectFinishPage = 6;
   const totalPages = Math.ceil(projects.length / projectFinishPage);
   const projectActive = projects.slice(page * projectFinishPage, (page + 1) * projectFinishPage);
@@ -27,7 +25,6 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
       try {
           
           const response = await getProject();
-          dispatch(setAllProject(response.data));
           setProjects(response.data);
           setLoading(false);
       } catch (error) {
