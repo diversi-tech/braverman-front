@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ProjectDetail from '../projectDetail.component';
 import { Project } from "../../../../model/project.model";
 import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
+import ProjectDetails from '../projectDetail.component';
 
 const project: Project = {
   projectId: '1',
@@ -45,7 +45,7 @@ const project: Project = {
 test('renders ProjectDetail component', () => {      
   render(
     <MemoryRouter> 
-      <ProjectDetail project={project} />
+      <ProjectDetails project={project} />
     </MemoryRouter>
   );
 
