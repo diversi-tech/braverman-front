@@ -13,5 +13,6 @@ export const importFile= async (fileSelected:any) =>
        catch (ex)
         {
          console.log(ex);
+         
        }
      }
