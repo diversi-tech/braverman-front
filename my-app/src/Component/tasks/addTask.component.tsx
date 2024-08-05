@@ -207,13 +207,12 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <TextField
                 label="טקסט חופשי"
                 dir='rtl'
-                margin="dense"
+                margin="normal" 
                 name="description"
                 value={formValues.description}
                 onChange={handleInputChange}
                 fullWidth
                 multiline
-{/*                 margin="normal" */}
             />
              </Rtl>
             <Button onClick={handleAddTask} color="primary">
