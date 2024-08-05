@@ -6,6 +6,8 @@ import { Enum } from '../../model/enum.model';
 import { User } from '../../model/user.model';
 import { Project } from '../../model/project.model';
 import { TaskCategory } from '../../model/taskCategory.model';
+import Rtl from '../rtl/rtl';
+
 interface AddTaskFormProps {
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
     handleTaskAdded: (newTask: Task) => Promise<void>;
