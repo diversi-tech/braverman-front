@@ -10,12 +10,16 @@
   font-size: 18px;
   direction: rtl;
   border-top: 1px solid #F1F7FF;
+  border-radius: 10px;
+  overflow: hidden;
+
 }
 
 .styled-table thead tr {
   background-color: white;
   color: black;
   font-weight: bold;
+  
 }
 
 .styled-table th,
@@ -23,13 +27,21 @@
   padding: 12px 15px;
   border: 1px solid #dddddd;
   text-align: center;
+
 }
+.styled-table th:nth-child(4)
+{
+  border-top-left-radius:10px ;
+}
+
 
 .styled-table th:nth-child(5),
 .styled-table td:nth-child(5) {
   background-color: transparent !important;
   border: none !important;
+
 }
+
 
 .styled-table th:nth-child(5) {
   display: none;
@@ -43,12 +55,10 @@
   position: relative;
 }
 
-/* הסרת פס תחתון בתא האחרון של העמודה הרביעית */
 .styled-table tbody tr:last-of-type td:nth-child(5) {
   border-bottom: none !important;
 }
 
-/* הסתרת התא התחתון */
 .styled-table tbody tr:last-of-type td:nth-child(5) {
   display: none;
 }
@@ -91,7 +101,6 @@
   vertical-align: middle;
 }
 
-/* הוספת הגדרת רוחב לעמודה האחרונה */
 .styled-table .col-edit {
   width: 10%;
 }
@@ -101,3 +110,4 @@
   background-color: #F1F7FF !important;
 
 }
+

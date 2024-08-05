@@ -29,7 +29,8 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     urlDrive: '',
     urlFigma: '',
     urlWordpress: '',
-    freeText: ''
+    freeText: '',
+    workLog: []
   });
   const dispatch = useDispatch();
 
@@ -70,9 +71,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       urlWordpress,
       urlDrive,
       urlFigma,
-      freeText, 
-       workLog: [],
-       stageStatus:selectedStatus,
+      freeText,
+      workLog: [],
+      stageStatus: selectedStatus,
 
     };
 
