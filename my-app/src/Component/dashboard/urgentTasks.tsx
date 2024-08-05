@@ -158,7 +158,7 @@ const UrgentTasksCard: React.FC = () => {
                   </Typography>
                 </IconContainer>
                 <Typography variant="body2">
-                  <strong>Comment:</strong> {task.comment || 'No comments'}
+                  <strong>Comment:</strong> {task.description || 'No comments'}
                 </Typography>
                 <Typography variant="body2">
                   <strong>Project ID:</strong> {task.projectId}
