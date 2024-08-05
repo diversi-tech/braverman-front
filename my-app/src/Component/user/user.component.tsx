@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './user.css'; 
+import './user.css';
 import { addUserApi, GetAllProjectPerUser, getUsers } from '../../api/user.api';
 import { UserType } from '../../model/userType.model';
 import { User } from '../../model/user.model';
@@ -14,22 +14,23 @@ import { FaUserEdit } from "react-icons/fa";
 import { GetById } from '../../api/project.api';
 import { useNavigate } from 'react-router-dom';
 import { RiUserAddLine } from "react-icons/ri";
-import { LiaUserEditSolid } from "react-icons/lia";
+import { LiaAccessibleIcon, LiaUserEditSolid } from "react-icons/lia";
 import ReactDOM from 'react-dom';
 import AddUserForm from './addUser.component';
 import Swal from 'sweetalert2';
 import store from '../../Redux/Store';
 import { ProviderWrapper } from './UpdateUser.component';
+import AssessmentIcon from '@mui/icons-material/Assessment'; // יבוא האייקון
 
 
 interface UserWithProjectsNames extends User {
-  projectsNames: string[];
+    projectsNames: string[];
 }
 
 const UserTable = () => {
     const [userTypes, setTypes] = useState<UserType[]>([]);
     // const [users, setUsers] = useState<UserWithProjectsNames[]>([]);
-    const [users,setUsers]=useState<User[]>([])
+    const [users, setUsers] = useState<User[]>([])
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 7;
     const userState = useSelector((state: { user: { allUser: User[] } }) => state.user.allUser);
@@ -45,7 +46,7 @@ const UserTable = () => {
                 } else {
                     const resAllUser = await getUsers();
                     data = resAllUser;
-                     dispatch(setAllUsers(data));
+                    dispatch(setAllUsers(data));
                 }
                 debugger
                 setUsers(data);
@@ -53,7 +54,7 @@ const UserTable = () => {
                 //     const projectsNames = await fetchProjectsNames(user.projectsId);
                 //     return { ...user, projectsNames };
                 // }));
-   
+
                 // setUsers(updatedUsers);
             } catch (error) {
                 console.error('Error fetching leads:', error);
@@ -99,69 +100,71 @@ const UserTable = () => {
             didOpen: () => {
                 const container = document.getElementById('update-user');
                 if (container) {
-                    ReactDOM.render(                        
+                    ReactDOM.render(
                         <ProviderWrapper userId={userId} />,
                         container
                     );
-                   
+
                 }
-                
+
             },
         })
     }
 
 
-const addUser = () => {
-  Swal.fire({
-    title: 'הוספת משתמש חדש',
-    html: '<div id="add-lead-container"></div>',
-    showCloseButton: true,
-    showCancelButton: false,
-    showConfirmButton: false,
-    didOpen: () => {
-      const container = document.getElementById('add-lead-container');
-      if (container) {
-        ReactDOM.render(
-            <Provider store={store}>
-          <AddUserForm
-            // open={true}
-            users={users}
-            setUser={setUsers}
-            handleUserAdded={async (newUser: User) => {
-                debugger
-              try {
-                // debugger
-                 const response = await addUserApi(newUser);
-                 const addedUser = response.data;
-                 setUsers(prevUsers => [...prevUsers, newUser]);
-                // const updatedProjectsNames = await fetchProjectsNames(newUser.projectsId);
-                // updateUserProjects(addedUser.id, updatedProjectsNames);
-                // dispatch(addUser(addedUser));
-                Swal.fire('Success', 'המשתמש נוסף בהצלחה', 'success');
-              } catch (error) {
-                Swal.fire('Error', 'שגיאה בהוספת המשתמש', 'error');
-              }
-            }}
-          />,
-        </Provider>,
-          container
-        );
-      }
-    },
-  });
-};
-const updateUserProjects = (userId: string, projectsNames: string[]) => {
-    setUsers(prevUsers => {
-        const updatedUsers = prevUsers.map(user => {
-            if (user.id === userId) {
-                return { ...user, projectsNames };
-            }
-            return user;
+    const addUser = () => {
+        Swal.fire({
+            title: 'הוספת משתמש חדש',
+            html: '<div id="add-lead-container"></div>',
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const container = document.getElementById('add-lead-container');
+                if (container) {
+                    ReactDOM.render(
+                        <Provider store={store}>
+                            <AddUserForm
+                                // open={true}
+                                users={users}
+                                setUser={setUsers}
+                                handleUserAdded={async (newUser: User) => {
+                                    debugger
+                                    try {
+                                        // debugger
+                                        const response = await addUserApi(newUser);
+                                        const addedUser = response.data;
+                                        setUsers(prevUsers => [...prevUsers, newUser]);
+                                        // const updatedProjectsNames = await fetchProjectsNames(newUser.projectsId);
+                                        // updateUserProjects(addedUser.id, updatedProjectsNames);
+                                        // dispatch(addUser(addedUser));
+                                        Swal.fire('Success', 'המשתמש נוסף בהצלחה', 'success');
+                                    } catch (error) {
+                                        Swal.fire('Error', 'שגיאה בהוספת המשתמש', 'error');
+                                    }
+                                }}
+                            />,
+                        </Provider>,
+                        container
+                    );
+                }
+            },
         });
-        return updatedUsers;
-    });
-};
-
+    };
+    const updateUserProjects = (userId: string, projectsNames: string[]) => {
+        setUsers(prevUsers => {
+            const updatedUsers = prevUsers.map(user => {
+                if (user.id === userId) {
+                    return { ...user, projectsNames };
+                }
+                return user;
+            });
+            return updatedUsers;
+        });
+    };
+    const attendanceReport = (userId: string) => {
+       nav(`/AttendanceReport/${userId}`)
+    };
     return (
         <div className="user-table-container">
             <div className="table-title">
@@ -170,49 +173,52 @@ const updateUserProjects = (userId: string, projectsNames: string[]) => {
             <table>
                 <thead>
                     <tr className="table-header-row">
-                        <th style={{textAlign:'right',width:'25%'}}>פרויקטים</th>
-                        <th style={{textAlign:'right' ,width:'25%'}}>אימייל</th>
-                        <th style={{textAlign:'right',width:'25%'}} >ניהול תפקיד</th>
-                        <th style={{textAlign:'right',width:'25%'}}>שם משתמש</th>
+                        <th style={{ textAlign: 'right', width: '20%' }}>דוחות נוכחות</th>                        <th style={{ textAlign: 'right', width: '25%' }}>פרויקטים</th>
+                        <th style={{ textAlign: 'right', width: '20%' }}>אימייל</th>
+                        <th style={{ textAlign: 'right', width: '20%' }} >ניהול תפקיד</th>
+                        <th style={{ textAlign: 'right', width: '20%' }}>שם משתמש</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>
+
                     {currentUsers.map((user) => (
                         <tr key={user.id}>
-<td > {Object.values(user.projectsId).join(', ')} <CiLock /></td>
-{/* {user.projectsNames.join(', ')} <CiLock /> */}
+                            <td onClick={() => attendanceReport(user.id)}>
+                                 {user.userType?.description === "עובד" ? <AssessmentIcon sx={{ fontSize: 30, color: '#3498db'  ,textAlign: 'center'}}  /> : null}
+                            </td>
+                            <td > {Object.values(user.projectsId).join(', ')} <CiLock /></td>
+                            {/* {user.projectsNames.join(', ')} <CiLock /> */}
                             <td>{user.email}</td>
                             <td>{user.userType?.description}</td>
                             <td>{user.firstName} {user.lastName}</td>
                             <td onClick={() => updateUser(user.id)}><LiaUserEditSolid className='user-icon' /></td>
-                           
                         </tr>
                     ))}
 
-                     <td colSpan={6} onClick={() => addUser()} style={{marginBlockStart:'10px'}}><RiUserAddLine className='user-icon'/>
-                     </td>
+                    <td colSpan={6} onClick={() => addUser()} style={{ marginBlockStart: '10px' }}><RiUserAddLine className='user-icon' />
+                    </td>
                 </tbody>
             </table>
             <div className="pagination">
-              <div className='pagination2'>
-              <button
-                    className="pagination-button"
-                    onClick={handleNextPage}
-                    disabled={indexOfLastUser >= users.length}
-                >
-                 <SlArrowDown className="icon" />
-                </button>
-                <button
-                    className="pagination-button"
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                >
-               <SlArrowUp className="icon" />
-                </button>
-               
-               
-            </div>
+                <div className='pagination2'>
+                    <button
+                        className="pagination-button"
+                        onClick={handleNextPage}
+                        disabled={indexOfLastUser >= users.length}
+                    >
+                        <SlArrowDown className="icon" />
+                    </button>
+                    <button
+                        className="pagination-button"
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                    >
+                        <SlArrowUp className="icon" />
+                    </button>
+
+
+                </div>
             </div>
         </div>
     );
