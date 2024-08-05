@@ -114,24 +114,27 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 <Rtl>
                     <TextField
+                    multiline
                         dir='rtl'
-                        label="First Name"
+                        label="שם פרטי "
                         name="firstName"
                         value={currentUser?.firstName || ""}
                         onChange={handleChange}
                         fullWidth
                     />
                     <TextField
+                    multiline
                         dir='rtl'
-                        label="Last Name"
+                        label="שם משפחה"
                         name="lastName"
                         value={currentUser?.lastName || ""}
                         onChange={handleChange}
                         fullWidth
                     />
                     <TextField
+                    multiline
                         dir='rtl'
-                        label="Email"
+                        label="אימייל"
                         type="email"
                         name="email"
                         value={currentUser?.email || ""}
@@ -140,7 +143,7 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
                     />
                     <TextField
                         dir='rtl'
-                        label="Password"
+                        label="סיסמא"
                         type="password"
                         name="password"
                         value={currentUser?.password || ""}
@@ -153,7 +156,7 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
                             variant="outlined"
                             onClick={() => setShowProjects(!showProjects)}
                         >
-                            Projects
+                            פרויקטים
                         </Button>
                         {showProjects && (
                             <FormGroup>
@@ -176,7 +179,7 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
                     </FormControl>
                 </Rtl>
                 <Button type="submit" variant="contained" color="primary">
-                    Save
+                    שמירה
                 </Button>
             </Box>
         </form>

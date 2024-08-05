@@ -24,6 +24,7 @@ import { Info } from './Component/tasks/info';
 import QuickActions from './Component/userScreen/quickActions';
 import ReportIssue from './Component/userScreen/reportFault';
 import Feedback from './Component/userScreen/feedback';
+import UrgentTasksTable from './Component/dashboard/urgentTasks';
 import AttendanceReport from './Component/Timer/AttendanceReport.component';
 
 
@@ -50,10 +51,11 @@ root.render(
             <Route path='/user' element={<UserTable />} />
             <Route path='/AttendanceReport/:userId' element={<AttendanceReport />} />
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
-            <Route path='/taskCategories' element={<TaskCategories />} />
-            <Route path='/quickActions' element={<QuickActions />} ></Route>
-            <Route path='/reportIssue' element={<ReportIssue />} ></Route>
-            <Route path='/feedback' element={<Feedback />} ></Route>
+              <Route path='/taskCategories' element={<TaskCategories />} />
+              <Route path='/quickActions' element={<QuickActions />} ></Route>
+              <Route path='/reportIssue' element={<ReportIssue />} ></Route>
+              <Route path='/feedback' element={<Feedback />} ></Route>
+              <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
 
           </Route>
         </Routes>

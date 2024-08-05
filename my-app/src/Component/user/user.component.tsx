@@ -177,6 +177,7 @@ const UserTable = () => {
                         <th style={{ textAlign: 'right', width: '20%' }}>אימייל</th>
                         <th style={{ textAlign: 'right', width: '20%' }} >ניהול תפקיד</th>
                         <th style={{ textAlign: 'right', width: '20%' }}>שם משתמש</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>

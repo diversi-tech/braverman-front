@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
+import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, OutlinedInput } from '@mui/material';
 import Swal from 'sweetalert2';
 import { Task } from '../../model/task.model';
 import { Enum } from '../../model/enum.model';
@@ -169,9 +169,11 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                     name="levelUrgency"
                     value={formValues.levelUrgency.value}
                     onChange={(e) => handleSelectChange(e, 'levelUrgency')}
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="רמת דחיפות" />}
+
                 >
                     {levelUrgencyStatus.map(level => (
-                        <MenuItem key={level.id} value={level.value}>
+                        <MenuItem key={level.id} value={level.value} style={{direction: 'rtl'}}>
                             {level.value}
                         </MenuItem>
                     ))}
@@ -197,9 +199,11 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                     name="taskStatus"
                     value={formValues.taskStatus.value}
                     onChange={(e) => handleSelectChange(e, 'taskStatus')}
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="סטטוס" />}
+
                 >
                     {taskStatus.map(status => (
-                        <MenuItem key={status.id} value={status.value}>
+                        <MenuItem key={status.id} value={status.value} style={{direction: 'rtl'}}>
                             {status.value}
                         </MenuItem>
                     ))}
