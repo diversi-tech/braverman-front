@@ -213,7 +213,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                 onChange={handleInputChange}
                 fullWidth
                 multiline
-                margin="normal"
+{/*                 margin="normal" */}
             />
              </Rtl>
             <Button onClick={handleAddTask} color="primary">
