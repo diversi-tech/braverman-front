@@ -62,31 +62,30 @@ export const Tasks = () => {
     const totalPages = Math.ceil(tasks.length / taskperPage);
 
     const [isOpen, setIsOpen] = useState(false);
-    // const [Myprop, setMyprop] = useState<Task>({
-    //     taskId: '',
-    //     taskName: 'try',
-    //     assignedTo: '6683dbc67f45f71f547804dc',
-    //     // comment: 'try',
-    //     projectId: '668d3bfa8d0828f533b2a85f',
-    //     // description: 'try',
-    //     taskCategory: {
-    //         taskCategoryId: "668d06b4825153a8af0254fd",
-    //         categoryName: " תשלום 1/3 מקדמה",
-    //         daysForExecution: 0,
-    //         stageId: '0',
-    //         sortOrder: 0,
-    //         userId: ""
-
-    //     },
-    //     status: {
-    //         "id": "66827898ef39f60dfd5e049f",
-    //         "key": "1",
-    //         "value": "TODO"
-    //     },
-    //     canBeApprovedByManager: null,
-    //     levelUrgencyStatus: '1',
-    // });
-
+    const [Myprop, setMyprop] = useState<Task>({
+        taskId: '',
+        taskName: 'try',
+        assignedTo: '6683dbc67f45f71f547804dc',
+        comment: 'try',
+        projectId: '668d3bfa8d0828f533b2a85f',
+        description: 'try',
+        startDate: new Date(),
+        taskCategory: {
+            taskCategoryId: "668d06b4825153a8af0254fd",
+            categoryName: " תשלום 1/3 מקדמה",
+            daysForExecution: 0,
+            stageId: '0',
+            sortOrder: 0 ,
+            userId:"",                
+        },
+        status: {
+            "id": "66827898ef39f60dfd5e049f",
+            "key": "1",
+            "value": "TODO"
+        },
+        canBeApprovedByManager: null,
+        levelUrgencyStatus: '1',
+    });
 
     const tasksState = useSelector((state: { Task: { allTask: { [key: string]: Task[] } } }) => state.Task);
     const levelState = useSelector((state: { LevelUrgencyStatus: { allEnums: { [key: string]: Enum[] } } }) => state.LevelUrgencyStatus);

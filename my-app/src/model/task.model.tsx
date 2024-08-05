@@ -7,11 +7,11 @@ export interface Task {
   taskId: string;
   taskName: string;
   assignedTo: string;
-  // comment: string;
   projectId: string;
   taskCategory: TaskCategory;
   status: Enum;
   canBeApprovedByManager: null;
   levelUrgencyStatus: string;
   description: string;
+   startDate: Date;
 }

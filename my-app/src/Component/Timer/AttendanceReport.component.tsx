@@ -1,31 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Paper } from '@mui/material';
+import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Paper, CircularProgress } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import { User } from '../../model/user.model';
 import { Timer } from '../../model/Timer.model';
 import { getTheAmountOfTimeForAllProjects, getTimersGroupedByUserAndProjectAsync } from '../../api/Timer.api';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-
+import { log } from 'console';
+import { getUserById } from '../../api/user.api';
+import { blue } from '@mui/material/colors';
+import { useParams } from 'react-router-dom';
 interface TimersData {
     users: { [key: string]: Timer[] };
     projects: { [key: string]: Timer[] };
 }
-
 const AttendanceReport: React.FC = () => {
-    const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
+
     const [timersData, setTimersData] = useState<TimersData>({ users: {}, projects: {} });
     const [totalDuration, setTotalDuration] = useState<string>('00:00:00');
     const [groupedTimers, setGroupedTimers] = useState<{ [key: string]: Timer[] }>({});
     const [userTimers, setUserTimers] = useState<Timer[]>([]);
+    const [full, setFull] = useState<boolean>(false);
+    const [user, setUser] = useState<User>();
 
+    let id = useParams()
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = (await getTimersGroupedByUserAndProjectAsync()).data;
                 const users = response[0];
-                const userId = currentUser.id;
+                const {userId} = id
                 const userTimers = users[userId] || [];
                 setUserTimers(userTimers);
                 groupTimersByDay(userTimers);
@@ -36,7 +41,8 @@ const AttendanceReport: React.FC = () => {
         };
 
         fetchData();
-    }, [currentUser.id]);
+    }, []);
+
 
     const groupTimersByDay = (timers: Timer[]) => {
         const groupedTimers: { [key: string]: Timer[] } = {};
@@ -95,53 +101,63 @@ const AttendanceReport: React.FC = () => {
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
         saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'AttendanceReport.xlsx');
     };
-
+    if (sortedDates.length == 0) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
     return (
-        <Box sx={{ padding: 4 }}>
-            <Paper elevation={3} sx={{ padding: 3 }}>
-                <Typography variant="h4" gutterBottom align="center" color="primary">
-                    דוח נוכחות
-                </Typography>
-                <IconButton onClick={downloadExcel} aria-label="download">
-                    <DownloadIcon />
-                </IconButton>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                        <TableCell style={{ textAlign: 'center' }}>תאריך</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}>שעת התחלה</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}>שעת סיום</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}>משך זמן</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}>פרויקט</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {sortedDates.map((date) => (
-                            <React.Fragment key={date}>
-                                {groupedTimers[date].map((timer, index) => (
-                                    <TableRow key={timer?.timerId || index}>
-                                        {index === 0 && (
-                                            <TableCell rowSpan={groupedTimers[date].length} align="center" sx={{ backgroundColor: '#f0f0f0' }}>
-                                                {date}
-                                            </TableCell>
-                                        )}
-                                        <TableCell style={{ textAlign: 'center' }}>{formatTime(timer.startTime)}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{timer?.endTime ? formatTime(timer?.endTime) : 'פעיל'}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{timer?.duration || '00:00:00'}</TableCell>
-                                        <TableCell style={{ textAlign: 'center' }}>{timer?.projectName}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </React.Fragment>
-                        ))}
-                    </TableBody>
-                </Table>
-                <Box sx={{ marginTop: 2, textAlign: 'center' }}>
-                    <Typography variant="h6" color="secondary">
-                        סך הכל שעות עבודה: {totalDuration}
+        <>        <div style={{ fontFamily: 'CustomFont'}}>
+            <Box sx={{ padding: 4, fontFamily: 'CustomFont' }}>
+                <Paper elevation={3} sx={{ padding: 3, borderRadius: '20px' }}>
+                    <Typography variant="h4" gutterBottom align="center" sx={{ fontFamily: 'CustomFont', fontWeight:700, color:'#002046'}}>
+                        דוח נוכחות
                     </Typography>
-                </Box>
-            </Paper>
-        </Box>
+                    <IconButton onClick={downloadExcel} aria-label="download">
+                        <DownloadIcon />
+                    </IconButton>
+                    <Table >
+                        <TableHead >
+                            <TableRow>
+                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>תאריך</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>שעת סיום</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>שעת התחלה</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>משך זמן</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>פרויקט</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {sortedDates.map((date) => (
+                                <React.Fragment key={date}>
+                                    {groupedTimers[date].map((timer, index) => (
+                                        <TableRow key={timer?.timerId || index}>
+                                            {index === 0 && (
+                                                <TableCell rowSpan={groupedTimers[date].length} align="center" sx={{ backgroundColor: '#f0f0f0', fontFamily:'CustomFont' }}>
+                                                    {date}
+                                                </TableCell>
+                                            )}
+                                            <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>{timer?.endTime ? formatTime(timer?.endTime) : 'פעיל'}</TableCell>
+                                            <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont'}}>{formatTime(timer.startTime)}</TableCell>
+                                            <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont'}}>{timer?.duration || '00:00:00'}</TableCell>
+                                            <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont'}}>{timer?.projectName}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </React.Fragment>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+                        <Typography variant="h6" sx={{ fontFamily: 'CustomFont',color:'#002046'}}>
+                            סך הכל שעות עבודה: {totalDuration}
+                        </Typography>
+                    </Box>
+                </Paper>
+            </Box>
+        </div>
+        </>
+
     );
 };
 

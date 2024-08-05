@@ -104,6 +104,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             assignedTo: assignedTo,
             projectId: projectId,
             taskCategory: taskCategory,
+            startDate: new Date(),
             status: taskStatus,
             canBeApprovedByManager: null,
             levelUrgencyStatus: levelUrgency.key,
@@ -115,7 +116,9 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
 
     return (
         <div>
+          <Rtl>
             <TextField
+                dir='rtl'
                 autoFocus
                 margin="dense"
                 name="taskName"
@@ -201,6 +204,8 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             </FormControl>
             <TextField
                 label="טקסט חופשי"
+                dir='rtl'
+                margin="dense"
                 name="description"
                 value={formValues.description}
                 onChange={handleInputChange}
@@ -208,6 +213,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                 multiline
                 margin="normal"
             />
+             </Rtl>
             <Button onClick={handleAddTask} color="primary">
                 הוסף משימה
             </Button>
