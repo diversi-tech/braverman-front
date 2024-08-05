@@ -3,6 +3,6 @@ export interface TaskCategory {
     categoryName:string,
     daysForExecution:number,
     stageId:string,
-    sortOrder:number|null
-    userId:string|undefined
+    sortOrder:number
+    userId:string
 }
