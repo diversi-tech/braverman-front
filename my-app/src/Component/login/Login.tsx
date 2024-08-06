@@ -96,7 +96,7 @@ const Login = () => {
           customClass: {
             confirmButton: 'my-confirm-button'
           }
-        });        // dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
+        });     
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
         sessionStorage.setItem("firstName", x.data.firstName);

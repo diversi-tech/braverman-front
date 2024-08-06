@@ -9,6 +9,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { teal, pink } from '@mui/material/colors';
 import { UpDateTask } from "../../api/task.api"; // Import the update function
+import Rtl from '../rtl/rtl';
 
 const CardContainer = styled(Grid)({
   display: 'flex',
@@ -31,7 +32,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 const CardHeader = styled('div')(({ theme }) => ({
-  backgroundColor: teal[500],
+  backgroundColor:'#00397C' ,
   color: theme.palette.common.white,
   padding: '8px 16px',
   borderRadius: '12px 12px 0 0',
@@ -88,7 +89,7 @@ const UrgentTasksCard: React.FC = () => {
 
       const filtered = data.filter(task => {
         const createdAtDate = new Date(task.startDate);
-        return task.levelUrgencyStatus === '66864040dc2e3dffad8c7bc1' && createdAtDate < threeDaysAgo;
+        return task.levelUrgencyStatus === '4' && createdAtDate < threeDaysAgo;
       });
 
       setFilteredTasks(filtered);
@@ -143,41 +144,39 @@ const UrgentTasksCard: React.FC = () => {
 
   return (
     <>
+    <Rtl>
       <CardContainer container spacing={2}>
         {filteredTasks.map((task) => (
           <Grid item key={task.taskId}>
             <StyledCard>
               <CardHeader>
-                <Typography variant="h6">{task.taskName}</Typography>
+                <Typography variant="h6" >{task.taskName}</Typography>
               </CardHeader>
               <CardContentStyled>
-                <IconContainer>
+                <IconContainer style={{ textAlign: 'right',direction: 'rtl'}}>
                   <AccessAlarmIcon style={{ color: pink[500] }} />
-                  <Typography variant="body2">
-                    <strong>Assigned To:</strong> {task.assignedTo || 'Not assigned'}
+                  <Typography variant="body2" style={{ textAlign: 'right' }}>
+                    <strong > אחראית משימה:  </strong> {task.assignedTo || 'Not assigned'}
                   </Typography>
                 </IconContainer>
-                <Typography variant="body2">
-                  <strong>Comment:</strong> {task.description || 'No comments'}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                  <strong>תאור: </strong> {task.description || 'אין תאור'}
                 </Typography>
-                <Typography variant="body2">
-                  <strong>Project ID:</strong> {task.projectId}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                {task.projectId}   <strong> :פרויקט </strong> 
                 </Typography>
-                <Typography variant="body2">
-                  <strong>Description:</strong> {task.description}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                  <strong> שם קטגוריה: </strong> {task.taskCategory.categoryName}
                 </Typography>
-                <Typography variant="body2">
-                  <strong>Task Category:</strong> {task.taskCategory.categoryName}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+               <strong>סטטוס:  </strong>דחוף
                 </Typography>
-                <Typography variant="body2">
-                  <strong>Status:</strong> {task.levelUrgencyStatus}
-                </Typography>
-                <Typography variant="body2">
-                  <strong>Start Date:</strong> {new Date(task.startDate).toLocaleDateString()}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                  <strong> תאריך יצירה: </strong> {new Date(task.startDate).toLocaleDateString()}
                 </Typography>
                 {/* {task.assignedTo === '' && ( */}
                   <IconButton onClick={() => handleAssignTask(task.taskId)}>
-                    <AssignmentTurnedInIcon style={{ color: teal[500] }} />
+                    <AssignmentTurnedInIcon style={{ color:  '#00397C' }} />
                     <Typography variant="body2">Assign to me</Typography>
                   </IconButton>
                 {/* )} */}
@@ -186,7 +185,7 @@ const UrgentTasksCard: React.FC = () => {
           </Grid>
         ))}
       </CardContainer>
-
+      </Rtl>
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
         <Alert onClose={() => setSnackbarOpen(false)} severity="success">
           {snackbarMessage}
