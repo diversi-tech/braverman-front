@@ -68,6 +68,7 @@
       width: 100%; /* Makes sure the container takes the full width */
       height: 100px; /* Adjust this height as needed */
      /* margin-top: 0; */
+     font-size: 28px;
      height: 30px;
      text-align: center;
   }

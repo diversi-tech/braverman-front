@@ -107,12 +107,12 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
         <table className="TableClose">
           <thead>
             <tr>
-              <th style={{ width: '15%', fontWeight: '600' }}></th>
-              <th style={{ width: '21%', fontWeight: '600' }}>שם לקוח</th>
-              <th style={{ width: '23%', fontWeight: '600' }}>שם העסק</th>
-              <th style={{ width: '15%', fontWeight: '600' }}>לינקים</th>
-              <th style={{ width: '1%', fontWeight: '600' }}></th>
-              <th style={{ width: '1%', fontWeight: '600' }}></th>
+              <th style={{ width: '15%', fontWeight: '600' ,fontSize:'13.5px' }}></th>
+              <th style={{ width: '21%', fontWeight: '600',fontSize:'13.5px' }}>שם לקוח</th>
+              <th style={{ width: '23%', fontWeight: '600',fontSize:'13.5px' }}>שם העסק</th>
+              <th style={{ width: '15%', fontWeight: '600',fontSize:'13.5px' }}>לינקים</th>
+              <th style={{ width: '1%', fontWeight: '600',fontSize:'13.5px' }}></th>
+              <th style={{ width: '1%', fontWeight: '600',fontSize:'13.5px' }}></th>
 
             </tr>
           </thead>

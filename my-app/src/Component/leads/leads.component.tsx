@@ -550,7 +550,7 @@ const formatDateForInput = (date:any) => {
   return (
     <div className="page-container">
       <div className="lead-management-container">
-        <h1 className="lead-management-title">ניהול לידים</h1>
+        <p className="lead-management-title">ניהול לידים</p>
         <div className="search-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
         </div>
         <div className="table-container">
