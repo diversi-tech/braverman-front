@@ -123,6 +123,7 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
               <th style={{ width: '22%', fontWeight: '600' }}>שם העסק</th>
               <th style={{ width: '30%', fontWeight: '600' }}>לינקים</th>
               <th style={{ width: '0.1%', fontWeight: '600' }}></th>
+
             </tr>
           </thead>
           <tbody>

@@ -32,6 +32,14 @@ import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import ReactDOM from "react-dom";
 import AddTaskForm from "./addTask.component";
 import { setAllTaskStatus } from "../../Redux/enum/taskStatusAction";
+import TaskEdit from "./editTask.component";
+import { User } from "../../model/user.model";
+import { getUsers } from "../../api/user.api";
+import { setAllUsers } from "../../Redux/User/userAction";
+import { getTaskCategories } from "../../api/taskCategory.api";
+import { TaskCategory } from "../../model/taskCategory.model";
+import { setAllTaskCategory } from "../../Redux/tasx/taskCategoryAction";
+import { blueGrey } from "@mui/material/colors";
 
 export const Tasks = () => {
 
@@ -45,6 +53,9 @@ export const Tasks = () => {
     const [taskStatus, setTaskStatus] = useState<Enum[]>([]);
     const [project, setProject] = useState<Project[]>([]);
     const [open, setOpen] = useState(false);
+    const [users, setUsers] = useState<User[]>([])
+    const [currentTask, setCurrentTask] = useState<Task>()
+    const [taskCategory, setTaskCategory] = useState<TaskCategory[]>([])
 
     const [page, setPage] = useState(0);
     const taskperPage = 7;
@@ -55,17 +66,17 @@ export const Tasks = () => {
         taskId: '',
         taskName: 'try',
         assignedTo: '6683dbc67f45f71f547804dc',
-        comment: 'try',
+        // comment: 'try',
         projectId: '668d3bfa8d0828f533b2a85f',
         description: 'try',
+        startDate: new Date(),
         taskCategory: {
             taskCategoryId: "668d06b4825153a8af0254fd",
             categoryName: " תשלום 1/3 מקדמה",
             daysForExecution: 0,
             stageId: '0',
             sortOrder: 0 ,
-            userId:""      
-
+            userId:"",                
         },
         status: {
             "id": "66827898ef39f60dfd5e049f",
@@ -74,6 +85,7 @@ export const Tasks = () => {
         },
         canBeApprovedByManager: null,
         levelUrgencyStatus: '1',
+        LastUpdateStatusUserId:''
     });
 
     const tasksState = useSelector((state: { Task: { allTask: { [key: string]: Task[] } } }) => state.Task);
@@ -81,6 +93,8 @@ export const Tasks = () => {
     const projectState = useSelector((state: { Project: { allProject: { [key: string]: Project[] } } }) => state.Project);
     const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
     const taskStatusState = useSelector((state: { taskStatus: { allTaskStatus: { [key: string]: Enum[] } } }) => state.taskStatus);
+    const userState = useSelector((state: { users: { allUsers: { [key: string]: User[] } } }) => state.users);
+    const taskCategoryState = useSelector((state: { taskCategory: { allTaskCategory: { [key: string]: Lead[] } } }) => state.taskCategory);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open2 = Boolean(anchorEl);
@@ -89,14 +103,33 @@ export const Tasks = () => {
 
     //useEffect
     useEffect(() => {
+        fetchDataUser();
         fetchDataLevel();
         fetchDataTask();
         fetchDataProject();
         fetchDataLead();
         fetchDatastatus();
+        fetchTaskCategory();
     }, [dispatch]);
 
     //Reduxשליפה מה 
+
+    const fetchDataUser = async () => {
+        // try {
+        let data;
+        // if (userState.allUsers.length) {
+        //     data = userState.allUsers;
+        // } 
+        // else {
+        const resAllUsers = await getUsers();
+        data = resAllUsers;
+        dispatch(setAllUsers(data));
+        // }
+        setUsers(data);
+        // } catch (error) {
+        // console.error('Error fetching user:', error);
+        // }
+    };
 
     const fetchDataLead = async () => {
         try {
@@ -114,19 +147,35 @@ export const Tasks = () => {
         }
     };
 
+    const fetchTaskCategory = async () => {
+        // try {
+        let data;
+        // if (taskCategoryState.allTaskCategory.length) {
+        //     data = taskCategoryState.allTaskCategory;
+        // } else {
+        const resAllTaskCategory = await getTaskCategories();
+        data = resAllTaskCategory;
+        dispatch(setAllTaskCategory(data));
+        // }
+        setTaskCategory(data);
+        console.log('taskCategory', data);
+        // } 
+        // catch (error) {
+        //     console.error('Error fetching taskcategory:', error);
+        // }
+    };
+
     const fetchDataTask = async () => {
         try {
-            debugger
             let data;
             if (tasksState.allTask.length) {
                 data = tasksState.allTask;
             }
             else {
                 const resAllTask = await getAllTaskFromServer();
-                data = resAllTask                ;
+                data = resAllTask;
                 dispatch(setAllTask(resAllTask));
             }
-            debugger
             setTasks(data);
         }
         catch (error) {
@@ -163,10 +212,10 @@ export const Tasks = () => {
             else {
                 const resAllStatus = await getAllEnumFromServer(3);
                 data = resAllStatus;
-                 dispatch(setAllTaskStatus(resAllStatus));
+                dispatch(setAllTaskStatus(resAllStatus));
             }
             console.log("resAllStatus", data);
-            
+
             setTaskStatus(data);
         }
         catch (error) {
@@ -209,24 +258,19 @@ export const Tasks = () => {
     };
 
     const updateLevel = (level: string) => {
-        debugger
         handleClose()
-        let t = findById();
-        debugger
+        let t = findTaskById();
         if (t != null) {
             t.levelUrgencyStatus = level;
             UpDateTask(t);
         }
     }
 
-    const findById = () => {
-        let t = tasks.find(t => t.taskId === selectedTaskId)
-        return t;
-    }
-    const con = () => {
-        console.log("tyr")
-    }
+    const findTaskById = () =>
+        tasks.find(t => t.taskId === selectedTaskId)
+
     const handleAddTask = () => {
+        debugger
         Swal.fire({
             title: 'הוספת משימה חדשה',
             html: '<div id="add-task-container"></div>',
@@ -235,20 +279,22 @@ export const Tasks = () => {
             showConfirmButton: false,
             didOpen: () => {
                 const container = document.getElementById('add-task-container');
-                console.log(taskStatus);
                 if (container) {
                     ReactDOM.render(
                         <AddTaskForm
                             levelUrgencyStatus={levelUrgencyStatus}
-                            tasks={tasks}
+                            // tasks={tasks}
                             setTasks={setTasks}
                             taskStatus={taskStatus}
+                            user={users}
+                            project={project}
+                            taskCategory={taskCategory}
                             handleTaskAdded={async (newTask: Task) => {
                                 try {
                                     const response = await addTask(newTask);
                                     const addedTask = response.data;
                                     setTasks([...tasks, addedTask]);
-                                    dispatch(await addTask(addedTask));
+                                    // dispatch(addedTask);
                                     Swal.fire('Success', 'המשימה נוספה בהצלחה', 'success');
                                 } catch (error) {
                                     Swal.fire('Error', 'שגיאה בהוספת המשימה', 'error');
@@ -261,7 +307,7 @@ export const Tasks = () => {
             },
         });
     };
-   
+
     const handlePageChange = (direction: 'next' | 'prev') => {
         setPage((prevPage) => {
             if (direction === 'next') {
@@ -273,41 +319,64 @@ export const Tasks = () => {
             }
         });
     };
-    const filterTask = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
-    console.log("filterTask", filterTask);
-    console.log("project", project);
-    
-    
+
     const handleEditLead = () => {
-        alert("the task update successfully")
+        findTaskById();
+        console.log("selectTask", selectedTaskId);
+        Swal.fire({
+            title: 'עדכון משימה',
+            html: '<div id="add-task-container"></div>',
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const container = document.getElementById('add-task-container');
+                if (container) {
+                    ReactDOM.render(
+                        <TaskEdit
+                            selectedTaskId={selectedTaskId}
+                            tasks={tasks}
+                            project={project}
+                            users={users}
+                            currentTask={currentTask}
+                        />,
+                        container
+                    );
+                }
+            },
+        });
     }
+    const filterTask2 = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
+    console.log("filterTask", filterTask2);
+    
     return (
         <div className="page-container">
             <div className="lead-management-container">
-                <h1 className="lead-management-title">משימות לטיפול</h1>
+                <p className="lead-management-title">משימות לטיפול</p>
                 <div className="search-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                 </div>
                 <div className="table-container">
                     <table className="table">
                         <thead>
                             <tr >
-                                {(['לינקים', 'רמת דחיפות', 'אחראית', 'המשימה', 'שם פרויקט'] as const).map((col) => (
+                                {(['לינקים', 'רמת דחיפות', 'אחראית', '', 'המשימה', 'שם פרויקט'] as const).map((col) => (
                                     <th key={col}>
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" ,fontWeight:700 }}>
                                             {col}
-                                            <button onClick={() => console.log(col)} style={{ backgroundColor: "white", border: 0, }}>
+                                            <button onClick={() => console.log("col", col)} style={{ backgroundColor: "white", border: 0, }}>
                                             </button>
                                         </div>
                                         <div style={{ display: "flex" }}>
                                         </div>
                                     </th>))}
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
 
                         {levelUrgencyStatus && levelUrgencyStatus.length && levelUrgencyStatus.map((l) => {
 
-                            return <> {filterTask && filterTask.length && filterTask.map((t) => {
+                            return <> { tasks.slice(page * taskperPage, (page + 1) * taskperPage).map((t) => {
                                 return +t.levelUrgencyStatus == 5 - (+l.key) &&
                                     <tbody>
                                         <tr onClick={() => setSelectedTaskId(t.taskId)}>
@@ -326,11 +395,35 @@ export const Tasks = () => {
                                                             open={open2}
                                                             onClose={handleClose}
                                                             onClick={handleClose}
+                                                            PaperProps={{
+                                                                elevation: 0,
+                                                                sx: {
+                                                                    overflow: 'visible',
+                                                                    filter: 'drop-shadow(0x 2px 8px rgba(0,0,0,0.32))',
+                                                                    mt: 1.5,
+                                                                    '& .MuiAvatar-root': {
+                                                                        width: 32,
+                                                                        height: 32,
+                                                                        ml: -0.5,
+                                                                        mr: 1,
+                                                                    },
+                                                                    '&::before': {
+                                                                        content: '""',
+                                                                        display: 'block',
+                                                                        position: 'absolute',
+                                                                        top: 0,
+                                                                        right: 14,
+                                                                        width: 10,
+                                                                        height: 10,
+                                                                        bgcolor: 'background.paper',
+                                                                        transform: 'translateY(-50%) rotate(45deg)',
+                                                                        zIndex: 0,
+                                                                    },
+                                                                },
+                                                            }}
                                                         >
                                                             <MenuItem onClick={() => updateLevel("1")}>
                                                                 <CircleIcon style={{ color: "green" }} /> נמוך
-                                                                {/* {+t.levelUrgencyStatus == 1 &&
-                                                                <CheckRoundedIcon/>} */}
                                                             </MenuItem>
                                                             <MenuItem onClick={() => updateLevel("2")}>
                                                                 <PlayArrowRoundedIcon style={{ color: "lightblue" }} /> רגיל
@@ -349,15 +442,17 @@ export const Tasks = () => {
                                                     </React.Fragment>
                                                 </div>
                                             </td>
-                                            <td>{leads && leads.length && leads.map((le) => {
-                                                if (le.id === t.assignedTo)
+                                            <td>{users && users.length && users.map((u) => {
+                                                if (u.id === t.assignedTo)
                                                     return <>
-                                                        {le.firstName} {le.lastName}
+                                                        {u.firstName} {u.lastName}
                                                     </>
                                             })}
                                             </td>
                                             <td>
-                                                {t.comment != '' && <AttachFileRoundedIcon />}
+                                                <AttachFileRoundedIcon />
+                                            </td>
+                                            <td>
                                                 {t.taskName}
                                                 +
                                                 {t.taskCategory.categoryName}
@@ -379,14 +474,9 @@ export const Tasks = () => {
                                     </tbody>
                             })}</>
                         })}
-                        {/* <button className="add-lead-button" onClick={handleAddTask} style={{ color: '#636363', backgroundColor: "white", border: 0 }}>
-                            +
-                            <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>להוספת משימה</span>
-                        </button> */}
-
                         <tfoot >
                             <tr>
-                                <td colSpan={6} style={{ textAlign: 'right', color: '#636363' }}>
+                                <td colSpan={7} style={{ textAlign: 'right', color: '#636363' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>
                                         {selectedTaskId && (
                                             <button className="convert-lead-button" onClick={handleEditLead}>
@@ -412,125 +502,9 @@ export const Tasks = () => {
                                 <SlArrowUp className="icon" />
                             </button>
                         </div>
-                        {/* <ExpandLessRoundedIcon /> */}
-                        {/* <ExpandMoreRoundedIcon /> */}
                     </tr>
                 </div>
             </div>
-
-            <div>
-                {/* <Button
-                    onClick={handleClick2}
-                >
-                    Dashboard
-                </Button>
-                <Menu
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <MenuItem><CircleIcon onClick={() => setSelectOpen(!selectOpen)} style={{ color: "green" }} ></CircleIcon></MenuItem>
-                    <MenuItem><PlayArrowRoundedIcon onClick={() => setSelectOpen(!selectOpen)} style={{ color: "lightblue" }}></PlayArrowRoundedIcon></MenuItem>
-                    <MenuItem><StarRoundedIcon onClick={() => setSelectOpen(!selectOpen)} style={{ color: "yellow" }}></StarRoundedIcon></MenuItem>
-                    <MenuItem><AssistantPhotoIcon onClick={() => setSelectOpen(!selectOpen)} style={{ color: "red" }}></AssistantPhotoIcon></MenuItem>
-                </Menu> */}
-            </div>
-            {/* </Dialog> */}
         </div>
     )
 }
-
-{/* <Dialog open={isOpen} onClose={() => setIsOpen(false)} style={{ padding: "20px" }}>
-                <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="string"
-                    label="שם המשימה"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, taskName: e.target.value })
-                        // checkId(e.target.value)
-                    }}
-                />
-                 <div>{error.id}</div> 
-                <br></br>
-                <TextField
-                    style={{ width: "100%" }}
-                    variant="outlined"
-                    type="String"
-                    label="שם העובד"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, assignedTo: e.target.value })
-                    }}
-                />
-                <br></br>
-                <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="String"
-                    label="הערה"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, comment: e.target.value })
-                    }}
-                />
-                <br></br>
-                <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="String"
-                    label="פרויקט"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, projectId: e.target.value })
-                    }}
-                />
-                <br></br>
-                <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="String"
-                    label="הערה"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, comment: e.target.value })
-                    }}
-                />
-                <br></br>
-                <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="String"
-                    label="בתהליך/השהיה"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, canBeApprovedByManager: e.target.value })
-                    }}
-                />
-                <br></br>
-                <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="String"
-                    label="תאור המשימה"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, description: e.target.value })
-                    }}
-                />
-                <br></br> */}
-{/* <TextField
-                    style={{ width: "223px" }}
-                    variant="outlined"
-                    type="String"
-                    label="רמת הדחיפות של המשימה"
-                    onChange={(e) => {
-                        setMyprop({ ...Myprop, levelUrgencyStatus: e.target.value })
-                    }}
-                /> */}
-{/* <InputLabel>רמת הדחיפות של המשימה</InputLabel>
-                {levelUrgencyStatus && levelUrgencyStatus.length &&
-                    <Select label="status" style={{ width: "223px", border: "2px solid rgb(255, 145, 0)" }} value={selectedT}>
-                        {levelUrgencyStatus && levelUrgencyStatus.length && levelUrgencyStatus.map(l => {
-                            return <MenuItem href="#" onClick={(e) => {
-                                debugger
-                                    setMyprop({ ...Myprop, levelUrgencyStatus: e.target.value})
-                                }}>
-                                    {l.value}
-                                </MenuItem>
-                        })} */}
-{/* <div onClick={() => logIn(1)}>  אחר  </div> */ }
-{/* </Select>} */ }

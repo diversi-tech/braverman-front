@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
+import { TextField, Button, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent, OutlinedInput } from '@mui/material';
 import Swal from 'sweetalert2';
 import { Project } from '../../../../model/project.model';
 import { updateProject } from '../../../../api/project.api';
@@ -8,6 +8,7 @@ import { Enum } from '../../../../model/enum.model';
 import { getStatusProject } from '../../../../api/projectStatus.api';
 import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
 import { log } from 'console';
+import Rtl from '../../../rtl/rtl';
 
 interface UpdateLeadProps {
     prod: Project;
@@ -89,7 +90,9 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
 
     return (
         <div>
+            <Rtl>
             <TextField
+                dir='rtl'
                 name="businessName"
                 label="שם העסק"
                 value={formValues.businessName}
@@ -99,6 +102,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 margin="normal"
             />
             <TextField
+                dir='rtl'
                 name="firstName"
                 label="שם פרטי"
                 value={formValues.firstName}
@@ -108,6 +112,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 margin="normal"
             />
             <TextField
+                dir='rtl'
                 name="lastName"
                 label="שם משפחה"
                 value={formValues.lastName}
@@ -117,6 +122,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 margin="normal"
             />
             <TextField
+                dir='rtl'
                 name="phone"
                 label="טלפון"
                 value={"phone" || ''}
@@ -126,6 +132,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 margin="normal"
             />
             <TextField
+                dir='rtl'
                 name="email"
                 label="אימייל"
                 value={formValues.email}
@@ -149,14 +156,17 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                     name="status"
                     value={formValues.status?.value }
                     onChange={handleChange2}
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="סטטוס" />}
+
                 >
                     {projectStatus.map((status) => (
-                        <MenuItem key={status.value} value={status.value}>
+                        <MenuItem key={status.value} value={status.value} style={{ direction: 'rtl' }} dir='rtl'>
                             {status.value}
                         </MenuItem>
                     ))}
                 </Select>
             </FormControl>
+            </Rtl>
             <Button variant="contained" color="primary" onClick={handleSubmit}>
                 עדכון
             </Button>

@@ -176,8 +176,8 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   }
 
   const handleFilterClose = (filterName: string) => {
-    if(filterName=="סטטוס")
-       filterByStatusFunc("-1");
+    if (filterName == "סטטוס")
+      filterByStatusFunc("-1");
     switch (filterName) {
       case "שם העסק":
         setFilterText('');
@@ -199,7 +199,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       default:
         break;
     }
-   
+
   };
 
   const filterByStatusFunc = async (selectedStatus: string) => {
@@ -236,19 +236,23 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
 
 
   if (loading) {
-    return <CircularProgress className="loading"/>;
+    return <CircularProgress className="loading" />;
   }
 
 
 
   return (
     <div className='styleProject'>
+
       <h1 className='title'><b>פרויקטים</b></h1>
+
       <table style={{ width: '100%' }}>
         <thead>
           <tr className='row'>
             <td></td>
+
             <td style={{ textAlign: "center", marginRight: "10px" }}>שם העסק
+
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "שם העסק": !filterInputsVisible["שם העסק"] });
@@ -278,7 +282,8 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
 
               </div>
             </td>
-            <td style={{ textAlign: "center" }}>סוג הפרויקט
+
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
@@ -300,7 +305,8 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{ textAlign: "center" }}>איש קשר
+
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
@@ -321,139 +327,144 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{ textAlign: "center" }}>טלפון
-              <br></br>
-              <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
-            </td>
-            <td style={{ textAlign: "center" }}>אימייל
-              <br></br>
-              <button className="filter" onClick={() => {
-                setFilterInputsVisible({ ...filterInputsVisible, "אימייל": !filterInputsVisible["אימייל"] })
-                handleFilterClose("אימייל");
-              }}
-                style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "39px" }} />
-              </button>
-              <div className="filter-wrapper">
-                {
-                  filterInputsVisible["אימייל"] && (
-                    <input
-                      type="text"
-                      value={filterEmail}
-                      onChange={(e) => setFilterEmail(e.target.value)}
-                      placeholder="הקלד כאן..."
-                      className="filter-input"
-                    />
-                  )}
-              </div>
-            </td>
-            <td style={{ textAlign: "right" }}>סטטוס פרויקט
-              <br></br>
-              <button className="filter" onClick={() =>{ setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })
-              handleFilterClose("סטטוס");}} 
-              style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "44px" }} />
-              </button>
-              <div className="filter-wrapper">
-                {
-                  filterInputsVisible["סטטוס"] && (
-                    <select
-                      className='selectAll'
-                      value={filterStatus}
-                      onChange={(e) => filterByStatusFunc(e.target.value)}
-                      style={{ width: "100%" }}
-                    >
-                      <option key={"allProject"} value={-1} className='select'>כל הפרויקטים
-                      </option>
-                      {projectStatus.filter(s=>s.value!="בוצע").map(status => (
-                        <option key={status.id} value={status.value} className='select'>
-                          {status.value}
-                        </option>
-                      ))}
-                    </select>
 
-
-                  )}
-              </div>
-            </td>
-            <td style={{ width: 'auto', fontWeight: '600', marginBottom: '3px' }} className="links-column" >לינקים
-              <br></br>
-              <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
-            </td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-
-          {projectActive.map((project, index) => (
-            <React.Fragment key={index}>
-              <tr>
-                <td>
-                  <button
-                    id='buttonProject' className='buttonCircle'
-                    onClick={() => handleButtonClick(project.projectId)}
-
-                  >
-                    <span style={{ fontSize: '17px', cursor: 'pointer' }}>
-                      {project.projectId === expandedRow ? '-' : '+'}
-                    </span>
-                  </button>
-                </td>
-                <td style={{ textAlign: 'center' }}>{project.businessName}</td>
-                <td style={{ textAlign: 'center' }}>{project.source}</td>
-                <td style={{ textAlign: 'center' }}>{`${project.firstName} ${project.lastName}`}</td>
-                <td style={{ textAlign: 'center' }}>פרויקט</td>
-                <td style={{ textAlign: 'center' }}>{project.email}</td>
-                <td style={{ textAlign: 'center' }}>{project.status.value}</td>
-                <td>
-                  <Links project={project}></Links>
-                </td>
-                <td>
-                  <button
-                    className='buttonCircle'
-                    onClick={() => handleEditClick(project)}
-                  >
-                    <svg
-                      width='14'
-                      height='14'
-                      viewBox='0 0 14 14'
-                      fill='none'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path
-                        d='M12.8119 0.629021C11.9731 -0.209674 10.6132 -0.209674 9.77446 0.629021L1.25963 9.1431C1.20127 9.20145 1.15914 9.27378 1.13714 9.35319L0.0174161 13.3953C-0.0286332 13.561 0.0181618 13.7385 0.139717 13.8602C0.261459 13.9818 0.438944 14.0286 0.604685 13.9827L4.64714 12.8629C4.72656 12.8409 4.7989 12.7988 4.85725 12.7404L13.3719 4.22614C14.2094 3.38689 14.2094 2.02827 13.3719 1.18902L12.8119 0.629021ZM2.29956 9.4533L9.26829 2.485L11.5158 4.73227L4.54684 11.7006L2.29956 9.4533ZM1.85063 10.3541L3.64618 12.1496L1.1625 12.8377L1.85063 10.3541ZM12.697 3.55131L12.1908 4.05743L9.94319 1.80998L10.4495 1.30385C10.9154 0.837995 11.6709 0.837995 12.1368 1.30385L12.697 1.86385C13.1622 2.33027 13.1622 3.08508 12.697 3.55131Z'
-                        fill='#002046'
-                      />
-                    </svg>
-                  </button>
-                  <button id="trash"
-                    className='buttonCircle'
-                    onClick={() => handleDelete(project.projectId)}
-                  >
-
-                    <HiOutlineTrash style={{ fontSize: '17px', alignItems: "center" }} />
-                  </button>
-                </td>
-              </tr>
-              {expandedRow === project.projectId && (
-                <tr>
-                  <td colSpan={9} style={{ padding: '10px' }}>
-                    <MainDetailProject detailsProject={project} />
-                  </td>
-                </tr>
-              )}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
-      <div className="pagination">
-      <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
-          <SlArrowUp className="icon" />
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>טלפון
+        <br></br>
+        <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+      </td>
+      <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>אימייל
+        <br></br>
+        <button className="filter" onClick={() => {
+          setFilterInputsVisible({ ...filterInputsVisible, "אימייל": !filterInputsVisible["אימייל"] })
+          handleFilterClose("אימייל");
+        }}
+          style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "39px" }} />
         </button>
-        <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} >
-          <SlArrowDown className="icon" />
-        </button>
-        
+        <div className="filter-wrapper">
+          {
+            filterInputsVisible["אימייל"] && (
+              <input
+                type="text"
+                value={filterEmail}
+                onChange={(e) => setFilterEmail(e.target.value)}
+                placeholder="הקלד כאן..."
+                className="filter-input"
+              />
+            )}
+        </div>
+      </td>
+
+            <td style={{ textAlign: "right", fontSize: '13.5px', fontWeight: '700' }}>סטטוס פרויקט
+      <br></br>
+      <button className="filter" onClick={() => {
+        setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })
+        handleFilterClose("סטטוס");
+      }}
+        style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft: "44px" }} />
+      </button>
+      <div className="filter-wrapper">
+        {
+          filterInputsVisible["סטטוס"] && (
+            <select
+              className='selectAll'
+              value={filterStatus}
+              onChange={(e) => filterByStatusFunc(e.target.value)}
+              style={{ width: "100%" }}
+            >
+              <option key={"allProject"} value={-1} className='select'>כל הפרויקטים
+              </option>
+              {projectStatus.filter(s => s.value != "בוצע").map(status => (
+                <option key={status.id} value={status.value} className='select'>
+                  {status.value}
+                </option>
+              ))}
+            </select>
+
+
+          )}
       </div>
-    </div>
+    </td>
+
+            <td style={{ width: 'auto', fontWeight: '700', marginBottom: '3px', fontSize: '13.5px' }} className="links-column" >לינקים
+      <br></br>
+      <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+    </td>
+    <td></td>
+  </tr>
+        </thead >
+  <tbody>
+
+    {projectActive.map((project, index) => (
+      <React.Fragment key={index}>
+        <tr>
+          <td>
+            <button
+              id='buttonProject' className='buttonCircle'
+              onClick={() => handleButtonClick(project.projectId)}
+
+            >
+              <span style={{ fontSize: '17px', cursor: 'pointer' }}>
+                {project.projectId === expandedRow ? '-' : '+'}
+              </span>
+            </button>
+          </td>
+          <td style={{ textAlign: 'center', fontSize: '13.5px', fontWeight: '400' }}>{project.businessName}</td>
+          <td style={{ textAlign: 'center', fontSize: '13.5px', fontWeight: '400' }}>{project.source}</td>
+          <td style={{ textAlign: 'center', fontSize: '13.5px', fontWeight: '400' }}>{`${project.firstName} ${project.lastName}`}</td>
+          <td style={{ textAlign: 'center', fontSize: '13.5px', fontWeight: '400' }}>פרויקט</td>
+          <td style={{ textAlign: 'center', fontSize: '13.5px', fontWeight: '400' }}>{project.email}</td>
+          <td style={{ textAlign: 'center', fontSize: '13.5px', fontWeight: '400' }}>{project.status.value}</td>
+          <td>
+            <Links project={project}></Links>
+          </td>
+          <td>
+            <button
+              className='buttonCircle'
+              onClick={() => handleEditClick(project)}
+            >
+              <svg
+                width='14'
+                height='14'
+                viewBox='0 0 14 14'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M12.8119 0.629021C11.9731 -0.209674 10.6132 -0.209674 9.77446 0.629021L1.25963 9.1431C1.20127 9.20145 1.15914 9.27378 1.13714 9.35319L0.0174161 13.3953C-0.0286332 13.561 0.0181618 13.7385 0.139717 13.8602C0.261459 13.9818 0.438944 14.0286 0.604685 13.9827L4.64714 12.8629C4.72656 12.8409 4.7989 12.7988 4.85725 12.7404L13.3719 4.22614C14.2094 3.38689 14.2094 2.02827 13.3719 1.18902L12.8119 0.629021ZM2.29956 9.4533L9.26829 2.485L11.5158 4.73227L4.54684 11.7006L2.29956 9.4533ZM1.85063 10.3541L3.64618 12.1496L1.1625 12.8377L1.85063 10.3541ZM12.697 3.55131L12.1908 4.05743L9.94319 1.80998L10.4495 1.30385C10.9154 0.837995 11.6709 0.837995 12.1368 1.30385L12.697 1.86385C13.1622 2.33027 13.1622 3.08508 12.697 3.55131Z'
+                  fill='#002046'
+                />
+              </svg>
+            </button>
+            <button id="trash"
+              className='buttonCircle'
+              onClick={() => handleDelete(project.projectId)}
+            >
+
+              <HiOutlineTrash style={{ fontSize: '17px', alignItems: "center" }} />
+            </button>
+          </td>
+        </tr>
+        {expandedRow === project.projectId && (
+          <tr>
+            <td colSpan={9} style={{ padding: '10px' }}>
+              <MainDetailProject detailsProject={project} />
+            </td>
+          </tr>
+        )}
+      </React.Fragment>
+    ))}
+  </tbody>
+      </table >
+  <div className="pagination">
+    <button onClick={() => handlePageChange('prev')} disabled={page === 0}>
+      <SlArrowUp className="icon" />
+    </button>
+    <button onClick={() => handlePageChange('next')} disabled={page === totalPages - 1} >
+      <SlArrowDown className="icon" />
+    </button>
+
+  </div>
+    </div >
   );
 };
 

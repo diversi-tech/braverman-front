@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, FormControl, Select, MenuItem, OutlinedInput } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { addLead } from  '../../api/leads.api';
@@ -8,6 +8,9 @@ import { addLead2 } from '../../Redux/Leads/leadsAction';
 // import handlePhoneNumberChange from './leads.component'
 import { Lead } from '../../model/leads.model';
 import store from '../../Redux/Store'
+import './addLead.css'
+import Rtl from '../rtl/rtl';
+
 
 interface AddLeadFormProps {
     // open: boolean;
@@ -37,6 +40,18 @@ interface AddLeadFormProps {
       source: ''
   });
   
+  const leadSources = [
+    'פרסום בגוגל',
+    'פרסום ברשתות חברתיות',
+    'המלצה מחברים',
+    'המלצה מלקוחות',
+    'חיפוש אקראי בגוגל',
+    'היכרות אישית',
+    'לקוח קיים',
+    'פניות מהאתר',
+    'פרסום בפרינט',
+    'אחר'
+  ];
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormValues({
@@ -95,6 +110,7 @@ interface AddLeadFormProps {
         };
     
         try {
+          debugger
           await handleLeadAdded(newLead); // Use the provided function to handle lead addition
         } catch (error) {
           Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
@@ -102,7 +118,13 @@ interface AddLeadFormProps {
       };
   return (
     <div>
+        <Rtl>
         <TextField
+           dir='rtl'
+          sx={{ textAlign: 'right' , fontFamily: 'CustomFont',fontSize: '20px' }}
+          inputProps={{style: {fontFamily: 'CustomFont'}}} 
+          InputLabelProps={{style:  {fontFamily: 'CustomFont'}}} 
+          className='textt'
           autoFocus
           margin="dense"
           name="firstName"
@@ -117,6 +139,11 @@ interface AddLeadFormProps {
 
         />
         <TextField
+        inputProps={{style: {fontFamily: 'CustomFont'}}} 
+        InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+          dir='rtl'
+           sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="lastName"
           label="שם משפחה"
@@ -130,6 +157,11 @@ interface AddLeadFormProps {
 
         />
         <TextField
+        inputProps={{style: {fontFamily: 'CustomFont'}}} 
+        InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+         dir='rtl'
+          sx={{ textAlign: 'right' }}
+         className='textt'
           margin="dense"
           name="phone"
           label="טלפון"
@@ -143,6 +175,11 @@ interface AddLeadFormProps {
 
         />
         <TextField
+        inputProps={{style: {fontFamily: 'CustomFont'}}} 
+        InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+          dir='rtl'
+          sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="email"
           label="אמייל"
@@ -154,19 +191,15 @@ interface AddLeadFormProps {
           error={!!errors.email}
           helperText={errors.email}
         />
+       
+
+
         <TextField
-          margin="dense"
-          name="source"
-          label="מקור הליד"
-          type="text"
-          fullWidth
-          multiline
-          value={formValues.source}
-          onChange={handleChange}
-          error={!!errors.source}
-          helperText={errors.source}
-        />
-        <TextField
+        inputProps={{style: {fontFamily: 'CustomFont'}}} 
+        InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+         dir='rtl'
+          sx={{ textAlign: 'right' }}
+          className='textt'
           margin="dense"
           name="businessName"
           label="שם העסק"
@@ -179,6 +212,11 @@ interface AddLeadFormProps {
           helperText={errors.businessName}
         />
         <TextField
+        inputProps={{style: {fontFamily: 'CustomFont'}}} 
+        InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+         dir='rtl'
+          sx={{ textAlign: 'right',fontFamily:'CustomFont' }}
+          className='textt'
           margin="dense"
           name="freeText"
           label="טקסט חופשי"
@@ -188,12 +226,33 @@ interface AddLeadFormProps {
           rows={4}
           value={formValues.freeText}
           onChange={handleChange}
-          error={!!errors.freeText}
-          helperText={errors.freeText}
+          // error={!!errors.freeText}
+          // helperText={errors.freeText}
         />
-        <Button onClick={handleAddLead} color="primary">
-          הוסף ליד
-        </Button>
+
+<FormControl fullWidth margin="dense">
+          <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>מקור הליד</InputLabel>
+          <Select
+            labelId="source-label"
+            id="source-select"
+            name="source"
+            value={formValues.source}
+            onChange={handleChange}
+            input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="מקור הליד" />}
+            sx={{ fontFamily: 'CustomFont' ,direction:'rtl'}}
+          >
+            {leadSources.map(option => (
+              <MenuItem key={option} value={option} style={{direction:'rtl'}}>{option}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        </Rtl>
+        <button onClick={handleAddLead}  className="btn-primary" style={{marginLeft:'33%',marginTop:'6px', marginBottom:'-6px'}}>
+  <span className="button__text"> הוספת ליד</span>
+  <span className="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" className="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+</button>
+        {/* <Button  color="primary">
+        </Button> */}
         </div>
   );
 };
