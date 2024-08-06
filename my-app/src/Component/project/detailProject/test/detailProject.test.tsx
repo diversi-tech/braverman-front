@@ -48,10 +48,8 @@ test('renders ProjectDetail component', () => {
       <ProjectDetail project={project} />
     </MemoryRouter>
   );
-
   expect(screen.getByText(/פרטי הפרויקט/i)).toBeInTheDocument();
   expect(screen.getByText(/שולם: 500/i)).toBeInTheDocument();
-
 });
 
 test('convertDateTimeToDate function returns correct formatted date', () => {

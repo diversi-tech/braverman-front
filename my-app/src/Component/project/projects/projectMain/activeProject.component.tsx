@@ -251,7 +251,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
           <tr className='row'>
             <td></td>
 
-            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>שם העסק
+            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>שם העסק
 
               <br></br>
               <button className="filter" onClick={() => {
@@ -283,7 +283,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>סוג הפרויקט
+            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
@@ -306,7 +306,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>איש קשר
+            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
@@ -328,7 +328,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>טלפון
+            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>טלפון
         <br></br>
         <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
       </td>
@@ -354,7 +354,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
         </div>
       </td>
 
-            <td style={{ textAlign: "right", fontSize: '13.5px', fontWeight: '700' }}>סטטוס פרויקט
+            <td style={{ textAlign: "right", fontSize: '10.5px', fontWeight: '700' }}>סטטוס פרויקט
       <br></br>
       <button className="filter" onClick={() => {
         setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })
@@ -385,7 +385,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       </div>
     </td>
 
-            <td style={{ width: 'auto', fontWeight: '700', marginBottom: '3px', fontSize: '13.5px' }} className="links-column" >לינקים
+            <td style={{ width: 'auto', fontWeight: '700', marginBottom: '3px', fontSize: '10.5px' }} className="links-column" >לינקים
       <br></br>
       <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
     </td>
