@@ -34,35 +34,7 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
   fetchCustomers();
    }, [refresh]);
    
-  // useEffect(() => {
-  //   const fetchCustomers = async () => {
-  
-  //     try {
-  //       let dataProject;
-  //       if (projectReducer.allProject.length) {
-  //         console.log("if");
-  //         console.log(projectReducer.allProject);
-  //         dataProject = projectReducer.allProject;
-  //         let a=dataProject.flat();
-  //         console.log("");
-  //         dataProject=a;
-  //         console.log(a);
-          
-  //       } 
-  //       else {
-  //         console.log("else");
-  //         const response = await getProject();
-  //         dispatch(setAllProject(response.data));
-  //         dataProject = response.data;
-  //       }
-  //       setProjects(dataProject);
-  //     } catch (error) {
-  //       console.error('Error fetching customers:', error);
-  //     }
-  //   };
-  // fetchCustomers();
-  //  }, [refresh]);
-   
+ 
   const handlePageChange = (direction: 'next' | 'prev') => {
     setPage((prevPage) => {
 
@@ -147,6 +119,7 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
                     </td>
                     <td style={{ textAlign: 'center' }}><button
                       className='buttonCircle'
+                      data-testid={`delete-button-${project.projectId}`}
                       onClick={() => handleDelete(project.projectId)}
                     >
 
