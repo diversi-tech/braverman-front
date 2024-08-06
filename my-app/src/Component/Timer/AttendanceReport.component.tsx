@@ -11,6 +11,7 @@ import { log } from 'console';
 import { getUserById } from '../../api/user.api';
 import { blue } from '@mui/material/colors';
 import { useParams } from 'react-router-dom';
+import AttendanceReportByMonth from './AttendanceReportByMonth.component';
 interface TimersData {
     users: { [key: string]: Timer[] };
     projects: { [key: string]: Timer[] };
@@ -156,6 +157,7 @@ const AttendanceReport: React.FC = () => {
                 </Paper>
             </Box>
         </div>
+        <AttendanceReportByMonth></AttendanceReportByMonth>
         </>
 
     );
