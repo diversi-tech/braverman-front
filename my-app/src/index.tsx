@@ -52,15 +52,13 @@ root.render(
             <Route path='/user' element={<UserTable />} />
             <Route path='/AttendanceReport/:userId' element={<AttendanceReport />} />
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
-              <Route path='/taskCategories' element={<TaskCategories />} />
-              <Route path='/quickActions' element={<QuickActions />} ></Route>
-              <Route path='/reportIssue' element={<ReportIssue />} ></Route>
-              <Route path='/feedback' element={<Feedback />} ></Route>
-              <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
-              <Route path='/chat' element={<ChatTable />} ></Route>
-              <Route path='/support' element={<AnyDeskChecker />} ></Route>
-
-
+            <Route path='/taskCategories' element={<TaskCategories />} />
+            <Route path='/quickActions' element={<QuickActions />} ></Route>
+            <Route path='/reportIssue' element={<ReportIssue />} ></Route>
+            <Route path='/feedback' element={<Feedback />} ></Route>
+            <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
+            <Route path='/chat' element={<ChatTable />} ></Route>
+            <Route path='/support' element={<AnyDeskChecker />} ></Route>
           </Route>
         </Routes>
       </HashRouter>
@@ -68,4 +66,3 @@ root.render(
   </React.StrictMode>
 );
 reportWebVitals();
-
