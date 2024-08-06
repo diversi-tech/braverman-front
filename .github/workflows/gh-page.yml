@@ -1,39 +1,65 @@
 name: Deploy static content to Pages
+
 on:
   push:
     branches: ['main']
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: 'pages'
   cancel-in-progress: true
+
 jobs:
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./my-app
+        run: npm install --legacy-peer-deps
+
+      # - name: Install @types/testing-library__react
+      #   working-directory: ./my-app
+      #   run: npm install --save-dev @types/testing-library__react
+
+      - name: List npm dependencies
+        working-directory: ./my-app
+        run: npm list --depth=0
+
       - name: Check @testing-library/react version
         working-directory: ./my-app
         run: npm list @testing-library/react
+
       - name: Build
         working-directory: ./my-app
         run: CI=false npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: './my-app/build'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

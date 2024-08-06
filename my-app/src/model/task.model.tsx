@@ -11,6 +11,8 @@ export interface Task {
   status: Enum;
   canBeApprovedByManager: null;
   levelUrgencyStatus: string;
+
+  LastUpdateStatusUserId:string;
   description: string;
   startDate: Date;
 }

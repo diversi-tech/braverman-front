@@ -173,10 +173,11 @@ const UserTable = () => {
             <table>
                 <thead>
                     <tr className="table-header-row">
-                        <th style={{ textAlign: 'right', width: '20%' }}>דוחות נוכחות</th>                        <th style={{ textAlign: 'right', width: '25%' }}>פרויקטים</th>
-                        <th style={{ textAlign: 'right', width: '20%' }}>אימייל</th>
-                        <th style={{ textAlign: 'right', width: '20%' }} >ניהול תפקיד</th>
-                        <th style={{ textAlign: 'right', width: '20%' }}>שם משתמש</th>
+                        <th style={{ textAlign: 'right', width: '20%',fontSize:'15px',fontWeight:'700' }}>דוחות נוכחות</th>                        <th style={{ textAlign: 'right', width: '25%' ,fontSize:'13.5px'}}>פרויקטים</th>
+                        <th style={{ textAlign: 'right', width: '20%' ,fontSize:'15px',fontWeight:'700'  }}>אימייל</th>
+                        <th style={{ textAlign: 'right', width: '20%' ,fontSize:'15px',fontWeight:'700' }} >ניהול תפקיד</th>
+                        <th style={{ textAlign: 'right', width: '20%' ,fontSize:'15px',fontWeight:'700' }}>שם משתמש</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>
