@@ -24,8 +24,8 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
         projectId: '',
         taskCategory: {} as TaskCategory,
         levelUrgency: levelUrgencyStatus[0] || {} as Enum, // Default value
-        taskStatus: taskStatus.find(status => status.key === '1') || {} as Enum ,// Default to 'TODO'
-        description: '', 
+        taskStatus: taskStatus.find(status => status.key === '1') || {} as Enum,// Default to 'TODO'
+        description: '',
     });
     const [errors, setErrors] = useState({
         taskName: '',
@@ -89,7 +89,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
     };
 
     const handleAddTask = async () => {
-        const { taskName, assignedTo, projectId, levelUrgency, taskStatus, taskCategory, description} = formValues;
+        const { taskName, assignedTo, projectId, levelUrgency, taskStatus, taskCategory, description } = formValues;
         if (!taskName || !assignedTo || !projectId || !levelUrgency.key || !taskStatus.value || !taskCategory) {
             Swal.fire('Error', 'אנא מלא את כל השדות', 'error');
             return;
@@ -101,12 +101,11 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             assignedTo: assignedTo,
             projectId: projectId,
             taskCategory: taskCategory,
-            startDate: new Date(),
             status: taskStatus,
-            startDate: new Date(),
             canBeApprovedByManager: null,
             levelUrgencyStatus: levelUrgency.key,
             description: description,
+            startDate: new Date(),
         };
 
         await handleTaskAdded(newTask);
@@ -114,7 +113,6 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
 
     return (
         <div>
-          <Rtl>
             <TextField
                 dir='rtl'
                 autoFocus
@@ -203,7 +201,6 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <TextField
                 label="טקסט חופשי"
                 dir='rtl'
-                margin="dense"
                 name="description"
                 value={formValues.description}
                 onChange={handleInputChange}
@@ -211,7 +208,6 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                 multiline
                 margin="normal"
             />
-             </Rtl>
             <Button onClick={handleAddTask} color="primary">
                 הוסף משימה
             </Button>

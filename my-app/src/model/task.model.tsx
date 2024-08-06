@@ -8,10 +8,9 @@ export interface Task {
   assignedTo: string;
   projectId: string;
   taskCategory: TaskCategory;
-  startDate: Date;
   status: Enum;
   canBeApprovedByManager: null;
   levelUrgencyStatus: string;
   description: string;
-   startDate: Date;
+  startDate: Date;
 }
