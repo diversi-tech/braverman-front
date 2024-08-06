@@ -60,7 +60,6 @@ const Login = () => {
           navigate("/quickActions");
         else if (x.data.userType.description === "מנהל")
           navigate("/leads");
-
         else
           navigate("/leads");
       } else {
