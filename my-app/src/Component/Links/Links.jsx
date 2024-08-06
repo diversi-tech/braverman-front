@@ -4,7 +4,7 @@ export const Links=({project})=>{
   
     return(<>
     
-<svg style={{ marginLeft:"12px" }}width="21" height="21"  onClick={()=>  window.open(`${project.urlFigma}`)} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg style={{ marginLeft:"12px", padding:"5px" }}width="21" height="21"  onClick={()=>  window.open(`${project.urlFigma}`)} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.5247 10.5C10.5247 8.567 12.0917 7 14.0246 7C15.9576 7 17.5246 8.56704 17.5246 10.5C17.5246 12.433 15.9576 14 14.0246 14C12.0916 14 10.5247 12.433 10.5247 10.5Z" fill="#00BCFF"/>
 <path d="M3.52466 17.4999C3.52466 15.5669 5.09166 13.9999 7.02464 13.9999L8.88983 13.0151L10.5246 13.9999V17.4999C10.5246 19.4329 8.95763 20.9999 7.02464 20.9999C5.09166 20.9999 3.52466 19.4329 3.52466 17.4999Z" fill="#00CF7F"/>
 <path d="M10.5246 0L8.62012 3.30873L10.5246 6.99997H13.9755C15.9086 6.99997 17.4755 5.43297 17.4755 3.49999C17.4755 1.567 15.9085 0 13.9755 0H10.5246Z" fill="#FF7361"/>
@@ -13,7 +13,7 @@ export const Links=({project})=>{
 </svg>
  
 
-<svg style={{ marginLeft:"12px"}} width="22" height="22" onClick={()=>  window.open(`${project.urlWordpress}`)} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg style={{ marginLeft:"12px", padding:"5px" }} width="22" height="22" onClick={()=>  window.open(`${project.urlWordpress}`)} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_34_1474)">
 <path d="M6.5994 6.78941H5.38449L8.69667 16.1522L10.5509 10.8533L9.1133 6.78941H7.83146V5.89727H13.5079V6.78941H12.1786L15.4907 16.1522L16.6813 12.7498C18.2431 8.39073 15.4012 7.03286 15.4012 6.06003C15.4012 5.0872 16.1899 4.2986 17.1627 4.2986C17.2153 4.2986 17.2664 4.30145 17.3165 4.30612C15.6682 2.75011 13.4456 1.7959 10.9999 1.7959C7.80433 1.7959 4.98948 3.42479 3.33936 5.89727H6.5993V6.78941H6.5994Z" fill="#00769D"/>
 <path d="M1.79602 11.0002C1.79602 14.524 3.77658 17.5847 6.6849 19.1313L2.53135 7.39014C2.0582 8.4986 1.79602 9.71877 1.79602 11.0002Z" fill="#00769D"/>
@@ -29,7 +29,7 @@ export const Links=({project})=>{
 </svg>
 
 
-<svg width="20" height="20"onClick={()=>  window.open(`${project.urlDrive}`)} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg style={{ marginLeft:"12px", padding:"5px" }} width="20" height="20"onClick={()=>  window.open(`${project.urlDrive}`)} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_34_1495)">
 <path d="M1.50637 16.2778L2.38567 17.8029C2.56836 18.1239 2.83137 18.3764 3.14032 18.5602L6.29438 16.3239L6.30012 13.1134L3.15258 11.6953L3.19829e-06 13.1021C-0.000621802 13.4572 0.0903548 13.8125 0.273089 14.1335L1.50637 16.2778Z" fill="#0066DD"/>
 <path d="M10.0114 6.78914L10.176 2.60695L6.87113 1.33105C6.56152 1.51379 6.29762 1.76531 6.11375 2.0857L0.276758 12.1555C0.0929297 12.4759 0.000625 12.8308 0 13.1859L6.30012 13.1971L10.0114 6.78914Z" fill="#00AD3C"/>

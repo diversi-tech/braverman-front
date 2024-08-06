@@ -39,12 +39,12 @@ label {
   background-color: #0056b3;
 }
 
- .upload-container {
+.upload-container {
   display: flex;
   align-items: center;
 }
 
- .container {
+.container {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -52,14 +52,19 @@ label {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
 }
-#maink{
-  left: 50%;display: flex;
+
+#maink {
+  left: 50%;
+  display: flex;
   margin-top: 50px;
-  margin-inline: 700px;}
-  .label-container{
-    display: flex;
-    align-items: center;
-  }
+  margin-inline: 700px;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+}
+
 .chat {
   width: 30%;
   border-right: 1px solid #ccc;
@@ -67,19 +72,19 @@ label {
   background-color: #ffffff;
 }
 
-#description{
+#description {
   width: 887px;
-height: 293px;
-top: 484px;
-left: 831px;
-gap: 0px;
-border-radius: 15px ;
-border: 1px 0px 0px 0px;
-opacity: 0px;
-border: 1px solid #8D8D8E
-
+  height: 293px;
+  top: 484px;
+  left: 831px;
+  gap: 0px;
+  border-radius: 15px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  border: 1px solid #8D8D8E
 }
-#file-upload-button{
+
+#file-upload-button {
   display: none;
 }
 
@@ -157,5 +162,10 @@ border: 1px solid #8D8D8E
   color: #999;
   margin-bottom: 10px;
 }
- 
- 
+
+#pupProp {
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+  padding-left: 40px;
+}

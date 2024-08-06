@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box, Button } from "@mui/material";
+
 import { MoreStatus } from "../project/moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
 import React from "react";
@@ -206,7 +207,7 @@ const Show = ({ props }: any) => {
   return (<>
     <br></br>
     <div>
-      {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
+      {/* {p && p.endDate && <MoreStatus project={p}></MoreStatus>} */}
     </div>
     <br></br>
     <br></br>
