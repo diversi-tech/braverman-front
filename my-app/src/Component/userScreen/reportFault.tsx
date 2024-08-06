@@ -9,6 +9,7 @@ import { sendEmail } from '../../api/sendEmail.api';
 const ReportIssue=() =>{
     const [project, setProject] = useState<Project | null>(null);
     const [endDate, setEndDate] = useState<string>("");
+    const [reportContent, setReportContent] = useState<string>("");
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -17,16 +18,20 @@ const ReportIssue=() =>{
     }, []);
 
     const send=()=>{
-        sendEmail("test", "test").then(x=>{
-          if(x.status==200){
-            alert("email sent");
-          }
-          else{
-            alert("email not sent");
-          }
-        })
-        .catch(err=>console.log(err))
-    }
+      const userEmail = sessionStorage.getItem("userEmail"); // Ensure this is set
+      const subject = "תקלות באתר";
+      const body = `היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\nהדיווח שלך:\n${reportContent}`;
+
+      sendEmail( "דיוות על תקלה באתר", body)
+          .then(response => {
+              if (response.status === 200) {
+                  alert("הודעת הדואל נשלחה בהצלחה");
+              } else {
+                  alert("לא הצלחנו לשלוח את ההודעה");
+              }
+          })
+          .catch(err => console.log(err));
+           }
     const getProject = async () => {
         try {
             debugger
@@ -63,8 +68,12 @@ const ReportIssue=() =>{
     <div className="report-issue">
       <h2 className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}> {action.label} {action.icon}</h2>
       <p className="description">{`!היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, האם נתקלת בבעיה באתר? אנא שתף אותנו בפרטים כדי שנוכל לטפל בה. תודה רבה`}</p>
-      <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"    />
-
+      <textarea
+                    className="textarea"
+                    placeholder=" ...כאן תוכלו לשתף אותנו"
+                    value={reportContent}
+                    onChange={(e) => setReportContent(e.target.value)}
+                />
 <button className='buttonnnn' onClick={() => send()}>
   <p>שליחה</p>
   <svg
