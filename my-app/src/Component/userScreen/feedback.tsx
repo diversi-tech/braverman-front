@@ -5,6 +5,8 @@ import { Project } from '../../model/project.model';
 import MoreStatus from '../project/moreStatus';
 import { send } from 'process';
 import { sendEmail } from '../../api/sendEmail.api';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 const Feedback=() =>{
     const [project, setProject] = useState<Project | null>(null);
@@ -17,18 +19,34 @@ const Feedback=() =>{
         getProject();
     }, []);
 
+    const MySwal = withReactContent(Swal);
+
     const send=()=>{
       const userEmail = sessionStorage.getItem("userEmail"); // Ensure this is set
-      const subject = "תקלות באתר";
-      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\nהדיווח שלך:\n${reportContent}`;
+      const subject = "שליחת פידבק";
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח פידבק:\n${reportContent}`;
 
       sendEmail( "דיוות על תקלה באתר", body)
           .then(response => {
               if (response.status === 200) {
-                  alert("הודעת הדואל נשלחה בהצלחה");
-              } else {
-                  alert("לא הצלחנו לשלוח את ההודעה");
-              }
+                MySwal.fire({
+                  title: 'success',
+                  text: 'המייל נשלח בהצלחה',
+                  icon: 'success',
+                  confirmButtonText: 'אישור',
+                  customClass: {
+                    confirmButton: 'my-confirm-button'
+                  }
+                });              } else {
+                  MySwal.fire({
+                    title: 'שגיאה',
+                    text: 'שגיאה בשליחת המייל',
+                    icon: 'error',
+                    confirmButtonText: 'אישור',
+                    customClass: {
+                      confirmButton: 'my-confirm-button'
+                    }
+                  });              }
           })
           .catch(err => console.log(err));
            }

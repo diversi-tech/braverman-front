@@ -102,7 +102,7 @@ const Leads: React.FC = () => {
             createdDate: new Date(lead.createdDate),
             lastContacted: lead.lastContacted ? new Date(lead.lastContacted) : null,
           }));
-          dispatch(setAllLeads(data));
+          dispatch(setAllLeads(data.reverse()));
         }
         setLeads(data);
         setLeadsChanges(new Array(data.length).fill(false));
@@ -247,7 +247,7 @@ const Leads: React.FC = () => {
                   const addedLead = response.data;
                   addedLead.createdDate = new Date(addedLead.createdDate);
                   addedLead.lastContacted = new Date(addedLead.lastContacted);
-                  setLeads([...leads, addedLead]);
+                  setLeads([ addedLead,...leads]);
                   dispatch(addLead2(addedLead));
                   MySwal.fire({
                     title: 'success',

@@ -44,10 +44,10 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
   const handleSubmit = async () => {
     const { firstName, lastName, email, businessName, source,address,phone, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
 
-    if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
-      alert('יש למלא את כל השדות');
-      return;
-    }
+    // if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
+    //   alert('יש למלא את כל השדות');
+    //   return;
+    // }
 
     const selectedStatus = statusOptions2.find(status => status.key === "1");
     const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.key === "4");
