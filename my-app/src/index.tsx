@@ -18,7 +18,9 @@ import Nav from './Component/nav/nav.component';
 import UserTable from './Component/user/user.component';
 import { TaskCategories } from './Component/adminScreen/taskCategories/taskCategoriesMain/taskCategories.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
-import { DashboardGraph } from "./Component/graphLead/mainGraphLead.component";
+import {DashboardGraph} from "./Component/graphLead/mainGraphLead.component";
+import { Info } from './Component/tasks/info';
+
 import QuickActions from './Component/userScreen/quickActions';
 import ReportIssue from './Component/userScreen/reportFault';
 import Feedback from './Component/userScreen/feedback';
@@ -36,6 +38,7 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/nav" element={<Nav />}></Route>
             <Route path="/st" element={<DashboardGraph />} />
+            <Route path="/tehila" element={<Info />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />

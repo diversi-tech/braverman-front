@@ -32,7 +32,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 const CardHeader = styled('div')(({ theme }) => ({
-  backgroundColor: teal[500],
+  backgroundColor:'#00397C' ,
   color: theme.palette.common.white,
   padding: '8px 16px',
   borderRadius: '12px 12px 0 0',
@@ -89,7 +89,7 @@ const UrgentTasksCard: React.FC = () => {
 
       const filtered = data.filter(task => {
         const createdAtDate = new Date(task.startDate);
-        return task.levelUrgencyStatus === '66864040dc2e3dffad8c7bc1' && createdAtDate < threeDaysAgo;
+        return task.levelUrgencyStatus === '4' && createdAtDate < threeDaysAgo;
       });
 
       setFilteredTasks(filtered);
@@ -150,33 +150,33 @@ const UrgentTasksCard: React.FC = () => {
           <Grid item key={task.taskId}>
             <StyledCard>
               <CardHeader>
-                <Typography variant="h6">{task.taskName}</Typography>
+                <Typography variant="h6" >{task.taskName}</Typography>
               </CardHeader>
               <CardContentStyled>
-                <IconContainer>
+                <IconContainer style={{ textAlign: 'right',direction: 'rtl'}}>
                   <AccessAlarmIcon style={{ color: pink[500] }} />
-                  <Typography variant="body2" style={{ direction: 'rtl' }}>
-                  {task.assignedTo || 'Not assigned'}   <strong  style={{ direction: 'rtl' }}> :אחראית משימה</strong> 
+                  <Typography variant="body2" style={{ textAlign: 'right' }}>
+                    <strong > אחראית משימה:  </strong> {task.assignedTo || 'Not assigned'}
                   </Typography>
                 </IconContainer>
-                <Typography variant="body2">
-                  <strong> :תאור</strong> {task.description || 'אין תאור'}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                  <strong>תאור: </strong> {task.description || 'אין תאור'}
                 </Typography>
-                <Typography variant="body2">
-                  <strong> :פרויקט </strong> {task.projectId}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                {task.projectId}   <strong> :פרויקט </strong> 
                 </Typography>
-                <Typography variant="body2">
-                  <strong> :שם קטגוריה</strong> {task.taskCategory.categoryName}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                  <strong> שם קטגוריה: </strong> {task.taskCategory.categoryName}
                 </Typography>
-                <Typography variant="body2">
-                  <strong> :סטטוס</strong> {task.levelUrgencyStatus}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+               <strong>סטטוס:  </strong>דחוף
                 </Typography>
-                <Typography variant="body2">
-                  <strong> :תאריך יצירה</strong> {new Date(task.startDate).toLocaleDateString()}
+                <Typography variant="body2" style={{textAlign: 'right'}}>
+                  <strong> תאריך יצירה: </strong> {new Date(task.startDate).toLocaleDateString()}
                 </Typography>
                 {/* {task.assignedTo === '' && ( */}
                   <IconButton onClick={() => handleAssignTask(task.taskId)}>
-                    <AssignmentTurnedInIcon style={{ color: teal[500] }} />
+                    <AssignmentTurnedInIcon style={{ color:  '#00397C' }} />
                     <Typography variant="body2">Assign to me</Typography>
                   </IconButton>
                 {/* )} */}
