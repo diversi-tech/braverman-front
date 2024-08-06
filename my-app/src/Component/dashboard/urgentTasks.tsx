@@ -9,6 +9,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { teal, pink } from '@mui/material/colors';
 import { UpDateTask } from "../../api/task.api"; // Import the update function
+import Rtl from '../rtl/rtl';
 
 const CardContainer = styled(Grid)({
   display: 'flex',
@@ -143,6 +144,7 @@ const UrgentTasksCard: React.FC = () => {
 
   return (
     <>
+    <Rtl>
       <CardContainer container spacing={2}>
         {filteredTasks.map((task) => (
           <Grid item key={task.taskId}>
@@ -153,27 +155,24 @@ const UrgentTasksCard: React.FC = () => {
               <CardContentStyled>
                 <IconContainer>
                   <AccessAlarmIcon style={{ color: pink[500] }} />
-                  <Typography variant="body2">
-                    <strong>Assigned To:</strong> {task.assignedTo || 'Not assigned'}
+                  <Typography variant="body2" style={{ direction: 'rtl' }}>
+                  {task.assignedTo || 'Not assigned'}   <strong  style={{ direction: 'rtl' }}> :אחראית משימה</strong> 
                   </Typography>
                 </IconContainer>
                 <Typography variant="body2">
-                  <strong>Comment:</strong> {task.comment || 'No comments'}
+                  <strong> :תאור</strong> {task.description || 'אין תאור'}
                 </Typography>
                 <Typography variant="body2">
-                  <strong>Project ID:</strong> {task.projectId}
+                  <strong> :פרויקט </strong> {task.projectId}
                 </Typography>
                 <Typography variant="body2">
-                  <strong>Description:</strong> {task.description}
+                  <strong> :שם קטגוריה</strong> {task.taskCategory.categoryName}
                 </Typography>
                 <Typography variant="body2">
-                  <strong>Task Category:</strong> {task.taskCategory.categoryName}
+                  <strong> :סטטוס</strong> {task.levelUrgencyStatus}
                 </Typography>
                 <Typography variant="body2">
-                  <strong>Status:</strong> {task.levelUrgencyStatus}
-                </Typography>
-                <Typography variant="body2">
-                  <strong>Start Date:</strong> {new Date(task.startDate).toLocaleDateString()}
+                  <strong> :תאריך יצירה</strong> {new Date(task.startDate).toLocaleDateString()}
                 </Typography>
                 {/* {task.assignedTo === '' && ( */}
                   <IconButton onClick={() => handleAssignTask(task.taskId)}>
@@ -186,7 +185,7 @@ const UrgentTasksCard: React.FC = () => {
           </Grid>
         ))}
       </CardContainer>
-
+      </Rtl>
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
         <Alert onClose={() => setSnackbarOpen(false)} severity="success">
           {snackbarMessage}

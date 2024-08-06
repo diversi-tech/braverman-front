@@ -66,7 +66,7 @@ export const Tasks = () => {
         taskId: '',
         taskName: 'try',
         assignedTo: '6683dbc67f45f71f547804dc',
-        comment: 'try',
+        // comment: 'try',
         projectId: '668d3bfa8d0828f533b2a85f',
         description: 'try',
         startDate: new Date(),
@@ -99,7 +99,6 @@ export const Tasks = () => {
     const open2 = Boolean(anchorEl);
 
     const [selectedTaskId, setSelectedTaskId] = useState<string>("");
-    const filterTask = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
 
     //useEffect
     useEffect(() => {
@@ -346,11 +345,13 @@ export const Tasks = () => {
             },
         });
     }
-
+    const filterTask2 = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
+    console.log("filterTask", filterTask2);
+    
     return (
         <div className="page-container">
             <div className="lead-management-container">
-                <h1 className="lead-management-title">משימות לטיפול</h1>
+                <p className="lead-management-title">משימות לטיפול</p>
                 <div className="search-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                 </div>
                 <div className="table-container">
@@ -359,7 +360,7 @@ export const Tasks = () => {
                             <tr >
                                 {(['לינקים', 'רמת דחיפות', 'אחראית', '', 'המשימה', 'שם פרויקט'] as const).map((col) => (
                                     <th key={col}>
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" ,fontWeight:700 }}>
                                             {col}
                                             <button onClick={() => console.log("col", col)} style={{ backgroundColor: "white", border: 0, }}>
                                             </button>
@@ -368,12 +369,13 @@ export const Tasks = () => {
                                         </div>
                                     </th>))}
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
 
                         {levelUrgencyStatus && levelUrgencyStatus.length && levelUrgencyStatus.map((l) => {
 
-                            return <> {filterTask && filterTask.length && filterTask.map((t) => {
+                            return <> { tasks.slice(page * taskperPage, (page + 1) * taskperPage).map((t) => {
                                 return +t.levelUrgencyStatus == 5 - (+l.key) &&
                                     <tbody>
                                         <tr onClick={() => setSelectedTaskId(t.taskId)}>
@@ -473,7 +475,7 @@ export const Tasks = () => {
                         })}
                         <tfoot >
                             <tr>
-                                <td colSpan={6} style={{ textAlign: 'right', color: '#636363' }}>
+                                <td colSpan={7} style={{ textAlign: 'right', color: '#636363' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>
                                         {selectedTaskId && (
                                             <button className="convert-lead-button" onClick={handleEditLead}>
