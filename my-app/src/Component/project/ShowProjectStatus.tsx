@@ -96,6 +96,7 @@ export const ShowProjectStatus = () => {
     return Array.from(taskMap.values());
   }
   let progectShow = {
+    // fromShowProject:false,
     projectName: "",
     statusProject: "",
     stat: "",
@@ -127,7 +128,7 @@ export const ShowProjectStatus = () => {
     for (let i = 0; i < data?.length; i++) {
       let newProgectShow = {
         ...progectShow,
-        projectName: data[i]?.firstName + " " + data[i]?.lastName,
+        projectName: data[i]?.businessName ,
         statusProject: data[i].status.key,
         endDate: data[i].endDate,
         totalPrice: data[i].totalPrice,
@@ -140,6 +141,7 @@ export const ShowProjectStatus = () => {
       else {
         let rezult = getUniqueTasksWithLowestStatus(tasksProject);
         rezult?.forEach(r => {
+
           newProgectShow.tashsShow.push(
             { key: r.status.key, categoryName: r.taskCategory.categoryName }
           )
@@ -205,7 +207,7 @@ const Show = ({ props }: any) => {
   return (<>
     <br></br>
     <div>
-      {p && <MoreStatus project={p}></MoreStatus>}
+      {p && <MoreStatus project={p.projectName}></MoreStatus>}
     </div>
     <br></br>
     <br></br>
@@ -238,11 +240,9 @@ const Show = ({ props }: any) => {
             <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
-
           (<p style={{ fontSize: "170%", fontWeight: "bold" }}>שלבי הפרויקט:</p> &&
             p.tashsShow?.map(t => (t?.categoryName != "" &&
               <>
-
                 <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
                   {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
                   {p.stat == t.categoryName
