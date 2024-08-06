@@ -8,7 +8,7 @@ module.exports = {
       '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
     },
     transformIgnorePatterns: [
-      'node_modules/(?!(axios|other-modules)/)'  // הוסף את המודולים שאתה צריך כאן
+      'node_modules/(?!(axios|other-modules)/)'  
     ],
     setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
     setupFiles: ['<rootDir>/jest.setup.js']

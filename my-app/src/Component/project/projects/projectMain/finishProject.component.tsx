@@ -6,8 +6,7 @@ import Links from '../../../Links/Links';
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { HiOutlineTrash } from 'react-icons/hi';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
-import { setAllProject } from '../../../../Redux/Project/projectAction';
+
 
 const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
   const [projects, setProjects] = useState<Project[]>([]);
