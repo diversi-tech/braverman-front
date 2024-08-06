@@ -7,6 +7,7 @@ import { deleteLead } from '../../Redux/Leads/leadsAction';
 import { Lead } from '../../model/leads.model';
 import { Enum } from '../../model/enum.model';
 import { Timer } from '../../model/Timer.model';
+import Rtl from '../rtl/rtl';
 
 interface ConvertLeadToProjectProps {
   lead: Lead;
@@ -23,12 +24,15 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     email: lead.email,
     businessName: lead.businessName,
     source: lead.source,
+    address:"",
+    phone:"",
     totalPrice: 0,
     pricePaid: 0,
     urlDrive: '',
     urlFigma: '',
     urlWordpress: '',
-    freeText: ''
+    freeText: '',
+    workLog: []
   });
   const dispatch = useDispatch();
 
@@ -38,23 +42,26 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
   };
 
   const handleSubmit = async () => {
-    const { firstName, lastName, email, businessName, source, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
+    const { firstName, lastName, email, businessName, source,address,phone, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
 
     if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
       alert('יש למלא את כל השדות');
       return;
     }
 
-    const selectedStatus = statusOptions2.find(status => status.value === "TODO");
-    const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
+    const selectedStatus = statusOptions2.find(status => status.key === "1");
+    const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.key === "4");
 
-    const Project: Project = {
+
+    const Project : Project = {
       projectId: '',
       firstName,
       lastName,
       businessName,
       email,
       source,
+      address,
+      phone,
       status: selectedStatus!,
       endDate: new Date(),
       balanceStatus: selectedBalanceStatus!,
@@ -68,9 +75,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       urlWordpress,
       urlDrive,
       urlFigma,
-      freeText, 
-       workLog: [],
-       stageStatus:selectedStatus,
+      freeText,
+      workLog: [],
+      stageStatus: selectedStatus,
 
     };
 
@@ -91,7 +98,11 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
 
   return (
     <div>
+      <Rtl>
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="שם פרטי"
         name="firstName"
         value={formValues.firstName}
@@ -101,6 +112,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="שם משפחה"
         name="lastName"
         value={formValues.lastName}
@@ -110,6 +124,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="אימייל"
         name="email"
         value={formValues.email}
@@ -119,6 +136,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="שם העסק"
         name="businessName"
         value={formValues.businessName}
@@ -128,6 +148,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="מקור הליד"
         name="source"
         value={formValues.source}
@@ -137,6 +160,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="מחיר כולל"
         name="totalPrice"
         value={formValues.totalPrice}
@@ -146,6 +172,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="מחיר ששולם"
         name="pricePaid"
         value={formValues.pricePaid}
@@ -155,6 +184,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="קישור דרייב"
         name="urlDrive"
         value={formValues.urlDrive}
@@ -164,6 +196,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="קישור פיגמה"
         name="urlFigma"
         value={formValues.urlFigma}
@@ -173,6 +208,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="קישור וורדפרס"
         name="urlWordpress"
         value={formValues.urlWordpress}
@@ -182,6 +220,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         margin="normal"
       />
       <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
         label="טקסט חופשי"
         name="freeText"
         value={formValues.freeText}
@@ -190,6 +231,7 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         multiline
         margin="normal"
       />
+      </Rtl>
       <Button onClick={handleSubmit} color="primary">צור פרויקט</Button>
     </div>
   );

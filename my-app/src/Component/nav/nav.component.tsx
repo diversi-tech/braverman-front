@@ -66,18 +66,18 @@ const Nav = () => {
                       <li className={`nav-item ${location.pathname.includes('/tasks') ? 'active' : ''}`}><Link to={'tasks'}>משימות</Link></li>
                       {/* <li className={`nav-item ${location.pathname.includes('/bookkeeping') ? 'active' : ''}`}><Link to={'bookkeeping'}>הנה"ח</Link></li> */}
                       <li className={`nav-item ${location.pathname.includes('/taskCategories') ? 'active' : ''}`}><Link to={'taskCategories'}>ניהול משימות</Link></li>
-                      <TimerComponent></TimerComponent>
      </>) :
 
-                      <p>הזן פרטי גישה כדי להתחבר למערכת</p>
+                      <p style={{fontSize:"17px"}}>הזן פרטי גישה כדי להתחבר למערכת</p>
                 }
               </ul>
             </nav>
           </header>
         </div>
-        <img src={logo} alt="" id='img' />
+        <TimerComponent></TimerComponent>
         <ProfileIcon />
-        
+        <img src={logo} alt="" id='img' />
+
       </div>
       {/* <Outlet /> */}
     </>

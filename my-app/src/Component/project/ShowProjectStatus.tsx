@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CheckCircleOutlineTwoTone } from "@mui/icons-material";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import { Box, Button } from "@mui/material";
+
 import { MoreStatus } from "../project/moreStatus";
 import { getCustomerProjects } from "../../api/project.api";
 import React from "react";
@@ -12,7 +13,7 @@ import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
 
-  debugger
+  
   const listProject = {
     projectId: null,
     firstName: "string",
@@ -122,7 +123,6 @@ export const ShowProjectStatus = () => {
   //============2======================
   // הכנסת הנתונים לתצוגה
   if (data[0]?.projectId && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
-    debugger
     dataShow.map(d => dataShow.pop())//איפוס מערך הפרויקטים המוצגים לפני שממלא למשתמש הנוכחי
     for (let i = 0; i < data?.length; i++) {
       let newProgectShow = {
@@ -140,7 +140,6 @@ export const ShowProjectStatus = () => {
       else {
         let rezult = getUniqueTasksWithLowestStatus(tasksProject);
         rezult?.forEach(r => {
-          debugger
           newProgectShow.tashsShow.push(
             { key: r.status.key, categoryName: r.taskCategory.categoryName }
           )
@@ -206,7 +205,7 @@ const Show = ({ props }: any) => {
   return (<>
     <br></br>
     <div>
-      {p && p.endDate && <MoreStatus project={p}></MoreStatus>}
+      {p && <MoreStatus project={p}></MoreStatus>}
     </div>
     <br></br>
     <br></br>
@@ -231,8 +230,12 @@ const Show = ({ props }: any) => {
       <div style={{ width: "100%", textAlign: "center" }}>
         {p.statusProject == "3" ?
           <div>
-            <CheckCircleOutlineTwoTone />
-            <p>הפרויקט הושלם בהצלחה!</p>
+            <CheckCircleOutlineTwoTone sx={{
+              paddingTop:"5%",
+              width:"10%",
+              height:"10%"
+            }}></CheckCircleOutlineTwoTone>
+            <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
 

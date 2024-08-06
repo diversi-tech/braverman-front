@@ -275,12 +275,12 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   return (
     <div className='styleProject'>
 
-      <h1 className='title'><b>פרויקטים</b></h1>
+      <p className='title' style={{fontSize:'28px'}} ><b>פרויקטים</b></p>
       <table style={{ width: '100%' }}>
         <thead>
           <tr className='row'>
             <td></td>
-            <td style={{textAlign:"center",marginRight:"10px"}}>שם העסק
+            <td style={{textAlign:"center",marginRight:"10px",fontSize:'13.5px', fontWeight: '700'}}>שם העסק
               <br></br>
               <button  className="filter"  onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "שם העסק": !filterInputsVisible["שם העסק"] });
@@ -310,7 +310,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   
               </div>
             </td>
-            <td style={{textAlign:"center"}}>סוג הפרויקט
+            <td style={{textAlign:"center",fontSize:'13.5px', fontWeight: '700'}}>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
@@ -332,7 +332,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{textAlign:"center"}}>איש קשר
+            <td style={{textAlign:"center",fontSize:'13.5px', fontWeight: '700'}}>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
@@ -353,11 +353,11 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{textAlign:"center"}}>טלפון
+            <td style={{textAlign:"center",fontSize:'13.5px', fontWeight: '700'}}>טלפון
               <br></br>
               <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
             </td>
-            <td style={{textAlign:"center"}}>אימייל
+            <td style={{textAlign:"center",fontSize:'13.5px', fontWeight: '700'}}>אימייל
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "אימייל": !filterInputsVisible["אימייל"] })
@@ -378,7 +378,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                   )}
               </div>
             </td>
-            <td style={{textAlign:"right"}}>סטטוס פרויקט
+            <td style={{textAlign:"right",fontSize:'13.5px', fontWeight: '700'}}>סטטוס פרויקט
               <br></br>
               <button className="filter" onClick={() => setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center", marginLeft:"44px" }} />
               </button>
@@ -405,7 +405,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
 
             </td>
-            <td style={{ width: 'auto', fontWeight: '600', marginBottom:'3px'}} className="links-column" >לינקים
+            <td style={{ width: 'auto', fontWeight: '700', marginBottom:'3px',fontSize:'13.5px'}} className="links-column" >לינקים
               <br></br>
               <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />  
                         </td>
@@ -428,12 +428,12 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
       </span>
                   </button>
                 </td>
-                <td style={{ textAlign: 'center' }}>{project.businessName}</td>
-                <td style={{ textAlign: 'center' }}>{project.source}</td>
-                <td style={{ textAlign: 'center' }}>{`${project.firstName} ${project.lastName}`}</td>
-                <td style={{ textAlign: 'center' }}>פרויקט</td>
-                <td style={{ textAlign: 'center' }}>{project.email}</td>
-                <td style={{ textAlign: 'center' }}>{project.status.value}</td>
+                <td style={{ textAlign: 'center' ,fontSize:'13.5px', fontWeight: '400'}}>{project.businessName}</td>
+                <td style={{ textAlign: 'center',fontSize:'13.5px' , fontWeight: '400'}}>{project.source}</td>
+                <td style={{ textAlign: 'center',fontSize:'13.5px' , fontWeight: '400'}}>{`${project.firstName} ${project.lastName}`}</td>
+                <td style={{ textAlign: 'center',fontSize:'13.5px' , fontWeight: '400'}}>פרויקט</td>
+                <td style={{ textAlign: 'center',fontSize:'13.5px' , fontWeight: '400'}}>{project.email}</td>
+                <td style={{ textAlign: 'center',fontSize:'13.5px' , fontWeight: '400'}}>{project.status.value}</td>
                 <td>
                   <Links project={project}></Links>
                 </td>

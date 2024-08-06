@@ -142,3 +142,15 @@ color: aquamarine;
   cursor: not-allowed;
 }
 
+.lead-management-title{
+      display: flex;
+      align-items: center;
+      justify-content: center; /* This centers the title horizontally */
+      width: 100%; /* Makes sure the container takes the full width */
+      height: 100px; /* Adjust this height as needed */
+     /* margin-top: 0; */
+     font-size: 28px;
+     height: 30px;
+     text-align: center;
+  }
+

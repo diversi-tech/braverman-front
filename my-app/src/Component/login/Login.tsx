@@ -95,7 +95,7 @@ const Login = () => {
           customClass: {
             confirmButton: 'my-confirm-button'
           }
-        });        // dispatch(setUser(x.data.userEmail, x.data.userPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
+        });     
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
         sessionStorage.setItem("firstName", x.data.firstName);
@@ -141,7 +141,7 @@ const Login = () => {
 
   return (
      <div className='login' >
-    <p id='p'>התחברות למערכת</p>
+    <p id='p' style={{marginTop: '110px'}}>התחברות למערכת</p>
     <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
       <div id='allin'>
       <input
@@ -172,7 +172,7 @@ const Login = () => {
         <div id='btn'>
         <button type="submit" className='textBox' id="submit">
           <div id='en'>
-            <span className='enter'>  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className='ok'>
+            <span className='enter'>  <svg width="20" height="20" fontSize={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className='ok'>
             <path d="M0.00598005 4.00597L1.90735e-06 20L16 19.998L16.002 18L3.41396 18L20 1.414L18.586 -1.78373e-06L1.99997 16.586L1.99996 3.99999L0.00598005 4.00597Z" fill="#002046" /> 
              </svg> כניסה  </span>
             

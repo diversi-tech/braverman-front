@@ -12,13 +12,11 @@ const taskReducer = (state = initialState, action) => {
         allTask: action.payload,
       };
     case 'ADD_TASK':
-      const updatedAllTasks = [...state.allTask];
-      updatedAllTasks.push(action.payload); 
+      
       return {
-          ...state,
-          allTask: updatedAllTasks
-      };
-
+        ...state,
+        allTask: [...state.allTask, action.payload],
+         };
     default:
       return state;
   }

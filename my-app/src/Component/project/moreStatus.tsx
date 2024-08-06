@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const MoreStatus = ({ project }: any) => {
-    debugger
+
     // useEffect(() => {
     //     console.log(project)
     // });
@@ -44,7 +44,7 @@ export const MoreStatus = ({ project }: any) => {
                 boxSizing: "border-box",
             }}>
             <p style={{ paddingLeft: "4%" }}></p>
-            <p style={{ paddingLeft: "71%"}}>אתר תוכן- {project?.projectName}</p>
+            <p style={{ paddingLeft: "61%"}}>אתר תוכן- {project?.projectName}</p>
             <p style={{ paddingLeft: "2%" }}>חזרה למסך ראשי</p>
             <svg width="27" height="27" onClick={()=>navigate("/quickActions")} viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.40891 17.676C8.95766 17.676 8.50493 17.5119 8.14794 17.1809L0.619188 10.1984C0.237703 9.84441 0.0217267 9.3464 0.0254377 8.82539C0.0291486 8.30437 0.251063 7.80933 0.637742 7.4605L8.37282 0.478004C9.13356 -0.208519 10.307 -0.148402 10.9935 0.61234C11.68 1.37308 11.6199 2.54648 10.8591 3.233L4.62923 8.85656L10.6706 14.4601C11.4217 15.157 11.4663 16.3311 10.7693 17.0822C10.4042 17.4763 9.90692 17.676 9.40891 17.676Z" fill="white" />
