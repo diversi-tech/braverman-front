@@ -36,9 +36,9 @@ jobs:
         working-directory: ./my-app
         run: npm install --legacy-peer-deps
 
-      - name: Install @types/testing-library__react
-        working-directory: ./my-app
-        run: npm install --save-dev @types/testing-library__react
+      # - name: Install @types/testing-library__react
+      #   working-directory: ./my-app
+      #   run: npm install --save-dev @types/testing-library__react
 
       - name: List npm dependencies
         working-directory: ./my-app
