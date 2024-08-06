@@ -251,7 +251,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
           <tr className='row'>
             <td></td>
 
-            <td style={{ textAlign: "center", marginRight: "10px" }}>שם העסק
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>שם העסק
 
               <br></br>
               <button className="filter" onClick={() => {
