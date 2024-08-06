@@ -9,6 +9,8 @@ import { getCustomerProjects } from "../../api/project.api";
 import React from "react";
 import ChatBot from "react-chatbotify";
 import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
+import { SendAnnouncement } from "./SendAnnouncement";
+import './ShowProjectStatus.css'
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
@@ -229,7 +231,7 @@ const Show = ({ props }: any) => {
         flexWrap: "wrap",
       }}
     >
-      <div style={{ width: "100%", textAlign: "center" }}>
+      <div style={{ width: "100%", textAlign: "center" }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div> 
         {p.statusProject == "3" ?
           <div>
             <CheckCircleOutlineTwoTone />

@@ -1,0 +1,77 @@
+.contact-form {
+    position: relative;
+    width: 60%; /* כאן ניתן להתאים את רוחב הטופס כפי שרלוונטי לך */
+    margin: 50px auto;
+    height: 500px;
+    background-color: #f1f7ff;
+    border: 1px solid #002046;
+    border-radius: 15px;
+    padding: 20px;
+  }
+  
+  .arrow-icon {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: -9px;
+    left: 10px;
+    background-color: #002046;
+    transform: rotate(45deg);
+  }
+  
+  .title {
+    font-family: 'Ping HL', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #002046;
+    text-align: right;
+  }
+  
+  .subtitle {
+    font-family: 'Ping HL', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #002046;
+    margin-top: 10px;
+    text-align: right;
+  }
+  textarea{
+    background-color: #f1f7ff;
+    border-color: #f1f7ff;
+  }
+  .message-input {
+    width: 99%;
+    height: 120px;
+    margin-top: 10px;
+    padding: 10px;
+    font-family: 'Ping HL', sans-serif;
+    font-size: 18px;
+    color: #636363;
+    /* border: 1px solid #002046; */
+    border-radius: 10px;
+    resize: none;
+  }
+  
+  .submit-button {
+    margin-top: 200px;
+    padding: 10px 20px;
+    font-family: 'Ping HL', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #002046;
+    background-color: #f1f7ff;
+    border: 1px solid #002046;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  .arrow-right {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #002046;
+    border-top: 2px solid #002046;
+    transform: rotate(45deg);
+    margin-left: 10px;
+  }
+  
