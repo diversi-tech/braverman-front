@@ -14,10 +14,10 @@ export interface Project {
   address: string|null;
   phone: string|null;
   status: Enum;
-  endDate: Date; // Assuming it's a string representation of a date
+  endDate: Date; 
   balanceStatus:Enum
-  createdAt: Date; // Assuming it's a string representation of a date
-  updatedAt: Date; // Assuming it's a string representation of a date
+  createdAt: Date;
+  updatedAt: Date; 
   totalPrice: number;
   pricePaid: number;
   balance: number;

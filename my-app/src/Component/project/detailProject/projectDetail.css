@@ -48,35 +48,33 @@ body{
   margin-right: 0; 
 }
 #descrption{
- width: 10%;
- padding-right: 3%;
+  width: 10%;
+  padding-right: 3%;
 
 }
 #detail{
   padding-right:55%;
   flex: 1;
-
 }
 #freeText{
-margin-right:32%; 
-position: fixed;
+margin-right:55%; 
  }
 .editButton{
 margin-top: -55%;
-margin-right:95%;
+margin-right:10%;
 }
 
 .editInput{
   height: 10px;
-  width:70px; 
-  font-size: 16px; /* גודל גופן */
-  border: 1px solid #ccc; /* גבול */
-  transition: border-color 0.3s ease; /* אנימציה של שינוי צבע הגבול */
+  width:90px; 
+  font-size: 16px;
+  border: 1px solid #ccc; 
+  transition: border-color 0.3s ease; 
 }
 .editInput:focus {
-  border-color: #007bff; /* צבע גבול בעת פוקוס */
-  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); /* צל מעודכן בעת פוקוס */
-  outline: none; /* הסרת הקו המוקף הסטנדרטי של פוקוס */
+  border-color: #007bff; 
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); 
+  outline: none; 
 }
 .links{
   display: flex;
@@ -85,13 +83,13 @@ margin-right:95%;
 }
 .cancelAndSave{
   margin-top:-220px;
-  margin-right:82%;
+  margin-right:3%;
   display: flex;
   justify-content: space-between; 
 }
 
 .freeTextInput {
-  width: 60%; /* רוחב מותאם; התאם לפי הצורך */
+  width:100%; /* רוחב מותאם; התאם לפי הצורך */
   max-width: 200px; /* רוחב מקסימלי, התאם לפי הצורך */
   height: 150px; /* גובה מותאם; התאם לפי הצורך */
   padding: 10px; /* ריפוד פנימי */

@@ -4,7 +4,7 @@ import ProjectDetail from "./detailProject.component";
 import "./detailProject.css"; // כולל את קובץ עיצוב ה- CSS
 import {  Project} from "../../../model/project.model";
 const MainDetailProject: React.FC<{ detailsProject: Project }> = ({detailsProject}) => {
-  const [projectData, setProjectData] = useState<any>(null); // אם את מצפה לנתונים מסוג מסוים, החלף את 'any' בסוג הנתונים המתאים
+  const [projectData, setProjectData] = useState<any>(null); 
 
   return (
     <div className="main-project-container">

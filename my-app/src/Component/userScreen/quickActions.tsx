@@ -21,7 +21,6 @@ const QuickActions = () => {
 
     const getProject = async () => {
         try {
-            debugger
             const userId = sessionStorage.getItem('userId');
             if (userId) {
                 const projectPerCustomer = await GetAllProjectPerUser(userId);
@@ -38,7 +37,6 @@ const QuickActions = () => {
         }
     };
     const handleChangeProject = (event: SelectChangeEvent<string>) => {
-      debugger
       const projectId = event.target.value as string;
       const project = projects.find(proj => proj.projectId === projectId) || null;
       setSelectedProject(project);
