@@ -26,6 +26,7 @@ import ReportIssue from './Component/userScreen/reportFault';
 import Feedback from './Component/userScreen/feedback';
 import UrgentTasksTable from './Component/dashboard/urgentTasks';
 import AttendanceReport from './Component/Timer/AttendanceReport.component';
+import ChatTable from './Component/tasks/chat';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -56,6 +57,8 @@ root.render(
               <Route path='/reportIssue' element={<ReportIssue />} ></Route>
               <Route path='/feedback' element={<Feedback />} ></Route>
               <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
+              <Route path='/chat' element={<ChatTable />} ></Route>
+
 
           </Route>
         </Routes>
