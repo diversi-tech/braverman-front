@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import Swal from 'sweetalert2';
 import './anydesck.css';
-
+import {sendEmail  } from "../../api/sendEmail.api";
 const AnyDeskChecker: React.FC = () => {
   const [message, setMessage] = useState<string>('');
   const [showCodeInput, setShowCodeInput] = useState<boolean>(false);
@@ -16,10 +16,8 @@ const AnyDeskChecker: React.FC = () => {
       cancelButtonText: 'לא'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("User confirmed AnyDesk is installed.");
         openAnyDesk();
       } else {
-        console.log("User confirmed AnyDesk is not installed.");
         setMessage(
           '<a href="https://anydesk.com/en/downloads" target="_blank" rel="noopener noreferrer">לחצו להורדה AnyDesk</a>.'
         );
@@ -37,7 +35,7 @@ const AnyDeskChecker: React.FC = () => {
     const timeout = setTimeout(() => {
       document.body.removeChild(iframe);
       setMessage(
-        'It seems AnyDesk is not installed. ' +
+        'אנידסק לא מותקן. ' +
         '<a href="https://anydesk.com/en/downloads" target="_blank" rel="noopener noreferrer"> לחצו להורדה AnyDesk</a>.'
       );
       setShowCodeInput(true);
@@ -51,34 +49,34 @@ const AnyDeskChecker: React.FC = () => {
       '<br />במקרה של בעיה, פתחו ידנית והכניסו את הקוד.'
     );
     setShowCodeInput(true);
-    window.onblur = null; // מניעת קריאות נוספות
+    window.onblur = null; 
   };
 };
 
   const handleCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAnyDeskCode(e.target.value);
-  };
-
-  const sendCodeToServer = () => {
-    // שליחת הקוד לפונקציה בשרת
-    fetch('/api/send-anydesk-code', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code: anyDeskCode }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-        setMessage('Code sent succe ssfully!');
-        setShowCodeInput(false);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setMessage('Failed to send the code.');
-      });
-  };
+    };
+    const sendCodeToServer = async () => {
+      try {
+        await sendEmail("תמיכה טכנית", anyDeskCode);
+        Swal.fire({
+          title: 'נשלח בהצלחה!',
+          icon: 'success',
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      } catch (error) {
+        Swal.fire({
+          title: 'השליחה נכשלה',
+          text: 'לא הצלחנו לשלוח את המייל, אנא נסה שוב מאוחר יותר.',
+          icon: 'error',
+          timer: 1500,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      }
+    };
 
   return (
     <div>

@@ -8,6 +8,7 @@ import { Project } from '../../model/project.model';
 import { GetAllProjectPerUser } from '../../api/user.api';
 import MoreStatus from '../project/moreStatus';
 
+
 const QuickActions = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -176,7 +177,7 @@ const QuickActions = () => {
       sx={{
         marginBottom: 2,
         textAlign: 'right',
-        fontSize: '35px',
+        fontSize: '28px',
         fontWeight: 700,
         fontFamily: 'CustomFont',
         lineHeight: '48px',
@@ -197,7 +198,7 @@ const QuickActions = () => {
                   {action.icon}
                 </IconButton>
                 <CardContent >
-                <Typography variant="body1" sx={{ display: 'inline-block', marginLeft: '8px' ,fontWeight: 700,fontSize:"25px"}} className='label'>
+                <Typography variant="body1" sx={{ display: 'inline-block', marginLeft: '8px' ,fontWeight: 700,fontSize:"22px"}} className='label'>
                 <GoArrowDownLeft className='arrow' />
                 {action.label}
                   </Typography>
