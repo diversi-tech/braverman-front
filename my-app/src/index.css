@@ -1,7 +1,9 @@
 @font-face {
-  font-family: 'CustomFont';
-  src: url('../public/Fonts/RAG-Sans-1.1-ExtraLight.otf') format('opentype');
+	font-family: 'CustomFont';
+	src: url("https://webfonts.typotheque.com/WF-039261-012388-002673-01198636e676e4eb7f3579a996093698.woff2") format("woff2");
+
 }
+
 
 :root {
   /* font-synthesis: none; */
@@ -18,6 +20,8 @@ body {
   min-height: 100vh;
   background-color: var(--surface-card);
   font-family: 'CustomFont'!important;
+  color: #002046;
+
 
   
 }

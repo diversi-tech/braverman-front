@@ -21,6 +21,7 @@ import UpdateLead from './updateLead.component';
 import AddLeadForm from './addLead.component';
 import ConvertLeadToProject from './convertToProject.component';
 import store from '../../Redux/Store';
+import withReactContent from 'sweetalert2-react-content';
 
 
 
@@ -35,7 +36,7 @@ const Leads: React.FC = () => {
 
   //עמודים
   const [page, setPage] = useState(0);
-  const leadsPerPage = 7;
+  const leadsPerPage = 8;
   const totalPages = Math.ceil(leads.length / leadsPerPage);
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
   const [filters, setFilters] = useState({
@@ -65,11 +66,28 @@ const Leads: React.FC = () => {
     "הערות": false,
     "סטטוס": false
   });
+
+  const leadSources = [
+    'פרסום בגוגל',
+    'פרסום ברשתות חברתיות',
+    'המלצה מחברים',
+    'המלצה מלקוחות',
+    'חיפוש אקראי בגוגל',
+    'היכרות אישית',
+    'לקוח קיים',
+    'פניות מהאתר',
+    'פרסום בפרינט',
+    'אחר'
+  ];
+
   const dispatch = useDispatch();
   const leadsState = useSelector((state: { leads: { allLeads: { [key: string]: Lead[] } } }) => state.leads);
-  const leadStatus = useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead);
-  console.log("status", leadStatus, "leads", leadsState);
+  const leadStatus=useSelector((state: { statusLead: { allStatusLead: { [key: string]: Enum[] } } }) => state.statusLead);
+  console.log("status",leadStatus,"leads",leadsState);
 
+  const MySwal = withReactContent(Swal);
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -179,6 +197,42 @@ const Leads: React.FC = () => {
     }
   };
 
+
+  const handleSourceChange = async(id: string, newSource: string) => {
+    const updatedLeads = leads!.map((lead) =>
+      lead.id === id ? { ...lead, source: newSource } : lead
+    );
+    setLeads(updatedLeads);
+    const lead =updatedLeads.find((lead)=>lead.id===id);
+    debugger
+    const response = await updateLeadChanges(lead,lead.id);
+    
+    const updatedIndex = leads!.findIndex((l) => l.id === id);
+           if (updatedIndex !== -1) {
+             const updatedChanges = [...leadsChanges!]; 
+             updatedChanges[updatedIndex] = true; 
+             setLeadsChanges(updatedChanges);
+           }
+  };
+
+
+  const handleSourceChange = async(id: string, newSource: string) => {
+    const updatedLeads = leads!.map((lead) =>
+      lead.id === id ? { ...lead, source: newSource } : lead
+    );
+    setLeads(updatedLeads);
+    const lead =updatedLeads.find((lead)=>lead.id===id);
+    debugger
+    const response = await updateLeadChanges(lead,lead.id);
+    
+    const updatedIndex = leads!.findIndex((l) => l.id === id);
+           if (updatedIndex !== -1) {
+             const updatedChanges = [...leadsChanges!]; 
+             updatedChanges[updatedIndex] = true; 
+             setLeadsChanges(updatedChanges);
+           }
+  };
+
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -213,7 +267,16 @@ const Leads: React.FC = () => {
                   addedLead.lastContacted = new Date(addedLead.lastContacted);
                   setLeads([...leads, addedLead]);
                   dispatch(addLead2(addedLead));
-                  Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
+                  MySwal.fire({
+                    title: 'success',
+                    text: 'הליד נוסף בהצלחה',
+                    icon: 'success',
+                    confirmButtonText: 'אישור',
+                    customClass: {
+                      confirmButton: 'my-confirm-button'
+                    }
+                  }); 
+                  // Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
                 } catch (error) {
                   Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
                 }
@@ -241,8 +304,8 @@ const Leads: React.FC = () => {
   // פונקציה להמרת ליד ללקוח
   const handleConvertLeadToProject = async () => {
     const result = await Swal.fire({
-      title: 'האם אתה בטוח?',
-      text: "האם אתה בטוח שאתה רוצה להמיר את הליד לפרויקט?",
+      title: '?האם אתה בטוח',
+      text: "?האם אתה בטוח שאתה רוצה להמיר את הליד לפרויקט",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -269,15 +332,22 @@ const Leads: React.FC = () => {
           if (container) {
             ReactDOM.render(
               <Provider store={store}>
-                <ConvertLeadToProject
-                  lead={lead}
-                  statusOptions2={statusOptions2}
-                  balanceStatusOptions={balanceStatusOptions}
-                  setLeads={setLeads}
-                  handleProjectAdded={(newProject) => {
-                    Swal.fire('Success', 'הפרויקט נוצר בהצלחה', 'success');
-                  }}
-                />,
+              <ConvertLeadToProject
+                lead={lead}
+                statusOptions2={statusOptions2}
+                balanceStatusOptions={balanceStatusOptions}
+                setLeads={setLeads}
+                handleProjectAdded={(newProject) => {
+                  MySwal.fire({
+                    title: 'success',
+                    text: 'הפרויקט נוצר בהצלחה',
+                    icon: 'success',
+                    confirmButtonText: 'אישור',
+                    customClass: {
+                      confirmButton: 'my-confirm-button'
+                    }
+                  });                 }}
+              />,
               </Provider>,
               container
             );
@@ -317,23 +387,29 @@ const Leads: React.FC = () => {
     setFilters({ ...filters, [key]: e.target.value });
   };
 
-  const filterStatus = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
-    setFilters({ ...filters, [key]: e.target.value });
-    console.log(e.target.value);
-    filterByStatus(e.target.value).then
-      ((response) => {
-        if (response.status === 200) {
-          setFilters({ ...filters, [key]: e.target.value });
-          console.log(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  const toggleFilterInput = (key: keyof typeof filterInputsVisible) => {
-    setFilterInputsVisible({ ...filterInputsVisible, [key]: !filterInputsVisible[key] });
-  };
+ const filterStatus =(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+  setFilters({ ...filters, [key]: e.target.value });
+  console.log(e.target.value);
+   filterByStatus(e.target.value).then
+   ((response) => {
+     if (response.status === 200) {
+      setFilters({ ...filters, [key]: e.target.value }); 
+      console.log(response.data);
+     }
+   })
+   .catch((error) => {  
+     console.log(error);
+   });
+ }
+ const toggleFilterInput = (key: keyof typeof filterInputsVisible) => {
+  setFilterInputsVisible(prevState => {
+    const newState = { ...prevState, [key]: !prevState[key] };
+    if (!newState[key]) {
+      setFilters(prevFilters => ({ ...prevFilters, [key]: '' }));
+    }
+    return newState;
+  });
+};
 
   const filteredLeads = leads.filter(lead => {
     return Object.entries(filters).every(([key, value]) => {
@@ -382,6 +458,9 @@ const Leads: React.FC = () => {
       setLeadsChanges(updatedChanges);
     }
 
+  };
+  const filterLeads = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+    setFilters({ ...filters, [key]: e.target.value });
   };
 
   const filteredLeads2 = filteredLeads.slice(page * leadsPerPage, (page + 1) * leadsPerPage);
@@ -497,38 +576,53 @@ const Leads: React.FC = () => {
           <table className="table">
             <thead>
               <tr>
-                {(['הערות', 'שם העסק', 'תאריך פניה אחרונה', 'מקור הליד', 'סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
-                  <th key={col}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      {col}
-                      <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
-                      </button>
+                {(['הערות', 'שם העסק', 'תאריך פניה אחרונה', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
+                  <th key={col} style={{fontWeight:700}}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    {col}
+                    <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>
+                    </button>
                     </div>
                     <div style={{ display: "flex" }}>
-
-                      {filterInputsVisible[col] && (
-                        col === 'סטטוס' ? (
-                          <select
-                            className='select'
-                            value={filters[col]}
-                            onChange={(e) => filterStatus(e, col)}
-                            style={{ width: "100%" }}
-                          >
-                            <option value="" className='select'>הכל</option>
-                            {statusOptions.map(option => (
-                              <option key={option.key} value={option.value} className='select'>
-                                {option.value}
-                              </option>
-                            ))}
-                          </select>
-                        ) :
-                          <input
-                            // type="text"
-                            value={filters[col]}
-                            onChange={(e) => handleFilterChange(e, col)}
-                            style={{ width: "100%" }}
-                          />
-                      )}
+                      
+                    {filterInputsVisible[col] && (
+                      col === 'סטטוס' ? (
+                        <select
+                        className='select2'
+                       value={filters[col]}
+                       onChange={(e) => filterStatus(e, col)}
+                      style={{ width: "100%" }} 
+                      >
+                     <option value="" className='select'>הכל</option> 
+                    {statusOptions.map(option => (
+                     <option key={option.key} value={option.value} className='select'>
+                     {option.value}
+                    </option>
+                   ))}
+                     </select>
+                      ) : col === 'מקור הליד' ? (
+                        <select
+                          className='select2'
+                          value={filters[col]}
+                          onChange={(e) => filterLeads(e, col)}
+                          style={{ width: "130px" }}
+                        >
+                          <option value="">בחר מקור ליד</option>
+                          {leadSources.map((source) => (
+                            <option key={source} value={source}>{source}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          // type="text"
+                          value={filters[col]}
+                          onChange={(e) => filterLeads(e, col)}
+                          // placeholder={`Filter by ${col}`}
+                          // style={{  alignItems:"left" }}
+                        />
+                        
+                      )
+                    )}
                     </div>
                   </th>
                 ))}
@@ -539,23 +633,34 @@ const Leads: React.FC = () => {
             <tbody>
               {filteredLeads2.map((lead) => (
                 <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
-                  <td style={{ width: '17%', alignItems: 'right' }}>
-                    <NoteColumn notes={lead.notes} leadId={lead.id} addNote={addNote} />
+                  <td style={{width:'17%',alignItems:'right'}}>
+                    <NoteColumn notes={lead.notes} leadId={lead.id}  addNote={addNote} />
                   </td>
                   <td>{lead.businessName}</td>
                   <td>{convertDateTimeToDate(lead.lastContacted)}</td>
-                  <td>{lead.source}</td>
+                  <td style={{width:'11%'}}>
+                  <select
+                        value={lead.source}
+                        onChange={(e) => handleSourceChange(lead.id, e.target.value)}
+                        className={`custom-select`}
+                        style={{    color: '#002046',width:"100%" }}
+                        >
+                        {leadSources.map((source) => (
+                          <option key={source} value={source} className='select' style={{width:"80%"}}  >{source}</option>
+                        ))}
+                      </select>
+                    </td>
                   <td>
-                    <select
-                      value={lead.status}
-                      onChange={(e) => handleStatus2Change(lead.id, e.target.value)}
-                      className={getStatusClass(lead.status)}
-                    >
-                      {statusOptions.map((status) => (
-                        <option key={status.key} value={status.value} className='select'>{status.value}</option>
-                      ))}
-                    </select>
-
+                      <select
+                        value={lead.status}
+                        onChange={(e) => handleStatus2Change(lead.id, e.target.value)}
+                        className={`custom-select ${getStatusClass(lead.status)}`}
+                        >
+                        {statusOptions.map((status) => (
+                          <option key={status.key} value={status.value} className='select'  >{status.value}</option>
+                        ))}
+                      </select>
+                   
                   </td>
                   <td className='email'>{lead.email}</td>
                   <td className='phone'>{lead.phone}</td>
