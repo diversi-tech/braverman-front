@@ -215,24 +215,6 @@ const Leads: React.FC = () => {
            }
   };
 
-
-  const handleSourceChange = async(id: string, newSource: string) => {
-    const updatedLeads = leads!.map((lead) =>
-      lead.id === id ? { ...lead, source: newSource } : lead
-    );
-    setLeads(updatedLeads);
-    const lead =updatedLeads.find((lead)=>lead.id===id);
-    debugger
-    const response = await updateLeadChanges(lead,lead.id);
-    
-    const updatedIndex = leads!.findIndex((l) => l.id === id);
-           if (updatedIndex !== -1) {
-             const updatedChanges = [...leadsChanges!]; 
-             updatedChanges[updatedIndex] = true; 
-             setLeadsChanges(updatedChanges);
-           }
-  };
-
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
