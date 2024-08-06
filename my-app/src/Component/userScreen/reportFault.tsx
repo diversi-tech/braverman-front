@@ -12,6 +12,7 @@ const ReportIssue=() =>{
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
+      
         getProject();
     }, []);
 
