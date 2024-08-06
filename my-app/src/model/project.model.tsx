@@ -11,6 +11,8 @@ export interface Project {
   businessName: string;
   email: string;
   source: string;
+  address: string|null;
+  phone: string|null;
   status: Enum;
   endDate: Date; // Assuming it's a string representation of a date
   balanceStatus:Enum
