@@ -11,5 +11,6 @@ export const importFile = async (fileSelected: any) => {
               console.log(ex);
               alert(" נסה שוב")
        }
-
 }
+
+

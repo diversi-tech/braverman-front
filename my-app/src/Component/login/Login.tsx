@@ -104,7 +104,7 @@ const Login = () => {
 
 
         if (x.data.userType.description === "לקוח")
-          navigate("/projectStatus");
+          navigate("/quickActions");
         else if (x.data.userType.description === "מנהל"){
           navigate("/leads");}
         else
