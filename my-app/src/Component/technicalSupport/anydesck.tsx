@@ -58,6 +58,7 @@ const AnyDeskChecker: React.FC = () => {
     };
     const sendCodeToServer = async () => {
       try {
+        const body = `היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\nהקוד לאנידסק :\n${anyDeskCode}`;
         await sendEmail("תמיכה טכנית", anyDeskCode);
         Swal.fire({
           title: 'נשלח בהצלחה!',

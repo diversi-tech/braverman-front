@@ -4,19 +4,34 @@ import { GetAllProjectPerUser } from '../../api/user.api';
 import { Project } from '../../model/project.model';
 import MoreStatus from '../project/moreStatus';
 import { send } from 'process';
+import { sendEmail } from '../../api/sendEmail.api';
 
 const Feedback=() =>{
     const [project, setProject] = useState<Project | null>(null);
     const [endDate, setEndDate] = useState<string>("");
     const [open, setOpen] = useState(false);
+    const [reportContent, setReportContent] = useState<string>("");
+
 
     useEffect(() => {
         getProject();
     }, []);
 
     const send=()=>{
+      const userEmail = sessionStorage.getItem("userEmail"); // Ensure this is set
+      const subject = "תקלות באתר";
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\nהדיווח שלך:\n${reportContent}`;
 
-    }
+      sendEmail( "דיוות על תקלה באתר", body)
+          .then(response => {
+              if (response.status === 200) {
+                  alert("הודעת הדואל נשלחה בהצלחה");
+              } else {
+                  alert("לא הצלחנו לשלוח את ההודעה");
+              }
+          })
+          .catch(err => console.log(err));
+           }
     const getProject = async () => {
         try {
             debugger
@@ -55,7 +70,8 @@ const Feedback=() =>{
       <p className="description2" >{`היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},נשמח אם תוכל לשתף אותנו במשוב על השרות שקיבלת `}</p>
       <p className="description2">{` 😊!הפידבק שלך חשוב לנו מאד ומשפר את השרות שלנו, תודה רבה`}</p>
 
-      <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"    />
+      <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"  onChange={(e) => setReportContent(e.target.value)}
+  />
 
 <button className='buttonnnn' onClick={() => send()}>
   <p>שליחה</p>

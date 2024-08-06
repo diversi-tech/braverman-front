@@ -32,3 +32,12 @@ export const addTask = async (newTask : Task) => {
         return await res.data;
     }
 }
+export const getTaskById = async (newTask : Task) => {
+return newTask;
+}
+
+export const getTaskStatusChanges = async (newTask : string) => {
+    return null
+}
+
+
