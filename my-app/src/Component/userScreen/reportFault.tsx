@@ -4,6 +4,7 @@ import { GetAllProjectPerUser } from '../../api/user.api';
 import { Project } from '../../model/project.model';
 import MoreStatus from '../project/moreStatus';
 import { send } from 'process';
+import { sendEmail } from '../../api/sendEmail.api';
 
 const ReportIssue=() =>{
     const [project, setProject] = useState<Project | null>(null);
@@ -15,7 +16,15 @@ const ReportIssue=() =>{
     }, []);
 
     const send=()=>{
-
+        sendEmail("test", "test").then(x=>{
+          if(x.status==200){
+            alert("email sent");
+          }
+          else{
+            alert("email not sent");
+          }
+        })
+        .catch(err=>console.log(err))
     }
     const getProject = async () => {
         try {
