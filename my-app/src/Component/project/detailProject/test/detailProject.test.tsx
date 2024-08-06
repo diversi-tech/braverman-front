@@ -12,6 +12,8 @@ const project: Project = {
   businessName: 'JD Inc.',
   email: 'john.doe@example.com',
   source: 'Referral',
+  address: '',
+  phone:'',
   status: {
     id: "string",
     key: "string",

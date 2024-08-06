@@ -24,6 +24,8 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     email: lead.email,
     businessName: lead.businessName,
     source: lead.source,
+    address:"",
+    phone:"",
     totalPrice: 0,
     pricePaid: 0,
     urlDrive: '',
@@ -40,7 +42,7 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
   };
 
   const handleSubmit = async () => {
-    const { firstName, lastName, email, businessName, source, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
+    const { firstName, lastName, email, businessName, source,address,phone, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
 
     if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
       alert('יש למלא את כל השדות');
@@ -58,6 +60,8 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       businessName,
       email,
       source,
+      address,
+      phone,
       status: selectedStatus!,
       endDate: new Date(),
       balanceStatus: selectedBalanceStatus!,

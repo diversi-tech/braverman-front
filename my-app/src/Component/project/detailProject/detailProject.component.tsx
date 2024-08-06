@@ -43,7 +43,7 @@ const ProjectDetail: React.FC<{ project: Project }> = ({ project }) => {
           </div>
         )}
         <div className='text'>סטטוס פרויקט: {project.status.value}</div>
-        <div className='text'>כתובת הלקוח:</div>
+        <div className='text'>כתובת הלקוח:{project.address}</div>
         <div className='text'>תאריך סיום: {convertDateTimeToDate(project.endDate)}</div>
       </div>
     </div>
