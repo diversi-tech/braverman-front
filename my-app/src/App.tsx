@@ -5,7 +5,7 @@ import Nav from './Component/nav/nav.component';
 import Leads from './Component/leads/leads.component';
 import ContactOptions from './Component/ContactOption/ContactOption';
 import ChatForm from './Component/ContactOption/Chat';
-import MoreStatus from './Component/project/moreStatus';
+
 
 
 
@@ -26,7 +26,6 @@ const App = () => {
     <ChatForm></ChatForm> */}
       <Nav />
       <Outlet />
-      <MoreStatus ></MoreStatus>
     </>
   );
 };

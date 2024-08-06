@@ -569,7 +569,7 @@ const Leads: React.FC = () => {
   return (
     <div className="page-container">
       <div className="lead-management-container">
-        <h1 className="lead-management-title">ניהול לידים</h1>
+        <p className="lead-management-title">ניהול לידים</p>
         <div className="search-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
         </div>
         <div className="table-container">
@@ -577,7 +577,7 @@ const Leads: React.FC = () => {
             <thead>
               <tr>
                 {(['הערות', 'שם העסק', 'תאריך פניה אחרונה', 'מקור הליד','סטטוס', 'אימייל', 'טלפון', 'שם משפחה', 'שם פרטי'] as const).map((col) => (
-                  <th key={col} style={{fontWeight:700}}>
+                  <th key={col} style={{fontWeight:700,fontSize:"15px"}}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     {col}
                     <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown  style={{ marginTop:  "5px" , alignItems: "center" }}/>

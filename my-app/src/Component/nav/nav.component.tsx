@@ -68,7 +68,7 @@ const Nav = () => {
                       <li className={`nav-item ${location.pathname.includes('/taskCategories') ? 'active' : ''}`}><Link to={'taskCategories'}>ניהול משימות</Link></li>
      </>) :
 
-                      <p style={{fontSize:"20px"}}>הזן פרטי גישה כדי להתחבר למערכת</p>
+                      <p style={{fontSize:"17px"}}>הזן פרטי גישה כדי להתחבר למערכת</p>
                 }
               </ul>
             </nav>
