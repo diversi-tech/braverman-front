@@ -22,18 +22,15 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
         taskName: '',
         assignedTo: '',
         projectId: '',
-        comment: '',
         taskCategory: {} as TaskCategory,
         levelUrgency: levelUrgencyStatus[0] || {} as Enum, // Default value
         taskStatus: taskStatus.find(status => status.key === '1') || {} as Enum ,// Default to 'TODO'
-        description: ''
+        description: '', 
     });
     const [errors, setErrors] = useState({
         taskName: '',
         assignedTo: '',
         projectId: '',
-        comment: '',
-        // description: '',
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,8 +89,8 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
     };
 
     const handleAddTask = async () => {
-        const { taskName, assignedTo, projectId, levelUrgency, taskStatus, taskCategory, description } = formValues;
-        if (!taskName || !assignedTo || !projectId || !levelUrgency.value || !taskStatus.value || !taskCategory) {
+        const { taskName, assignedTo, projectId, levelUrgency, taskStatus, taskCategory, description} = formValues;
+        if (!taskName || !assignedTo || !projectId || !levelUrgency.key || !taskStatus.value || !taskCategory) {
             Swal.fire('Error', 'אנא מלא את כל השדות', 'error');
             return;
         }
@@ -105,6 +102,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             projectId: projectId,
             taskCategory: taskCategory,
             status: taskStatus,
+            startDate: new Date(),
             canBeApprovedByManager: null,
             levelUrgencyStatus: levelUrgency.key,
             description: description,
