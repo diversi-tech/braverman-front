@@ -11,6 +11,7 @@ import ChatBot from "react-chatbotify";
 import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
 import { SendAnnouncement } from "./SendAnnouncement";
 import './ShowProjectStatus.css'
+import DocumentViewer from "./DocumentViewer";
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
@@ -231,8 +232,9 @@ const Show = ({ props }: any) => {
         flexWrap: "wrap",
       }}
     >
-      <div style={{ width: "100%", textAlign: "center" }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div> 
-        {p.statusProject == "3" ?
+
+      <div style={{ width: "100%", textAlign: "center" }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
+  {p.statusProject == "3" ?
           <div>
             <CheckCircleOutlineTwoTone />
             <p>הפרויקט הושלם בהצלחה!</p>

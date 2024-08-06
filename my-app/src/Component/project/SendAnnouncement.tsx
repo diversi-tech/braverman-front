@@ -15,10 +15,12 @@ export const SendAnnouncement = (nameProject:any) => {
     await sendEmailToRivky(`mail from:${nameProject}`,message);
     // כאן תוכל להוסיף לוגיקה לשליחת המייל, לדוגמה fetch או קריאה לפונקציה שתעטוף שליחת מייל
     console.log('הודעה נשלחה:', message);
+    alert("👍👍sucsses sending  Email😆😆👍👍")
     setMessage('');
   };
 
   return (
+    
     <div className="contact-form">
       <div className="arrow-icon"></div>
       <div className="title">דברו איתי</div>
