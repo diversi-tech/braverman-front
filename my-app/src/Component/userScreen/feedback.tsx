@@ -26,7 +26,7 @@ const Feedback=() =>{
       const subject = "שליחת פידבק";
       const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח פידבק:\n${reportContent}`;
 
-      sendEmail( "דיוות על תקלה באתר", body)
+      sendEmail( "פידבק חדש", body)
           .then(response => {
               if (response.status === 200) {
                 MySwal.fire({
@@ -82,7 +82,7 @@ const Feedback=() =>{
 
   return (
     <div className='div2'>
-      {project && project.endDate && <MoreStatus project={project}></MoreStatus>}
+      {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
     <div className="report-issue">
       <p className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}>😊 נשמח לפידבק </p>
       <p className="description2" >{`היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},נשמח אם תוכל לשתף אותנו במשוב על השרות שקיבלת `}</p>

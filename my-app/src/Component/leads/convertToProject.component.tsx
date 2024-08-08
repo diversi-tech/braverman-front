@@ -77,7 +77,7 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       urlFigma,
       freeText,
       workLog: [],
-      stageStatus: selectedStatus,
+      stageStatus: selectedStatus!,
 
     };
 

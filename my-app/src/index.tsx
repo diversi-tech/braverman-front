@@ -26,7 +26,8 @@ import Feedback from './Component/userScreen/feedback';
 import UrgentTasksTable from './Component/dashboard/urgentTasks';
 import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
-import AnyDeskChecker from "./Component/technicalSupport/anydesck";
+import AnyDeskChecker from "./Component/userScreen/anyDesk";
+import DocumentViewer from './Component/userScreen/DocumentViewer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -59,6 +60,8 @@ root.render(
             <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
             <Route path='/chat' element={<ChatTable />} ></Route>
             <Route path='/support' element={<AnyDeskChecker />} ></Route>
+            <Route path='/documents' element={<DocumentViewer />} ></Route>
+
           </Route>
         </Routes>
       </HashRouter>

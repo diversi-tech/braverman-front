@@ -5,6 +5,7 @@ import axios from "axios";
 import ReactWhatsapp from "react-whatsapp";
 import { Project } from "../../../../model/project.model";
 import { GetAllProjectPerUser } from "../../../../api/user.api";
+import { sendEmail } from "../../../../api/sendEmail.api";
 
 const MyChatBot2: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -79,7 +80,7 @@ const MyChatBot2: React.FC = () => {
   };
 
   const sendInvoice = async (params: any) => {
-    // Implement invoice sending logic here
+    
   };
 
   const moreHelp = async (params: any) => {
@@ -105,6 +106,17 @@ const MyChatBot2: React.FC = () => {
   </ReactWhatsapp>
     )
   }
+
+  const sendEmail2 = async (emailContent: string) => {
+    try {
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח דיווח בצאט בוט:\n${emailContent}`;
+      const response = await sendEmail( "צאט בוט ", body)
+      return response.status === 200 ? 'המייל נשלח בהצלחה' : 'הייתה בעיה בשליחת המייל';
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return 'הייתה בעיה בשליחת המייל';
+    }
+  };
 
   const flow: Flow = {
     start: {
@@ -192,7 +204,23 @@ const MyChatBot2: React.FC = () => {
       path: (params) => contect(params),
     },
     email: {
-      message:"פתיחת שיחה במייל"
+      message: "אנא הכנס את תוכן המייל שברצונך לשלוח:",
+      // input: true,
+      path: async (params) => {
+        const userMessage = params.userInput;
+        const emailResponse = await sendEmail2(userMessage);
+        return emailResponse === 'המייל נשלח בהצלחה' ? 'email_sent' : 'email_failed';
+      },
+    },
+    email_sent: {
+      message: "המייל נשלח בהצלחה. האם יש משהו נוסף שאוכל לעזור בו?",
+      options: ["כן", "לא"],
+      path: (params) => moreHelp(params),
+    },
+    email_failed: {
+      message: "הייתה בעיה בשליחת המייל. האם תרצה לנסות שוב?",
+      options: ["כן", "לא"],
+      path: (params) => moreHelp(params),
     },
 
     end: {

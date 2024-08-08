@@ -39,7 +39,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
   const projectActive = projects.filter((project) =>
     project.status.value !== "בוצע" &&
     project.businessName.includes(filterText) &&
-    project.phone.includes(filterPhone)&&
+    project.phone?.includes(filterPhone)&&
     project.source.includes(filterSource) &&
     `${project.firstName} ${project.lastName}`.includes(filterName) &&
     project.email.includes(filterEmail)).slice(page * leadsPerPage, (page + 1) * leadsPerPage);
@@ -252,7 +252,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
           <tr className='row'>
             <td></td>
 
-            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>שם העסק
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700'  }}>שם העסק
 
               <br></br>
               <button className="filter" onClick={() => {
@@ -284,7 +284,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>סוג הפרויקט
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>סוג הפרויקט
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "סוג הפרויקט": !filterInputsVisible["סוג הפרויקט"] })
@@ -307,7 +307,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>איש קשר
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>איש קשר
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "איש קשר": !filterInputsVisible["איש קשר"] })
@@ -329,7 +329,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "center", fontSize: '10.5px', fontWeight: '700' }}>טלפון
+            <td style={{ textAlign: "center", fontSize: '13.5px', fontWeight: '700' }}>טלפון
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "טלפון": !filterInputsVisible["טלפון"] })
@@ -372,7 +372,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ textAlign: "right", fontSize: '10.5px', fontWeight: '700' }}>סטטוס פרויקט
+            <td style={{ textAlign: "right", fontSize: '13.5px', fontWeight: '700' }}>סטטוס פרויקט
               <br></br>
               <button className="filter" onClick={() => {
                 setFilterInputsVisible({ ...filterInputsVisible, "סטטוס": !filterInputsVisible["סטטוס"] })
@@ -403,7 +403,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </div>
             </td>
 
-            <td style={{ width: 'auto', fontWeight: '700', marginBottom: '3px', fontSize: '10.5px' }} className="links-column" >לינקים
+            <td style={{ width: '130px', fontWeight: '700', marginBottom: '3px', fontSize: '13.5px' }} className="links-column" >לינקים
               <br></br>
               <HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
             </td>
@@ -421,7 +421,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                     onClick={() => handleButtonClick(project.projectId)}
 
                   >
-                    <span style={{ fontSize: '17px', cursor: 'pointer' }}>
+                    <span style={{ fontSize: '14px', cursor: 'pointer' }}>
                       {project.projectId === expandedRow ? '-' : '+'}
                     </span>
                   </button>
@@ -435,7 +435,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
                 <td>
                   <Links project={project}></Links>
                 </td>
-                <td>
+                <td style={{padding:'0px'}}>
                   <button
                     className='buttonCircle'
                     onClick={() => handleEditClick(project)}
@@ -464,7 +464,7 @@ const ActiveProjects: React.FC<{ onChangeStatus: () => void }> = ({ onChangeStat
               </tr>
               {expandedRow === project.projectId && (
                 <tr>
-                  <td colSpan={9} style={{ padding: '10px' }}>
+                  <td colSpan={9} style={{ padding: '0px' }}>
                     <MainDetailProject detailsProject={project} />
                   </td>
                 </tr>

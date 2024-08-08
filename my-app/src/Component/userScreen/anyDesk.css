@@ -1,0 +1,50 @@
+.send-code-button{
+    width: 1000px;
+height: 95px;
+top: 721px;
+left: 274px;
+gap: 0px;
+border-radius: 15px 0px 0px 0px;
+border: 1px 0px 0px 0px;
+
+}
+ 
+  
+  .send-code-button input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .send {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .message {
+    margin-right: 100px;
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+  }
+  
+  .message a {
+    text-decoration: none;
+  }
+  
+  .message a:hover {
+    text-decoration: underline;
+  }
+  
+  .message br {
+    margin-bottom: 10px;
+  }
+
+  
+  
+  
