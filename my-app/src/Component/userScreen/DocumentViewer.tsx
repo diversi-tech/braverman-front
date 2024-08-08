@@ -52,7 +52,7 @@ const [loading, setLoading] = useState<boolean>(false);
           setDocuments(documents);
         } catch (error) {
           console.error('Error:', error);
-          alert('An error occurred');
+          console.log('An error occurred');
         } finally {
           setLoading(false);
         }
