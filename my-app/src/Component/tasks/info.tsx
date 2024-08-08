@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { getTaskStatusChanges } from "../../api/task.api";
 import { logs } from "../../model/logs.model";
+import React from "react";
 
 export const Info = () => {
     const [logData, setLogData] = useState<logs[] | null>(null); // אתחול ל-null
