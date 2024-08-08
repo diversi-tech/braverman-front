@@ -19,7 +19,6 @@ interface AddLeadFormProps {
     setLeads: React.Dispatch<React.SetStateAction<Lead[]>>;
     handleLeadAdded: (newLead: Lead) => Promise<void>;
   }
-
   const AddLeadForm: React.FC<AddLeadFormProps> = ({leads, setLeads, handleLeadAdded }) => {
     const [formValues, setFormValues] = useState({
       firstName: '',
