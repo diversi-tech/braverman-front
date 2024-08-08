@@ -34,7 +34,7 @@ import AddTaskForm from "./addTask.component";
 import { setAllTaskStatus } from "../../Redux/enum/taskStatusAction";
 import TaskEdit from "./editTask.component";
 import { User } from "../../model/user.model";
-import { getUsers } from "../../api/user.api";
+import { getUserById, getUsers } from "../../api/user.api";
 import { setAllUsers } from "../../Redux/User/userAction";
 import { getTaskCategories } from "../../api/taskCategory.api";
 import { TaskCategory } from "../../model/taskCategory.model";
@@ -134,7 +134,7 @@ export const Tasks = () => {
     const fetchDataLead = async () => {
         try {
             let data;
-            if (leadsState.allLeads.length) {
+            if (leadsState.allLeads?.length) {
                 data = leadsState.allLeads;
             } else {
                 const resAllLeads = await getAllLeads();
@@ -166,14 +166,24 @@ export const Tasks = () => {
     };
 
     const fetchDataTask = async () => {
+        debugger
         try {
             let data;
-            if (tasksState.allTask.length) {
+            if (tasksState.allTask?.length) {
                 data = tasksState.allTask;
             }
             else {
                 const resAllTask = await getAllTaskFromServer();
-                data = resAllTask;
+                const userId=sessionStorage.getItem("userId");
+                const usertpy=sessionStorage.getItem("userType");
+                console.log(usertpy)
+                console.log("resAllTask "+resAllTask)
+                console.log("resAllTask.assignedTo "+resAllTask.assignedTo)
+                console.log("userId "+userId)
+
+                if(resAllTask.assignedTo==userId&&usertpy!="מנהל")
+                    {console.log("=============")
+                   data = resAllTask;}
                 dispatch(setAllTask(resAllTask));
             }
             setTasks(data);
@@ -186,7 +196,7 @@ export const Tasks = () => {
     const fetchDataLevel = async () => {
         try {
             let data;
-            if (levelState.allEnums.length) {
+            if (levelState.allEnums?.length) {
                 data = levelState.allEnums;
             }
             else {
@@ -206,7 +216,7 @@ export const Tasks = () => {
         try {
             let data;
             console.log(taskStatusState.allTaskStatus);
-            if (taskStatusState.allTaskStatus.length) {
+            if (taskStatusState.allTaskStatus?.length) {
                 data = taskStatusState.allTaskStatus;
             }
             else {
@@ -228,7 +238,7 @@ export const Tasks = () => {
         try {
             let data;
             console.log(projectState.allProject);
-            if (projectState.allProject.length) {
+            if (projectState.allProject?.length) {
                 data = projectState.allProject;
             }
             else {
