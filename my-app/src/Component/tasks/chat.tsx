@@ -15,7 +15,7 @@ const ChatTable = () => {
 
     useEffect(() => {
         debugger
-        axios.get(`${apiUrl}/${sessionStorage.getItem("userId")}`)
+        axios.get(`${apiUrl}${sessionStorage.getItem("userId")}`)
             .then(response => {
                 setMessages(response.data);
             });
@@ -29,7 +29,7 @@ const ChatTable = () => {
         else
            userId2=sessionStorage.getItem("userId")
         const message = {id: '' , sender:sessionStorage.getItem("userType"), content: newMessage ,Timestamp: new Date().toISOString(), userId:userId2};
-        axios.post('`${apiUrl}/Chat', message)
+        axios.post(`${apiUrl}Chat`, message)
             .then(response => {
                 setMessages([...messages, response.data]);
                 setNewMessage('');
