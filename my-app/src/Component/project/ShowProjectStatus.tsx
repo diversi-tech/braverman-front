@@ -227,7 +227,7 @@ const Show = ({ props }: any) => {
       }}
     >
 
-      <div style={{ width: "100%", textAlign: "center" }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
+      <div style={{ width: "100%", textAlign: "center",marginTop:'40px' }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
   {p.statusProject == "3" ?
           <div>
             <CheckCircleOutlineTwoTone sx={{
@@ -238,11 +238,12 @@ const Show = ({ props }: any) => {
             <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
-          (<p style={{ fontSize: "170%", fontWeight: "bold" }}>שלבי הפרויקט:</p> &&
+          (<p style={{ fontSize: "170%", fontWeight: "bold" ,marginTop:"5%" }}>שלבי הפרויקט:</p> &&
             p.tashsShow?.map(t => (t?.categoryName != "" &&
               <>
+             
                 <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
-                  {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
+                  {t.key == "4" ? <CheckCircleOutlineTwoTone style={{marginTop:'15px', marginLeft:'8px' }} /> : <RadioButtonUncheckedIcon  style={{marginTop:'15px', marginLeft:'8px'}}/>}
                   {p.stat == t.categoryName
                     ? <p style={{ backgroundColor: "#F1F7FF", borderRadius: 3, }}>{t.categoryName}</p>
                     : <p>{t.categoryName}</p>}
