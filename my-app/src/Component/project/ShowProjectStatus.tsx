@@ -12,8 +12,6 @@ import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
-
-  
   const listProject = {
     projectId: null,
     firstName: "string",
@@ -73,13 +71,11 @@ export const ShowProjectStatus = () => {
   };
   const [data, setData] = useState([{ ...listProject }]);
   const [goShow, setgoShow] = useState({ projectName: "" });
-
   // האוביקטים הבאים לצורך התצוגה
   let taskShow = {
     taskCategoryName: "",
     status: 1,
   }
-
   const getUniqueTasksWithLowestStatus = (tasksProject: { [key: string]: any }[]) => {
     const taskMap = new Map();
     let countNoFinishTask = 0;
@@ -96,7 +92,6 @@ export const ShowProjectStatus = () => {
     return Array.from(taskMap.values());
   }
   let progectShow = {
-    // fromShowProject:false,
     projectName: "",
     statusProject: "",
     stat: "",
@@ -120,7 +115,6 @@ export const ShowProjectStatus = () => {
       }; task();
     }
   });
-
   //============2======================
   // הכנסת הנתונים לתצוגה
   if (data[0]?.projectId && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
@@ -135,7 +129,6 @@ export const ShowProjectStatus = () => {
         pricePaid: data[i].pricePaid,
         tashsShow: [{ key: "", categoryName: "" }]
       };
-
       const tasksProject = data[i].tasks;
       if (data[i].status.key == "3") { progectShow.stat = "" }
       else {
@@ -166,7 +159,6 @@ export const ShowProjectStatus = () => {
 
       {goShow.projectName != '' ? <Show props={goShow}></Show>
         : <Show props={show[0]}></Show>}
-
 <div style={{ paddingRight: "12%" }}>
         {/* <compunent stay me ansowor/> */}
         <div>

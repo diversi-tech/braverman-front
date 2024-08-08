@@ -1,4 +1,3 @@
-import { TaskStatus } from "../enum/taskStatus.enum";
 import { Enum } from "./enum.model";
 
 import { TaskCategory } from "./taskCategory.model";
@@ -15,5 +14,5 @@ export interface Task {
 
   LastUpdateStatusUserId:string;
   description: string;
-   startDate: Date;
+  startDate: Date;
 }

@@ -7,7 +7,6 @@ import { updateProject } from '../../../../api/project.api';
 import { Enum } from '../../../../model/enum.model';
 import { getStatusProject } from '../../../../api/projectStatus.api';
 import { setAllStatusProject } from '../../../../Redux/Project/projectStatusAction';
-import { log } from 'console';
 import Rtl from '../../../rtl/rtl';
 
 interface UpdateLeadProps {
@@ -27,6 +26,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
         lastName: prod.lastName,
         email: prod.email,
         status: prod.status,
+        address:prod.address,
     });
 
     useEffect(() => {
@@ -144,7 +144,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
              <TextField
                 name="adress"
                 label="כתובת"
-                value={"adress" || ''}
+                value={formValues.address}
                 onChange={handleChange}
                 fullWidth
                 multiline

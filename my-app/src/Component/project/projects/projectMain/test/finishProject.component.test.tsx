@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import ProjectFinish from '../finishProject.component';
 import { deleteProject, getProject } from '../../../../../api/project.api';
 
-// Mocking the API module
 jest.mock('../../../../../api/project.api', () => ({
   getProject: jest.fn(),
   deleteProject: jest.fn(),

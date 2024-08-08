@@ -34,7 +34,7 @@ const BarChart = () => {
         const fetchData = async () => {
             try {
                 let data;
-                if (leadsState.allLeads.length) {
+                if (leadsState.allLeads?.length) {
                     data = leadsState.allLeads;
                 } else {
                     const resAllLeads = await getAllLeads();
@@ -44,7 +44,7 @@ const BarChart = () => {
                 setLeads(data);
 
                 let statusData;
-                if (leadStatus.allStatusLead.length) {
+                if (leadStatus.allStatusLead?.length) {
                     statusData = leadStatus.allStatusLead;
                 } else {
                     const resAllStatusLeads = await getAllEnumFromServer(5);
@@ -61,7 +61,7 @@ const BarChart = () => {
     }, [dispatch, leadsState.allLeads, leadStatus.allStatusLead]);
 
     useEffect(() => {
-        if (leads.length > 0) {
+        if (leads?.length > 0) {
             statusCount();
         }
     }, [leads, selectedDate]);
