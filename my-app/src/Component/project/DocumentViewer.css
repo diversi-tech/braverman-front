@@ -1,0 +1,48 @@
+/* Rectangle 4 */
+.container {
+    position: absolute;
+    width: 1784px;
+    left: calc(50% - 1784px / 2);
+    top: 30.96%;
+    bottom: 6.25%;
+    background: #FFFFFF;
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    direction: rtl; /* תומך בסידור מימין לשמאל */
+  }
+  
+  /* כללית */
+  .column-header {
+    font-family: 'Ping HL';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 80.1%;
+    text-align: center;
+    color: #002046;
+    margin: 0;
+    padding: 10px;
+    background: #f0f0f0; /* רקע קל לצורך הבחנה */
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* פריסת עמודות */
+  .document-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 40px; /* רווח בין הכותרות לרשימות */
+    direction: rtl; /* תומך בסידור מימין לשמאל */
+  }
+  
+  /* העמודות הספציפיות */
+  .document-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-family: 'Ping HL';
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center; /* ממרכז את התוכן בתוך כל תא */
+  }
+  .header-svg{text-align: center;}
