@@ -15,7 +15,7 @@
   }
   #payments-title {
     margin-top: 27px;
-    font-family: 'Ping HL';
+    font-family: 'CustomFont';
     font-style: normal;
     font-weight: 700;
     font-size: 13px;
@@ -46,7 +46,7 @@
     margin-right: 10px; 
   }
   .payment-text {
-    font-family: 'Ping HL';
+    font-family: 'CustomFont';
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
