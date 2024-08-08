@@ -16,7 +16,16 @@
     left: 10px;
     background-color: #002046;
     transform: rotate(45deg);
-  }
+  }.allDocument{
+margin-left: 50px;
+    position: absolute;
+    width: 95%;
+    top: 20.96%;
+    bottom: 6.25%;
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 15px;
+    }
   .title {
     font-family: 'CustomFont'!important;
     text-align: center;
