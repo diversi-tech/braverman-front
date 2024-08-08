@@ -170,8 +170,8 @@ interface AddLeadFormProps {
           multiline
           value={formValues.phone}
           onChange={handleChange}
-          error={!!errors.phone}
-          helperText={errors.phone}
+          // error={!!errors.phone}
+          // helperText={errors.phone}
 
         />
         <TextField
