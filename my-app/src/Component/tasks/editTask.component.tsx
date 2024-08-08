@@ -12,6 +12,7 @@ import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
 import { IconButton, ListItemIcon, Menu, MenuItem, Select } from '@mui/material';
 import { UpDateTask } from '../../api/task.api';
 import { Enum } from '../../model/enum.model';
+import { importFile } from '../../api/upFileTDrive';
 interface editTask {
   selectedTaskId: string;
   tasks: Task[];
@@ -20,14 +21,26 @@ interface editTask {
   levelUrgencyStatus: Enum[];
   setRef: React.Dispatch<React.SetStateAction<Boolean>>;
 }
+interface Task2 {
+  description: string;
+  files: File[];
+}
+
 
 const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, levelUrgencyStatus, setRef }) => {
 
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [task, setTask] = useState<Task2>({ description: '', files: [] });
+
   const open3 = Boolean(anchorEl2);
   const open2 = Boolean(anchorEl);
 
+
+  const drive=async () =>{
+    await importFile(task.files[0])
+   }
+   
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
@@ -82,6 +95,14 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${day}/${month}/${year}`;
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setTask((prevTask) => ({ ...prevTask, files: [...prevTask.files, ...newFiles] }));
+      drive();
+    }
   };
 
   return (<>
@@ -140,7 +161,7 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
             <p>        </p>
           </div>
 
-
+      
           <div>רמת דחיפות</div>
           <div className='prop'>
             <p>        </p>
@@ -217,11 +238,30 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
         </div>
         <br />
         <div id='files'>
-          <div><AttachFileRoundedIcon /></div>
-          <div>העלאת קבצים נוספים:</div>
+          {/* <div><AttachFileRoundedIcon /></div>
+          <div>העלאת קבצים נוספים:</div> */}
+          <form onSubmit={(e) => e.preventDefault()}>
+        <div id="ab">
+          <label htmlFor="file-upload" className="upload-label">
+          <AttachFileRoundedIcon />
+            <span > :העלאת קבצים נוספים</span>
+            <input
+              id="file-upload"
+              type="file"
+              multiple
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+          </label>
+          <div id="aaa">
+            {/* <h3>קבצים מצורפים :</h3> */}
+          </div>
+        </div>
+     
+      </form>
         </div>
       </div>
-      <div className='document'><Documents></Documents></div>
+      {/* <div className='document'><Documents></Documents></div> */}
     </div >
   </>);
 };
