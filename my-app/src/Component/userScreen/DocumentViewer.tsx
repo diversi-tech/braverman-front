@@ -39,7 +39,6 @@ const DocumentViewer: React.FC= () => {
 const [loading, setLoading] = useState<boolean>(false);
 console.log(sessionStorage.getItem("email"))
 const email=sessionStorage.getItem("email")
-  debugger
   // שימוש ב-useEffect לטעינת המסמכים בעת טעינת הקומפוננטה
   useEffect(() => {
     const fetchDocuments = async () => {
