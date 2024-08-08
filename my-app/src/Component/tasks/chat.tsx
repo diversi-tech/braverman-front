@@ -11,9 +11,11 @@ interface Files {
 const ChatTable = () => {
     const [messages, setMessages] = useState<Chat[]>([]);
     const [newMessage, setNewMessage] = useState('');
+    const apiUrl = process.env.REACT_APP_BRAVERMAN
+
     useEffect(() => {
         debugger
-        axios.get(`https://localhost:7119/${sessionStorage.getItem("userId")}`)
+        axios.get(`${apiUrl}/${sessionStorage.getItem("userId")}`)
             .then(response => {
                 setMessages(response.data);
             });
