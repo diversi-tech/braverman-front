@@ -8,8 +8,14 @@ import { styled } from '@mui/material/styles';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { teal, pink } from '@mui/material/colors';
-import { UpDateTask } from "../../api/task.api"; // Import the update function
+import { UpDateTask } from "../../api/task.api"; 
 import Rtl from '../rtl/rtl';
+import { Project } from '../../model/project.model';
+import { getProject } from '../../api/project.api';
+import { setAllProject } from '../../Redux/Project/projectAction';
+import { getUsers } from '../../api/user.api';
+import { setAllUsers } from '../../Redux/User/userAction';
+import { User } from '../../model/user.model';
 
 const CardContainer = styled(Grid)({
   display: 'flex',
@@ -55,22 +61,58 @@ const IconContainer = styled('div')({
 
 const UrgentTasksCard: React.FC = () => {
   const tasksState = useSelector((state: { Task: { allTask: Task[] } }) => state.Task.allTask);
+  const projectState = useSelector((state: { Project: { allProject: { [key: string]: Project[] } } }) => state.Project);
+
+  const [project, setProject] = useState<Project[]>([]);
   const dispatch = useDispatch();
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+  const [users, setUsers] = useState<User[]>([])
 
   // Function to fetch user info from session
   const getUserFromSession = () => {
     // Assume we get user info from session storage or a context
-    return sessionStorage.getItem('firstName') || '';
+    return sessionStorage.getItem('userId') || '';
   };
 
   useEffect(() => {
     fetchDataTask();
+    fetchDataProject();
+    fetchDataUser();
   }, []);
+
+
+  const fetchDataUser = async () => {
+    let data;
+    const resAllUsers = await getUsers();
+    data = resAllUsers;
+    dispatch(setAllUsers(data));
+    setUsers(data);
+};
+
+  const fetchDataProject = async () => {
+    try {
+        let data;
+        console.log(projectState.allProject);
+        if (projectState.allProject.length) {
+            data = projectState.allProject;
+        }
+        else {
+            const resAllproject = await getProject();
+            data = resAllproject.data;
+            console.log("resAllproject", data);
+            dispatch(setAllProject(resAllproject));
+        }
+        setProject(data);
+    }
+    catch (error) {
+        console.error('Error fetching task:', error);
+    }
+}
+
 
   const fetchDataTask = async () => {
     try {
@@ -82,12 +124,14 @@ const UrgentTasksCard: React.FC = () => {
         data = resAllTask;
         dispatch(setAllTask(resAllTask));
       }
-
+      debugger
       const now = new Date();
       const threeDaysAgo = new Date(now);
       threeDaysAgo.setDate(now.getDate() - 3);
 
       const filtered = data.filter(task => {
+        console.log("task.startDate", task.startDate);
+        
         const createdAtDate = new Date(task.startDate);
         return task.levelUrgencyStatus === '4' && createdAtDate < threeDaysAgo;
       });
@@ -98,6 +142,25 @@ const UrgentTasksCard: React.FC = () => {
       setError('Error fetching tasks');
       setLoading(false);
     }
+  };
+
+  const convertDateTimeToDate = (date: any) => {
+    debugger
+    if (date == null)
+      return;
+    if (typeof date === 'string')
+      if (date.includes('-')) {
+        date = new Date(date);
+      } else {
+        return date;
+      }
+    if (isNaN(date))
+      return date;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${day}/${month}/${year}`;
   };
 
   const handleAssignTask = async (taskId: string) => {
@@ -156,15 +219,29 @@ const UrgentTasksCard: React.FC = () => {
                 <IconContainer style={{ textAlign: 'right',direction: 'rtl'}}>
                   <AccessAlarmIcon style={{ color: pink[500] }} />
                   <Typography variant="body2" style={{ textAlign: 'right' }}>
-                    <strong > אחראית משימה:  </strong> {task.assignedTo || 'Not assigned'}
+                  <strong>אחראית משימה:
+                  {users
+                .filter(user => user.id === task.assignedTo)
+                 .map(user => (
+                 <div key={user.id}>
+                {user.firstName} {user.lastName}
+                  </div>
+                 ))}
+                 </strong>
+                    {/* <strong > אחראית משימה:  </strong> {task.assignedTo || 'Not assigned'} */}
                   </Typography>
                 </IconContainer>
                 <Typography variant="body2" style={{textAlign: 'right'}}>
                   <strong>תאור: </strong> {task.description || 'אין תאור'}
                 </Typography>
                 <Typography variant="body2" style={{textAlign: 'right'}}>
-                {task.projectId}   <strong> :פרויקט </strong> 
-                </Typography>
+                {project
+                .filter(proj => proj.projectId === task.projectId)
+                 .map(proj => (
+                 <div key={proj.projectId}>
+                  <strong>פרויקט: </strong>{proj.businessName}
+                  </div>
+                 ))}</Typography>
                 <Typography variant="body2" style={{textAlign: 'right'}}>
                   <strong> שם קטגוריה: </strong> {task.taskCategory.categoryName}
                 </Typography>
@@ -172,7 +249,7 @@ const UrgentTasksCard: React.FC = () => {
                <strong>סטטוס:  </strong>דחוף
                 </Typography>
                 <Typography variant="body2" style={{textAlign: 'right'}}>
-                  <strong> תאריך יצירה: </strong> {new Date(task.startDate).toLocaleDateString()}
+                  <strong> תאריך יצירה: </strong> {convertDateTimeToDate(task.startDate) || 'Not set'}
                 </Typography>
                 {/* {task.assignedTo === '' && ( */}
                   <IconButton onClick={() => handleAssignTask(task.taskId)}>

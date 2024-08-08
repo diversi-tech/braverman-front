@@ -24,18 +24,15 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
         taskName: '',
         assignedTo: '',
         projectId: '',
-        comment: '',
         taskCategory: {} as TaskCategory,
         levelUrgency: levelUrgencyStatus[0] || {} as Enum, // Default value
-        taskStatus: taskStatus.find(status => status.key === '1') || {} as Enum ,// Default to 'TODO'
-        description: ''
+        taskStatus: taskStatus.find(status => status.key === '1') || {} as Enum,// Default to 'TODO'
+        description: '',
     });
     const [errors, setErrors] = useState({
         taskName: '',
         assignedTo: '',
         projectId: '',
-        comment: '',
-        // description: '',
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +92,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
 
     const handleAddTask = async () => {
         const { taskName, assignedTo, projectId, levelUrgency, taskStatus, taskCategory, description } = formValues;
-        if (!taskName || !assignedTo || !projectId || !levelUrgency.value || !taskStatus.value || !taskCategory) {
+        if (!taskName || !assignedTo || !projectId || !levelUrgency.key || !taskStatus.value || !taskCategory) {
             Swal.fire('Error', 'אנא מלא את כל השדות', 'error');
             return;
         }
@@ -106,12 +103,12 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             assignedTo: assignedTo,
             projectId: projectId,
             taskCategory: taskCategory,
-            startDate: new Date(),
             status: taskStatus,
             canBeApprovedByManager: null,
+            LastUpdateStatusUserId:null,
             levelUrgencyStatus: levelUrgency.key,
-            LastUpdateStatusUserId:sessionStorage.getItem("userId"),
-            description: description
+            description: description,
+            startDate: new Date(),
         };
 
         await handleTaskAdded(newTask);
@@ -119,7 +116,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
 
     return (
         <div>
-          <Rtl>
+           <Rtl>
             <TextField
                 dir='rtl'
                 autoFocus
@@ -136,14 +133,17 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             />
             <FormControl fullWidth margin="dense">
                 <InputLabel>שם העובדת</InputLabel>
+                
                 <Select
+                     input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="שם העובדת" />}
+                    sx={{direction:'ltr'}}
                     name="assignedTo"
                     value={formValues.assignedTo}
                     onChange={(e) => handleAssignedTo(e, 'assignedTo')}
                 >
                     {user && user.length && user.map(u => (
                         u.userType.id === '66979b192031c6931ddaa99b' &&
-                        <MenuItem key={u.id} value={u.id}>
+                        <MenuItem key={u.id} value={u.id} style={{direction:'rtl'}}>
                             {u.firstName} {u.lastName}
                         </MenuItem>
                     ))}
@@ -152,12 +152,13 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <FormControl fullWidth margin="dense">
                 <InputLabel>שם הפרויקט</InputLabel>
                 <Select
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="שם הפרויקט" />}
                     name="projectId"
                     value={formValues.projectId}
                     onChange={(e) => handleProject(e, 'projectId')}
                 >
                     {project && project.length && project.map(p => (
-                        <MenuItem key={p.projectId} value={p.projectId}>
+                        <MenuItem key={p.projectId} value={p.projectId} style={{direction:'rtl'}}>
                             {p.businessName}
                         </MenuItem>
                     ))}
@@ -182,6 +183,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <FormControl fullWidth margin="dense">
                 <InputLabel>קטגורית המשימה</InputLabel>
                 <Select
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="קטגורית המשימה" />}
                     name="taskCategory"
                     value={formValues.taskCategory.categoryName}
                     onChange={(e) => handleSelectTaskCategory(e, 'taskCategory')}
@@ -212,14 +214,13 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <TextField
                 label="טקסט חופשי"
                 dir='rtl'
-                margin="normal" 
                 name="description"
                 value={formValues.description}
                 onChange={handleInputChange}
                 fullWidth
                 multiline
             />
-             </Rtl>
+            </Rtl>
             <Button onClick={handleAddTask} color="primary">
                 הוסף משימה
             </Button>

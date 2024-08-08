@@ -9,6 +9,10 @@ import { Timer } from '../../model/Timer.model';
 import { getProject } from '../../api/project.api';
 import { setAllProject } from '../../Redux/Project/projectAction';
 import { addTimer } from '../../api/Timer.api';
+import { LuAlarmClock } from "react-icons/lu";
+import { TbClockPause } from "react-icons/tb";
+import { TbClockPlay } from "react-icons/tb";
+
 
 const TimerComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -145,23 +149,28 @@ const TimerComponent: React.FC = () => {
       }}
     >
       <Button
-        variant="contained"
-        color={currentTimer ? 'secondary' : 'primary'}
-        onClick={currentTimer ? handleStopTimer : openProjectDialog}
-        sx={{
-          borderRadius: '50%',
-          width: 30,
-          height: 30,
-          minWidth: 0,
-          padding: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 30,
-        }}
-      >
-        {currentTimer ? <PauseIcon /> : <PlayArrowIcon />}
-      </Button>
+      // variant="contained"
+      onClick={currentTimer ? handleStopTimer : openProjectDialog}
+      sx={{
+        // backgroundColor: 'white',
+        color: 'black',
+        borderRadius: '50%',
+        width: 40,
+        height: 40,
+        minWidth: 0,
+        padding: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 35,
+
+      }}
+    >
+      {currentTimer ? <TbClockPause /> : <TbClockPlay />}
+    </Button>
+      {/* <LuAlarmClock  onClick={currentTimer ? handleStopTimer : openProjectDialog}
+ /> */}
+
       <Box sx={{ marginLeft: 2 }}>
         <Typography variant="h6">
           {formatDuration(currentTimer?.duration)}

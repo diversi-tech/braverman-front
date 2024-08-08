@@ -19,7 +19,6 @@ interface AddLeadFormProps {
     setLeads: React.Dispatch<React.SetStateAction<Lead[]>>;
     handleLeadAdded: (newLead: Lead) => Promise<void>;
   }
-
   const AddLeadForm: React.FC<AddLeadFormProps> = ({leads, setLeads, handleLeadAdded }) => {
     const [formValues, setFormValues] = useState({
       firstName: '',
@@ -170,8 +169,8 @@ interface AddLeadFormProps {
           multiline
           value={formValues.phone}
           onChange={handleChange}
-          error={!!errors.phone}
-          helperText={errors.phone}
+          // error={!!errors.phone}
+          // helperText={errors.phone}
 
         />
         <TextField

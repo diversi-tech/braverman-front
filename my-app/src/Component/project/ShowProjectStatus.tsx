@@ -9,11 +9,14 @@ import { getCustomerProjects } from "../../api/project.api";
 import React from "react";
 import ChatBot from "react-chatbotify";
 import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
+import { SendAnnouncement } from "./SendAnnouncement";
+import './ShowProjectStatus.css'
+import DocumentViewer from "./DocumentViewer";
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
 
-  debugger
+  
   const listProject = {
     projectId: null,
     firstName: "string",
@@ -96,6 +99,7 @@ export const ShowProjectStatus = () => {
     return Array.from(taskMap.values());
   }
   let progectShow = {
+    // fromShowProject:false,
     projectName: "",
     statusProject: "",
     stat: "",
@@ -123,12 +127,11 @@ export const ShowProjectStatus = () => {
   //============2======================
   // הכנסת הנתונים לתצוגה
   if (data[0]?.projectId && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
-    debugger
     dataShow.map(d => dataShow.pop())//איפוס מערך הפרויקטים המוצגים לפני שממלא למשתמש הנוכחי
     for (let i = 0; i < data?.length; i++) {
       let newProgectShow = {
         ...progectShow,
-        projectName: data[i]?.firstName + " " + data[i]?.lastName,
+        projectName: data[i]?.businessName ,
         statusProject: data[i].status.key,
         endDate: data[i].endDate,
         totalPrice: data[i].totalPrice,
@@ -141,7 +144,7 @@ export const ShowProjectStatus = () => {
       else {
         let rezult = getUniqueTasksWithLowestStatus(tasksProject);
         rezult?.forEach(r => {
-          debugger
+
           newProgectShow.tashsShow.push(
             { key: r.status.key, categoryName: r.taskCategory.categoryName }
           )
@@ -170,15 +173,9 @@ export const ShowProjectStatus = () => {
 <div style={{ paddingRight: "12%" }}>
         {/* <compunent stay me ansowor/> */}
         <div>
-       {!open &&
-       <button onClick={() => setOpen(!open)}>
-         <ChatBot></ChatBot>
-        {/* {open ? 'Close Chat' : 'Open Chat'} */}
-       </button>}
-       {open && (
+    
         <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}> <MyChatBot2 />
          </div>
-      )}
      </div>
       </div>
     </>
@@ -207,7 +204,7 @@ const Show = ({ props }: any) => {
   return (<>
     <br></br>
     <div>
-      {/* {p && p.endDate && <MoreStatus project={p}></MoreStatus>} */}
+      {p && <MoreStatus project={p.projectName}></MoreStatus>}
     </div>
     <br></br>
     <br></br>
@@ -229,18 +226,21 @@ const Show = ({ props }: any) => {
         flexWrap: "wrap",
       }}
     >
-      <div style={{ width: "100%", textAlign: "center" }}>
-        {p.statusProject == "3" ?
+
+      <div style={{ width: "100%", textAlign: "center" }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
+  {p.statusProject == "3" ?
           <div>
-            <CheckCircleOutlineTwoTone />
-            <p>הפרויקט הושלם בהצלחה!</p>
+            <CheckCircleOutlineTwoTone sx={{
+              paddingTop:"5%",
+              width:"10%",
+              height:"10%"
+            }}></CheckCircleOutlineTwoTone>
+            <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
-
           (<p style={{ fontSize: "170%", fontWeight: "bold" }}>שלבי הפרויקט:</p> &&
             p.tashsShow?.map(t => (t?.categoryName != "" &&
               <>
-
                 <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
                   {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
                   {p.stat == t.categoryName

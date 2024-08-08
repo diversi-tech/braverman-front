@@ -15,18 +15,11 @@ body{
   box-sizing: border-box;
 }
 .styleSection{
-  margin: -8%;
   text-align: right;
-  width: 100%; /* שימוש ברוחב 100% כדי שיתאים לאזור התצוגה */
+  width: 100%; 
   display: flex;
-  flex-direction: row; /* שימוש בפריסת flex עם כיוון רוחבי */
-  justify-content: space-between; /* מרווחים באופן אופטימלי בין הקטעים */
-}
-.styleSection .section {
-width: 80% /* חישוב רוחב בהתאם לגודל הדף */
- 
-}
 
+}
 .project-details h2 {
   margin-bottom: 15px;
   font-size: 20px;
@@ -52,28 +45,71 @@ width: 80% /* חישוב רוחב בהתאם לגודל הדף */
 }
 
 .project-details .section:last-child {
-  margin-right: 0; /* להסיר את הרווח המרגיע בצד האחרון */
+  margin-right: 0; 
 }
 #descrption{
-  padding-right: 10%;
+  width: 10%;
+  padding-right: 3%;
 
 }
-.section{
-  padding-right: 40%;
+#detail{
+  padding-right:55%;
+  flex: 1;
 }
+#freeText{
+margin-right:55%; 
+ }
 .editButton{
-  margin-top: -62%;
-  margin-right:40%;
+margin-top: -55%;
+margin-right:10%;
 }
-.saveButton{
-  padding-top: 20%;
-}
+
 .editInput{
   height: 10px;
-   width: 60px; 
-  padding: 3px; /* ריפוד פנימי */
-  font-size: 16px; /* גודל גופן */
-  border: 1px solid #ccc; /* גבול */
-  transition: border-color 0.3s ease; /* אנימציה של שינוי צבע הגבול */
+  width:90px; 
+  font-size: 16px;
+  border: 1px solid #ccc; 
+  transition: border-color 0.3s ease; 
+}
+.editInput:focus {
+  border-color: #007bff; 
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); 
+  outline: none; 
+}
+.links{
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between; 
+}
+.cancelAndSave{
+  margin-top:-220px;
+  margin-right:3%;
+  display: flex;
+  justify-content: space-between; 
 }
 
+.freeTextInput {
+  width:100%; /* רוחב מותאם; התאם לפי הצורך */
+  max-width: 200px; /* רוחב מקסימלי, התאם לפי הצורך */
+  height: 150px; /* גובה מותאם; התאם לפי הצורך */
+  padding: 10px; /* ריפוד פנימי */
+  font-size: 16px; /* גודל גופן */
+  border: 1px solid #ccc; /* גבול */
+  border-radius: 8px; /* רדיוס מעוגל בצדדים */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* צל עדין */
+  resize: vertical; /* אפשר שינוי גובה בלבד */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* אנימציה של שינוי צבע הגבול וצל */
+}
+
+.freeTextInput:focus {
+  border-color: #007bff; /* צבע גבול בעת פוקוס */
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); /* צל מעודכן בעת פוקוס */
+  outline: none; /* הסרת הקו המוקף הסטנדרטי של פוקוס */
+}
+.textFree {
+  word-wrap: break-word; /* שובר את המילים אם הן ארוכות מדי */
+  overflow-wrap: break-word; /* סגנון מודרני לשבירת מילים */
+  white-space: pre-wrap; /* מאפשר ירידת שורות אוטומטית */
+  max-width: 100%; /* מבטיח שהטקסט לא יחרוג מהרוחב של הקופסה */
+  overflow: hidden; /* אם הטקסט חורג, לא יוצג מעבר לקופסה */
+}

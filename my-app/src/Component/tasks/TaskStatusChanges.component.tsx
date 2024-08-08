@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getTaskById } from "../../api/task.api";
 import { getUserById } from "../../api/user.api";
 import { User } from "../../model/user.model";
+import React from "react";
 
 export const TaskStatusChanges = ({ logData }) => {
   const [data, setData] = useState(logData);

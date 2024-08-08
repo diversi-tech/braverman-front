@@ -4,19 +4,53 @@ import { GetAllProjectPerUser } from '../../api/user.api';
 import { Project } from '../../model/project.model';
 import MoreStatus from '../project/moreStatus';
 import { send } from 'process';
+import { sendEmail } from '../../api/sendEmail.api';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+
 
 const ReportIssue=() =>{
     const [project, setProject] = useState<Project | null>(null);
     const [endDate, setEndDate] = useState<string>("");
+    const [reportContent, setReportContent] = useState<string>("");
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
+      
         getProject();
     }, []);
 
-    const send=()=>{
+    const MySwal = withReactContent(Swal);
 
-    }
+    const send=()=>{
+      const userEmail = sessionStorage.getItem("userEmail"); // Ensure this is set
+      const subject = "תקלות באתר";
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח דיווח על תקלה באתר:\n${reportContent}`;
+
+      sendEmail( "דיוות על תקלה באתר", body)
+          .then(response => {
+              if (response.status === 200) {
+                MySwal.fire({
+                  title: 'success',
+                  text: 'המייל נשלח בהצלחה',
+                  icon: 'success',
+                  confirmButtonText: 'אישור',
+                  customClass: {
+                    confirmButton: 'my-confirm-button'
+                  }
+                });              } else {
+                  MySwal.fire({
+                    title: 'שגיאה',
+                    text: ' שגיאה בשליחת המייל',
+                    icon: 'error',
+                    confirmButtonText: 'אישור',
+                    customClass: {
+                      confirmButton: 'my-confirm-button'
+                    }
+                  });              }
+          })
+          .catch(err => console.log(err));
+           }
     const getProject = async () => {
         try {
             debugger
@@ -49,12 +83,16 @@ const ReportIssue=() =>{
 
   return (
     <div className='div2'>
-      {project && project.endDate && <MoreStatus project={project}></MoreStatus>}
+      {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
     <div className="report-issue">
       <h2 className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}> {action.label} {action.icon}</h2>
       <p className="description">{`!היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, האם נתקלת בבעיה באתר? אנא שתף אותנו בפרטים כדי שנוכל לטפל בה. תודה רבה`}</p>
-      <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"    />
-
+      <textarea
+                    className="textarea"
+                    placeholder=" ...כאן תוכלו לשתף אותנו"
+                    value={reportContent}
+                    onChange={(e) => setReportContent(e.target.value)}
+                />
 <button className='buttonnnn' onClick={() => send()}>
   <p>שליחה</p>
   <svg

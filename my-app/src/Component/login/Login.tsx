@@ -60,7 +60,6 @@ const Login = () => {
           navigate("/quickActions");
         else if (x.data.userType.description === "מנהל")
           navigate("/leads");
-
         else
           navigate("/leads");
       } else {
@@ -105,7 +104,7 @@ const Login = () => {
 
 
         if (x.data.userType.description === "לקוח")
-          navigate("/projectStatus");
+          navigate("/quickActions");
         else if (x.data.userType.description === "מנהל"){
           navigate("/leads");}
         else
@@ -141,6 +140,7 @@ const Login = () => {
   };
 
   return (
+    
      <div className='login' >
     <p id='p' style={{marginTop: '110px'}}>התחברות למערכת</p>
     <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
@@ -166,6 +166,7 @@ const Login = () => {
            <span
               className="password-toggle-icon"
               onClick={() => setShowPassword(!showPassword)}
+
             >
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </span>
