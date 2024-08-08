@@ -1,34 +1,38 @@
 import React, { useState } from 'react';
-import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
+import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, OutlinedInput } from '@mui/material';
 import Swal from 'sweetalert2';
 import { Task } from '../../model/task.model';
 import { Enum } from '../../model/enum.model';
+import { User } from '../../model/user.model';
+import { Project } from '../../model/project.model';
+import { TaskCategory } from '../../model/taskCategory.model';
 import Rtl from '../rtl/rtl';
 
 interface AddTaskFormProps {
-    tasks: Task[];
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
     handleTaskAdded: (newTask: Task) => Promise<void>;
     taskStatus: Enum[];
     levelUrgencyStatus: Enum[];
+    user: User[];
+    project: Project[];
+    taskCategory: TaskCategory[];
 }
 
-const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAdded, taskStatus, levelUrgencyStatus }) => {
+const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, taskStatus, levelUrgencyStatus, user, project, taskCategory }) => {
+
     const [formValues, setFormValues] = useState({
         taskName: '',
         assignedTo: '',
         projectId: '',
-        comment: '',
-        description: '',
+        taskCategory: {} as TaskCategory,
         levelUrgency: levelUrgencyStatus[0] || {} as Enum, // Default value
-        taskStatus: taskStatus.find(status => status.value === 'TODO') || {} as Enum // Default to 'TODO'
+        taskStatus: taskStatus.find(status => status.key === '1') || {} as Enum,// Default to 'TODO'
+        description: '',
     });
     const [errors, setErrors] = useState({
         taskName: '',
         assignedTo: '',
         projectId: '',
-        comment: '',
-        description: '',
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,60 +57,65 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
         }
 
     };
-    const validateFields = () => {
-        const newErrors = {
-            taskName: formValues.taskName ? '' : 'שדה חובה',
-            assignedTo: formValues.assignedTo ? '' : 'שדה חובה',
-            projectId: formValues.assignedTo ? '' : 'שדה חובה',
-            comment: formValues.comment ? '' : 'שדה חובה',
-            description: formValues.description ? '' : 'שדה חובה',
-        };
-        setErrors(newErrors);
 
-        return Object.values(newErrors).every(error => error === '');
+    const handleProject = (e: SelectChangeEvent<string>, name: keyof typeof formValues) => {
+        const selectedProject = project.find(item => item.projectId === e.target.value);
+        if (selectedProject) {
+            setFormValues({
+                ...formValues,
+                [name]: selectedProject.projectId
+            });
+        }
+    };
+
+    const handleAssignedTo = (e: SelectChangeEvent<string>, name: keyof typeof formValues) => {
+        const myAssignedTo = user.find(item => item.id === e.target.value);
+        if (myAssignedTo) {
+            setFormValues({
+                ...formValues,
+                [name]: myAssignedTo.id
+            });
+        }
+
+    };
+
+    const handleSelectTaskCategory = (e: SelectChangeEvent<string>, name: keyof typeof formValues) => {
+        const myTaskCategory = taskCategory.find(item => item.taskCategoryId === e.target.value);
+        if (myTaskCategory) {
+            setFormValues({
+                ...formValues,
+                [name]: myTaskCategory
+            });
+        }
+
     };
 
     const handleAddTask = async () => {
-        const { taskName, assignedTo, projectId, comment, description, levelUrgency, taskStatus } = formValues;
-        if (!validateFields()) {
-            return;
-        }
-        if (!taskName || !assignedTo || !projectId || !comment || !description || !levelUrgency.value || !taskStatus.value) {
+        const { taskName, assignedTo, projectId, levelUrgency, taskStatus, taskCategory, description } = formValues;
+        if (!taskName || !assignedTo || !projectId || !levelUrgency.key || !taskStatus.value || !taskCategory) {
             Swal.fire('Error', 'אנא מלא את כל השדות', 'error');
             return;
         }
 
         const newTask: Task = {
             taskId: '',
-            taskName,
-            assignedTo,
-            comment,
-            projectId,
-            description,
-            taskCategory: {
-                taskCategoryId: "668d06b4825153a8af0254fd",
-                categoryName: "תשלום 1/3 מקדמה",
-                daysForExecution: 0,
-                stageId: null,
-                userId: sessionStorage.getItem('userId'),
-                sortOrder: 0
-            },
-            startDate: new Date(),
+            taskName: taskName,
+            assignedTo: assignedTo,
+            projectId: projectId,
+            taskCategory: taskCategory,
             status: taskStatus,
             canBeApprovedByManager: null,
+            LastUpdateStatusUserId:null,
             levelUrgencyStatus: levelUrgency.key,
+            description: description,
+            startDate: new Date(),
         };
 
-        try {
-            await handleTaskAdded(newTask);
-        } catch (error) {
-            Swal.fire('Error', 'שגיאה בהוספת המשימה', 'error');
-        }
+        await handleTaskAdded(newTask);
     };
 
     return (
         <div>
-          <Rtl>
             <TextField
                 dir='rtl'
                 autoFocus
@@ -121,55 +130,61 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                 helperText={errors.taskName}
                 onChange={handleInputChange}
             />
-            <TextField
-                dir='rtl'
-                margin="dense"
-                name="assignedTo"
-                label="שם העובדת"
-                type="text"
-                fullWidth
-                multiline
-                value={formValues.assignedTo}
-                error={!!errors.assignedTo}
-                helperText={errors.assignedTo}
-                onChange={handleInputChange}
-            />
-            <TextField
-                dir='rtl'
-                margin="dense"
-                name="projectId"
-                label="שם הפרויקט"
-                type="text"
-                fullWidth
-                multiline
-                value={formValues.projectId}
-                error={!!errors.projectId}
-                helperText={errors.projectId}
-                onChange={handleInputChange}
-            />
-            <TextField
-                dir='rtl'
-                margin="dense"
-                name="comment"
-                label="הערה"
-                type="text"
-                fullWidth
-                multiline
-                value={formValues.comment}
-                error={!!errors.comment}
-                helperText={errors.comment}
-                onChange={handleInputChange}
-            />
+            <FormControl fullWidth margin="dense">
+                <InputLabel>שם העובדת</InputLabel>
+                <Select
+                    name="assignedTo"
+                    value={formValues.assignedTo}
+                    onChange={(e) => handleAssignedTo(e, 'assignedTo')}
+                >
+                    {user && user.length && user.map(u => (
+                        u.userType.id === '66979b192031c6931ddaa99b' &&
+                        <MenuItem key={u.id} value={u.id}>
+                            {u.firstName} {u.lastName}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <FormControl fullWidth margin="dense">
+                <InputLabel>שם הפרויקט</InputLabel>
+                <Select
+                    name="projectId"
+                    value={formValues.projectId}
+                    onChange={(e) => handleProject(e, 'projectId')}
+                >
+                    {project && project.length && project.map(p => (
+                        <MenuItem key={p.projectId} value={p.projectId}>
+                            {p.businessName}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
             <FormControl fullWidth margin="dense">
                 <InputLabel>רמת דחיפות</InputLabel>
                 <Select
                     name="levelUrgency"
                     value={formValues.levelUrgency.value}
                     onChange={(e) => handleSelectChange(e, 'levelUrgency')}
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="רמת דחיפות" />}
+
                 >
                     {levelUrgencyStatus.map(level => (
-                        <MenuItem key={level.id} value={level.value}>
+                        <MenuItem key={level.id} value={level.value} style={{direction: 'rtl'}}>
                             {level.value}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <FormControl fullWidth margin="dense">
+                <InputLabel>קטגורית המשימה</InputLabel>
+                <Select
+                    name="taskCategory"
+                    value={formValues.taskCategory.categoryName}
+                    onChange={(e) => handleSelectTaskCategory(e, 'taskCategory')}
+                >
+                    {taskCategory.map(t => (
+                        <MenuItem key={t.taskCategoryId} value={t.taskCategoryId}>
+                            {t.categoryName}
                         </MenuItem>
                     ))}
                 </Select>
@@ -180,33 +195,29 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ tasks, setTasks, handleTaskAd
                     name="taskStatus"
                     value={formValues.taskStatus.value}
                     onChange={(e) => handleSelectChange(e, 'taskStatus')}
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="סטטוס" />}
+
                 >
                     {taskStatus.map(status => (
-                        <MenuItem key={status.id} value={status.value}>
+                        <MenuItem key={status.id} value={status.value} style={{direction: 'rtl'}}>
                             {status.value}
                         </MenuItem>
                     ))}
                 </Select>
             </FormControl>
             <TextField
+                label="טקסט חופשי"
                 dir='rtl'
-                margin="dense"
                 name="description"
-                label="תאור"
-                type="text"
-                fullWidth
-                multiline
-                rows={4}
                 value={formValues.description}
                 onChange={handleInputChange}
-                error={!!errors.description}
-                helperText={errors.description}
+                fullWidth
+                multiline
             />
-             </Rtl>
             <Button onClick={handleAddTask} color="primary">
                 הוסף משימה
             </Button>
-        </div>
+        </div >
     );
 };
 

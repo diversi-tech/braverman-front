@@ -13,12 +13,11 @@ export const getAllTaskFromServer = async () => {
 } 
 
 export const UpDateTask = async (t : Task) => {
-    debugger
     let res = await axios.put(`${apiUrl}Tasks/Update`,
         t
     )
     if (res) {
-        console.log(res.data);
+        console.log("Update", res.data);
         return await res.data;
     }
 }
@@ -33,3 +32,12 @@ export const addTask = async (newTask : Task) => {
         return await res.data;
     }
 }
+export const getTaskById = async (newTask : Task) => {
+return newTask;
+}
+
+export const getTaskStatusChanges = async (newTask : string) => {
+    return null
+}
+
+

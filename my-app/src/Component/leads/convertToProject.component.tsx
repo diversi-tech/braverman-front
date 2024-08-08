@@ -24,12 +24,15 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     email: lead.email,
     businessName: lead.businessName,
     source: lead.source,
+    address:"",
+    phone:"",
     totalPrice: 0,
     pricePaid: 0,
     urlDrive: '',
     urlFigma: '',
     urlWordpress: '',
-    freeText: ''
+    freeText: '',
+    workLog: []
   });
   const dispatch = useDispatch();
 
@@ -39,23 +42,26 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
   };
 
   const handleSubmit = async () => {
-    const { firstName, lastName, email, businessName, source, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
+    const { firstName, lastName, email, businessName, source,address,phone, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
 
-    if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
-      alert('יש למלא את כל השדות');
-      return;
-    }
+    // if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
+    //   alert('יש למלא את כל השדות');
+    //   return;
+    // }
 
-    const selectedStatus = statusOptions2.find(status => status.value === "TODO");
-    const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.value === "DUE");
+    const selectedStatus = statusOptions2.find(status => status.key === "1");
+    const selectedBalanceStatus = balanceStatusOptions.find(balanceStatus => balanceStatus.key === "4");
 
-    const Project: Project = {
+
+    const Project : Project = {
       projectId: '',
       firstName,
       lastName,
       businessName,
       email,
       source,
+      address,
+      phone,
       status: selectedStatus!,
       endDate: new Date(),
       balanceStatus: selectedBalanceStatus!,
@@ -69,9 +75,9 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       urlWordpress,
       urlDrive,
       urlFigma,
-      freeText, 
-       workLog: [],
-       stageStatus:selectedStatus,
+      freeText,
+      workLog: [],
+      stageStatus: selectedStatus,
 
     };
 
