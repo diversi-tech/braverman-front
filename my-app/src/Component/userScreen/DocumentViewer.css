@@ -42,3 +42,13 @@ container {
     text-align: center; /* ממרכז את התוכן בתוך כל תא */
   }
   .header-svg{text-align: center;}
+ .allDocument{
+margin-left: 50px;
+    position: absolute;
+    width: 95%;
+    top: 20.96%;
+    bottom: 6.25%;
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 15px;
+    }
