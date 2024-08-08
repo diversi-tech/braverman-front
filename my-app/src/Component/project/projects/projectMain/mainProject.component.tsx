@@ -16,7 +16,7 @@ export const MainProject = () => {
         <div className="customerProjects">
             <ActiveProjects onChangeStatus={onChangeStatusRefresh} />
         </div>
-        <div className="projectFinish">
+        <div className="projectFinish" style={{paddingRight:'40px'}}>
             <ProjectFinish refresh={refresh} />
 
             </div>
