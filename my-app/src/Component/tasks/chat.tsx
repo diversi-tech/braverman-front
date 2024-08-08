@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Chat } from '../../model/chat.nodel';
 import { Directions } from '@mui/icons-material';
+import './chat.css'
 interface Files {
    
     files: File[];
