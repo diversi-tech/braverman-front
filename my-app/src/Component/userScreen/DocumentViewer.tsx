@@ -37,7 +37,7 @@ const data = await response.json();
 // רכיב React
 const DocumentViewer: React.FC= () => {
   const [documents, setDocuments] = useState<{type: string, number: string, documentDate: string, description: string, price: string, downloadLink: string }[]>([]);
-const email=essionStorage.getItem("email")
+const email=sessionStorage.getItem("email")
 const [loading, setLoading] = useState<boolean>(false);
   debugger
   // שימוש ב-useEffect לטעינת המסמכים בעת טעינת הקומפוננטה
