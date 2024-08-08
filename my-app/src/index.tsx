@@ -28,6 +28,7 @@ import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
 import AnyDeskChecker from "./Component/userScreen/anyDesk";
 import DocumentViewer from './Component/userScreen/DocumentViewer';
+import MainDeshbord from './Component/dashboard/mainDeshbord';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -61,7 +62,7 @@ root.render(
             <Route path='/chat' element={<ChatTable />} ></Route>
             <Route path='/support' element={<AnyDeskChecker />} ></Route>
             <Route path='/documents' element={<DocumentViewer />} ></Route>
-
+            <Route path='/allDeshbord' element={<MainDeshbord />} ></Route>
           </Route>
         </Routes>
       </HashRouter>
