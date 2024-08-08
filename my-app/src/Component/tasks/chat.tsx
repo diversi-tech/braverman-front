@@ -2,20 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Chat } from '../../model/chat.nodel';
 import { Directions } from '@mui/icons-material';
-import './chat.css'
+// import './chat.css'
 interface Files {
-   
     files: File[];
   }
-  
 const ChatTable = () => {
     const [messages, setMessages] = useState<Chat[]>([]);
     const [newMessage, setNewMessage] = useState('');
-    const apiUrl = process.env.REACT_APP_BRAVERMAN
-
+    // const apiUrl = process.env.REACT_APP_BRAVERMAN
     useEffect(() => {
         debugger
-        axios.get(`${apiUrl}${sessionStorage.getItem("userId")}`)
+        axios.get(`https://braverman-back.onrender.com/${sessionStorage.getItem("userId")}`)
             .then(response => {
                 setMessages(response.data);
             });
@@ -23,27 +20,33 @@ const ChatTable = () => {
     const handleSubmit = (e) => {
         debugger
         e.preventDefault();
-        let userId2;
+        let userId2='';
         if(sessionStorage.getItem("userType")=="מנהל")
             userId2="fghjkl";
         else
-           userId2=sessionStorage.getItem("userId")
-        const message = {id: '' , sender:sessionStorage.getItem("userType"), content: newMessage ,Timestamp: new Date().toISOString(), userId:userId2};
-        axios.post(`${apiUrl}Chat`, message)
+           userId2=sessionStorage.getItem("userId")!
+           const message: Chat = {
+            id: '',
+            sender: sessionStorage.getItem("userType")!,
+            content: newMessage,
+            timestamp: new Date(new Date().toISOString()),
+            userId: userId2
+        };
+        // const message = {id: '' , sender:sessionStorage.getItem("userType"), content: newMessage ,Timestamp: new Date().toISOString(), userId:userId2};
+        debugger
+        axios.post(`https://braverman-back.onrender.com/api/Chat`, message)
             .then(response => {
-                setMessages([...messages, response.data]);
+                setMessages([...messages,message]);
                 setNewMessage('');
             });
     };
     const [file, setTask] = useState<Files>({  files: [] });
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
         const newFiles = Array.from(e.target.files);
         setTask((prevTask) => ({ ...prevTask, files: [...prevTask.files, ...newFiles] }));
       }
     };
-  
     const handleDeleteFile = (index: number) => {
       setTask((prevTask) => {
         const newFiles = [...prevTask.files];
