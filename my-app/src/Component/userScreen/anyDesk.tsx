@@ -85,7 +85,7 @@ const checkAnyDesk = () => {
     };
     const sendCodeToServer = async () => {
       try {
-        const body = `היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\nהקוד לאנידסק :\n${anyDeskCode}`;
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח קוד התחברות לאנידסק    :\n${anyDeskCode}`;
         await sendEmail("תמיכה טכנית", anyDeskCode);
         Swal.fire({
           title: 'נשלח בהצלחה!',
@@ -108,7 +108,7 @@ const checkAnyDesk = () => {
 
   return (
     <div className='div2' style={{alignItems:"center"}}>
-      {project && project.endDate && <MoreStatus project={project}></MoreStatus>}
+      {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
       <div className="report-issue" style={{alignItems:"center"}}>
       <p className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}>תמיכה מרחוק</p>
       <button className="anydesk-button" onClick={checkAnyDesk} style={{background:"red", width:"722px", height:"72px", fontSize:'30px', fontWeight:400, borderRadius:"15px", marginRight:"23%"}}>
