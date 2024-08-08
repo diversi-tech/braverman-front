@@ -83,17 +83,17 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
   }
 
   return (
-    <div className='styleProject2'>
+    <div className='styleProject2' style={{marginLeft:'2%'}}>
       <div className="table-wrapper" id="finishProject">
         <h2 className='titleFinish' style={{ fontWeight: '700' }}><b> פרויקטים סגורים</b></h2>
         <table className="TableClose" style={{ width: '100%' }}>
           <thead>
             <tr>
-              <th style={{ width: '0.1%', fontWeight: '600' }}></th>
-              <th style={{ width: '21%', fontWeight: '600' }}>שם לקוח</th>
-              <th style={{ width: '22%', fontWeight: '600' }}>שם העסק</th>
-              <th style={{ width: '30%', fontWeight: '600' }}>לינקים</th>
-              <th style={{ width: '0.1%', fontWeight: '600' }}></th>
+              <th style={{ width: '0.1%', fontWeight: '600', fontSize:'13.5px' }}></th>
+              {/* <th style={{ width: '12%', fontWeight: '600' , fontSize:'13.5px'}}>שם לקוח</th> */}
+              <th style={{ width: '12%', fontWeight: '600', fontSize:'13.5px' }}>שם העסק</th>
+              <th style={{ width: '24%', fontWeight: '600' , fontSize:'13.5px'}}>לינקים</th>
+              <th style={{ width: '0.1%', fontWeight: '600' , fontSize:'13.5px'}}></th>
 
             </tr>
           </thead>
@@ -111,9 +111,9 @@ const ProjectFinish: React.FC<{ refresh: boolean }> = (refresh) => {
                         </svg>
                       </div>
                     </td>
-                    <td style={{ textAlign: 'center' }}>{`${project.firstName} ${project.lastName}`}</td>
-                    <td style={{ textAlign: 'center' }}>{project.source}</td>
-                    <td style={{ textAlign: 'center' }}>
+                    {/* <td style={{ textAlign: 'center' , fontSize:'13.5px'}}>{`${project.firstName} ${project.lastName}`}</td> */}
+                    <td style={{ textAlign: 'center', fontSize:'13.5px' }}>{project.businessName}</td>
+                    <td style={{ textAlign: 'center', fontSize:'13.5px' }}>
                       <Links project={project}></Links>
                     </td>
                     <td style={{ textAlign: 'center' }}><button

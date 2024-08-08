@@ -26,7 +26,7 @@ import Feedback from './Component/userScreen/feedback';
 import UrgentTasksTable from './Component/dashboard/urgentTasks';
 import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
-import AnyDeskChecker from "./Component/technicalSupport/anydesck";
+import AnyDeskChecker from "./Component/userScreen/anyDesk";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
