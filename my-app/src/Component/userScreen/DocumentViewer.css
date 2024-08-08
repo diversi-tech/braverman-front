@@ -42,3 +42,17 @@
     text-align: center; /* ממרכז את התוכן בתוך כל תא */
   }
   .header-svg{text-align: center;}
+
+  .allDocument{/* Rectangle 4 */
+    position: absolute;
+    width: 90%;
+    /* left: calc(50% - 1784px/2); */
+    top: 15.96%;
+    bottom: 6.25%;
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    }
