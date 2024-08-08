@@ -12,7 +12,7 @@ export const SendAnnouncement = (nameProject:any) => {
   const handleSubmit = async (event:any) => {
     event.preventDefault();
   
-    await sendEmail(`mail from:${nameProject}`,message);
+    await sendEmail(`mail from:${sessionStorage.getItem("firstName")}`,message);
     // כאן תוכל להוסיף לוגיקה לשליחת המייל, לדוגמה fetch או קריאה לפונקציה שתעטוף שליחת מייל
     console.log('הודעה נשלחה:', message);
     alert("👍👍sucsses sending  Email😆😆👍👍")
