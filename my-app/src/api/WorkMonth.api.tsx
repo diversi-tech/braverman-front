@@ -1,10 +1,10 @@
 import axios from 'axios';
-const apiUrl = 'https://localhost:7119/api/WorkMonth'
+const apiUrl = process.env.REACT_APP_BRAVERMAN;
 
 export const GetTimersByMonthAsync = (date: any) => {
     const [year, month] = date.split('-').map(Number);
     const newDate = new Date(year, month, 1)
     const formatDate = newDate.toISOString();
-    const response = axios.get(`${apiUrl}/GetTimersByMonthAsync/${formatDate}`);
+    const response = axios.get(`${apiUrl}WorkMonth/GetTimersByMonthAsync/${formatDate}`);
     return response;
 }

@@ -145,10 +145,7 @@ const TimerComponent: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 2,
-        marginRight: "33%",
-        marginTop: '-25px',
-        
-
+        position:'absolute', left: '250px', top: '20px'
       }}
     >
       <Button
