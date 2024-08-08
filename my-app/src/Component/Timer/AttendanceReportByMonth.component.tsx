@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Paper, CircularProgress, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Paper, CircularProgress, Select, MenuItem, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -47,6 +47,7 @@ const AttendanceReportByMonth: React.FC = () => {
         });
         setGroupedTimers(groupedTimers);
     };
+    
 
     const formatDate = (date: Date) => {
         return new Date(date).toLocaleDateString('en-GB'); // Changed to en-GB for dd/mm/yyyy format
@@ -70,11 +71,14 @@ const AttendanceReportByMonth: React.FC = () => {
         setTotalDuration(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
     };
 
+    
+
     const sortedDates = Object.keys(groupedTimers).sort((a, b) => {
         const dateA = new Date(a.split('/').reverse().join('-'));
         const dateB = new Date(b.split('/').reverse().join('-'));
         return dateA.getTime() - dateB.getTime();
     });
+
 
     const downloadExcel = () => {
         const ws = XLSX.utils.json_to_sheet(
@@ -94,55 +98,61 @@ const AttendanceReportByMonth: React.FC = () => {
         saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'AttendanceReport.xlsx');
     };
 
+    
+
     return (
         <Box sx={{ padding: 4, fontFamily: 'CustomFont' }}>
-        <Paper elevation={3} sx={{ padding: 3, borderRadius: '20px' }}>
-            <Typography variant="h4" gutterBottom align="center" sx={{ fontFamily: 'CustomFont', fontWeight:700, color:'#002046'}}>
+            <Paper elevation={3} sx={{ padding: 3, borderRadius: '20px' }}>
+                <Typography variant="h4" gutterBottom align="center" sx={{ fontFamily: 'CustomFont', fontWeight: 700, color: '#002046' }}>
                     דוח נוכחות לפי חודש
                 </Typography>
                 <FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
-                    <InputLabel>בחר שנה</InputLabel>
+                    <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>בחר שנה</InputLabel>
                     <Select
+                        input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר שנה" />}
+
                         value={selectedMonth}
                         onChange={(e) => setSelectedYear(e.target.value)}
                     >
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2020'}>2020</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2021'}>2021</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2023'}>2023</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2024'}>2024</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2025'}>2025</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2026'}>2026</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2027'}>2027</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2028'}>2028</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2029'}>2029</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={'2030'}>2030</MenuItem>
-                
-                       
+
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2020'}>2020</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2021'}>2021</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2023'}>2023</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2024'}>2024</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2025'}>2025</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2026'}>2026</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2027'}>2027</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2028'}>2028</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2029'}>2029</MenuItem>
+                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2030'}>2030</MenuItem>
+
+
                     </Select>
                 </FormControl>
                 {selectedYear &&
-                (<FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
-                    <InputLabel>בחר חודש</InputLabel>
-                    <Select
-                        value={selectedMonth}
-                        onChange={(e) => fetchData(e.target.value)}
-                    >
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-01'}>ינואר</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-02'}>פבורא</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-03'}>מרץ</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-04'}>אפריל</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-05'}>מאי</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-06'}>יוני</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-07'}>יולי</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-08'}>אוגוסט</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-09'}>ספטמבר</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-10'}>אוקטובר</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-11'}>נובמבר</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily:'CustomFont' }} value={selectedYear+'-12'}>דיצמבר</MenuItem>
-                       
-                    </Select>
-                </FormControl>
-                )}
+                    (<FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
+                        <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>בחר חודש</InputLabel>
+                        <Select
+                            input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר חודש" />}
+                            value={selectedMonth}
+                            onChange={(e) => fetchData(e.target.value)}
+                        >
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-01'}>ינואר</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-02'}>פבורא</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-03'}>מרץ</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-04'}>אפריל</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-05'}>מאי</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-06'}>יוני</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-07'}>יולי</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-08'}>אוגוסט</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-09'}>ספטמבר</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-10'}>אוקטובר</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-11'}>נובמבר</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-12'}>דיצמבר</MenuItem>
+
+                        </Select>
+                    </FormControl>
+                    )}
                 <IconButton onClick={downloadExcel} aria-label="download">
                     <DownloadIcon />
                 </IconButton>
@@ -152,14 +162,14 @@ const AttendanceReportByMonth: React.FC = () => {
                     </Box>
                 ) : (
                     <Table>
-                        <TableHead>                           
+                        <TableHead>
                             <TableRow>
-                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>תאריך</TableCell>
-                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>שעת סיום</TableCell>
-                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>שעת התחלה</TableCell>
-                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>משך זמן</TableCell>
-                                <TableCell style={{ textAlign: 'center', fontFamily:'CustomFont' }}>פרויקט</TableCell>
-                            </TableRow>                          
+                                <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>תאריך</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>שעת סיום</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>שעת התחלה</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>משך זמן</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>פרויקט</TableCell>
+                            </TableRow>
                         </TableHead>
                         <TableBody>
                             {sortedDates.map((date) => (
@@ -183,9 +193,9 @@ const AttendanceReportByMonth: React.FC = () => {
                     </Table>
                 )}
                 <Box sx={{ marginTop: 2, textAlign: 'center' }}>
-                <Typography variant="h6" sx={{ fontFamily: 'CustomFont',color:'#002046'}}>
-                            סך הכל שעות עבודה: {totalDuration}
-                        </Typography>
+                    <Typography variant="h6" sx={{ fontFamily: 'CustomFont', color: '#002046' }}>
+                        סך הכל שעות עבודה: {totalDuration}
+                    </Typography>
                 </Box>
             </Paper>
         </Box>
