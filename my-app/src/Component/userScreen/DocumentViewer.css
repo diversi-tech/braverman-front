@@ -1,54 +1,72 @@
-container {
-    position: absolute;
-    width: 1784px;
-    left: calc(50% - 1784px / 2);
-    top: 30.96%;
-    bottom: 6.25%;
-    background: #FFFFFF;
+.contact-form {
+    position: relative;
+    width: 60%; /* כאן ניתן להתאים את רוחב הטופס כפי שרלוונטי לך */
+    margin: 50px auto;
+    height: 500px;
+    background-color: #F1F7FF;
+    border: 1px solid #002046;
     border-radius: 15px;
     padding: 20px;
-    box-sizing: border-box;
-    direction: rtl; /* תומך בסידור מימין לשמאל */
   }
-  /* כללית */
-  .column-header {
-  font-family: 'CustomFont'!important;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 80.1%;
-    text-align: center;
-    color: #002046;
-    margin: 0;
-    padding: 10px;
-    background: #F0F0F0; /* רקע קל לצורך הבחנה */
-    border-bottom: 1px solid #ddd;
-  }
-  /* פריסת עמודות */
-  .document-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-top: 40px; /* רווח בין הכותרות לרשימות */
-    direction: rtl; /* תומך בסידור מימין לשמאל */
-  }
-  /* העמודות הספציפיות */
-  .document-item {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  font-family: 'CustomFont'!important;
-    font-size: 14px;
-    line-height: 1.5;
-    text-align: center; /* ממרכז את התוכן בתוך כל תא */
-  }
-  .header-svg{text-align: center;}
- .allDocument{
-margin-left: 50px;
+  .arrow-icon {
     position: absolute;
-    width: 95%;
-    top: 20.96%;
-    bottom: 6.25%;
+    width: 18px;
+    height: 18px;
+    top: -9px;
+    left: 10px;
+    background-color: #002046;
+    transform: rotate(45deg);
+  }
+  .title {
+    font-family: 'CustomFont'!important;
     text-align: center;
-    background: #FFFFFF;
+    font-weight: 700;
+    font-size: 22px;
+    color: #002046;
+    text-align: right;
+  }
+  .subtitle {
+    font-family: 'CustomFont'!important;
+    font-weight: 700;
+    font-size: 20px;
+    color: #002046;
+    margin-top: 10px;
+    text-align: right;
+  }
+  textarea{
+    background-color: #F1F7FF;
+    border-color: #F1F7FF;
+  }
+  .message-input {
+    width: 99%;
+    height: 120px;
+    margin-top: 10px;
+    padding: 10px;
+    font-family: 'CustomFont'!important;
+    font-size: 18px;
+    color: #636363;
+    /* border: 1px solid #002046; */
+    border-radius: 10px;
+    resize: none;
+  }
+  .submit-button {
+    margin-top: 200px;
+    padding: 10px 20px;
+    font-family: 'CustomFont'!important;
+    font-weight: 700;
+    font-size: 20px;
+    color: #002046;
+    background-color: #F1F7FF;
+    border: 1px solid #002046;
     border-radius: 15px;
-    }
+    cursor: pointer;
+  }
+  .arrow-right {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #002046;
+    border-top: 2px solid #002046;
+    transform: rotate(45deg);
+    margin-left: 10px;
+  }
