@@ -170,15 +170,9 @@ export const ShowProjectStatus = () => {
 <div style={{ paddingRight: "12%" }}>
         {/* <compunent stay me ansowor/> */}
         <div>
-       {!open &&
-       <button onClick={() => setOpen(!open)}>
-         <ChatBot></ChatBot>
-        {/* {open ? 'Close Chat' : 'Open Chat'} */}
-       </button>}
-       {open && (
+    
         <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}> <MyChatBot2 />
          </div>
-      )}
      </div>
       </div>
     </>
