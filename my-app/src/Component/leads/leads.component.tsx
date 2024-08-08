@@ -187,7 +187,7 @@ const Leads: React.FC = () => {
     setLeads(updatedLeads);
     const lead = updatedLeads.find((lead) => lead.id === id);
     debugger
-    const response = await updateLeadChanges(lead, lead.id);
+    const response = await updateLeadChanges(lead!, lead!.id);
 
     const updatedIndex = leads!.findIndex((l) => l.id === id);
     if (updatedIndex !== -1) {
@@ -205,7 +205,7 @@ const Leads: React.FC = () => {
     setLeads(updatedLeads);
     const lead =updatedLeads.find((lead)=>lead.id===id);
     debugger
-    const response = await updateLeadChanges(lead,lead.id);
+    const response = await updateLeadChanges(lead!,lead!.id);
     
     const updatedIndex = leads!.findIndex((l) => l.id === id);
            if (updatedIndex !== -1) {
@@ -315,7 +315,7 @@ const Leads: React.FC = () => {
             ReactDOM.render(
               <Provider store={store}>
               <ConvertLeadToProject
-                lead={lead}
+                lead={lead!}
                 statusOptions2={statusOptions2}
                 balanceStatusOptions={balanceStatusOptions}
                 setLeads={setLeads}

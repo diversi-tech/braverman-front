@@ -5,5 +5,5 @@ const apiUrl = process.env.REACT_APP_BRAVERMAN
 
 
 export const sendEmail = (title :string, body:string) => {
-    return axios.post(`${apiUrl}Email/sendEmail/$${title}/$${body}`);    
+    return axios.post(`${apiUrl}Email/sendEmail/${title}/${body}`);    
 }

@@ -116,6 +116,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
 
     return (
         <div>
+           <Rtl>
             <TextField
                 dir='rtl'
                 autoFocus
@@ -132,14 +133,17 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             />
             <FormControl fullWidth margin="dense">
                 <InputLabel>שם העובדת</InputLabel>
+                
                 <Select
+                     input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="שם העובדת" />}
+                    sx={{direction:'ltr'}}
                     name="assignedTo"
                     value={formValues.assignedTo}
                     onChange={(e) => handleAssignedTo(e, 'assignedTo')}
                 >
                     {user && user.length && user.map(u => (
                         u.userType.id === '66979b192031c6931ddaa99b' &&
-                        <MenuItem key={u.id} value={u.id}>
+                        <MenuItem key={u.id} value={u.id} style={{direction:'rtl'}}>
                             {u.firstName} {u.lastName}
                         </MenuItem>
                     ))}
@@ -148,12 +152,13 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <FormControl fullWidth margin="dense">
                 <InputLabel>שם הפרויקט</InputLabel>
                 <Select
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="שם הפרויקט" />}
                     name="projectId"
                     value={formValues.projectId}
                     onChange={(e) => handleProject(e, 'projectId')}
                 >
                     {project && project.length && project.map(p => (
-                        <MenuItem key={p.projectId} value={p.projectId}>
+                        <MenuItem key={p.projectId} value={p.projectId} style={{direction:'rtl'}}>
                             {p.businessName}
                         </MenuItem>
                     ))}
@@ -178,6 +183,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
             <FormControl fullWidth margin="dense">
                 <InputLabel>קטגורית המשימה</InputLabel>
                 <Select
+                    input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="קטגורית המשימה" />}
                     name="taskCategory"
                     value={formValues.taskCategory.categoryName}
                     onChange={(e) => handleSelectTaskCategory(e, 'taskCategory')}
@@ -214,6 +220,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                 fullWidth
                 multiline
             />
+            </Rtl>
             <Button onClick={handleAddTask} color="primary">
                 הוסף משימה
             </Button>

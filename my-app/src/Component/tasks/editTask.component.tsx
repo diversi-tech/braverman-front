@@ -133,9 +133,9 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
                   </MenuItem>
                 ))}
               </Menu>
-              {users && users.length && users.map(u => u.id === findTaskById().assignedTo && u.firstName)}
-              {users && users.length && users.map(u => u.id === findTaskById().assignedTo && "  ")}
-              {users && users.length && users.map(u => u.id === findTaskById().assignedTo && u.lastName)}
+              {users && users.length && users.map(u => u.id === findTaskById()!.assignedTo && u.firstName)}
+              {users && users.length && users.map(u => u.id === findTaskById()!.assignedTo && "  ")}
+              {users && users.length && users.map(u => u.id === findTaskById()!.assignedTo && u.lastName)}
             </React.Fragment>
             <p>        </p>
           </div>
