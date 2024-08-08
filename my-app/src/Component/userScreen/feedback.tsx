@@ -4,19 +4,52 @@ import { GetAllProjectPerUser } from '../../api/user.api';
 import { Project } from '../../model/project.model';
 import MoreStatus from '../project/moreStatus';
 import { send } from 'process';
+import { sendEmail } from '../../api/sendEmail.api';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 const Feedback=() =>{
     const [project, setProject] = useState<Project | null>(null);
     const [endDate, setEndDate] = useState<string>("");
     const [open, setOpen] = useState(false);
+    const [reportContent, setReportContent] = useState<string>("");
+
 
     useEffect(() => {
         getProject();
     }, []);
 
-    const send=()=>{
+    const MySwal = withReactContent(Swal);
 
-    }
+    const send=()=>{
+      const userEmail = sessionStorage.getItem("userEmail"); // Ensure this is set
+      const subject = "שליחת פידבק";
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח פידבק:\n${reportContent}`;
+
+      sendEmail( "פידבק חדש", body)
+          .then(response => {
+              if (response.status === 200) {
+                MySwal.fire({
+                  title: 'success',
+                  text: 'המייל נשלח בהצלחה',
+                  icon: 'success',
+                  confirmButtonText: 'אישור',
+                  customClass: {
+                    confirmButton: 'my-confirm-button'
+                  }
+                });              } else {
+                  MySwal.fire({
+                    title: 'שגיאה',
+                    text: 'שגיאה בשליחת המייל',
+                    icon: 'error',
+                    confirmButtonText: 'אישור',
+                    customClass: {
+                      confirmButton: 'my-confirm-button'
+                    }
+                  });              }
+          })
+          .catch(err => console.log(err));
+           }
     const getProject = async () => {
         try {
             debugger
@@ -49,13 +82,14 @@ const Feedback=() =>{
 
   return (
     <div className='div2'>
-      {project && project.endDate && <MoreStatus project={project}></MoreStatus>}
+      {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
     <div className="report-issue">
       <p className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}>😊 נשמח לפידבק </p>
       <p className="description2" >{`היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},נשמח אם תוכל לשתף אותנו במשוב על השרות שקיבלת `}</p>
       <p className="description2">{` 😊!הפידבק שלך חשוב לנו מאד ומשפר את השרות שלנו, תודה רבה`}</p>
 
-      <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"    />
+      <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"  onChange={(e) => setReportContent(e.target.value)}
+  />
 
 <button className='buttonnnn' onClick={() => send()}>
   <p>שליחה</p>

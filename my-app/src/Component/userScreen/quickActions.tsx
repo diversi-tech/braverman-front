@@ -8,6 +8,7 @@ import { Project } from '../../model/project.model';
 import { GetAllProjectPerUser } from '../../api/user.api';
 import MoreStatus from '../project/moreStatus';
 
+
 const QuickActions = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -20,7 +21,6 @@ const QuickActions = () => {
 
     const getProject = async () => {
         try {
-            debugger
             const userId = sessionStorage.getItem('userId');
             if (userId) {
                 const projectPerCustomer = await GetAllProjectPerUser(userId);
@@ -37,7 +37,6 @@ const QuickActions = () => {
         }
     };
     const handleChangeProject = (event: SelectChangeEvent<string>) => {
-      debugger
       const projectId = event.target.value as string;
       const project = projects.find(proj => proj.projectId === projectId) || null;
       setSelectedProject(project);
@@ -94,7 +93,7 @@ const QuickActions = () => {
               <path d="M17.333 18.4166C17.333 19.0154 17.8176 19.5 18.4164 19.5H31.4164C32.0152 19.5 32.4997 19.0154 32.4997 18.4166C32.4997 17.8178 32.0152 17.3333 31.4164 17.3333H18.4164C17.8176 17.3334 17.333 17.8179 17.333 18.4166Z" fill="#002046"/>
               <path d="M9.75 17.3332H7.58337C6.98456 17.3332 6.5 17.8178 6.5 18.4166C6.5 19.0154 6.98456 19.4999 7.58337 19.4999H8.66673C8.66673 20.0988 9.15129 20.5833 9.7501 20.5833C10.3489 20.5833 10.8335 20.0988 10.8335 19.4999V19.3004C12.0916 18.8516 13 17.6603 13 16.2498C13 14.4577 11.5422 12.9998 9.75 12.9998C9.15332 12.9998 8.66663 12.5143 8.66663 11.9165C8.66663 11.3188 9.15332 10.8331 9.75 10.8331H11.9166C12.5154 10.8331 13 10.3486 13 9.74974C13 9.15093 12.5154 8.66637 11.9166 8.66637H10.8333C10.8333 8.06756 10.3487 7.58301 9.7499 7.58301C9.15109 7.58301 8.66653 8.06756 8.66653 8.66637V8.86594C7.40838 9.31475 6.5 10.506 6.5 11.9165C6.5 13.7086 7.95783 15.1665 9.75 15.1665C10.3467 15.1665 10.8334 15.652 10.8334 16.2498C10.8334 16.8476 10.3467 17.3332 9.75 17.3332Z" fill="#002046"/>
               </svg>
-              ,label:'חשבונית להורדה',link:"http://localhost:3000"},
+              ,label:'חשבונית להורדה',link:"/documents"},
       
           {icon: <svg width="35" height="35" viewBox="0 0 72 62" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M57.6613 26.8976C65.082 26.8976 71.1192 20.8684 71.1192 13.4579C71.1192 6.03724 65.082 0 57.6613 0C50.2406 0 44.2031 6.03724 44.2031 13.4579C44.2031 20.8684 50.2404 26.8976 57.6613 26.8976ZM57.6613 3.01273C63.4205 3.01273 68.1065 7.69872 68.1065 13.4579C68.1065 19.2075 63.4205 23.8848 57.6613 23.8848C51.902 23.8848 47.2161 19.2075 47.2161 13.4579C47.2159 7.69872 51.902 3.01273 57.6613 3.01273Z" fill="#002046"/>
@@ -126,7 +125,7 @@ const QuickActions = () => {
           { icon: <svg width="35" height="35" viewBox="0 0 58 52" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M51.9151 0H6.55339C3.19799 0 0.468262 2.72985 0.468262 6.08513V30.9787V34.8511C0.468262 38.2064 3.19799 40.9362 6.55339 40.9362H21.2464L19.4762 49.7873H13.7449C13.1338 49.7873 12.6385 50.2826 12.6385 50.8936C12.6385 51.5047 13.1338 52 13.7449 52H44.7236C45.3346 52 45.8299 51.5047 45.8299 50.8936C45.8299 50.2826 45.3346 49.7873 44.7236 49.7873H38.9923L37.2221 40.9362H51.9151C55.2704 40.9362 58.0002 38.2065 58.0002 34.8511V30.9787V6.08513C58.0002 2.72985 55.2705 0 51.9151 0ZM21.7327 49.7873L23.5029 40.9362H34.9655L36.7357 49.7873H21.7327ZM55.7875 34.8511C55.7875 36.9863 54.0504 38.7235 51.9151 38.7235H6.55339C4.41819 38.7235 2.68099 36.9864 2.68099 34.8511V32.0852H55.7874V34.8511H55.7875ZM55.7875 29.8724H2.68099V27.6597H9.3193C9.93036 27.6597 10.4257 27.1644 10.4257 26.5534C10.4257 25.9423 9.93036 25.447 9.3193 25.447H2.68099V6.08513C2.68099 3.94993 4.41808 2.21273 6.55339 2.21273H51.9151C54.0503 2.21273 55.7875 3.94981 55.7875 6.08513V29.8724Z" fill="#002046"/>
               </svg>
-              , label: 'תמיכה מרחוק' ,link:"http://localhost:3000"},
+              , label: 'תמיכה מרחוק' ,link:"/support"},
               
       
         { icon: <svg style={{ marginLeft:"12px" }}width="35" height="35"  onClick={()=>  window.open(`localhost:3000`)} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +177,7 @@ const QuickActions = () => {
       sx={{
         marginBottom: 2,
         textAlign: 'right',
-        fontSize: '35px',
+        fontSize: '28px',
         fontWeight: 700,
         fontFamily: 'CustomFont',
         lineHeight: '48px',
@@ -199,7 +198,7 @@ const QuickActions = () => {
                   {action.icon}
                 </IconButton>
                 <CardContent >
-                <Typography variant="body1" sx={{ display: 'inline-block', marginLeft: '8px' ,fontWeight: 700,fontSize:"25px"}} className='label'>
+                <Typography variant="body1" sx={{ display: 'inline-block', marginLeft: '8px' ,fontWeight: 700,fontSize:"22px"}} className='label'>
                 <GoArrowDownLeft className='arrow' />
                 {action.label}
                   </Typography>
