@@ -159,7 +159,7 @@ const MainDeshbord = () => {
 <path d="M40.0641 18.7494C41.9439 18.7656 43.7441 18.0325 45.082 16.7102C46.4199 15.3724 47.1846 13.5722 47.2008 11.6923C47.2008 11.6768 47.2008 11.6768 47.2008 11.6768C47.2008 7.7422 43.9987 4.54004 40.0641 4.54004C38.1687 4.54004 36.3523 5.28862 35.0144 6.64266C33.6759 7.96497 32.9274 9.78073 32.9274 11.6606C32.9274 15.5796 36.1295 18.7656 40.0641 18.7494ZM36.8146 8.44287C38.5987 6.64266 41.514 6.64266 43.298 8.44287C44.158 9.30283 44.6358 10.4658 44.6358 11.6768C44.6203 12.8871 44.1262 14.0501 43.2663 14.9107C42.4057 15.7544 41.2588 16.2168 40.0479 16.2006C37.5315 16.2168 35.4762 14.1776 35.4606 11.6606C35.4606 11.6606 35.4606 11.6606 35.4606 11.645C35.4606 10.4341 35.9541 9.28728 36.8146 8.44287Z" fill="#002046"/>
 </svg>
 
-            ,label:'לידים לפולואפ',link:"/leads"},
+            ,label:'לידים לפולואפ',link:"/followUp"},
 
         { icon: <svg width="80" height="69" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M52.7344 19.9219V28.7109C52.7344 29.9238 51.75 30.9082 50.5371 30.9082C49.3242 30.9082 48.3398 29.9238 48.3398 28.7109V19.9219C48.3398 18.709 49.3242 17.7246 50.5371 17.7246C51.75 17.7246 52.7344 18.709 52.7344 19.9219Z" fill="#002046"/>
@@ -206,52 +206,50 @@ const MainDeshbord = () => {
       
       
 
-  return (
-    <div>
-      <div className='div'>
-     
-      </div>
-      <Box sx={{ padding: 3, backgroundColor: '#f4f7fc', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}>
-      <Typography
-      sx={{
-        marginBottom: 2,
-        textAlign: 'right',
-        fontSize: '28px',
-        fontWeight: 700,
-        fontFamily: 'CustomFont',
-        lineHeight: '48px',
-        '@media (max-width: 600px)': {
-          marginBottom:"30px",
-          fontSize: '22px !important', /* גודל קטן יותר למובייל */
-        },
-      }}
-    >    </Typography>
-    
-        <Grid container spacing={2}  marginTop={"5%"} marginBottom={"5%"} >
-          {actions.map((action, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index} >
-            <Link to={action.link} style={{}}>
-              <Card  className='card' sx={{ borderRadius: '15px' ,width:'100%' }} >
-                <IconButton>
-                  {action.icon}
-                </IconButton>
-                <CardContent >
-                <Typography variant="body1" sx={{ display: 'inline-block', marginLeft: '8px' ,fontWeight: 700,fontSize:"22px"}} className='label'>
-                <GoArrowDownLeft className='arrow' />
-                {action.label}
-                  </Typography>
-                </CardContent>
-              </Card>
-               </Link>
-
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </div>
-  );
-};
-
+      return (
+            <div>
+              <div className='div'>
+              </div>
+              <Box sx={{ padding: 3, backgroundColor: '#f4f7fc', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}>
+                {/* <Box sx={{ backgroundColor: 'white', padding: 3, borderRadius: '15px', boxShadow: 3, maxWidth: '1200px', margin: '0 auto' }}> */}
+                  <Typography
+                    sx={{
+                      marginBottom: 0,
+                      textAlign: 'right',
+                      fontSize: '28px',
+                      fontWeight: 700,
+                      fontFamily: 'CustomFont',
+                      lineHeight: '48px',
+                      '@media (max-width: 600px)': {
+                        marginBottom: "30px",
+                        fontSize: '22px !important', /* גודל קטן יותר למובייל */
+                      },
+                    }}
+                  ></Typography>
+                  <Grid container spacing={2} marginTop={"5%"} marginBottom={"5%"}>
+                    {actions.map((action, index) => (
+                      <Grid item xs={12} sm={6} md={4} key={index}>
+                        <Link to={action.link} style={{}}>
+                          <Card className='card' sx={{ borderRadius: '15px', width: '100%' }}>
+                            <IconButton>
+                              {action.icon}
+                            </IconButton>
+                            <CardContent>
+                              <Typography variant="body1" sx={{ display: 'inline-block', marginLeft: '8px', fontWeight: 700, fontSize: "22px" }} className='label'>
+                                <GoArrowDownLeft className='arrow' />
+                                {action.label}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              {/* </Box> */}
+            </div>
+          );   
+}      
 
 
 

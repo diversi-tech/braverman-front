@@ -29,6 +29,7 @@ import ChatTable from './Component/tasks/chat';
 import AnyDeskChecker from "./Component/userScreen/anyDesk";
 import DocumentViewer from './Component/userScreen/DocumentViewer';
 import MainDeshbord from './Component/dashboard/mainDeshbord';
+import FollowUp from './Component/leads/followUp.component';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -63,6 +64,8 @@ root.render(
             <Route path='/support' element={<AnyDeskChecker />} ></Route>
             <Route path='/documents' element={<DocumentViewer />} ></Route>
             <Route path='/allDeshbord' element={<MainDeshbord />} ></Route>
+            <Route path='/followUp' element={<FollowUp />} ></Route>
+
           </Route>
         </Routes>
       </HashRouter>
