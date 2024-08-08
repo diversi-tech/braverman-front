@@ -59,6 +59,7 @@ root.render(
             <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
             <Route path='/chat' element={<ChatTable />} ></Route>
             <Route path='/support' element={<AnyDeskChecker />} ></Route>
+            <Route path='/Login' element={<Login />} ></Route>
           </Route>
         </Routes>
       </HashRouter>
