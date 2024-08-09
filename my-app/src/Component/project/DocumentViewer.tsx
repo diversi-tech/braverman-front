@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './DocumentViewer.css'; // נניח ששם הקובץ הוא DocumentViewer.css
 import MoreStatus from '../project/moreStatus';

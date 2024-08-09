@@ -9,6 +9,9 @@ import { getCustomerProjects } from "../../api/project.api";
 import React from "react";
 import ChatBot from "react-chatbotify";
 import MyChatBot2 from "../../Component/project/projects/projectMain/chatBot";
+import { SendAnnouncement } from "./SendAnnouncement";
+import './ShowProjectStatus.css'
+import DocumentViewer from "./DocumentViewer";
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
@@ -162,15 +165,9 @@ export const ShowProjectStatus = () => {
 <div style={{ paddingRight: "12%" }}>
         {/* <compunent stay me ansowor/> */}
         <div>
-       {!open &&
-       <button onClick={() => setOpen(!open)}>
-         <ChatBot></ChatBot>
-        {/* {open ? 'Close Chat' : 'Open Chat'} */}
-       </button>}
-       {open && (
+    
         <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}> <MyChatBot2 />
          </div>
-      )}
      </div>
       </div>
     </>
@@ -221,8 +218,9 @@ const Show = ({ props }: any) => {
         flexWrap: "wrap",
       }}
     >
-      <div style={{ width: "100%", textAlign: "center" }}>
-        {p.statusProject == "3" ?
+
+      <div style={{ width: "100%", textAlign: "center",marginTop:'40px' }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
+  {p.statusProject == "3" ?
           <div>
             <CheckCircleOutlineTwoTone sx={{
               paddingTop:"5%",
@@ -232,11 +230,12 @@ const Show = ({ props }: any) => {
             <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
-          (<p style={{ fontSize: "170%", fontWeight: "bold" }}>שלבי הפרויקט:</p> &&
+          (<p style={{ fontSize: "170%", fontWeight: "bold" ,marginTop:"5%" }}>שלבי הפרויקט:</p> &&
             p.tashsShow?.map(t => (t?.categoryName != "" &&
               <>
+             
                 <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
-                  {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
+                  {t.key == "4" ? <CheckCircleOutlineTwoTone style={{marginTop:'15px', marginLeft:'8px' }} /> : <RadioButtonUncheckedIcon  style={{marginTop:'15px', marginLeft:'8px'}}/>}
                   {p.stat == t.categoryName
                     ? <p style={{ backgroundColor: "#F1F7FF", borderRadius: 3, }}>{t.categoryName}</p>
                     : <p>{t.categoryName}</p>}
