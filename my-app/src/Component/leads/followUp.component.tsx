@@ -25,7 +25,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 
 
-const Leads: React.FC = () => {
+const FollowUp: React.FC = () => {
 
   const [leads, setLeads] = useState<Lead[]>([]);
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
@@ -37,7 +37,7 @@ const Leads: React.FC = () => {
   //עמודים
   const [page, setPage] = useState(0);
   const leadsPerPage = 8;
-  const totalPages = Math.ceil(leads?.length / leadsPerPage);
+  const totalPages = Math.ceil(leads.length / leadsPerPage);
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
   const [filters, setFilters] = useState({
     "שם פרטי": '',
@@ -104,7 +104,8 @@ const Leads: React.FC = () => {
           }));
           dispatch(setAllLeads(data.reverse()));
         }
-        setLeads(data);
+        const followUpLeads = data.filter((lead: Lead) => lead.status === "שיחת מעקב");
+        setLeads(followUpLeads);
         setLeadsChanges(new Array(data.length).fill(false));
       } catch (error) {
         console.error('Error fetching leads:', error);
@@ -700,4 +701,4 @@ const Leads: React.FC = () => {
   );
 };
 
-export default Leads;
+export default FollowUp;

@@ -19,7 +19,6 @@ import UserTable from './Component/user/user.component';
 import { TaskCategories } from './Component/adminScreen/taskCategories/taskCategoriesMain/taskCategories.component';
 import ShowProjectStatus from './Component/project/ShowProjectStatus';
 import { DashboardGraph } from "./Component/graphLead/mainGraphLead.component";
-import { Info } from './Component/tasks/info';
 import QuickActions from './Component/userScreen/quickActions';
 import ReportIssue from './Component/userScreen/reportFault';
 import Feedback from './Component/userScreen/feedback';
@@ -28,6 +27,11 @@ import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
 import AnyDeskChecker from "./Component/userScreen/anyDesk";
 import TaskCompletionGraph from './Component/TaskCompletionGraph/TaskCompletionGraph.component';
+
+import DocumentViewer from './Component/userScreen/DocumentViewer';
+import MainDeshbord from './Component/dashboard/mainDeshbord';
+import FollowUp from './Component/leads/followUp.component';
+import Info from './Component/dashboard/info.component';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -63,7 +67,12 @@ root.render(
             <Route path='/urgentTasksTable' element={<UrgentTasksTable />} ></Route>
             <Route path='/chat' element={<ChatTable />} ></Route>
             <Route path='/support' element={<AnyDeskChecker />} ></Route>
-            <Route path='/Login' element={<Login />} ></Route>
+            <Route path='/documents' element={<DocumentViewer />} ></Route>
+            <Route path='/allDeshbord' element={<MainDeshbord />} ></Route>
+            <Route path='/followUp' element={<FollowUp />} ></Route>
+            <Route path='/info' element={<Info />} ></Route>
+
+
           </Route>
         </Routes>
       </HashRouter>

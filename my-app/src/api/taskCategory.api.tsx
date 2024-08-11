@@ -42,3 +42,14 @@ export const deleteCategory = async (categoryId:string) => {
         throw error;
       }
 }
+export const getMandatoryOptions=async ()=>{
+  try{
+    const response=await axios.get(`${apiUrl}TaskCategory/getMaxSortOrder`)
+  return response.data;
+  }
+  catch(error){
+    console.error('error in get mzx sort order ',error);
+    throw error;
+
+  }
+}

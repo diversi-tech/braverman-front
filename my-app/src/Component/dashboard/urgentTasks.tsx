@@ -13,6 +13,9 @@ import Rtl from '../rtl/rtl';
 import { Project } from '../../model/project.model';
 import { getProject } from '../../api/project.api';
 import { setAllProject } from '../../Redux/Project/projectAction';
+import { getUsers } from '../../api/user.api';
+import { setAllUsers } from '../../Redux/User/userAction';
+import { User } from '../../model/user.model';
 
 const CardContainer = styled(Grid)({
   display: 'flex',
@@ -67,17 +70,28 @@ const UrgentTasksCard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+  const [users, setUsers] = useState<User[]>([])
 
   // Function to fetch user info from session
   const getUserFromSession = () => {
     // Assume we get user info from session storage or a context
-    return sessionStorage.getItem('firstName') || '';
+    return sessionStorage.getItem('userId') || '';
   };
 
   useEffect(() => {
     fetchDataTask();
     fetchDataProject();
+    fetchDataUser();
   }, []);
+
+
+  const fetchDataUser = async () => {
+    let data;
+    const resAllUsers = await getUsers();
+    data = resAllUsers;
+    dispatch(setAllUsers(data));
+    setUsers(data);
+};
 
   const fetchDataProject = async () => {
     try {
@@ -205,7 +219,16 @@ const UrgentTasksCard: React.FC = () => {
                 <IconContainer style={{ textAlign: 'right',direction: 'rtl'}}>
                   <AccessAlarmIcon style={{ color: pink[500] }} />
                   <Typography variant="body2" style={{ textAlign: 'right' }}>
-                    <strong > אחראית משימה:  </strong> {task.assignedTo || 'Not assigned'}
+                  <strong>אחראית משימה:
+                  {users
+                .filter(user => user.id === task.assignedTo)
+                 .map(user => (
+                 <div key={user.id}>
+                {user.firstName} {user.lastName}
+                  </div>
+                 ))}
+                 </strong>
+                    {/* <strong > אחראית משימה:  </strong> {task.assignedTo || 'Not assigned'} */}
                   </Typography>
                 </IconContainer>
                 <Typography variant="body2" style={{textAlign: 'right'}}>

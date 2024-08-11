@@ -62,7 +62,7 @@ const NotesColumn: React.FC<NotesColumnProps> = ({ notes, leadId, addNote }) => 
 
   return (
     <div onClick={handleNoteClick} style={{ cursor: 'pointer', textAlign: 'right', marginRight: '15px' }} >
-      {notes.length > 0 ? notes[notes.length - 1].content : 'אין הערות'}
+      {notes.length > 0 ? notes[notes?.length - 1].content : 'אין הערות'}
     </div>
   );
 };
