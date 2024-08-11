@@ -26,6 +26,7 @@ const App = () => {
     <ChatForm></ChatForm> */}
       <Nav />
       <Outlet />
+      
     </>
   );
 };

@@ -64,7 +64,7 @@ export const TaskCategoriesEditor: React.FC<{
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (categoryName.length < 2) {
+    if (categoryName?.length < 2) {
       setMessage('שם הקטגוריה חייב להיות לפחות 2 תווים');
       setIsMessageVisible(true);
       setTimeout(() => {

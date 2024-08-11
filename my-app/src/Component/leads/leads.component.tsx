@@ -37,7 +37,7 @@ const Leads: React.FC = () => {
   //עמודים
   const [page, setPage] = useState(0);
   const leadsPerPage = 8;
-  const totalPages = Math.ceil(leads.length / leadsPerPage);
+  const totalPages = Math.ceil(leads?.length / leadsPerPage);
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
   const [filters, setFilters] = useState({
     "שם פרטי": '',
