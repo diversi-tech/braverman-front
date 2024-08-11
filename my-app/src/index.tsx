@@ -27,6 +27,7 @@ import UrgentTasksTable from './Component/dashboard/urgentTasks';
 import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
 import AnyDeskChecker from "./Component/userScreen/anyDesk";
+import TaskCompletionGraph from './Component/TaskCompletionGraph/TaskCompletionGraph.component';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -40,6 +41,9 @@ root.render(
             <Route path="/nav" element={<Nav />}></Route>
             <Route path="/dashboardStatus" element={<DashboardGraph />} />
             <Route path="/tehila" element={<Info />} />
+            <Route path="/tehila2" element={<TaskCompletionGraph />} />
+            <Route path="/st" element={<DashboardGraph />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />
