@@ -12,6 +12,7 @@ export const Dashboard = () => {
     const { userId } = id
     const role = sessionStorage.getItem("userType")
     const Id = sessionStorage.getItem("userId")
+   
 const actions = [
 {
     icon: <svg width="80" height="69" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +116,8 @@ const actions = [
         </clipPath>
       </defs>
     </svg>
-    , label: 'דוח נוחכות לחודש הנוכחי ', link: `/AttendanceReport/${userId}`
+, label: 'דוח נוכחות לחודש הנוכחי', link: userId == null ? `/AttendanceReport/${Id}` : `/AttendanceReport/${userId}`
+// , label: 'דוח נוחכות לחודש הנוכחי ', link: `/AttendanceReport/${userId}`
   }
 
 ];

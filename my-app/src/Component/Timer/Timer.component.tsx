@@ -148,29 +148,24 @@ const TimerComponent: React.FC = () => {
 
       }}
     >
-      <Button
-      // variant="contained"
-      onClick={currentTimer ? handleStopTimer : openProjectDialog}
-      sx={{
-        // backgroundColor: 'white',
-        color: 'black',
-        borderRadius: '50%',
-        width: 40,
-        height: 40,
-        minWidth: 0,
-        padding: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 35,
-
-      }}
-    >
-      {currentTimer ? <TbClockPause /> : <TbClockPlay />}
-    </Button>
-      {/* <LuAlarmClock  onClick={currentTimer ? handleStopTimer : openProjectDialog}
- /> */}
-
+    
+<Button
+  onClick={currentTimer ? handleStopTimer : openProjectDialog}
+  sx={{
+    color: currentTimer ? 'red': 'blue',       
+    borderRadius: '50%',
+    width: 40,
+    height: 40,
+    minWidth: 0,
+    padding: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 35,
+  }}
+>
+  {currentTimer ? <TbClockPause /> : <TbClockPlay />}
+</Button>
       <Box sx={{ marginLeft: 2 }}>
         <Typography variant="h6">
           {formatDuration(currentTimer?.duration)}
