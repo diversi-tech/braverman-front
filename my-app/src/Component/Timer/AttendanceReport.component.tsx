@@ -157,7 +157,6 @@ const AttendanceReport: React.FC = () => {
                 </Paper>
             </Box>
         </div>
-        <AttendanceReportByMonth></AttendanceReportByMonth>
         </>
 
     );
