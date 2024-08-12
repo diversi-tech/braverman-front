@@ -240,10 +240,8 @@ const TimerComponent: React.FC = () => {
               color: 'text.secondary',
             }}
           >
-            {index + 1}
           </Typography>
         </ListItemButton>
-        {index < projects.length - 1 && <Divider sx={{ my: 1 }} />}
       </React.Fragment>
     ))}
   </List>
