@@ -15,8 +15,6 @@ import DocumentViewer from "./DocumentViewer";
 
 export const ShowProjectStatus = () => {
    const [open, setOpen] = useState(false);
-
-  
   const listProject = {
     projectId: null,
     firstName: "string",
@@ -76,13 +74,11 @@ export const ShowProjectStatus = () => {
   };
   const [data, setData] = useState([{ ...listProject }]);
   const [goShow, setgoShow] = useState({ projectName: "" });
-
   // האוביקטים הבאים לצורך התצוגה
   let taskShow = {
     taskCategoryName: "",
     status: 1,
   }
-
   const getUniqueTasksWithLowestStatus = (tasksProject: { [key: string]: any }[]) => {
     const taskMap = new Map();
     let countNoFinishTask = 0;
@@ -99,7 +95,6 @@ export const ShowProjectStatus = () => {
     return Array.from(taskMap.values());
   }
   let progectShow = {
-    // fromShowProject:false,
     projectName: "",
     statusProject: "",
     stat: "",
@@ -123,7 +118,6 @@ export const ShowProjectStatus = () => {
       }; task();
     }
   });
-
   //============2======================
   // הכנסת הנתונים לתצוגה
   if (data[0]?.projectId && (data.length == 1 ? show[0].projectName == '' : show?.length < data?.length)) {
@@ -138,7 +132,6 @@ export const ShowProjectStatus = () => {
         pricePaid: data[i].pricePaid,
         tashsShow: [{ key: "", categoryName: "" }]
       };
-
       const tasksProject = data[i].tasks;
       if (data[i].status.key == "3") { progectShow.stat = "" }
       else {
@@ -169,7 +162,6 @@ export const ShowProjectStatus = () => {
 
       {goShow.projectName != '' ? <Show props={goShow}></Show>
         : <Show props={show[0]}></Show>}
-
 <div style={{ paddingRight: "12%" }}>
         {/* <compunent stay me ansowor/> */}
         <div>
@@ -227,7 +219,7 @@ const Show = ({ props }: any) => {
       }}
     >
 
-      <div style={{ width: "100%", textAlign: "center" }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
+      <div style={{ width: "100%", textAlign: "center",marginTop:'40px' }}><div className="note">  <SendAnnouncement nameProject={p.projectName}></SendAnnouncement></div>       
   {p.statusProject == "3" ?
           <div>
             <CheckCircleOutlineTwoTone sx={{
@@ -238,11 +230,12 @@ const Show = ({ props }: any) => {
             <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
-          (<p style={{ fontSize: "170%", fontWeight: "bold" }}>שלבי הפרויקט:</p> &&
+          (<p style={{ fontSize: "170%", fontWeight: "bold" ,marginTop:"5%" }}>שלבי הפרויקט:</p> &&
             p.tashsShow?.map(t => (t?.categoryName != "" &&
               <>
+             
                 <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
-                  {t.key == "4" ? <CheckCircleOutlineTwoTone /> : <RadioButtonUncheckedIcon />}
+                  {t.key == "4" ? <CheckCircleOutlineTwoTone style={{marginTop:'15px', marginLeft:'8px' }} /> : <RadioButtonUncheckedIcon  style={{marginTop:'15px', marginLeft:'8px'}}/>}
                   {p.stat == t.categoryName
                     ? <p style={{ backgroundColor: "#F1F7FF", borderRadius: 3, }}>{t.categoryName}</p>
                     : <p>{t.categoryName}</p>}

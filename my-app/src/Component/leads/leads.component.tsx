@@ -37,7 +37,7 @@ const Leads: React.FC = () => {
   //עמודים
   const [page, setPage] = useState(0);
   const leadsPerPage = 8;
-  const totalPages = Math.ceil(leads.length / leadsPerPage);
+  const totalPages = Math.ceil(leads?.length / leadsPerPage);
   const [leadsChanges, setLeadsChanges] = useState<boolean[]>();
   const [filters, setFilters] = useState({
     "שם פרטי": '',
@@ -371,18 +371,34 @@ const Leads: React.FC = () => {
 
  const filterStatus =(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
   setFilters({ ...filters, [key]: e.target.value });
+  debugger
   console.log(e.target.value);
+  if(e.target.value === ''){
+    debugger
+      getAllLeads()
+        .then((response) => {
+          if (response.status === 200) {
+            setLeads(response.data);    
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
+  else{
    filterByStatus(e.target.value).then
    ((response) => {
      if (response.status === 200) {
-      setFilters({ ...filters, [key]: e.target.value }); 
-      console.log(response.data);
+      setLeads(response.data);
+            console.log(response.data);
      }
    })
    .catch((error) => {  
      console.log(error);
    });
  }
+}
  const toggleFilterInput = (key: keyof typeof filterInputsVisible) => {
   setFilterInputsVisible(prevState => {
     const newState = { ...prevState, [key]: !prevState[key] };

@@ -11,10 +11,10 @@
     direction: rtl; /* תומך בסידור מימין לשמאל */
   }
   .allDocument{
-margin-left: 50px;
+margin-left: 8%;
     position: absolute;
-    width: 95%;
-    top: 20.96%;
+    width: 85%;
+    top: 30.96%;
     bottom: 6.25%;
     text-align: center;
     background: #FFFFFF;

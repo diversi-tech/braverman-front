@@ -32,7 +32,8 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     urlFigma: '',
     urlWordpress: '',
     freeText: '',
-    workLog: []
+    workLog: [],
+    projectType: '',
   });
   const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
   };
 
   const handleSubmit = async () => {
-    const { firstName, lastName, email, businessName, source,address,phone, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText } = formValues;
+    const { firstName, lastName, email, businessName, source,address,phone, totalPrice, pricePaid, urlDrive, urlFigma, urlWordpress, freeText,projectType } = formValues;
 
     // if (!firstName || !lastName || !email || !businessName || !source || !totalPrice || !pricePaid || !urlDrive || !urlFigma || !urlWordpress) {
     //   alert('יש למלא את כל השדות');
@@ -54,6 +55,7 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
 
 
     const Project : Project = {
+      projectType:'',
       projectId: '',
       firstName,
       lastName,
@@ -166,6 +168,18 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         label="מחיר כולל"
         name="totalPrice"
         value={formValues.totalPrice}
+        onChange={handleInputChange}
+        fullWidth
+        multiline
+        margin="normal"
+      />
+          <TextField
+      inputProps={{style: {fontFamily: 'CustomFont'}}} 
+      InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
+        dir='rtl'
+        label="סוג פרויקט"
+        name="projectType"
+        value={formValues.projectType}
         onChange={handleInputChange}
         fullWidth
         multiline
