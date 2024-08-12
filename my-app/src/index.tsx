@@ -27,7 +27,7 @@ import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
 import AnyDeskChecker from "./Component/userScreen/anyDesk";
 import DocumentViewer from './Component/userScreen/DocumentViewer';
-import MainDeshbord from './Component/dashboard/mainDeshbord';
+import MainDeshbord from './Component/dashboard/mainDashbord';
 import FollowUp from './Component/leads/followUp.component';
 import Info from './Component/dashboard/info.component';
 
