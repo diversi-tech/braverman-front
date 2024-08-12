@@ -76,8 +76,8 @@ const AttendanceReportForAllUserByMonth: React.FC = () => {
     const downloadExcel = () => {
         const ws = XLSX.utils.json_to_sheet(
             timersData.map(timer => ({
-                UserId: timer.userId,
                 Date: new Date(timer.startTime).toLocaleDateString('en-GB'),
+                UserName: timer.userName,
                 StartTime: new Date(timer.startTime).toISOString().substr(11, 8),
                 EndTime: timer.endTime ? new Date(timer.endTime).toISOString().substr(11, 8) : 'Active',
                 Duration: timer.duration || '00:00:00',

@@ -77,7 +77,7 @@ debugger
             Object.entries(groupedTimers).flatMap(([date, timers]) =>
                 timers.map((timer) => ({
                     Date: date,
-                    Employee: timer.userName,
+                    userName: timer.userName,
                     StartTime: formatTime(timer.startTime),
                     EndTime: timer.endTime ? formatTime(timer.endTime) : 'Active',
                     Duration: timer.duration || '00:00:00',
