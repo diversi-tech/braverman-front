@@ -30,6 +30,7 @@ import DocumentViewer from './Component/userScreen/DocumentViewer';
 import MainDeshbord from './Component/dashboard/mainDashbord';
 import FollowUp from './Component/leads/followUp.component';
 import Info from './Component/dashboard/info.component';
+import AttendanceReportByMonth from './Component/Timer/AttendanceReportByMonth.component';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -53,7 +54,11 @@ root.render(
             <Route path="/customers" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
+            
+            <Route path='/Dashboard/:userId' element={<Dashboard />}></Route>
             <Route path='/AttendanceReport/:userId' element={<AttendanceReport />} />
+            <Route path='/AttendanceReportByMonth/:userId' element={<AttendanceReportByMonth />} />
+             
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
             <Route path='/taskCategories' element={<TaskCategories />} />
             <Route path='/quickActions' element={<QuickActions />} ></Route>
