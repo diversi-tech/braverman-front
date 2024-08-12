@@ -142,7 +142,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 margin="normal"
             />
              <TextField
-                name="adress"
+                name="address"
                 label="כתובת"
                 value={formValues.address}
                 onChange={handleChange}

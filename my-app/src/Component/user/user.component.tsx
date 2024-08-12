@@ -167,7 +167,7 @@ const UserTable = () => {
     };
     return (
         <div className="user-table-container">
-            <div className="table-title">
+            <div className="table-title" >
                 תצוגת משתמשי מערכת
             </div>
             <table>
