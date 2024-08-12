@@ -133,7 +133,7 @@ const MainDeshbord = () => {
             </clipPath>
             </defs>
             </svg>            
-              ,label:'נוכחות עובדים',link:"/Dashboard"},
+              ,label:'נוכחות עובדים',link:"/DashboardAllUser"},
       
           {icon: 
             <svg width="80" height="69" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">

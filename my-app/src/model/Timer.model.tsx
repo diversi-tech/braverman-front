@@ -6,5 +6,6 @@ export interface Timer {
   projectId?: string;
   userId?: string;
   projectName?: string;
+  userName?:string;
 
 }

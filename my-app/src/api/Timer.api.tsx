@@ -4,7 +4,7 @@ import { Timer } from '../model/Timer.model';
 
 
 export const getAllTimers = () => {
-  return axios.get(apiUrl);
+  return axios.get(`${apiUrl}Timer`);
 }
 
 export const addTimer = (timer: Timer) => {
