@@ -3,6 +3,7 @@ import './DocumentViewer.css'; // נניח ששם הקובץ הוא DocumentView
 import MoreStatus from '../project/moreStatus';
 import { Project } from '../../model/project.model';
 import axios from 'axios';
+import { GetAllProjectPerUser } from '../../api/user.api';
 axios.defaults.baseURL = process.env.REACT_APP_BRAVERMAN;
 const apiUrl = process.env.REACT_APP_BRAVERMAN
 // פונקציה לשליחת בקשה לקבלת טוקן
@@ -36,12 +37,33 @@ const data = await response.json();
 };
 // רכיב React
 const DocumentViewer: React.FC= () => {
+  const [project, setProject] = useState<Project | null>(null);
+  const [endDate, setEndDate] = useState<string>("");
   const [documents, setDocuments] = useState<{type: string, number: string, documentDate: string, description: string, price: string, downloadLink: string }[]>([]);
 const email=sessionStorage.getItem("email")
 const [loading, setLoading] = useState<boolean>(false);
   debugger
   // שימוש ב-useEffect לטעינת המסמכים בעת טעינת הקומפוננטה
   useEffect(() => {
+
+    const getProject = async () => {
+      try {
+          debugger
+          const userId = sessionStorage.getItem('userId');
+          if (userId) {
+              const projectPerCustomer = await GetAllProjectPerUser(userId);
+              console.log("Projects:", projectPerCustomer);
+              if (projectPerCustomer.length > 0) {
+                  setProject(projectPerCustomer[0]);
+                  const dateObject = new Date(projectPerCustomer[0].endDate);
+                  setEndDate(dateObject.toISOString().split('T')[0]);
+              }
+          }
+      } catch (error) {
+          console.error("Failed to fetch projects:", error);
+      }
+  };
+
     const fetchDocuments = async () => {
       if (email) {
         setLoading(true);
@@ -58,9 +80,12 @@ const [loading, setLoading] = useState<boolean>(false);
         }
       }
     };
-fetchDocuments();
+fetchDocuments();    getProject();
+
   }, [email]);
      return (
+      <div className='div2'>
+      {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
       <div>
         <div className='allDocument'>
       {/* {project && project.endDate && <MoreStatus project={project} />} */}
@@ -98,6 +123,7 @@ fetchDocuments();
         ))}
       </div>
     )}</div>
+  </div>
   </div>
 );
 };

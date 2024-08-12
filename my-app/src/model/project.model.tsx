@@ -29,6 +29,8 @@ export interface Project {
   urlWordpress: string;
   freeText: string;
   workLog: string[];
+  projectType: string;
+
 }
 
 
