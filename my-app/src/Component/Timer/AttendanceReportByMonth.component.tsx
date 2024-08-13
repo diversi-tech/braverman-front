@@ -138,7 +138,7 @@ const AttendanceReportByMonth: React.FC = () => {
                             onChange={(e) => fetchData(e.target.value)}
                         >
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-01'}>ינואר</MenuItem>
-                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-02'}>פבורא</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-02'}>פברואר</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-03'}>מרץ</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-04'}>אפריל</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-05'}>מאי</MenuItem>
@@ -148,7 +148,7 @@ const AttendanceReportByMonth: React.FC = () => {
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-09'}>ספטמבר</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-10'}>אוקטובר</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-11'}>נובמבר</MenuItem>
-                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-12'}>דיצמבר</MenuItem>
+                            <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-12'}>דצמבר</MenuItem>
 
                         </Select>
                     </FormControl>
