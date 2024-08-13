@@ -86,7 +86,8 @@ const TimerComponent: React.FC = () => {
       startTime: new Date(),
       projectId: projectId,
       userId: currentUser.id,
-      projectName: projectName
+      projectName: projectName,
+      userName: currentUser.firstName+ ' '+ currentUser.lastName
     };
     setCurrentTimer(timer);
     setProjectDialogOpen(false);
