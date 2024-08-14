@@ -27,6 +27,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
         email: prod.email,
         status: prod.status,
         address:prod.address,
+        phone:prod.phone,
     });
 
     useEffect(() => {
@@ -125,7 +126,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 dir='rtl'
                 name="phone"
                 label="טלפון"
-                value={"phone" || ''}
+                value={formValues.phone || ''}
                 onChange={handleChange}
                 fullWidth
                 multiline
@@ -142,6 +143,7 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
                 margin="normal"
             />
              <TextField
+                dir='rtl'
                 name="address"
                 label="כתובת"
                 value={formValues.address}
