@@ -59,9 +59,9 @@ const Login = () => {
         if (x.data.userType.description === "לקוח")
           navigate("/quickActions");
         else if (x.data.userType.description === "מנהל")
-          navigate("/leads");
+          navigate("/allDeshbord");
         else
-          navigate("/leads");
+          navigate("/allDeshbord");
       } else {
         MySwal.fire({
           title: 'error',
@@ -106,9 +106,9 @@ const Login = () => {
         if (x.data.userType.description === "לקוח")
           navigate("/quickActions");
         else if (x.data.userType.description === "מנהל"){
-          navigate("/leads");}
-        // else
-        //   navigate("/leads");
+          navigate("/allDeshbord");}
+         else
+           navigate("/allDeshbord");
 
       } else {
         MySwal.fire({
