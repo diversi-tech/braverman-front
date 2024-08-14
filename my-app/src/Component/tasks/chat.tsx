@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Chat } from '../../model/chat.nodel';
-import { Directions } from '@mui/icons-material';
-// import './chat.css'
+import { BorderColor, Directions, Padding } from '@mui/icons-material';
+import './chat.css'
+import { backdropClasses } from '@mui/material';
+import { TbBackground } from 'react-icons/tb';
+import { red } from '@mui/material/colors';
+import { withWidth } from '@material-ui/core';
+
 interface Files {
     files: File[];
   }
@@ -22,7 +27,9 @@ const ChatTable = () => {
         e.preventDefault();
         let userId2='';
         if(sessionStorage.getItem("userType")=="מנהל")
-            userId2="fghjkl";
+        
+            userId2="fghjkl";   
+      
         else
            userId2=sessionStorage.getItem("userId")!
            const message: Chat = {
@@ -40,27 +47,14 @@ const ChatTable = () => {
                 setNewMessage('');
             });
     };
-    const [file, setTask] = useState<Files>({  files: [] });
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        const newFiles = Array.from(e.target.files);
-        setTask((prevTask) => ({ ...prevTask, files: [...prevTask.files, ...newFiles] }));
-      }
-    };
-    const handleDeleteFile = (index: number) => {
-      setTask((prevTask) => {
-        const newFiles = [...prevTask.files];
-        newFiles.splice(index, 1);
-        return { ...prevTask, files: newFiles };
-      });
-    };
     return (
-        <div>
+        <div style={{backgroundColor:'#ffffff'}}>
             <h2>Chat Room</h2>
-            <div id='massage'>
+            <div  id='massage'>
                 {messages.map((msg, index) => (
-                    <div key={index}>
-                        <strong>{msg.sender}:</strong> {msg.content}
+                    <div className='masg'style={{borderColor:'red',border:'30px',color:'red',padding:'50px',borderRadius:15, display: "flex",direction:'rtl', flexDirection: 'column', gap: '10px',  backgroundColor: '#F6F6F6',width:'70%',marginLeft:'12%'}}  key={index}>
+                        <strong className='msan'>{  msg.sender }:
+                           </strong> {msg.content}
                     </div>
                 ))}
             </div>

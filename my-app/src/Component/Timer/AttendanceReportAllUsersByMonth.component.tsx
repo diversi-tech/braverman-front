@@ -3,33 +3,27 @@ import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, Icon
 import DownloadIcon from '@mui/icons-material/Download';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { GetTimersByMonthAsync } from '../../api/WorkMonth.api';
-import { useParams } from 'react-router-dom';
 import { Timer } from '../../model/Timer.model';
+import { GetByMonthAsync } from '../../api/WorkMonth.api';
 
-const AttendanceReportByMonth: React.FC = () => {
-    const [timersData, setTimersData] = useState([]);
-    const [totalDuration, setTotalDuration] = useState('00:00:00');
+const AttendanceReportForAllUserByMonth: React.FC = () => {
+    const [timersData, setTimersData] = useState<Timer[]>([]);
+    // const [totalDuration, setTotalDuration] = useState<>({});
     const [selectedMonth, setSelectedMonth] = useState<string>();
     const [selectedYear, setSelectedYear] = useState<string>();
     const [loading, setLoading] = useState(false);
-    const [groupedTimers, setGroupedTimers] = useState<{ [key: string]: Timer[] }>({});
-    const [userTimers, setUserTimers] = useState<Timer[]>([]);
+    const [groupedTimers, setGroupedTimers] = useState<Timer[] >([]);
 
-    let id = useParams()
-    debugger
+
     const fetchData = async (filter: string) => {
         debugger
         setLoading(true);
         try {
             debugger
-            const response = (await GetTimersByMonthAsync(filter)).data
-            const users = response[0];
-            const { userId } = id
-            const userTimers = users[userId] || [];
-            setUserTimers(userTimers);
-            groupTimersByDay(userTimers);
-            calculateTotalDuration(userTimers);
+            const timers = (await GetByMonthAsync(filter)).data            
+            setTimersData(timers);
+            groupTimersByDay(timers);
+            calculateTotalDuration(timers);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -37,7 +31,7 @@ const AttendanceReportByMonth: React.FC = () => {
     };
 
     const groupTimersByDay = (timers: Timer[]) => {
-        const groupedTimers: { [key: string]: Timer[] } = {};
+        const groupedTimers:  Timer[]  = [];
         timers.forEach((timer) => {
             const date = formatDate(new Date(timer.startTime));
             if (!groupedTimers[date]) {
@@ -68,7 +62,7 @@ const AttendanceReportByMonth: React.FC = () => {
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
 
-        setTotalDuration(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+        // setTotalDuration(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
     };
 
     
@@ -79,27 +73,22 @@ const AttendanceReportByMonth: React.FC = () => {
         return dateA.getTime() - dateB.getTime();
     });
 
-
     const downloadExcel = () => {
         const ws = XLSX.utils.json_to_sheet(
-            Object.entries(groupedTimers).flatMap(([date, timers]) =>
-                timers.map((timer) => ({
-                    Date: date,
-                    StartTime: formatTime(timer.startTime),
-                    EndTime: timer.endTime ? formatTime(timer.endTime) : 'Active',
-                    Duration: timer.duration || '00:00:00',
-                    Project: timer.projectName,
-                }))
-            )
+            timersData.map(timer => ({
+                Date: new Date(timer.startTime).toLocaleDateString('en-GB'),
+                UserName: timer.userName,
+                StartTime: new Date(timer.startTime).toISOString().substr(11, 8),
+                EndTime: timer.endTime ? new Date(timer.endTime).toISOString().substr(11, 8) : 'Active',
+                Duration: timer.duration || '00:00:00',
+                Project: timer.projectName,
+            }))
         );
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Attendance Report');
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'AttendanceReport.xlsx');
+        saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'AttendanceReport_AllEmployees.xlsx');
     };
-
-    
-
     return (
         <Box sx={{ padding: 4, fontFamily: 'CustomFont' }}>
             <Paper elevation={3} sx={{ padding: 3, borderRadius: '20px' }}>
@@ -165,6 +154,7 @@ const AttendanceReportByMonth: React.FC = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>תאריך</TableCell>
+                                <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>עובד</TableCell>
                                 <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>שעת סיום</TableCell>
                                 <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>שעת התחלה</TableCell>
                                 <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>משך זמן</TableCell>
@@ -181,6 +171,7 @@ const AttendanceReportByMonth: React.FC = () => {
                                                     {date}
                                                 </TableCell>
                                             )}
+                                            <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>{timer.userName}</TableCell>
                                             <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>{timer?.endTime ? formatTime(timer?.endTime) : 'פעיל'}</TableCell>
                                             <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>{formatTime(timer.startTime)}</TableCell>
                                             <TableCell style={{ textAlign: 'center', fontFamily: 'CustomFont' }}>{timer?.duration || '00:00:00'}</TableCell>
@@ -194,7 +185,7 @@ const AttendanceReportByMonth: React.FC = () => {
                 )}
                 <Box sx={{ marginTop: 2, textAlign: 'center' }}>
                     <Typography variant="h6" sx={{ fontFamily: 'CustomFont', color: '#002046' }}>
-                        סך הכל שעות עבודה: {totalDuration}
+                        {/* סך הכל שעות עבודה: {totalDuration} */}
                     </Typography>
                 </Box>
             </Paper>
@@ -202,4 +193,5 @@ const AttendanceReportByMonth: React.FC = () => {
     );
 };
 
-export default AttendanceReportByMonth;
+
+export default AttendanceReportForAllUserByMonth;

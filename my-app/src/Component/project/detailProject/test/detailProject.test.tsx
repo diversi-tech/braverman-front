@@ -41,7 +41,9 @@ const project: Project = {
   urlDrive: '',
   urlWordpress: '',
   freeText: 'stYut',
-  workLog: []
+  workLog: [],
+  projectType: '',
+  
 };
 
 test('renders ProjectDetail component', () => {      

@@ -29,9 +29,13 @@ import AnyDeskChecker from "./Component/userScreen/anyDesk";
 import TaskCompletionGraph from './Component/TaskCompletionGraph/TaskCompletionGraph.component';
 
 import DocumentViewer from './Component/userScreen/DocumentViewer';
-import MainDeshbord from './Component/dashboard/mainDeshbord';
+import MainDeshbord from './Component/dashboard/mainDashbord';
 import FollowUp from './Component/leads/followUp.component';
 import Info from './Component/dashboard/info.component';
+import AttendanceReportByMonth from './Component/Timer/AttendanceReportByMonth.component';
+import AttendanceReportAllUsers from './Component/Timer/AttendanceReportForAllUsers.component';
+import { DashboardAllUser } from './Component/dashboard/DeshboardAllUser.component';
+import AttendanceReportForAllUserByMonth from './Component/Timer/AttendanceReportAllUsersByMonth.component';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -58,7 +62,14 @@ root.render(
             <Route path="/customers" element={<MainProject />} />
             <Route path='/leads' element={<Leads />} />
             <Route path='/user' element={<UserTable />} />
+            
+            <Route path='/Dashboard/:userId' element={<Dashboard />}></Route>
+            <Route path='/DashboardAllUser' element={<DashboardAllUser />}></Route>
+            <Route path='/AttendanceReportForAllUserByMonth' element={<AttendanceReportForAllUserByMonth />}></Route>
+            <Route path='/AttendanceReportAllUsers' element={<AttendanceReportAllUsers />}></Route>
             <Route path='/AttendanceReport/:userId' element={<AttendanceReport />} />
+            <Route path='/AttendanceReportByMonth/:userId' element={<AttendanceReportByMonth />} />
+             
             <Route path='/projectStatus' element={<ShowProjectStatus />} />
             <Route path='/taskCategories' element={<TaskCategories />} />
             <Route path='/quickActions' element={<QuickActions />} ></Route>
@@ -71,6 +82,7 @@ root.render(
             <Route path='/allDeshbord' element={<MainDeshbord />} ></Route>
             <Route path='/followUp' element={<FollowUp />} ></Route>
             <Route path='/info' element={<Info />} ></Route>
+            <Route path='/Login' element={<Login />} ></Route>
 
 
           </Route>
