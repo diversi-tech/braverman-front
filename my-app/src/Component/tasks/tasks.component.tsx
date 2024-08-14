@@ -33,6 +33,7 @@ import { getTaskCategories } from "../../api/taskCategory.api";
 import { TaskCategory } from "../../model/taskCategory.model";
 import { setAllTaskCategory } from "../../Redux/tasx/taskCategoryAction";
 import { HiChevronDown } from "react-icons/hi";
+import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 
 export const Tasks = () => {
 
@@ -51,7 +52,10 @@ export const Tasks = () => {
     const [ref, setRef] = useState(false);
     const [users, setUsers] = useState<User[]>([])
     const [taskCategory, setTaskCategory] = useState<TaskCategory[]>([])
-
+    const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+      const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open3 = Boolean(anchorEl2);
+    const open2 = Boolean(anchorEl);
     const [page, setPage] = useState(0);
     const taskperPage = 7;
     const totalPages = Math.ceil(tasks.length / taskperPage);
@@ -330,7 +334,29 @@ export const Tasks = () => {
             return newState;
         });
     }
-
+    const handleToggleDropdown = () => {
+        setOpen(!open);
+    };
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+    
+      const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+      };
+      const updateLevel = (level: string) => {
+        handleClose()
+        let t = findTaskById();
+        if (t != null) {
+          t.levelUrgencyStatus = level;
+          UpDateTask(t);
+        }
+        setRef(true);
+      }
 
     return (
         <div className="page-container">
@@ -343,16 +369,16 @@ export const Tasks = () => {
                         <tr>
                             <th></th>
 
-                            {(['רמת דחיפות', 'אחראית', 'המשימה', 'שם פרויקט'] as const).map((col) => (
-                                <th key={col} style={{ fontWeight: 700, fontSize: "15px" }}>
-                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            {(['לינקים','רמת דחיפות', 'אחראית', 'המשימה', 'שם פרויקט'] as const).map((col) => (
+                                <th key={col} style={{ fontWeight: 700, fontSize: "15px",textAlign:"right" ,height:"35px"}}>
+                                    <div style={{ display: "flex", flexDirection: "column",textAlign:"right" }}>
                                         {col}
-                                        <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+                                        {/* <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "right" }} />
                                         </button>
                                     </div>
-                                    <div style={{ display: "flex" }}>
+                                    <div style={{ display: "flex" }}> */}
 
-                                        {filterInputsVisible[col] && (
+                                        {/* {filterInputsVisible[col] && (
                                             col === 'שם פרויקט' ? (
                                                 <select
                                                     className='select2'
@@ -373,18 +399,20 @@ export const Tasks = () => {
                                                     onChange={(e) => filterMyTask(e, col)}
                                                 />
                                             )
-                                        )}
+                                        )} */}
 
                                     </div>
                                 </th>
                             ))}
+                        <th></th>
                         </tr>
                         {filterTask && filterTask.length && filterTask.map((t) => {
                             return <tbody>
                                 <tr onClick={() => setSelectedTaskId(t.taskId)}>
-                                    <td><Links project={t}></Links></td>
-                                    <td>
-                                        <div id="id01">
+                                    <td></td>
+                                    <td style={{ textAlign: 'right',marginRight:'10px' }}><Links project={t}></Links></td>
+                                    <td style={{ textAlign: 'right'}}>
+                                    <div id="id01" style={{marginRight:"20%"}}>
                                             <IconButton>
                                                 {+(t.levelUrgencyStatus) == 1 && <CircleIcon onClick={() => setOpen(!open)} style={{ color: "green" }} ></CircleIcon>}
                                                 {+(t.levelUrgencyStatus) == 2 && <PlayArrowRoundedIcon onClick={() => setOpen(!open)} style={{ color: "lightblue" }}></PlayArrowRoundedIcon>}
@@ -393,25 +421,29 @@ export const Tasks = () => {
                                             </IconButton>
                                         </div>
                                     </td>
-                                    <td>{users && users.length && users.map((u) => {
+                                    <td style={{ textAlign: 'right' }}>{users && users.length && users.map((u) => {
                                         if (u.id === t.assignedTo)
                                             return <>
                                                 {u.firstName} {u.lastName}
                                             </>
                                     })}
                                     </td>
-                                    <td>
+                                    <td style={{ textAlign: 'right' ,marginRight:'10px'}}>
                                         {t.taskName}
                                         +
                                         {t.taskCategory.categoryName}
                                     </td>
-                                    <td>
+                                    <td style={{ textAlign: 'right' ,marginRight:'50px'}}>
+                                    <div style={{marginRight:'10%'}}>
                                         {project && project.length && project.map((m) => {
                                             if (m.projectId === t.projectId)
                                                 return <>
                                                     {m.businessName}
                                                 </>
-                                        })}</td>
+                                        })}
+                                         </div>
+                                        </td>
+                                       
                                     <td>
                                         <button
                                             className={`circle-button ${selectedTaskId === t.taskId ? 'clicked' : ''}`}
@@ -423,11 +455,11 @@ export const Tasks = () => {
                         })}
                         <tfoot >
                             <tr>
-                                <td colSpan={6} style={{ textAlign: 'right', color: '#636363' }}>
+                                <td colSpan={8} style={{ textAlign: 'right', color: '#636363' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>
                                         {selectedTaskId && (
                                             <button className="convert-lead-button" onClick={handleEditLead}>
-                                                <GrUpdate className="icon" />
+                                                <GrUpdate style={{width:'20px',height:'20px'}} className="icon" />
                                                 <span className='add' style={{ fontSize: 15, color: '#636363', width: '150px' }}>עדכון משימה</span>
                                             </button>
                                         )}
