@@ -14,10 +14,10 @@ interface Files {
 const ChatTable = () => {
     const [messages, setMessages] = useState<Chat[]>([]);
     const [newMessage, setNewMessage] = useState('');
-    // const apiUrl = process.env.REACT_APP_BRAVERMAN
+     const apiUrl = process.env.REACT_APP_BRAVERMAN
     useEffect(() => {
         debugger
-        axios.get(`https://braverman-back.onrender.com/${sessionStorage.getItem("userId")}`)
+        axios.get(`${apiUrl}Chat/${sessionStorage.getItem("userId")}`)
             .then(response => {
                 setMessages(response.data);
             });
@@ -41,7 +41,7 @@ const ChatTable = () => {
         };
         // const message = {id: '' , sender:sessionStorage.getItem("userType"), content: newMessage ,Timestamp: new Date().toISOString(), userId:userId2};
         debugger
-        axios.post(`https://braverman-back.onrender.com/api/Chat`, message)
+        axios.post(`${apiUrl}Chat`, message)
             .then(response => {
                 setMessages([...messages,message]);
                 setNewMessage('');
