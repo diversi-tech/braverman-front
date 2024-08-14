@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './document.css';
 import { FaDownload } from 'react-icons/fa';
 import { importFile } from '../../api/upFileTDrive';
-
 interface Task {
   description: string;
   files: File[];
@@ -17,7 +16,6 @@ const Documents: React.FC = () => {
       setTask((prevTask) => ({ ...prevTask, files: [...prevTask.files, ...newFiles] }));
     }
   };
-
   const handleDeleteFile = (index: number) => {
     setTask((prevTask) => {
       const newFiles = [...prevTask.files];
@@ -29,7 +27,6 @@ const Documents: React.FC = () => {
 
    await importFile(task.files[0])
   }
-
   const handleFileClick = (file: File) => {
     const fileUrl = URL.createObjectURL(file);
     const newWindow = window.open();
@@ -39,7 +36,6 @@ const Documents: React.FC = () => {
       window.location.href = fileUrl;
     }
   };
-
   const handleFileDownload = (file: File) => {
     const fileUrl = URL.createObjectURL(file);
     const a = document.createElement('a');
@@ -49,8 +45,6 @@ const Documents: React.FC = () => {
     a.click();
     document.body.removeChild(a);
   };
-  
-
   return (
     <div className="container">
       <form onSubmit={(e) => e.preventDefault()}>
