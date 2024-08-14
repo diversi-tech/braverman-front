@@ -163,11 +163,11 @@ const UserTable = () => {
         });
     };
     const attendanceReport = (userId: string) => {
-       nav(`/AttendanceReport/${userId}`)
+       nav(`/Dashboard/${userId}`)
     };
     return (
         <div className="user-table-container">
-            <div className="table-title">
+            <div className="table-title" >
                 תצוגת משתמשי מערכת
             </div>
             <table>
@@ -185,7 +185,7 @@ const UserTable = () => {
                     {currentUsers.map((user) => (
                         <tr key={user.id}>
                             <td onClick={() => attendanceReport(user.id)}>
-                                 {user.userType?.description === "עובד" ? <AssessmentIcon sx={{ fontSize: 30, color: '#3498db'  ,textAlign: 'center'}}  /> : null}
+                                 {user.userType?.description === "עובד" || user.userType?.description === "עובד לידים" ||user.userType?.description === "מנהל" ? <AssessmentIcon sx={{ fontSize: 30, color: '#3498db'  ,textAlign: 'center'}}  /> : null}
                             </td>
                             <td > {Object.values(user.projectsId).join(', ')} <CiLock /></td>
                             {/* {user.projectsNames.join(', ')} <CiLock /> */}

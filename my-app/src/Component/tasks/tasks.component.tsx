@@ -8,22 +8,15 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import CircleIcon from '@mui/icons-material/Circle';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AssistantPhotoIcon from '@mui/icons-material/AssistantPhoto';
-import { setAllLeads } from "../../Redux/Leads/leadsAction";
 import { Enum } from '../../model/enum.model';
 import './task.css';
 import { Project } from "../../model/project.model";
 import { setAllProject } from "../../Redux/Project/projectAction";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
-import { getAllLeads } from "../../api/leads.api";
 import { Lead } from "../../model/leads.model";
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import Swal from "sweetalert2";
-import { addNewTask, setAllTask } from "../../Redux/tasx/taskAction";
-import { TaskStatus } from "../../enum/taskStatus.enum";
+import { setAllTask } from "../../Redux/tasx/taskAction";
 import { getProject } from "../../api/project.api";
 import { setAllEnums } from "../../Redux/enum/enumAction";
 import Links from "../Links/Links";
@@ -39,8 +32,7 @@ import { setAllUsers } from "../../Redux/User/userAction";
 import { getTaskCategories } from "../../api/taskCategory.api";
 import { TaskCategory } from "../../model/taskCategory.model";
 import { setAllTaskCategory } from "../../Redux/tasx/taskCategoryAction";
-import { blueGrey } from "@mui/material/colors";
-
+import { HiChevronDown } from "react-icons/hi";
 
 export const Tasks = () => {
 
@@ -51,6 +43,7 @@ export const Tasks = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [myTasks, setMyTasks] = useState<Task[]>([]);
 
+    // const [statusOptions, setStatusOptions] = useState<Enum[]>([]);
     const [levelUrgencyStatus, setLevelUrgencyStatus] = useState<Enum[]>([]);
     const [taskStatus, setTaskStatus] = useState<Enum[]>([]);
     const [project, setProject] = useState<Project[]>([]);
@@ -70,7 +63,46 @@ export const Tasks = () => {
     const taskStatusState = useSelector((state: { taskStatus: { allTaskStatus: { [key: string]: Enum[] } } }) => state.taskStatus);
 
     const [selectedTaskId, setSelectedTaskId] = useState<string>("");
-    const filterTask = tasks.slice(page * taskperPage, (page + 1) * taskperPage);
+    const filterMyTaskByPro = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+        setFilters({ ...filters, [key]: findProById(e.target.value) });
+    };
+    const filterMyTask = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: keyof typeof filters) => {
+        setFilters({ ...filters, [key]: e.target.value });
+    };
+    const [filterInputsVisible, setFilterInputsVisible] = useState({
+        "":false,
+        "שם פרויקט": false,
+        "המשימה": false,
+        "אחראית": false,
+        "רמת דחיפות": false,
+        "לינקים": false,
+    });
+    const [filters, setFilters] = useState({
+        "":'',
+        "שם פרויקט": '',
+        "המשימה": '',
+        "אחראית": '',
+        "רמת דחיפות": '',
+        "לינקים": '',
+    });
+    const filtered = tasks.filter(t => {
+        return Object.entries(filters).every(([key, value]) => {
+            if (!value) return true;
+            debugger
+            switch (key) {
+                case 'שם פרויקט':
+                    return t.projectId.toLowerCase().includes(value.toLowerCase());
+                case 'המשימה':
+                    return t.taskName.toLowerCase().includes(value.toLowerCase());
+                case 'רמת דחיפות':
+                    return t.levelUrgencyStatus.toLowerCase().includes(value.toLowerCase());
+                default:
+                    return true;
+            }
+        });
+    });
+
+    const filterTask = filtered.slice(page * taskperPage, (page + 1) * taskperPage);
 
     //useEffect
     useEffect(() => {
@@ -89,38 +121,19 @@ export const Tasks = () => {
     //Reduxשליפה מה 
 
     const fetchDataUser = async () => {
-        // try {
         let data;
-        // if (userState.allUsers.length) {
-        //     data = userState.allUsers;
-        // } 
-        // else {
         const resAllUsers = await getUsers();
         data = resAllUsers;
         dispatch(setAllUsers(data));
-        // }
         setUsers(data);
-        // } catch (error) {
-        // console.error('Error fetching user:', error);
-        // }
     };
 
     const fetchTaskCategory = async () => {
-        // try {
         let data;
-        // if (taskCategoryState.allTaskCategory.length) {
-        //     data = taskCategoryState.allTaskCategory;
-        // } else {
         const resAllTaskCategory = await getTaskCategories();
         data = resAllTaskCategory;
         dispatch(setAllTaskCategory(data));
-        // }
         setTaskCategory(data);
-        console.log('taskCategory', data);
-        // } 
-        // catch (error) {
-        //     console.error('Error fetching taskcategory:', error);
-        // }
     };
 
     const fetchDataTask = async () => {
@@ -135,9 +148,7 @@ export const Tasks = () => {
                 console.log("data", data)
                 dispatch(setAllTask(resAllTask));
             }
-            await tryIt(data);
-            await (myTasks != null);
-            setTasks(myTasks);
+            setTasks(data)
         }
         catch (error) {
             console.error('Error fetching task:', error);
@@ -228,6 +239,11 @@ export const Tasks = () => {
     const findTaskById = () =>
         tasks.find(t => t.taskId === selectedTaskId)
 
+    const findProById = (s: string) =>
+        project.find(t => t.businessName === s).projectId;
+
+
+
     const handleAddTask = () => {
         Swal.fire({
             title: 'הוספת משימה חדשה',
@@ -305,6 +321,16 @@ export const Tasks = () => {
         });
     };
 
+    const toggleFilterInput = (key: keyof typeof filterInputsVisible) => {
+        setFilterInputsVisible(prevState => {
+            const newState = { ...prevState, [key]: !prevState[key] };
+            if (!newState[key]) {
+                setFilters(prevFilters => ({ ...prevFilters, [key]: '' }));
+            }
+            return newState;
+        });
+    }
+
 
     return (
         <div className="page-container">
@@ -314,22 +340,45 @@ export const Tasks = () => {
                 </div>
                 <div className="table-container">
                     <table className="table">
-                        <thead>
-                            <tr >
-                                {(['לינקים', 'רמת דחיפות', 'אחראית', '', 'המשימה', 'שם פרויקט'] as const).map((col) => (
-                                    <th key={col}>
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                            {col}
-                                            <button onClick={() => console.log("col", col)} style={{ backgroundColor: "white", border: 0, }}>
-                                            </button>
-                                        </div>
-                                        <div style={{ display: "flex" }}>
-                                        </div>
-                                    </th>))}
-                                <th></th>
-                            </tr>
-                        </thead>
+                        <tr>
+                            <th></th>
 
+                            {(['רמת דחיפות', 'אחראית', 'המשימה', 'שם פרויקט'] as const).map((col) => (
+                                <th key={col} style={{ fontWeight: 700, fontSize: "15px" }}>
+                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                        {col}
+                                        <button onClick={() => toggleFilterInput(col)} style={{ backgroundColor: "white", border: 0 }}><HiChevronDown style={{ marginTop: "5px", alignItems: "center" }} />
+                                        </button>
+                                    </div>
+                                    <div style={{ display: "flex" }}>
+
+                                        {filterInputsVisible[col] && (
+                                            col === 'שם פרויקט' ? (
+                                                <select
+                                                    className='select2'
+                                                    value={filters[col]}
+                                                    onChange={(e) => filterMyTaskByPro(e, col)}
+                                                    style={{ width: "100%" }}
+                                                >
+                                                    <option value="" className='select'>הכל</option>
+                                                    {project.map(option => (
+                                                        <option key={option.projectId} value={option.businessName} className='select'>
+                                                            {option.businessName}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    value={filters[col]}
+                                                    onChange={(e) => filterMyTask(e, col)}
+                                                />
+                                            )
+                                        )}
+
+                                    </div>
+                                </th>
+                            ))}
+                        </tr>
                         {filterTask && filterTask.length && filterTask.map((t) => {
                             return <tbody>
                                 <tr onClick={() => setSelectedTaskId(t.taskId)}>
@@ -352,9 +401,6 @@ export const Tasks = () => {
                                     })}
                                     </td>
                                     <td>
-                                        <AttachFileRoundedIcon />
-                                    </td>
-                                    <td>
                                         {t.taskName}
                                         +
                                         {t.taskCategory.categoryName}
@@ -366,12 +412,12 @@ export const Tasks = () => {
                                                     {m.businessName}
                                                 </>
                                         })}</td>
-                                    <td>{
+                                    <td>
                                         <button
                                             className={`circle-button ${selectedTaskId === t.taskId ? 'clicked' : ''}`}
                                             onClick={() => setSelectedTaskId(t.taskId)}>
                                         </button>
-                                    }</td>
+                                    </td>
                                 </tr>
                             </tbody>
                         })}

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { Timer } from '../model/Timer.model';
-const apiUrl = 'https://localhost:7119/api/Timer'
+ const apiUrl = process.env.REACT_APP_BRAVERMAN;
 
 
 export const getAllTimers = () => {
-  return axios.get(apiUrl);
+  return axios.get(`${apiUrl}Timer`);
 }
 
 export const addTimer = (timer: Timer) => {
@@ -13,15 +13,15 @@ export const addTimer = (timer: Timer) => {
     startTime: timer.startTime.toISOString(),
     endTime: timer.endTime?.toISOString()
   }
-  return axios.post(`${apiUrl}/Add`, timerToUpdate);
+  return axios.post(`${apiUrl}Timer/Add`, timerToUpdate);
 }
 
 export const getTheAmountOfTimeForAllProjects = async (): Promise<string> => {
-  const response = await axios.get(`${apiUrl}/GetTheAmountOfTimeForAllProjects`);
+  const response = await axios.get(`${apiUrl}Timer/GetTheAmountOfTimeForAllProjects`);
   return response.data;
 }
 
 export const getTimersGroupedByUserAndProjectAsync =  () => {
-  const response =  axios.get(`${apiUrl}/GetTimersGroupedByUserAndProjectAsync`);
+  const response =  axios.get(`${apiUrl}Timer/GetTimersGroupedByUserAndProjectAsync`);
   return response;
 }

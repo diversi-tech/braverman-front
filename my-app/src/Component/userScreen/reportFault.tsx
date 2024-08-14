@@ -25,7 +25,7 @@ const ReportIssue=() =>{
     const send=()=>{
       const userEmail = sessionStorage.getItem("userEmail"); // Ensure this is set
       const subject = "תקלות באתר";
-      const body = `היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\nהדיווח שלך:\n${reportContent}`;
+      const body = ` ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},\n\ שלח דיווח על תקלה באתר:\n${reportContent}`;
 
       sendEmail( "דיוות על תקלה באתר", body)
           .then(response => {
@@ -83,7 +83,7 @@ const ReportIssue=() =>{
 
   return (
     <div className='div2'>
-      {project && project.endDate && <MoreStatus project={project}></MoreStatus>}
+      {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
     <div className="report-issue">
       <h2 className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}> {action.label} {action.icon}</h2>
       <p className="description">{`!היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, האם נתקלת בבעיה באתר? אנא שתף אותנו בפרטים כדי שנוכל לטפל בה. תודה רבה`}</p>

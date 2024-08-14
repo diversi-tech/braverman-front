@@ -7,11 +7,11 @@ import AttendanceReport from "../Timer/AttendanceReport.component";
 import { Box, Card, CardContent, Grid, IconButton, Typography } from "@mui/material";
 import { GoArrowDownLeft } from "react-icons/go";
 
-export const Dashboard = () => {
-    let id = useParams()
-    const { userId } = id
-    const role = sessionStorage.getItem("userType")
-    const Id = sessionStorage.getItem("userId")
+export const DashboardAllUser = () => {
+    // let id = useParams()
+    // const { userId } = id
+    // const role = sessionStorage.getItem("userType")
+    // const Id = sessionStorage.getItem("userId")
    
 const actions = [
 {
@@ -64,7 +64,7 @@ const actions = [
         </clipPath>
       </defs>
     </svg>
-    , label: 'דוחות נוחכות לפי חודש ', link: `/AttendanceReportByMonth/${userId}`
+    , label: 'דוחות נוחכות לפי חודש ', link: '/AttendanceReportForAllUserByMonth'
   },
   {
     icon: <svg width="80" height="69" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,7 +116,7 @@ const actions = [
         </clipPath>
       </defs>
     </svg>
-, label: 'דוח נוכחות לחודש הנוכחי', link: userId == null ? `/AttendanceReport/${Id}` : `/AttendanceReport/${userId}`
+, label: 'דוח נוכחות לחודש הנוכחי', link: '/AttendanceReportAllUsers'
 // , label: 'דוח נוחכות לחודש הנוכחי ', link: `/AttendanceReport/${userId}`
   }
 

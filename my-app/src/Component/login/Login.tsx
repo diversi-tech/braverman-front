@@ -77,7 +77,7 @@ const Login = () => {
     }
   };
 
-  const clientId = '412263291390-jkirnvmjnk6qbera6qcdq3k6cotqk9o7.apps.googleusercontent.com';
+  const clientId = '712110921118-7lmsam5ji19333th54fv96cf4k54fk1q.apps.googleusercontent.com';
   const onSuccess = (googleUser: any) => {
     console.log('Login Success:', googleUser);
     const credentials = jwtDecode<GoogleCredentials>(googleUser.credential);
@@ -107,8 +107,8 @@ const Login = () => {
           navigate("/quickActions");
         else if (x.data.userType.description === "מנהל"){
           navigate("/leads");}
-        else
-          navigate("/leads");
+        // else
+        //   navigate("/leads");
 
       } else {
         MySwal.fire({

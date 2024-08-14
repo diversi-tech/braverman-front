@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
-import { addCategory, updateCategory } from "../../../../api/taskCategory.api";
+import { addCategory, getMandatoryOptions, updateCategory } from "../../../../api/taskCategory.api";
 import { TaskCategory } from "../../../../model/taskCategory.model";
 import './taskCategoryEditor.css';
 import React from "react";
 import { User } from "../../../../model/user.model";
-import { getUserById, getUsers } from "../../../../api/user.api";
+import { getUsers } from "../../../../api/user.api";
 
 export const TaskCategoriesEditor: React.FC<{
   onCategoryAdded: () => void,
   onClose: () => void,
   editCategory: TaskCategory | null,
-
 }> = ({ onCategoryAdded, onClose, editCategory }) => {
 
   const [categoryName, setCategoryName] = useState('');
@@ -18,14 +17,16 @@ export const TaskCategoriesEditor: React.FC<{
   const [isMandatory, setIsMandatory] = useState(true);
   const [message, setMessage] = useState('');
   const [isMessageVisible, setIsMessageVisible] = useState(false);
-  const [userId, setUserId] = useState<string|undefined>("");
-  const [workers, setWorkers] = useState<User[]>([])
-
+  const [userId, setUserId] = useState<string | undefined>("");
+  const [workers, setWorkers] = useState<User[]>([]);
+  const [mandatoryOptions, setMandatoryOptions] = useState<number[]>([]);
+  const [mandatoryValue, setMandatoryValue]=useState(0);
+  const [mandatoryValue2, setMandatoryValue2]=useState(0);
+  let  maxOption;
   useEffect(() => {
     async function getData() {
-
       try {
-        const usersResult = await getUsers()
+        const usersResult = await getUsers();
         setWorkers(usersResult.filter((user) => user.userType.description === "עובד"));
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -35,17 +36,35 @@ export const TaskCategoriesEditor: React.FC<{
   }, []);
 
   useEffect(() => {
+    async function fetchMandatoryOptions() {
+      try {
+          maxOption = await getMandatoryOptions();
+        const options = Array.from({ length: maxOption + 1 }, (_, i) => i + 1);
+        setMandatoryOptions(options);
+        setMandatoryValue2(maxOption);
+      } catch (error) {
+        console.error('Error fetching mandatory options:', error);
+      }
+    }
+
+    fetchMandatoryOptions();
+  }, []);
+
+  useEffect(() => {
     if (editCategory) {
       setCategoryName(editCategory.categoryName);
       setWeeksRequired(editCategory.daysForExecution);
       setIsMandatory(editCategory.sortOrder !== null);
       setUserId(editCategory.userId || "");
+      setMandatoryValue(editCategory.sortOrder);
+    } else {
+      setIsMandatory(true);
     }
   }, [editCategory]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (categoryName.length < 2) {
+    if (categoryName?.length < 2) {
       setMessage('שם הקטגוריה חייב להיות לפחות 2 תווים');
       setIsMessageVisible(true);
       setTimeout(() => {
@@ -63,17 +82,20 @@ export const TaskCategoriesEditor: React.FC<{
       return;
     }
 
-    const mandatoryValue = isMandatory ? 0 : -1;
 
     try {
+      console.log(mandatoryValue);
+      
       const categoryData: TaskCategory = {
         taskCategoryId: editCategory ? editCategory.taskCategoryId : "",
         categoryName: categoryName,
         daysForExecution: weeksRequired,
-        sortOrder: editCategory ? isMandatory ? editCategory.sortOrder != null ? editCategory.sortOrder : mandatoryValue : mandatoryValue : mandatoryValue,
+        sortOrder:  !editCategory || editCategory.sortOrder === null?mandatoryValue2:mandatoryValue,
         stageId: editCategory ? editCategory.stageId : "",
         userId: userId
-      }
+      };
+console.log(categoryData);
+console.log("in func");
 
       if (editCategory) {
         await updateCategory(categoryData.taskCategoryId, categoryData);
@@ -127,29 +149,62 @@ export const TaskCategoriesEditor: React.FC<{
             />
           </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="isMandatory" className="input-label">האם לכלול כשלב חובה?</label>
-          <div className="input-wrapper">
-            <input
-              type="checkbox"
-              id="isMandatory"
-              checked={isMandatory}
-              onChange={(e) => setIsMandatory(e.target.checked)}
-            />
+        {!editCategory || editCategory.sortOrder === null ? (
+          <div className="form-group">
+            <label htmlFor="isMandatory" className="input-label">האם לכלול כשלב חובה?</label>
+            <div className="input-wrapper">
+              <input
+                type="checkbox"
+                id="isMandatory"
+                checked={isMandatory}
+                onChange={(e) => setIsMandatory(e.target.checked)}
+              />
+              {isMandatory && (
+                <select
+                  id="mandatorySelect"
+                  value={mandatoryValue2+1}
+                  onChange={(e) => setMandatoryValue2(parseInt(e.target.value))}
+                  required
+                >
+                  <option value="">בחר מספר שלב</option>
+                  {mandatoryOptions.map(option => (
+                    <option key={option} value={option.toString()}>{option}</option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="form-group">
+            <label htmlFor="mandatorySelect" className="input-label">בחר מספר שלב</label>
+            <div className="input-wrapper">
+              <select
+                id="mandatorySelect"
+                value={mandatoryValue}
+                onChange={(e) => setMandatoryValue(parseInt(e.target.value))}
+                required
+              >
+                <option value="">בחר מספר שלב</option>
+                
+                {mandatoryOptions.slice(0, -1).map(option => (
+                  <option key={option} value={option.toString()}>{option}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
         <div className="form-group">
           <label htmlFor="workerSelect" className="input-label">בחר עובד:</label>
           <div className="input-wrapper">
             <select
               id="workerSelect"
-              value={(workers.find((w)=>w.id===userId))?.firstName+" "+(workers.find((w)=>w.id===userId))?.lastName}
-              onChange={(e) => setUserId((workers.find((w)=>w.firstName+" "+w.lastName===e.target.value))?.id)}
+              value={workers.find((w) => w.id === userId)?.id || ""}
+              onChange={(e) => setUserId(e.target.value)}
               required
             >
               <option value="">בחר עובד</option>
               {workers.map(worker => (
-                <option key={worker.id} value={worker.firstName+" "+worker.lastName}>{worker.firstName+" "+worker.lastName}</option>
+                <option key={worker.id} value={worker.id}>{worker.firstName + " " + worker.lastName}</option>
               ))}
             </select>
           </div>
