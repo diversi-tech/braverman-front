@@ -7,6 +7,7 @@ import { GoArrowDownLeft } from "react-icons/go";
 import { Project } from '../../model/project.model';
 import { GetAllProjectPerUser } from '../../api/user.api';
 import MoreStatus from '../project/moreStatus';
+import MyChatBot2 from '../project/projects/projectMain/chatBot';
 
 
 const QuickActions = () => {
@@ -170,6 +171,7 @@ const QuickActions = () => {
       )}
     </Box>
 </div>
+<div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" ,zIndex:"1000"}}> <MyChatBot2 /></div>
       {/* {selectedProject && selectedProject.endDate && <MoreStatus project={selectedProject}></MoreStatus>} */}
       </div>
       <Box sx={{ padding: 3, backgroundColor: '#f4f7fc', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}>
