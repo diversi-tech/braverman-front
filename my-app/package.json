@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "homepage": "https://dash.braverman.digital/#",
+  "homepage": "https://dash.braverman.digital",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
