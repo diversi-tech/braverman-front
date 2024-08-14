@@ -266,7 +266,7 @@ const MyChatBot2: React.FC = () => {
       <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}>
         <button onClick={() => setOpen(false)} style={{ position: "absolute", top: 0, right: 0 }}>Close</button>
         <ChatBot options=
-        {{header:{ title:"צאט בוט",avatar:`${logo}`, className:"tittle", styles: {width: "1000px", height: "1000px" }
+        {{header:{ title:"(:תמר המזכירה הדיגיטלית",avatar:`${logo}`, className:"tittle", styles: {width: "1000px", height: "1000px" }
       } as any,
         chatHistory: {storageKey: "example_real_time_stream"}, botBubble: {simStream: true}}} flow={flow}/>      </div>
    
