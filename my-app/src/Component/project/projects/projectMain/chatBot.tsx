@@ -6,7 +6,8 @@ import ReactWhatsapp from "react-whatsapp";
 import { Project } from "../../../../model/project.model";
 import { GetAllProjectPerUser } from "../../../../api/user.api";
 import { sendEmail } from "../../../../api/sendEmail.api";
-
+import logo from "../../../../assets/images/logo512.ico.png";
+import './chatBot.css'
 const MyChatBot2: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [messages, setMessages] = useState<string[]>([]);
@@ -262,14 +263,13 @@ const MyChatBot2: React.FC = () => {
 
   return (
     <>
-    {/* {!open ? (
-      <button onClick={() => setOpen(true)}>Open Chat</button>
-    ) : ( */}
       <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}>
         <button onClick={() => setOpen(false)} style={{ position: "absolute", top: 0, right: 0 }}>Close</button>
-        <ChatBot flow={flow} />
-      </div>
-    {/* )} */}
+        <ChatBot options=
+        {{header:{ title:"צאט בוט",avatar:`${logo}`, className:"tittle", styles: {width: "1000px", height: "1000px" }
+      } as any,
+        chatHistory: {storageKey: "example_real_time_stream"}, botBubble: {simStream: true}}} flow={flow}/>      </div>
+   
   </>
 );
 };
