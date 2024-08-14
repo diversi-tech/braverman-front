@@ -23,16 +23,11 @@ const ProfileIcon: React.FC = () => {
         console.log('User logged out');
         window.location.href = '../../login/Login.tsx';
     };
-
     return (
-
         <div id='imgprof'>
             <IconButton
                 edge="end"
                 color="inherit"
-                // aria-label="account of current user"
-                // aria-controls="menu-appbar"
-                // aria-haspopup="true"
                 onClick={handleMenu}
             >
                 <AccountCircle sx={{ width: 40, height: 40 }} />
@@ -41,11 +36,6 @@ const ProfileIcon: React.FC = () => {
                 className='prof'
                 id="menu-appbar"
                 anchorEl={anchorEl}
-                // anchorOrigin={{
-                //     vertical: 'top',
-                //     horizontal: 'right',
-
-                // }}
                 keepMounted
                 transformOrigin={{
                     vertical: 'top',
@@ -70,7 +60,5 @@ const ProfileIcon: React.FC = () => {
 
 // const navigate = useNavigate();
 // const location = useLocation();
-
-
 
 export default ProfileIcon;
