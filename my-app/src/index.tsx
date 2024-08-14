@@ -77,6 +77,7 @@ root.render(
             <Route path='/allDeshbord' element={<MainDeshbord />} ></Route>
             <Route path='/followUp' element={<FollowUp />} ></Route>
             <Route path='/info' element={<Info />} ></Route>
+            <Route path='/Login' element={<Login />} ></Route>
 
 
           </Route>
