@@ -73,7 +73,7 @@ input[type="text"] {
     border-radius: 5px;
     box-sizing: border-box;
 }
-strong{
+.msan{
     border: 30px;
     color: red;
 }
