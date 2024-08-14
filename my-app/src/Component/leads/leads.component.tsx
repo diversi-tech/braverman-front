@@ -378,7 +378,7 @@ const Leads: React.FC = () => {
       getAllLeads()
         .then((response) => {
           if (response.status === 200) {
-            setLeads(response.data);    
+              setLeads(response.data.reverse());      
             console.log(response.data);
           }
         })
