@@ -1,0 +1,24 @@
+.info-button {
+    background-color: #7066E0;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.info-button:hover {
+    background-color: #6558f3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.info-button:focus {
+    outline: none;
+}

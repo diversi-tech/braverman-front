@@ -198,9 +198,10 @@ console.log("in func");
           <div className="input-wrapper">
             <select
               id="workerSelect"
-              value={workers.find((w) => w.id === userId)?.id || ""}
-              onChange={(e) => setUserId(e.target.value)}
-              required
+              value={(workers.find((w)=>w.id===userId))?.firstName+" "+(workers.find((w)=>w.id===userId))?.lastName}
+              onChange={(e) => setUserId((workers.find((w)=>w.firstName+" "+w.lastName===e.target.value))?.id)}
+              
+
             >
               <option value="">בחר עובד</option>
               {workers.map(worker => (

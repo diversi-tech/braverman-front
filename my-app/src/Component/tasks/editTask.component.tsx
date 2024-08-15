@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './editTask.css';
 import { Task } from '../../model/task.model';
 import { Project } from '../../model/project.model';
@@ -10,9 +10,14 @@ import { User } from '../../model/user.model';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'; import Documents from './document';
 import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
 import { IconButton, ListItemIcon, Menu, MenuItem, Select } from '@mui/material';
-import { UpDateTask } from '../../api/task.api';
+import { getTaskStatusChanges, UpDateTask } from '../../api/task.api';
 import { Enum } from '../../model/enum.model';
 import { importFile } from '../../api/upFileTDrive';
+import Swal from 'sweetalert2';
+import ReactDOM from 'react-dom';
+import { TaskStatusChanges } from './TaskStatusChanges.component';
+import { logs } from '../../model/logs.model';
+import './info.css';
 interface editTask {
   selectedTaskId: string;
   tasks: Task[];
@@ -32,6 +37,7 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [task, setTask] = useState<Task2>({ description: '', files: [] });
+  const [logData, setLogData] = useState<logs[] | null>(null); // אתחול ל-null
 
   const open3 = Boolean(anchorEl2);
   const open2 = Boolean(anchorEl);
@@ -57,6 +63,42 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
     setAnchorEl2(event.currentTarget);
   };
 
+  const fetchTaskLogsData = async () => {
+      try {
+          
+          const response = await getTaskStatusChanges(selectedTaskId);
+          console.log(response);
+          setLogData(response);
+      } catch (error) {
+          console.error('Error fetching task data:', error);
+      }
+  };
+
+  useEffect(() => {
+      if (logData !== null) { 
+          Swal.fire({
+              title: 'פרטי שינויי סטטוסים',
+              html: '<div id="task-modal-container"></div>',
+              showCloseButton: true,
+              showCancelButton: false,
+              showConfirmButton: false,
+              didOpen: () => {
+                  const container = document.getElementById('task-modal-container');
+                  if (container) {
+                      console.log(logData);
+                      ReactDOM.render(
+                          <TaskStatusChanges logData={logData} />,
+                          container
+                      );
+                  }
+              },
+          });
+      }
+  }, [logData]);
+
+  const showTaskModal = async () => {
+      await fetchTaskLogsData();
+  };
   const updateLevel = (level: string) => {
     handleClose()
     let t = findTaskById();
@@ -229,7 +271,11 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
             <div>תאריך:</div>
             <p>   </p>
             {tasks && tasks.length && tasks.map(t => t.taskId === selectedTaskId && convertDateTimeToDate(t.startDate))}
-
+          </div>
+          <div className='prop'>
+          <button className="info-button" onClick={showTaskModal}>
+            !
+        </button>
           </div>
         </div>
         <br />

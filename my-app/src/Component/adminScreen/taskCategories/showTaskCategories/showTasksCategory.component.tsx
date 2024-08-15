@@ -18,7 +18,12 @@ export const ShowTasksCategory: React.FC<{
             try {
                 const data = await getTaskCategories();
                 const users=await getUsers()
-                setTasksCategories(data);
+                const sortedData = data.sort((a, b) => {
+                    if (a.sortOrder === null) return 1;
+                    if (b.sortOrder === null) return -1;
+                    return a.sortOrder - b.sortOrder;
+                });          
+                      setTasksCategories(sortedData);
                 setUsersDetails(users.filter((worker)=>worker.userType.description==="עובד"));                 
             } catch (error) {
                 console.error('Error fetching data:', error);
