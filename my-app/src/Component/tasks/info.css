@@ -1,5 +1,5 @@
 .info-button {
-    background-color: #17a2b8;
+    background-color: #7066E0;
     color: white;
     border: none;
     border-radius: 50%;
@@ -15,7 +15,7 @@
 }
 
 .info-button:hover {
-    background-color: #138496;
+    background-color: #6558f3;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
