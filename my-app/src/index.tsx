@@ -26,12 +26,11 @@ import UrgentTasksTable from './Component/dashboard/urgentTasks';
 import AttendanceReport from './Component/Timer/AttendanceReport.component';
 import ChatTable from './Component/tasks/chat';
 import AnyDeskChecker from "./Component/userScreen/anyDesk";
-import TaskCompletionGraph from './Component/TaskCompletionGraph/TaskCompletionGraph.component';
+import TaskCompletionGraph from './Component/dashboard/TaskCompletionGraph.component';
 
 import DocumentViewer from './Component/userScreen/DocumentViewer';
 import MainDeshbord from './Component/dashboard/mainDashbord';
 import FollowUp from './Component/leads/followUp.component';
-import Info from './Component/dashboard/info.component';
 import AttendanceReportByMonth from './Component/Timer/AttendanceReportByMonth.component';
 import AttendanceReportAllUsers from './Component/Timer/AttendanceReportForAllUsers.component';
 import { DashboardAllUser } from './Component/dashboard/DeshboardAllUser.component';
@@ -48,8 +47,6 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/nav" element={<Nav />}></Route>
             <Route path="/dashboardStatus" element={<DashboardGraph />} />
-            <Route path="/tehila" element={<Info />} />
-            <Route path="/tehila2" element={<TaskCompletionGraph />} />
             <Route path="/st" element={<DashboardGraph />} />
 
             <Route path="/login" element={<Login />} />
@@ -81,7 +78,7 @@ root.render(
             <Route path='/documents' element={<DocumentViewer />} ></Route>
             <Route path='/allDeshbord' element={<MainDeshbord />} ></Route>
             <Route path='/followUp' element={<FollowUp />} ></Route>
-            <Route path='/info' element={<Info />} ></Route>
+            <Route path='/tasksGraph' element={<TaskCompletionGraph />} ></Route>
             <Route path='/Login' element={<Login />} ></Route>
 
 
