@@ -44,7 +44,7 @@ const Nav = () => {
                 {type === "לקוח" ? (
                   <>
                   <p>{getGreetingMessage()}</p>
-                  <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'projectStatus'}></Link></li>  
+                  <li className={`nav-item ${location.pathname.includes('/projectStatus') ? 'active' : ''}`}><Link to={'projectStatus'}></Link></li>  
                </>  
                   
                 ) :
