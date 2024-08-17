@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+  import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import './nav.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
@@ -50,7 +50,7 @@ const Nav = () => {
                 ) :
 
                 type === "עובד" ? (<>
-                    <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'allDeshbord'}>דשבורד</Link></li>
+                    <li className={`nav-item ${location.pathname.includes('/allDeshbord') ? 'active' : ''}`}><Link to={'allDeshbord'}>דשבורד</Link></li>
                     <li className={`nav-item ${location.pathname==='/tasks' ? 'active' : ''}`}><Link to={'tasks'}>משימות</Link></li>
                     <li className={`nav-item ${location.pathname.includes('/customers') ? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
                      <TimerComponent></TimerComponent>
@@ -58,7 +58,7 @@ const Nav = () => {
                   :
 
                   type === "עובד לידים"? (<>
-                      <li className={`nav-item ${location.pathname.includes('/dashboard') ? 'active' : ''}`}><Link to={'allDeshbord'}>דשבורד</Link></li>
+                      <li className={`nav-item ${location.pathname.includes('/allDeshbord') ? 'active' : ''}`}><Link to={'allDeshbord'}>דשבורד</Link></li>
                       <li className={`nav-item ${location.pathname.includes('/leads') ? 'active' : ''}`}><Link to={'leads'}>לידים</Link></li>
                        <TimerComponent></TimerComponent>
                     </>)
