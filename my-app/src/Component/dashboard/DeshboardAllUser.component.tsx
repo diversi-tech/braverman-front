@@ -64,7 +64,7 @@ const actions = [
         </clipPath>
       </defs>
     </svg>
-    , label: 'דוחות נוחכות לפי חודש ', link: '/AttendanceReportForAllUserByMonth'
+    , label: 'דוחות נוכחות לפי חודש ', link: '/AttendanceReportForAllUserByMonth'
   },
   {
     icon: <svg width="80" height="69" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -7,6 +7,8 @@ import { Project } from "../../../../model/project.model";
 import { GetAllProjectPerUser } from "../../../../api/user.api";
 import { sendEmail } from "../../../../api/sendEmail.api";
 import logo from "../../../../assets/images/logo512.ico.png";
+import logo2 from "../../../../assets/images/1.png";
+
 import './chatBot.css'
 const MyChatBot2: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -266,9 +268,9 @@ const MyChatBot2: React.FC = () => {
       <div style={{ position: "fixed", bottom: 0, right: 0, width: "400px" }}>
         <button onClick={() => setOpen(false)} style={{ position: "absolute", top: 0, right: 0 }}>Close</button>
         <ChatBot options=
-        {{header:{ title:"(:תמר המזכירה הדיגיטלית",avatar:`${logo}`, className:"tittle", styles: {width: "1000px", height: "1000px" }
+        {{ tooltip:{text:"לשיחה עם תמר המזכירה הדיגטלית"},tooltipStyle:{backgroundColor:"Black",fontSize:"15px"},theme: {fontFamily:"CustomFont"},chatButton:{icon: `${logo2}`},footer:{text:"office@braverman.digital"},header:{ title:"(:תמר המזכירה הדיגיטלית",avatar:`${logo}`, className:"tittle", styles: {width: "1000px", height: "1000px" }
       } as any,
-        chatHistory: {storageKey: "example_real_time_stream"}, botBubble: {simStream: true}}} flow={flow}/>      </div>
+        chatHistory: {storageKey: "example_real_time_stream"}}} flow={flow}/>      </div>
    
   </>
 );

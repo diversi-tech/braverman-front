@@ -85,7 +85,7 @@ const Feedback=() =>{
       {project && project.endDate && <MoreStatus project={project.businessName}></MoreStatus>}
     <div className="report-issue">
       <p className="title" style={{textAlign:"start",marginLeft:"40%" ,width:"1000px"}}>😊 נשמח לפידבק </p>
-      <p className="description2" >{`היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")},נשמח אם תוכל לשתף אותנו במשוב על השרות שקיבלת `}</p>
+      <p className="description2" >{`היי ${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, נשמח אם תוכל לשתף אותנו במשוב על השרות שקיבלת `}</p>
       <p className="description2">{` 😊!הפידבק שלך חשוב לנו מאד ומשפר את השרות שלנו, תודה רבה`}</p>
 
       <textarea className="textarea" placeholder=" ...כאן תוכלו לשתף אותנו"  onChange={(e) => setReportContent(e.target.value)}
