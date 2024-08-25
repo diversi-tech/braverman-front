@@ -192,12 +192,12 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
     const renderProjectsSelection = () => {
         if (!formValues.userType) return null;
 
-        const isCustomerOrEmployee = formValues.userType.description === 'לקוח' || formValues.userType.description === 'עובד';
+        const isCustomerOrEmployee = formValues.userType.description == 'לקוח' || formValues.userType.description === 'עובד'|| formValues.userType.description === 'עובד לידים';
 
         if (!isCustomerOrEmployee) return null;
         return (
             <Rtl>
-            <FormControl fullWidth style={{ marginTop: '10px' }}>
+            <FormControl fullWidth style={{ marginTop: '10px', direction: 'rtl' }}>
                 <InputLabel>בחר פרויקטים</InputLabel>
                 <Select
                   dir='rtl'
@@ -219,7 +219,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
                     )}
                 >
                     {projects.map((project) => (
-                        <MenuItem key={project.projectId} value={project.projectId}>
+                        <MenuItem key={project.projectId} value={project.projectId} dir='rtl'>
                             {project.businessName}
                         </MenuItem>
                     ))}

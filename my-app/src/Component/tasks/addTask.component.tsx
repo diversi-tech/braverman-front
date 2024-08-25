@@ -189,7 +189,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ setTasks, handleTaskAdded, ta
                     onChange={(e) => handleSelectTaskCategory(e, 'taskCategory')}
                 >
                     {taskCategory.map(t => (
-                        <MenuItem key={t.taskCategoryId} value={t.taskCategoryId}>
+                        <MenuItem key={t.taskCategoryId} value={t.taskCategoryId} dir='rtl'>
                             {t.categoryName}
                         </MenuItem>
                     ))}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { convertToProject, convertToCustomer } from '../../api/leads.api';
 import { Project } from '../../model/project.model';
@@ -8,6 +8,7 @@ import { Lead } from '../../model/leads.model';
 import { Enum } from '../../model/enum.model';
 import { Timer } from '../../model/Timer.model';
 import Rtl from '../rtl/rtl';
+
 
 interface ConvertLeadToProjectProps {
   lead: Lead;
@@ -36,6 +37,19 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
     projectType: '',
   });
   const dispatch = useDispatch();
+
+  const leadSources = [
+    'פרסום בגוגל',
+    'פרסום ברשתות חברתיות',
+    'המלצה מחברים',
+    'המלצה מלקוחות',
+    'חיפוש אקראי בגוגל',
+    'היכרות אישית',
+    'לקוח קיים',
+    'פניות מהאתר',
+    'פרסום בפרינט',
+    'אחר'
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -97,6 +111,14 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
       alert('שגיאה ביצירת הפרויקט');
     }
   };
+  const handleChange2 = (event: SelectChangeEvent<string>) => {    
+    const { name, value } = event.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
 
   return (
     <div>
@@ -149,13 +171,29 @@ const ConvertLeadToProject: React.FC<ConvertLeadToProjectProps> = ({ lead, statu
         multiline
         margin="normal"
       />
-      <TextField
+    <FormControl fullWidth margin="dense">
+          <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>מקור הליד</InputLabel>
+          <Select
+            labelId="source-label"
+            id="source-select"
+            name="source"
+            value={formValues.source}
+            onChange={handleChange2}
+            input={<OutlinedInput sx={{fontFamily: 'CustomFont'}} label="מקור הליד" />}
+            sx={{ fontFamily: 'CustomFont' ,direction:'rtl'}}
+          >
+            {leadSources.map(option => (
+              <MenuItem key={option} value={option} style={{direction:'rtl'}}>{option}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+       <TextField
       inputProps={{style: {fontFamily: 'CustomFont'}}} 
       InputLabelProps={{style:  {fontFamily: 'CustomFont'}}}
         dir='rtl'
-        label="מקור הליד"
-        name="source"
-        value={formValues.source}
+        label="טלפון"
+        name="phone"
+        value={formValues.phone}
         onChange={handleInputChange}
         fullWidth
         multiline

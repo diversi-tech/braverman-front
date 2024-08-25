@@ -254,7 +254,7 @@ const UrgentTasksCard: React.FC = () => {
                 {/* {task.assignedTo === '' && ( */}
                   <IconButton onClick={() => handleAssignTask(task.taskId)}>
                     <AssignmentTurnedInIcon style={{ color:  '#00397C' }} />
-                    <Typography variant="body2">Assign to me</Typography>
+                    <Typography variant="body2">אני לוקחת את המשימה עלי </Typography>
                   </IconButton>
                 {/* )} */}
               </CardContentStyled>

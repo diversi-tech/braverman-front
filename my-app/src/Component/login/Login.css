@@ -7,7 +7,7 @@ body {
     overflow-x: hidden;
 }
 .textBox {
-
+    
     box-sizing: border-box;
     position: absolute;
     width: 600px;
@@ -208,7 +208,7 @@ body{
 .password-toggle-icon{
     position: absolute;
     top: 54.5%;
-    right: 68%;
+    left: 30%;
     transform: translateY(-50%);
     cursor: pointer;
     z-index: 10;

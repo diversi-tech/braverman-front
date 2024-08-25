@@ -20,10 +20,12 @@ import {
     Typography,
     Card,
     CardContent,
+    SelectChangeEvent,
 } from "@mui/material";
 import store from "../../Redux/Store";
 import { setAllProject } from "../../Redux/Project/projectAction";
 import Rtl from "../rtl/rtl";
+import Swal from "sweetalert2";
 
 interface UserId {
     userId: string
@@ -79,17 +81,22 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
         });
     };
 
+
     const handleProjectChange = (projectId: string) => {
         setSelectedProjects((prevSelectedProjects) => {
             const newSelectedProjects = { ...prevSelectedProjects };
             if (newSelectedProjects[projectId]) {
-                delete newSelectedProjects[projectId];
+                delete newSelectedProjects[projectId]; 
             } else {
-                newSelectedProjects[projectId] = projectId;
+                const project = allProjects.find(p => p.projectId === projectId);
+                if (project) {
+                    newSelectedProjects[projectId] = project.businessName; 
+                }
             }
             return newSelectedProjects;
         });
     };
+
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -101,7 +108,7 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
             dispatch(updateUser(updatedUser));
             UpdateUserAPI(updatedUser)
                 .then(() => {
-                    alert("success");
+                    Swal.fire('Success', 'המשתמש נוסף בהצלחה', 'success');
                 })
                 .catch(err => {
                     console.log(err);
