@@ -82,6 +82,7 @@ const Documents: React.FC = () => {
                   key={index}
                   className="cont1"
                   style={{
+                    padding:'100%',
                     zIndex: 0,
                     textAlign: 'center',
                     margin: 15,

@@ -7,12 +7,14 @@ import CircleIcon from '@mui/icons-material/Circle';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AssistantPhotoIcon from '@mui/icons-material/AssistantPhoto';
 import { User } from '../../model/user.model';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'; import Documents from './document';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
 import { IconButton, ListItemIcon, Menu, MenuItem, Select } from '@mui/material';
 import { UpDateTask } from '../../api/task.api';
 import { Enum } from '../../model/enum.model';
 import { importFile } from '../../api/upFileTDrive';
+import Documents from './document';
+import { Margin } from '@mui/icons-material';
 interface editTask {
   selectedTaskId: string;
   tasks: Task[];
@@ -236,12 +238,13 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
         <div id='descreption'>
           {tasks && tasks.length && tasks.map(t => t.taskId === selectedTaskId && t.description)}
         </div>
-        <br />
-        <div id='files'>
+        <br /> 
+        {/* <div id='files'>
+        
           {/* <div><AttachFileRoundedIcon /></div>
           <div>העלאת קבצים נוספים:</div> */}
-          <form onSubmit={(e) => e.preventDefault()}>
-        <div id="ab">
+          {/* <form onSubmit={(e) => e.preventDefault()}> */}
+        {/* <div id="ab">
           <label htmlFor="file-upload" className="upload-label">
           <AttachFileRoundedIcon />
             <span > :העלאת קבצים נוספים</span>
@@ -252,17 +255,17 @@ const TaskEdit: React.FC<editTask> = ({ selectedTaskId, tasks, project, users, l
               onChange={handleFileChange}
               style={{ display: 'none' }}
             />
-          </label>
-          <div id="aaa">
+          </label> */}
+          <div id="aaa" > <Documents/>
             {/* <h3>קבצים מצורפים :</h3> */}
           </div>
         </div>
      
-      </form>
-        </div>
-      </div>
+      {/* </form> */}
+      
+      </div> 
       {/* <div className='document'><Documents></Documents></div> */}
-    </div >
+    {/* </div > */}
   </>);
 };
 
