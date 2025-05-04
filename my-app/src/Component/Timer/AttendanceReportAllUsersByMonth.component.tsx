@@ -13,6 +13,13 @@ const AttendanceReportForAllUserByMonth: React.FC = () => {
     const [selectedYear, setSelectedYear] = useState<string>();
     const [loading, setLoading] = useState(false);
     const [groupedTimers, setGroupedTimers] = useState<Timer[] >([]);
+    
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = 2020; year <= currentYear; year++) {
+    years.push(year);
+    }
+
 
 
     const fetchData = async (filter: string) => {
@@ -98,25 +105,25 @@ const AttendanceReportForAllUserByMonth: React.FC = () => {
                 <FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
                     <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>בחר שנה</InputLabel>
                     <Select
-                        input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר שנה" />}
-
-                        value={selectedMonth}
-                        onChange={(e) => setSelectedYear(e.target.value)}
-                    >
-
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2020'}>2020</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2021'}>2021</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2023'}>2023</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2024'}>2024</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2025'}>2025</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2026'}>2026</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2027'}>2027</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2028'}>2028</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2029'}>2029</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2030'}>2030</MenuItem>
-
-
+                    input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר שנה" />}
+                    value={selectedYear}
+                    onChange={(e) => {
+                        setSelectedYear(e.target.value);
+                        setSelectedMonth(undefined);
+                    }}
+                >
+                    {years.map((year) => (
+                        <MenuItem
+                            key={year}
+                            style={{ textAlign: 'center', fontFamily: 'CustomFont' }}
+                            value={year.toString()}
+                        >
+                            {year}
+                        </MenuItem>
+                    ))}
                     </Select>
+
+                  
                 </FormControl>
                 {selectedYear &&
                     (<FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
@@ -124,7 +131,13 @@ const AttendanceReportForAllUserByMonth: React.FC = () => {
                         <Select
                             input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר חודש" />}
                             value={selectedMonth}
-                            onChange={(e) => fetchData(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setSelectedMonth(value);
+                                fetchData(value);
+                            }}
+                            
+
                         >
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-01'}>ינואר</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-02'}>פברואר</MenuItem>
