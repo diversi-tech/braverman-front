@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import { useDispatch, useSelector, } from 'react-redux';
 // import { setUser } from '../../Redux/User/userAction';
 import { log } from 'console';
@@ -21,6 +21,7 @@ const Login = () => {
   const [UserEmail, setUserEmail] = useState('');
   const [UserPassword, setUserPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const isSubmitting = useRef(false);//יוצר דגל 
 
   // const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
   // console.log(currentUser);
@@ -31,49 +32,66 @@ const Login = () => {
   const MySwal = withReactContent(Swal);
 
   const handleLogin = async () => {
-    
+    if (isSubmitting.current) return; // חסימת לחיצות כפולות מיידית
+    isSubmitting.current = true;//סימן שההתחברות התחילה 
+  
     if (UserEmail && UserPassword) {
-      console.log('Logging in with', { UserEmail, UserPassword });
-      const response = await LoginUser(UserEmail, UserPassword);
-      if (response.status === 200) {
-    
-        const x = response;
-        console.log(x);
-        console.log(x.data);
-        MySwal.fire({
-          title: 'success',
-          text: 'התחברת בהצלחה',
-          icon: 'success',
-          confirmButtonText: 'אישור',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
-        });  
-              dispatch(setCurrentUser(x.data))
-        // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
-        sessionStorage.setItem("userId", x.data.id);
-        sessionStorage.setItem("userType", x.data.userType.description);
-        sessionStorage.setItem("firstName", x.data.firstName);
-        sessionStorage.setItem("lastName", x.data.lastName);
-        sessionStorage.setItem("email", x.data.email);
-        if (x.data.userType.description === "לקוח")
-          navigate("/quickActions");
-        else if (x.data.userType.description === "מנהל")
-          navigate("/allDeshbord");
-        else
-          navigate("/allDeshbord");
-      } else {
+      try {
+        console.log('Logging in with', { UserEmail, UserPassword });
+        const response = await LoginUser(UserEmail, UserPassword);
+  
+        if (response.status === 200) {
+          const x = response;
+          console.log(x.data);
+          MySwal.fire({
+            title: 'success',
+            text: 'התחברת בהצלחה',
+            icon: 'success',
+            confirmButtonText: 'אישור',
+            customClass: {
+              confirmButton: 'my-confirm-button'
+            }
+          });
+  
+          dispatch(setCurrentUser(x.data));
+          sessionStorage.setItem("userId", x.data.id);
+          sessionStorage.setItem("userType", x.data.userType.description);
+          sessionStorage.setItem("firstName", x.data.firstName);
+          sessionStorage.setItem("lastName", x.data.lastName);
+          sessionStorage.setItem("email", x.data.email);
+  
+          if (x.data.userType.description === "לקוח")
+            navigate("/quickActions");
+          else
+            navigate("/allDeshbord");
+        } else {
+          MySwal.fire({
+            title: 'error',
+            text: 'מייל וסיסמא לא קיימים',
+            icon: 'error',
+            confirmButtonText: 'אישור',
+            customClass: {
+              confirmButton: 'my-confirm-button'
+            }
+          });
+        }
+      } catch (error) {
+        console.error(error);
         MySwal.fire({
           title: 'error',
-          text: 'מייל וסיסמא לא קיימים',
+          text: 'שגיאה בהתחברות',
           icon: 'error',
           confirmButtonText: 'אישור',
           customClass: {
             confirmButton: 'my-confirm-button'
           }
-        });      }
+        });
+      } finally {
+        isSubmitting.current = false; // החזרת האפשרות להתחבר
+      }
     } else {
       alert('נא להכניס מייל וסיסמא');
+      isSubmitting.current = false; // במקרה וחסרים פרטים מאתחל שוב 
     }
   };
 
