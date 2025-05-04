@@ -44,10 +44,9 @@ const Login = () => {
           title: 'success',
           text: 'התחברת בהצלחה',
           icon: 'success',
-          confirmButtonText: 'אישור',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
+          showConfirmButton: false, // הסתרת כפתור האישור
+          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+
         });  
               dispatch(setCurrentUser(x.data))
         // dispatch(setUser(UserEmail, UserPassword, x.data.id, x.data.userType.id, x.data.userType.description, x.data.firstName, x.data.lastName));
@@ -67,10 +66,9 @@ const Login = () => {
           title: 'error',
           text: 'מייל וסיסמא לא קיימים',
           icon: 'error',
-          confirmButtonText: 'אישור',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
+          showConfirmButton: false, // הסתרת כפתור האישור
+          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+
         });      }
     } else {
       alert('נא להכניס מייל וסיסמא');
@@ -91,10 +89,9 @@ const Login = () => {
           title: 'success',
           text: 'התחברת בהצלחה',
           icon: 'success',
-          confirmButtonText: 'אישור',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
+          showConfirmButton: false, // הסתרת כפתור האישור
+          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+
         });     
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
@@ -115,10 +112,9 @@ const Login = () => {
           title: 'error',
           text: 'מייל וסיסמא לא קיימים',
           icon: 'error',
-          confirmButtonText: 'אישור',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
+          showConfirmButton: false, // הסתרת כפתור האישור
+          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+
         });       }
     })
       .catch((error) => {
@@ -127,10 +123,9 @@ const Login = () => {
           title: 'error',
           text: 'שגיאה בהתחברות ',
           icon: 'error',
-          confirmButtonText: 'אישור',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
+          showConfirmButton: false, // הסתרת כפתור האישור
+          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+
         });       });
 
   };
