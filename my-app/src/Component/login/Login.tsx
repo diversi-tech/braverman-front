@@ -33,15 +33,15 @@ const Login = () => {
   const handleLogin = async () => {
     
     if (UserEmail && UserPassword) {
-      console.log('Logging in with', { UserEmail, UserPassword });
-      const response = await LoginUser(UserEmail, UserPassword);
+      // console.log('Logging in with', { UserEmail, UserPassword });
+      const normalizedEmail = UserEmail.toLowerCase();
+      const response = await LoginUser(normalizedEmail, UserPassword);
       if (response.status === 200) {
     
         const x = response;
         console.log(x);
         console.log(x.data);
         MySwal.fire({
-          title: 'success',
           text: 'התחברת בהצלחה',
           icon: 'success',
           confirmButtonText: 'אישור',
@@ -64,7 +64,6 @@ const Login = () => {
           navigate("/allDeshbord");
       } else {
         MySwal.fire({
-          title: 'error',
           text: 'מייל וסיסמא לא קיימים',
           icon: 'error',
           confirmButtonText: 'אישור',
@@ -82,13 +81,13 @@ const Login = () => {
     console.log('Login Success:', googleUser);
     const credentials = jwtDecode<GoogleCredentials>(googleUser.credential);
     console.log(credentials);
-    LoginWithGoogle(credentials.email).then((response) => {
+    const normalizedEmail = credentials.email.toLowerCase();
+    LoginWithGoogle(normalizedEmail).then((response) => {
       if (response.status === 200) {
         const x = response;
         console.log(x);
         console.log(x.data);
         MySwal.fire({
-          title: 'success',
           text: 'התחברת בהצלחה',
           icon: 'success',
           confirmButtonText: 'אישור',
@@ -112,7 +111,6 @@ const Login = () => {
 
       } else {
         MySwal.fire({
-          title: 'error',
           text: 'מייל וסיסמא לא קיימים',
           icon: 'error',
           confirmButtonText: 'אישור',
@@ -124,7 +122,6 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         MySwal.fire({
-          title: 'error',
           text: 'שגיאה בהתחברות ',
           icon: 'error',
           confirmButtonText: 'אישור',

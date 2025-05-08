@@ -83,9 +83,9 @@ const UpdateProject: React.FC<UpdateLeadProps> = ({ prod, onUpdate,onChangeStatu
             if (UpdatedMyProject.status.value == "בוצע") {
                 onChangeStatusDone();
               } 
-            Swal.fire('Success', 'הפרויקט עודכן בהצלחה', 'success');
+            Swal.fire('', 'הפרויקט עודכן בהצלחה', 'success');
         } catch (error) {
-            Swal.fire('Error', 'עדכון הפרויקט נכשל', 'error');
+            Swal.fire('', 'עדכון הפרויקט נכשל', 'error');
         }
     };
 
