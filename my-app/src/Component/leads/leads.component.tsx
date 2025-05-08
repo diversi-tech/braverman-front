@@ -669,7 +669,10 @@ const Leads: React.FC = () => {
 
                     <button
                       className={`circle-button ${selectedLeadId === lead.id ? 'clicked' : ''}`}
-                      onClick={() => setSelectedLeadId(lead.id)}
+                      onClick={() => {
+                        setSelectedLeadId(lead.id);
+                        handleEditLead();
+                      }}
                     ></button>
                   </td>
                 </tr>

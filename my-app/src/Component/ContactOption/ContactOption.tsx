@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{ FC } from 'react';
 import { FaWhatsapp, FaPhone, FaEnvelope, FaComments } from 'react-icons/fa';
 
-const ContactOptions = () => {
+const ContactOptions:FC =() => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-around', padding: '20px' }}>
       <a href="https://wa.me/0548559840" target="_blank" rel="noopener noreferrer">

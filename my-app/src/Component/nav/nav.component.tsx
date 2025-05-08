@@ -52,7 +52,6 @@ const Nav = () => {
                 type === "עובד" ? (<>
                     <li className={`nav-item ${location.pathname.includes('/allDeshbord') ? 'active' : ''}`}><Link to={'allDeshbord'}>דשבורד</Link></li>
                     <li className={`nav-item ${location.pathname==='/tasks' ? 'active' : ''}`}><Link to={'tasks'}>משימות</Link></li>
-                    <li className={`nav-item ${location.pathname.includes('/customers') ? 'active' : ''}`}><Link to={'customers'}>לקוחות</Link></li>
                      <TimerComponent></TimerComponent>
                   </>)
                   :

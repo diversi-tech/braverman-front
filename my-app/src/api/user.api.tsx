@@ -10,12 +10,12 @@ export const addUserApi = (user:User) => {
     return axios.post(`${apiUrl}User/PostUser`,user);
 }
 
-export const LoginUser = async(userEmail:string,userPassword:string)=>{
-    
-    console.log(userEmail,userPassword);
-    return await axios.post(`${apiUrl}User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
+export const LoginUser = async(userEmail:string,userPassword:string)=>
+ { 
+    return await axios.post( `${apiUrl}User/Login?UserEmail=${encodeURIComponent(userEmail)}&UserPassword=${encodeURIComponent(userPassword)}`);
+ } 
 
-}
+
 
 export const getUsers = async () => {
     try {
