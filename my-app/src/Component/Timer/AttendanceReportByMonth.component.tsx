@@ -15,6 +15,11 @@ const AttendanceReportByMonth: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [groupedTimers, setGroupedTimers] = useState<{ [key: string]: Timer[] }>({});
     const [userTimers, setUserTimers] = useState<Timer[]>([]);
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = 2020; year <= currentYear; year++) {
+    years.push(year);
+}
 
     let id = useParams()
     debugger
@@ -104,38 +109,39 @@ const AttendanceReportByMonth: React.FC = () => {
         <Box sx={{ padding: 4, fontFamily: 'CustomFont' }}>
             <Paper elevation={3} sx={{ padding: 3, borderRadius: '20px' }}>
                 <Typography variant="h4" gutterBottom align="center" sx={{ fontFamily: 'CustomFont', fontWeight: 700, color: '#002046' }}>
-                    דוח נוכחות לפי חודש
+                  
                 </Typography>
                 <FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
-                    <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>בחר שנה</InputLabel>
-                    <Select
-                        input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר שנה" />}
+    <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>בחר שנה</InputLabel>
+    <Select
+        input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר שנה" />}
+        value={selectedYear}
+        onChange={(e) => setSelectedYear(e.target.value)}
+    >
+        {years.map((year) => (
+            <MenuItem
+                key={year}
+                style={{ textAlign: 'center', fontFamily: 'CustomFont' }}
+                value={year.toString()}
+            >
+                {year}
+            </MenuItem>
+        ))}
+    </Select>
+ </FormControl>
 
-                        value={selectedMonth}
-                        onChange={(e) => setSelectedYear(e.target.value)}
-                    >
-
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2020'}>2020</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2021'}>2021</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2023'}>2023</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2024'}>2024</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2025'}>2025</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2026'}>2026</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2027'}>2027</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2028'}>2028</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2029'}>2029</MenuItem>
-                        <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={'2030'}>2030</MenuItem>
-
-
-                    </Select>
-                </FormControl>
                 {selectedYear &&
                     (<FormControl sx={{ minWidth: 120, marginBottom: 2 }}>
                         <InputLabel id="source-label" style={{ fontFamily: 'CustomFont' }}>בחר חודש</InputLabel>
                         <Select
                             input={<OutlinedInput sx={{ fontFamily: 'CustomFont' }} label="בחר חודש" />}
                             value={selectedMonth}
-                            onChange={(e) => fetchData(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setSelectedMonth(value);
+                                fetchData(value);
+                            }}
+                            
                         >
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-01'}>ינואר</MenuItem>
                             <MenuItem style={{ textAlign: 'center', fontFamily: 'CustomFont' }} value={selectedYear + '-02'}>פברואר</MenuItem>
@@ -156,11 +162,14 @@ const AttendanceReportByMonth: React.FC = () => {
                 <IconButton onClick={downloadExcel} aria-label="download">
                     <DownloadIcon />
                 </IconButton>
-                {loading ? (
+                                {loading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
                         <CircularProgress />
                     </Box>
+                
                 ) : (
+
+                    
                     <Table>
                         <TableHead>
                             <TableRow>
