@@ -138,9 +138,9 @@ const UserTable = () => {
                                         // const updatedProjectsNames = await fetchProjectsNames(newUser.projectsId);
                                         // updateUserProjects(addedUser.id, updatedProjectsNames);
                                         // dispatch(addUser(addedUser));
-                                        Swal.fire('Success', 'המשתמש נוסף בהצלחה', 'success');
+                                        Swal.fire('', 'המשתמש נוסף בהצלחה', 'success');
                                     } catch (error) {
-                                        Swal.fire('Error', 'שגיאה בהוספת המשתמש', 'error');
+                                        Swal.fire('', 'שגיאה בהוספת המשתמש', 'error');
                                     }
                                 }}
                             />,

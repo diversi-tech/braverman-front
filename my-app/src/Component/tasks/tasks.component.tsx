@@ -271,9 +271,9 @@ export const Tasks = () => {
                                     const response = await addTask(newTask);
                                     const addedTask = response.data;
                                     setTasks([...tasks, addedTask]);
-                                    Swal.fire('Success', 'המשימה נוספה בהצלחה', 'success');
+                                    Swal.fire('', 'המשימה נוספה בהצלחה', 'success');
                                 } catch (error) {
-                                    Swal.fire('Error', 'שגיאה בהוספת המשימה', 'error');
+                                    Swal.fire('', 'שגיאה בהוספת המשימה', 'error');
                                 }
                             }}
                         />,

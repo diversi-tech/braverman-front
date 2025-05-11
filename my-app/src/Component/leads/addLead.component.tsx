@@ -112,7 +112,7 @@ interface AddLeadFormProps {
           debugger
           await handleLeadAdded(newLead); // Use the provided function to handle lead addition
         } catch (error) {
-          Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
+          Swal.fire('', 'שגיאה בהוספת הליד', 'error');
         }
       };
   return (

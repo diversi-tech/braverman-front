@@ -31,7 +31,6 @@ const ReportIssue=() =>{
           .then(response => {
               if (response.status === 200) {
                 MySwal.fire({
-                  title: 'success',
                   text: 'המייל נשלח בהצלחה',
                   icon: 'success',
                   confirmButtonText: 'אישור',
