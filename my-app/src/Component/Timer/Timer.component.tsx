@@ -140,12 +140,19 @@ const TimerComponent: React.FC = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 2,
-        position: 'absolute', left: '250px', top: '20px'
+        position: 'absolute',
+      top: '20px',
+      right: '20px',
+      backgroundColor: '#e8f0f8',
+      padding: '10px 20px',
+      borderRadius: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      minWidth: '320px',
+      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+      direction: 'rtl',
+      zIndex: 1000,
 
       }}
     >
@@ -153,25 +160,25 @@ const TimerComponent: React.FC = () => {
 <Button
   onClick={currentTimer ? handleStopTimer : openProjectDialog}
   sx={{
-    color: currentTimer ? 'red': 'blue',       
-    borderRadius: '50%',
-    width: 40,
-    height: 40,
-    minWidth: 0,
+    fontSize: 28,
+    cursor: 'pointer',
+    color: currentTimer ? 'red' : 'blue',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    minWidth: 'auto',
     padding: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 35,
   }}
 >
   {currentTimer ? <TbClockPause /> : <TbClockPlay />}
 </Button>
-      <Box sx={{ marginLeft: 2 }}>
-        <Typography variant="h6">
-          {formatDuration(currentTimer?.duration)}
-        </Typography>
-      </Box>
+
+  <Typography sx={{ fontWeight: 'bold', color: '#002046', fontSize: '16px' }}>
+  פרויקט: {currentTimer?.projectName || 'לא נבחר'}
+</Typography>
+
+<Typography sx={{ fontSize: '16px', color: '#002046' }}>
+  {formatDuration(currentTimer?.duration)}
+</Typography>
 
 <Dialog
   open={isProjectDialogOpen}
