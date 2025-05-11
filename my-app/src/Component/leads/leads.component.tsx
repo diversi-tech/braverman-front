@@ -567,7 +567,29 @@ const Leads: React.FC = () => {
       <div className="lead-management-container">
         <p className="lead-management-title">ניהול לידים</p>
         <div className="search-container" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-        </div>
+ 
+
+  {/* כפתור נוסף בצד שמאל */}
+  <button
+  className="add-lead-button"
+  onClick={handleAddLead}
+  style={{
+    marginRight: 'auto',
+    backgroundColor: '#e8f0f8',
+    color: '#002046',
+    padding: '8px 16px',
+    borderRadius: '8px',
+    fontWeight: 600,
+    fontSize: '15px',
+    boxShadow: 'none',
+    border: 'none',
+    cursor: 'pointer'
+  }}
+>
+  + <span className='add' style={{ marginLeft: '5px' }}>הוספת ליד חדש</span>
+</button>
+</div>
+
         <div className="table-container">
           <table className="table">
             <thead>

@@ -170,6 +170,27 @@ const UserTable = () => {
             <div className="table-title" >
                 תצוגת משתמשי מערכת
             </div>
+            {/* כפתור הוספת משתמש חדש בצד שמאל למעלה */}
+<div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
+  <button
+    onClick={addUser}
+    style={{
+      backgroundColor: '#e8f0f8',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '8px 16px',
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: '14px',
+      color: '#002046',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      cursor: 'pointer'
+    }}
+  >
+    + <span style={{ marginRight: '8px' }}>הוספת משתמש</span>
+  </button>
+</div>
+
             <table>
                 <thead>
                     <tr className="table-header-row">
