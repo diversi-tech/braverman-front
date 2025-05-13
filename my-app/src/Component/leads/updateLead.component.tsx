@@ -65,6 +65,7 @@ const UpdateLead: React.FC<UpdateLeadProps> = ({ lead, statusOptions, onUpdate }
       await updateLeadChanges(updatedLead,updatedLead.id);
       onUpdate(updatedLead);
       MySwal.fire({
+        title: 'success',
         text: 'הליד עודכן בהצלחה',
         icon: 'success',
         confirmButtonText: 'אישור',

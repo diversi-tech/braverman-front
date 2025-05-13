@@ -230,20 +230,18 @@ const Show = ({ props }: any) => {
             <p style={{ fontSize: "200%"}}>הפרויקט הושלם בהצלחה!</p>
           </div>
           :
-
-          (<> {/* עוטף את כל האלמנטים המוחזרים */}
-            <p style={{ fontSize: "170%", fontWeight: "bold" ,marginTop:"5%" }}>שלבי הפרויקט:</p>
-            {p.tashsShow?.map(t => (t?.categoryName != "" &&
-              <div key={t.categoryName} style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}> {/* הוספת key */}
-                {t.key == "4" ? <CheckCircleOutlineTwoTone style={{marginTop:'15px', marginLeft:'8px' }} /> : <RadioButtonUncheckedIcon  style={{marginTop:'15px', marginLeft:'8px'}}/>}
-                {p.stat == t.categoryName
-                  ? <p style={{ backgroundColor: "#F1F7FF", borderRadius: 3, }}>{t.categoryName}</p>
-                  : <p>{t.categoryName}</p>}
-              </div>
-            ))}
-          </>)
-        }
-      
+          (<p style={{ fontSize: "170%", fontWeight: "bold" ,marginTop:"5%" }}>שלבי הפרויקט:</p> &&
+            p.tashsShow?.map(t => (t?.categoryName != "" &&
+              <>
+             
+                <div style={{ display: 'flex', flexDirection: "row", paddingRight: "11%" }}>
+                  {t.key == "4" ? <CheckCircleOutlineTwoTone style={{marginTop:'15px', marginLeft:'8px' }} /> : <RadioButtonUncheckedIcon  style={{marginTop:'15px', marginLeft:'8px'}}/>}
+                  {p.stat == t.categoryName
+                    ? <p style={{ backgroundColor: "#F1F7FF", borderRadius: 3, }}>{t.categoryName}</p>
+                    : <p>{t.categoryName}</p>}
+                </div>
+              </>))
+          )}
 
 
       </div>

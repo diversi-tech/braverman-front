@@ -153,7 +153,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ users, setUser, handleUserAdd
         try {
             await handleUserAdded(newUser);
         } catch (error) {
-            Swal.fire('', 'שגיאה בהוספת המשתמש', 'error');
+            Swal.fire('Error', 'שגיאה בהוספת המשתמש', 'error');
         }
     };
 

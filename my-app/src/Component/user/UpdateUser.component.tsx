@@ -108,7 +108,7 @@ const UpdateUser: React.FC<UserId> = ({ userId }) => {
             dispatch(updateUser(updatedUser));
             UpdateUserAPI(updatedUser)
                 .then(() => {
-                    Swal.fire('', 'המשתמש נוסף בהצלחה', 'success');
+                    Swal.fire('Success', 'המשתמש נוסף בהצלחה', 'success');
                 })
                 .catch(err => {
                     console.log(err);

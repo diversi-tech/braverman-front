@@ -251,6 +251,7 @@ const FollowUp: React.FC = () => {
                   setLeads([ addedLead,...leads]);
                   dispatch(addLead2(addedLead));
                   MySwal.fire({
+                    title: 'success',
                     text: 'הליד נוסף בהצלחה',
                     icon: 'success',
                     confirmButtonText: 'אישור',
@@ -260,7 +261,7 @@ const FollowUp: React.FC = () => {
                   }); 
                   // Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
                 } catch (error) {
-                  Swal.fire('', 'שגיאה בהוספת הליד', 'error');
+                  Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
                 }
               }}
             />,
@@ -321,6 +322,7 @@ const FollowUp: React.FC = () => {
                 setLeads={setLeads}
                 handleProjectAdded={(newProject) => {
                   MySwal.fire({
+                    title: 'success',
                     text: 'הפרויקט נוצר בהצלחה',
                     icon: 'success',
                     confirmButtonText: 'אישור',
@@ -513,7 +515,7 @@ const FollowUp: React.FC = () => {
           console.log(response);
         }
       }
-      Swal.fire('', 'שמירה בוצעה בהצלחה', 'success');
+      Swal.fire('Success', 'שמירה בוצעה בהצלחה', 'success');
       setLeadsChanges(new Array<boolean>(leads.length).fill(false));
       console.log(leads);
 

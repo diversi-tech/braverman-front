@@ -250,6 +250,7 @@ const Leads: React.FC = () => {
                   setLeads([ addedLead,...leads]);
                   dispatch(addLead2(addedLead));
                   MySwal.fire({
+                    title: 'success',
                     text: 'הליד נוסף בהצלחה',
                     icon: 'success',
                     confirmButtonText: 'אישור',
@@ -259,7 +260,7 @@ const Leads: React.FC = () => {
                   }); 
                   // Swal.fire('Success', 'הליד נוסף בהצלחה', 'success');
                 } catch (error) {
-                  Swal.fire('', 'שגיאה בהוספת הליד', 'error');
+                  Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
                 }
               }}
             />,
@@ -320,6 +321,7 @@ const Leads: React.FC = () => {
                 setLeads={setLeads}
                 handleProjectAdded={(newProject) => {
                   MySwal.fire({
+                    title: 'success',
                     text: 'הפרויקט נוצר בהצלחה',
                     icon: 'success',
                     confirmButtonText: 'אישור',
@@ -528,14 +530,14 @@ const Leads: React.FC = () => {
           console.log(response);
         }
       }
-      Swal.fire('', 'שמירה בוצעה בהצלחה', 'success');
+      Swal.fire('Success', 'שמירה בוצעה בהצלחה', 'success');
       setLeadsChanges(new Array<boolean>(leads.length).fill(false));
       console.log(leads);
 
       setLeads(leads!)
     } catch (error) {
-      console.error('השמירה נכשלה', error);
-      Swal.fire('שגיאה', 'השמירה נכשלה', 'error');
+      console.error('Error saving leads:', error);
+      Swal.fire('Error', 'השמירה נכשלה', 'error');
     }
   }
   const addNote = (newNote: Notes) => {
