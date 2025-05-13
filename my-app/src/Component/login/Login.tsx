@@ -37,14 +37,14 @@ const Login = () => {
 
     if (UserEmail && UserPassword) {
       try {
-        console.log('Logging in with', { UserEmail, UserPassword });
-        const response = await LoginUser(UserEmail, UserPassword);
-
+      // console.log('Logging in with', { UserEmail, UserPassword });
+      const normalizedEmail = UserEmail.toLowerCase();
+      const response = await LoginUser(normalizedEmail, UserPassword);
+  
         if (response.status === 200) {
           const x = response;
           console.log(x.data);
           MySwal.fire({
-            title: 'success',
             text: 'התחברת בהצלחה',
             icon: 'success',
             showConfirmButton: false, // הסתרת כפתור האישור
@@ -65,7 +65,6 @@ const Login = () => {
             navigate("/allDeshbord");
         } else {
           MySwal.fire({
-            title: 'error',
             text: 'מייל וסיסמא לא קיימים',
             icon: 'error',
             showConfirmButton: false, // הסתרת כפתור האישור
@@ -98,13 +97,13 @@ const Login = () => {
     console.log('Login Success:', googleUser);
     const credentials = jwtDecode<GoogleCredentials>(googleUser.credential);
     console.log(credentials);
-    LoginWithGoogle(credentials.email).then((response) => {
+    const normalizedEmail = credentials.email.toLowerCase();
+    LoginWithGoogle(normalizedEmail).then((response) => {
       if (response.status === 200) {
         const x = response;
         console.log(x);
         console.log(x.data);
         MySwal.fire({
-          title: 'success',
           text: 'התחברת בהצלחה',
           icon: 'success',
           showConfirmButton: false, // הסתרת כפתור האישור
@@ -128,7 +127,6 @@ const Login = () => {
 
       } else {
         MySwal.fire({
-          title: 'error',
           text: 'מייל וסיסמא לא קיימים',
           icon: 'error',
           showConfirmButton: false, // הסתרת כפתור האישור
@@ -140,7 +138,6 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         MySwal.fire({
-          title: 'error',
           text: 'שגיאה בהתחברות ',
           icon: 'error',
           showConfirmButton: false, // הסתרת כפתור האישור
