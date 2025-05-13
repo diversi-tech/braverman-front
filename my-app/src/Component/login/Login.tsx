@@ -1,4 +1,4 @@
-import React, { useState ,useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector, } from 'react-redux';
 // import { setUser } from '../../Redux/User/userAction';
 import { log } from 'console';
@@ -34,12 +34,12 @@ const Login = () => {
   const handleLogin = async () => {
     if (isSubmitting.current) return; // חסימת לחיצות כפולות מיידית
     isSubmitting.current = true;//סימן שההתחברות התחילה 
-  
+
     if (UserEmail && UserPassword) {
       try {
         console.log('Logging in with', { UserEmail, UserPassword });
         const response = await LoginUser(UserEmail, UserPassword);
-  
+
         if (response.status === 200) {
           const x = response;
           console.log(x.data);
@@ -47,18 +47,18 @@ const Login = () => {
             title: 'success',
             text: 'התחברת בהצלחה',
             icon: 'success',
-          showConfirmButton: false, // הסתרת כפתור האישור
-          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+            showConfirmButton: false, // הסתרת כפתור האישור
+            timer: 3000, // סגירה אוטומטית אחרי 3 שניות
 
           });
-  
+
           dispatch(setCurrentUser(x.data));
           sessionStorage.setItem("userId", x.data.id);
           sessionStorage.setItem("userType", x.data.userType.description);
           sessionStorage.setItem("firstName", x.data.firstName);
           sessionStorage.setItem("lastName", x.data.lastName);
           sessionStorage.setItem("email", x.data.email);
-  
+
           if (x.data.userType.description === "לקוח")
             navigate("/quickActions");
           else
@@ -68,8 +68,8 @@ const Login = () => {
             title: 'error',
             text: 'מייל וסיסמא לא קיימים',
             icon: 'error',
-          showConfirmButton: false, // הסתרת כפתור האישור
-          timer: 3000, // סגירה אוטומטית אחרי 3 שניות
+            showConfirmButton: false, // הסתרת כפתור האישור
+            timer: 3000, // סגירה אוטומטית אחרי 3 שניות
 
           });
         }
@@ -110,7 +110,7 @@ const Login = () => {
           showConfirmButton: false, // הסתרת כפתור האישור
           timer: 3000, // סגירה אוטומטית אחרי 3 שניות
 
-        });     
+        });
         sessionStorage.setItem("userId", x.data.id);
         sessionStorage.setItem("userType", x.data.userType.description);
         sessionStorage.setItem("firstName", x.data.firstName);
@@ -120,10 +120,11 @@ const Login = () => {
 
         if (x.data.userType.description === "לקוח")
           navigate("/quickActions");
-        else if (x.data.userType.description === "מנהל"){
-          navigate("/allDeshbord");}
-         else
-           navigate("/allDeshbord");
+        else if (x.data.userType.description === "מנהל") {
+          navigate("/allDeshbord");
+        }
+        else
+          navigate("/allDeshbord");
 
       } else {
         MySwal.fire({
@@ -133,7 +134,8 @@ const Login = () => {
           showConfirmButton: false, // הסתרת כפתור האישור
           timer: 3000, // סגירה אוטומטית אחרי 3 שניות
 
-        });       }
+        });
+      }
     })
       .catch((error) => {
         console.log(error);
@@ -144,7 +146,8 @@ const Login = () => {
           showConfirmButton: false, // הסתרת כפתור האישור
           timer: 3000, // סגירה אוטומטית אחרי 3 שניות
 
-        });       });
+        });
+      });
 
   };
 
@@ -153,65 +156,74 @@ const Login = () => {
   };
 
   return (
-    
-     <div className='login' >
-    <p id='p' style={{marginTop: '110px'}}>התחברות למערכת</p>
-    <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-      <div id='allin'>
-      <input
-        id="username"
-        placeholder=":הכנס אימייל"
-        className='textBox'
-        value={UserEmail}
-        onChange={(e) => setUserEmail(e.target.value)}
-        required
-      />
-        <div>
-          <input
-            type={!showPassword ? 'password' : ''}
-            id="password"
-            placeholder=':סיסמא'
-            className='textBox'
-            value={UserPassword}
-            onChange={(e) => setUserPassword(e.target.value)}
-            required
-          />
-           <span
+
+    <div className='login' >
+      <p id='p' style={{ marginTop: '110px' }}>התחברות למערכת</p>
+      <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+        <div id="login-fields">
+          {/* שדה אימייל */}
+          <div className="form-group">
+            <input
+              id="username"
+              placeholder=":הכנס אימייל"
+              className="textBox"
+              value={UserEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* שדה סיסמה עם אייקון */}
+          <div className="form-group password-wrapper">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              placeholder=":סיסמא"
+              className="textBox"
+              value={UserPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
+              required
+            />
+            <span
               className="password-toggle-icon"
               onClick={() => setShowPassword(!showPassword)}
-
             >
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </span>
+          </div>
+
+
+          {/* כפתור התחברות */}
+          <div className="form-group">
+            <button type="submit" className="textBox" id="submit">
+              <div id="en">
+                <span className="enter">
+                  <svg width="20" height="20" fontSize={20} viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" className="ok">
+                    <path d="M0.00598005 4.00597L1.90735e-06 20L16 19.998L16.002 18L3.41396 18L20 1.414L18.586 -1.78373e-06L1.99997 16.586L1.99996 3.99999L0.00598005 4.00597Z" fill="#002046" />
+                  </svg>
+                  כניסה
+                </span>
+              </div>
+            </button>
+          </div>
+
+          {/* כפתור התחברות עם Google */}
+          <div className="form-group google-login-wrapper">
+            <GoogleOAuthProvider clientId={clientId}>
+              <div className="custom-google-login-button">
+                <GoogleLogin
+                  onSuccess={onSuccess}
+                  onError={onFailure}
+                />
+              </div>
+            </GoogleOAuthProvider>
+          </div>
+
         </div>
-        <div id='btn'>
-        <button type="submit" className='textBox' id="submit">
-          <div id='en'>
-            <span className='enter'>  <svg width="20" height="20" fontSize={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className='ok'>
-            <path d="M0.00598005 4.00597L1.90735e-06 20L16 19.998L16.002 18L3.41396 18L20 1.414L18.586 -1.78373e-06L1.99997 16.586L1.99996 3.99999L0.00598005 4.00597Z" fill="#002046" /> 
-             </svg> כניסה  </span>
-            
-          </div>
-        </button>
-      </div>
-      </div>
-         {/* כפתור התחברות מהירה */}
-      <div >
-        <button type="button" id='linkq' >
-        <GoogleOAuthProvider clientId={clientId}>
-        <div className="custom-google-login-button">
-          <GoogleLogin
-            onSuccess={onSuccess}
-            onError={onFailure}
-          // buttonText="התחברות עם Google"
-          />
-          </div>
-      </GoogleOAuthProvider>
-        </button>
-      </div>
       </form>
-      
-    </div> 
-      );
-      }
-      export default Login;
+    </div>
+
+  );
+}
+export default Login;

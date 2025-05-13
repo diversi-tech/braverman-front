@@ -1,218 +1,144 @@
-#username {
-    top: 39%;
-    bottom: 54.37%;
-    border: none;
-}
 body {
+    margin: 0;
+    padding: 0;
+    font-family: 'CustomFont', sans-serif !important;
     overflow-x: hidden;
-}
-.textBox {
-    
-    box-sizing: border-box;
-    position: absolute;
-    width: 600px;
-    height: 55px;
-    left: calc(50% - 779px/2 + 70px);
-    background: #F1F7FF;
-    border-radius: 15px;
-    font-family: 'CustomFont'!important;
-    /* font-family: 'tutorial'; */
-    /* font-style: normal; */
-    font-weight: 400;
-    font-size: 27px;
-    line-height: 36px;
-    text-align: right;
-    color: #002046;
-    align-content: center;
-    /* z-index: 1; */
-}
-input::placeholder::placeholder {
-    font-family: 'CustomFont'!important;
-    position: absolute;
-    width: 277px;
-    height: 60px;
-    left: calc(50% - 277px/2 + 235.5px);
-    top: 378px;
-}
-#password {
-    font-family: 'CustomFont'!important;
-    top: 50.5%;
-    bottom: 43.35%;
-    border: none;
-}
-#submit {
-    left: calc(50% - 779px/2 + 70px);
-    top: 62%;
-    bottom: 32.12%;
-}
-.enter {
-    /* v */
-    position: absolute;
-    width: 81px;
-    height: 28px;
-    left: calc(50% - 81px/2 + 20.5px);
-    top: 18%;
-    /* z-index: 2; */
-    /* font-family: 'tutorial'; */
-    /* font-style: normal; */
-    font-weight: 700;
-    font-size: 30px;
-    font-family: 'CustomFont'!important;
-
-    line-height: 36px;
-    text-align: center;
-}
-#allin {
-    bottom: 10px;
-    align-content: center;
-}
-#p {
-    /* v */
-    position: absolute;
-    width: 300px;
-    height: 60px;
-    left: calc(50% - 340px/2);
-    top: 80px;
-    /* font-family: 'tutorial'; */
-    /* font-style: normal; */
-    /* font-weight: 700; */
-    /* font-size: 40px; */
-    font-family: 'CustomFont'!important;
-
-    line-height: 48px;
-    text-align: center;
-    color: #002046;
-}
-input::placeholder::placeholder {
-position: absolute;
-width: 277px;
-height: 60px;
-left: calc(50% - 277px/2 + 235.5px);
-top: 378px;
-}
-#password {
-top:50.5%;
-bottom: 43.35%;
-border: none;
-}
-#submit {
-left: calc(50% - 779px/2 + 70px);
-top: 62%;
-bottom: 32.12%;
-}
-.enter {
-/* v */
-position: absolute;
-width: 81px;
-height: 28px;
-left: calc(50% - 81px/2 + 20.5px);
-top: 18%;
-/* z-index: 2; */
-font-family: 'CustomFont'!important;
-/* font-weight: 700; */
-/* font-size: 30px; */
-line-height: 36px;
-text-align: center;
-}
-#allin{
-bottom: 10px;
-align-content: center;
-}
-#p {
-/* v */
-position: absolute;
-width: 300px;
-height: 60px;
-left: calc(50% - 340px/2);
-top:80px;
-font-family: 'CustomFont'!important;
-font-style: normal;
-font-weight: 700;
-font-size: 32px;
-line-height: 48px;
-text-align: center;
-color: #002046;
-}
-.ok {
-/* Vector v*/
-position: absolute;
-left: -40px;
-right: 50%;
-top: 50%;
-bottom: 33.26%;
-width: 50%;
-height: 50%;
-color: #002046;
-}
-#linkq {
-/* Rectangle 13 */
-position: absolute;
-width: 400px;
-left: calc(50% - 450px/2);
-top: 75.68%;
-bottom: 15%;
-background: #F1F7FF;
-border-radius: 15px;
-border: none;
-}
-
-.ok {
-    /* Vector v*/
-    position: absolute;
-    left: -40px;
-    right: 50%;
-    top: 50%;
-    bottom: 33.26%;
-    width: 50%;
-    height: 50%;
-    color: #002046;
-}
-.login {
-    width: 50%;
-    /* height: 50%; */
+    background-color: #f8f9fa;
+  }
+  
+  .login {
+    max-width: 500px;
+    margin: 50px auto;
     background-color: #FFFFFF;
     border-radius: 15px;
-    padding: 18%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: 90%;
-    margin-left: 7%;
-    margin-top: 2.5%;
-    margin-bottom: 2.5%;
-}
-#q {
-    /* התחברות מהירה */
-    position: absolute;
-    width: 200px;
-    height: 60px;
-    left: calc(50% - 277px/2);
-    margin-top: 15%;
-    /* top: -10px; */
-    
-    font-family: 'CustomFont'!important;
-    /* font-style: normal; */
-    /* font-weight: 400; */
-    /* font-size: 180%; */
-    line-height: 36px;
-    text-align: right;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #p {
+    text-align: center;
+    font-size: 3rem;
     color: #002046;
-}
-.custom-google-login-button {
-    margin-left: 26%;
-    overflow: hidden;
-    max-width: 300px;
-}
-body{
-    font-family: 'CustomFont'!important;
-
-}
-.password-toggle-icon{
+    margin-bottom: inherit;
+  }
+  
+  /* מוודא שכל קבוצת שדה תהיה ברווח מסודר */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #login-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* רווח בין כל form-group */
+  }
+  
+  /* עוטף כל שדה ומאפשר מרווחים גמישים */
+  .form-group {
+    width: 100%;
+  }
+  
+  /* עיצוב אחיד לאינפוטים וכפתורים */
+  .textBox {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 2.2rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #F1F7FF;
+    color: #002046;
+    box-sizing: border-box;
+  }
+  
+  /* עיטוף לשדה הסיסמה כולל האייקון */
+  .password-wrapper {
+    position: relative;
+  }
+  
+  /* איקון עין */
+  .password-toggle-icon {
     position: absolute;
-    top: 54.5%;
-    left: 30%;
+    top: 50%;
+    right: 1rem;
     transform: translateY(-50%);
     cursor: pointer;
-    z-index: 10;
-}
-.my-confirm-button{
+    color: #002046;
+  }
+  
+  /* כפתור התחברות */
+  #submit {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #F1F7FF;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    color: #002046;
+  }
+  
+  .enter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  /* עיצוב כפתור התחברות עם גוגל */
+  .google-login-wrapper {
+    margin-top: 1rem;
+  }
+  
+  #linkq {
+    width: 100%;
+    background-color: #F1F7FF;
+    border: none;
+    border-radius: 15px;
+    padding: 0.8rem;
+  }
+  
+  .custom-google-login-button {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .my-confirm-button {
     background-color: #00397C;
-}
+  }
+  
+  /* רספונסיביות */
+  @media (max-width: 768px) {
+    .login {
+      margin: 20px;
+      padding: 1.5rem;
+    }
+  
+    #p {
+      font-size: 1.5rem;
+    }
+  
+    .textBox {
+      font-size: 1rem;
+      padding: 0.7rem;
+    }
+  
+    #submit {
+      font-size: 1rem;
+    }
+  
+    .password-toggle-icon {
+      right: 0.8rem;
+    }
+  
+    .enter svg {
+      width: 16px;
+      height: 16px;
+    }
+  
+    #linkq {
+      padding: 0.7rem;
+    }
+  }
+  

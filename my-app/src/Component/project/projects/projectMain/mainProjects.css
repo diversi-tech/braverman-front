@@ -58,5 +58,54 @@ body {
 }
 
 
+/* קונטיינר של שתי הטבלאות */
+.main-project-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: nowrap;
+  padding: 20px;
+}
+
+/* עיצוב ברירת מחדל למסכים גדולים */
+.customerProjects {
+  flex: 1;
+  min-width: 0;
+}
+
+.projectFinish {
+  flex: 0.95; /* הקטנה קלה */
+  max-width: 98%; /* מוודא שלא תחרוג מהמסך */
+  min-width: 0;
+}
+
+/* בתוך כל אחד מהם */
+.customerProjects table,
+.projectFinish table {
+  width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+td, th {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* רספונסיביות למסכים קטנים */
+@media (max-width: 1500px) {
+  .main-project-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .customerProjects,
+  .projectFinish {
+    width: 100%;
+    overflow-x: hidden; /* מבטל גלילה לרוחב */
+  }
+}
 
     
