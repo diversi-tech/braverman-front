@@ -489,9 +489,8 @@ const Leads: React.FC = () => {
       }
     })
   }
-
-  const handleEditLead = async () => {
-    const lead = leads.find((l) => l.id === selectedLeadId);
+ 
+  const handleEditLead = async (lead: Lead) => {
     if (!lead) {
       Swal.fire('Error', 'Selected lead not found', 'error');
       return;
@@ -630,7 +629,7 @@ const Leads: React.FC = () => {
             </thead>
             <tbody>
               {filteredLeads2.map((lead) => (
-                <tr key={lead.id} onClick={() => setSelectedLeadId(lead.id)}>
+                <tr key={lead.id} onClick={() => {setSelectedLeadId(lead.id) ;handleEditLead(lead)}}>
                   <td style={{width:'17%',alignItems:'right'}}>
                     <NoteColumn notes={lead.notes} leadId={lead.id}  addNote={addNote} />
                   </td>
@@ -669,7 +668,7 @@ const Leads: React.FC = () => {
 
                     <button
                       className={`circle-button ${selectedLeadId === lead.id ? 'clicked' : ''}`}
-                      onClick={() => setSelectedLeadId(lead.id)}
+                      onClick={() => {setSelectedLeadId(lead.id)  ;handleEditLead(lead)}}
                     ></button>
                   </td>
                 </tr>
@@ -683,12 +682,6 @@ const Leads: React.FC = () => {
                       <button className="convert-lead-button" onClick={handleConvertLeadToProject}>
                         →
                         <span className='add' style={{ fontSize: 15, color: '#636363' }}>המרת ליד ללקוח</span>
-                      </button>
-                    )}
-                    {selectedLeadId && (
-                      <button className="convert-lead-button" onClick={handleEditLead}>
-                        <GrUpdate />
-                        <span className='add' style={{ fontSize: 15, color: '#636363' }}>עדכון ליד</span>
                       </button>
                     )}
                     <button className="add-lead-button" onClick={handleAddLead}>

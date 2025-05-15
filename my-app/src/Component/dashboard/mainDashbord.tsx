@@ -210,8 +210,8 @@ const MainDeshbord = () => {
             <div>
               <div className='div'>
               </div>
-              <Box sx={{ padding: 3, backgroundColor: '#f4f7fc', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}>
-                {/* <Box sx={{ backgroundColor: 'white', padding: 3, borderRadius: '15px', boxShadow: 3, maxWidth: '1200px', margin: '0 auto' }}> */}
+              {/* <Box sx={{ padding: 3, backgroundColor: 'white', marginTop: 2, marginRight: "6%", marginLeft: "6%" }}> */}
+                <Box sx={{ backgroundColor: 'white', padding: 6, maxWidth: '1300px', margin: '0 auto',width:"100%",height:"100%"}}>
                   <Typography
                     sx={{
                       marginBottom: 0,
